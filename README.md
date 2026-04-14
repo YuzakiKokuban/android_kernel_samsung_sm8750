@@ -1,4 +1,3 @@
-<!-- BEGIN-ZH -->
 # Kokuban 内核 for 三星 Galaxy S25 系列
 
 <p align="center">
@@ -10,84 +9,50 @@
 <a href="https://t.me/kokubanchat"><img src="https://img.shields.io/badge/Telegram-交流群-blue.svg?style=for-the-badge&logo=telegram" alt="Telegram"></a>
 </p>
 
-这是一个适用于 **三星 Galaxy S25 系列** 的高性能自定义内核。它旨在提供卓越的稳定性和流畅度，同时围绕当前仍在维护的 `LKM` 与 `ReSukiSU` 模式，带来更清晰也更稳定的玩机体验。
+这是一个面向 **三星 Galaxy S25 系列** 的自定义内核项目，重点围绕稳定性、性能调优与日常可用性进行构建。项目当前维护 `LKM` 与 `ReSukiSU` 两种发行模式，以满足不同用户对纯净环境和高级功能的需求。
 
-## 📌 主要特性
+## 项目概览
 
+* **性能优化**：提供面向日常使用与游戏场景的调度与性能调优。
+* **精简发行模式**：围绕 `LKM` 与 `ReSukiSU` 两种模式持续维护，减少历史分支带来的维护复杂度。
+* **扩展特性支持**：可按构建配置集成 `SuSFS` 与 `BBG`，其中 `SuSFS` 仅在 `ReSukiSU` 构建中启用。
+* **版本标识**：`-android15-Kokuban-Herta-BYIF`
 
-* **性能优化**: 针对性的性能调度优化，带来更流畅的日常使用和游戏体验。
-
-* **KernelSU 集成**: 提供精简的构建模式选择，支持纯净 `LKM` 与功能完整的 `ReSukiSU`。
-* **SuSFS / BBG**: 对应构建可按需集成 `SuSFS` 与 `BBG`，其中 `SuSFS` 仅在 `ReSukiSU` 构建中启用。
-
-* **版本信息**: `-android15-Kokuban-Herta-BYIF`
-
-## 🧩 可用版本详解
+## 发行版本说明
 
 * **LKM (Loadable Kernel Module)**
-
-  * 未内置任何 Root 方案，保持官方内核的纯净性。
-
-  * **使用方式**: 需要您通过 KernelSU Manager App 手动修补设备的 `init_boot` 分区来实现 Root。
+  * 不内置 Root 方案，适合希望保持内核环境尽可能精简的使用方式。
+  * 如需 Root，需要通过 KernelSU Manager App 手动修补并刷入设备的 `init_boot` 镜像。
 
 * **ReSuki (ReSukiSU)**
-
-  * 内置功能强大的 ReSukiSU，支持 SUSFS 和 KPM 模块，为高级玩家提供更多可玩性。
+  * 集成 ReSukiSU，并支持 `SUSFS` 与 `KPM` 等高级特性。
+  * 适合有模块扩展、隐藏能力或进阶调试需求的用户。
 
 > 当前项目不再维护旧的内置 `KSU/MKSU` 分支模式。
 
-## ⚙️ 安装指南
+## 安装指南
 
-1. **解锁 Bootloader**: 请确保您的设备已经解锁 Bootloader。
+1. **解锁 Bootloader**：请确保设备已完成 Bootloader 解锁。
+2. **准备 Recovery**：建议使用较新的 `TWRP` 或 `OrangeFox Recovery`。
+3. **刷入内核**：从本项目 [Releases 页面](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8750/releases) 下载对应版本，并在 Recovery 中刷入内核 `zip` 包。
+4. **仅 LKM 版本需要：修补 `init_boot`**
+   使用前请先备份当前设备的 `init_boot.img`，再通过 KernelSU Manager App 选择并修补该镜像，随后使用 Fastboot 或 Recovery 将修补后的镜像刷入 `init_boot` 分区。
+5. **重启设备**：完成刷入后重启系统并确认功能状态。
 
-2. **刷入 Recovery**: 推荐使用最新的 TWRP 或 OrangeFox Recovery。
+## 下载
 
-3. **刷入内核**: 在 Recovery 中刷入本项目 Releases 页面下载的内核 `zip` 包。
+所有最新构建版本均发布于 [**Releases 页面**](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8750/releases)。
 
-4. **（仅 LKM 版本需要）修补 `init_boot`**:
+## 反馈与支持
 
-   * 备份您设备当前的 `init_boot.img`。
+如需获取使用交流、问题反馈或发布通知，可加入 [Telegram 交流群](https://t.me/kokubanchat)。
 
-   * 使用 KernelSU Manager App 选择并修补该镜像。
-
-   * 将修补后生成的 `init_boot.img` 通过 Fastboot 或 Recovery 刷入设备的 `init_boot` 分区。
-
-5. **重启设备**, 享受新内核带来的快感！
-
-## 📥 下载
-
-所有最新版本都可以在 [**Releases 页面**](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8750/releases) 找到。
-
-## ⚠️ 免责声明
+## 免责声明
 
 刷机有风险，操作需谨慎。在进行任何操作前，请务必完整备份您的个人数据。因刷入此内核而导致的任何设备损坏或数据丢失，本人概不负责。
 
----
 
-# 🥺 小小拜托
 
-## 求求你了，不要拿这个内核去适配 KernelSU-Next 啦～
-😭😭😭
-
-KernelSU-Next 不是 KernelSU 官方开发的，也不是官方认可的改进版，
-而且它的开发者有一些很让人摸不着头脑的操作……
-
-[岁月史书](https://web.archive.org/web/20250211155215/https://github.com/rifsxd/KernelSU-Next/issues/145)
-
-如果你想要类似功能的话，拜托用 **ReSukiSU** 好不好嘛～
-它更稳定，也更值得信赖！
-
----
-
-## 如果你还是坚持要适配 KernelSU-Next……
-我真的会呜呜呜哭出来的！！！
-(｡•́︿•̀｡)
-拜托啦～谢谢谢谢！
-
----
-<!-- END-ZH -->
-
-<!-- BEGIN-EN -->
 # Kokuban Kernel for Samsung Galaxy S25 Series
 
 <p align="center">
@@ -99,81 +64,48 @@ KernelSU-Next 不是 KernelSU 官方开发的，也不是官方认可的改进�
 <a href="https://t.me/kokubanchat"><img src="https://img.shields.io/badge/Telegram-Chat-blue.svg?style=for-the-badge&logo=telegram" alt="Telegram"></a>
 </p>
 
-This is a high-performance custom kernel for the **Samsung Galaxy S25 Series**. It is designed to deliver exceptional stability and smoothness while focusing on the currently maintained `LKM` and `ReSukiSU` modes.
+This is a custom kernel project for the **Samsung Galaxy S25 Series**, built with a focus on stability, performance tuning, and day-to-day usability. The project currently maintains two release tracks, `LKM` and `ReSukiSU`, to serve both clean setups and advanced power-user workflows.
 
-## 📌 Highlights
+## Overview
 
-* **Performance-Tuned**: Targeted performance and scheduling optimizations for a smoother daily usage and gaming experience.
+* **Performance Tuned**: Includes targeted scheduling and performance optimizations for smoother daily use and gaming.
+* **Streamlined Release Model**: Focuses on the actively maintained `LKM` and `ReSukiSU` variants to keep maintenance predictable and transparent.
+* **Optional Feature Integration**: Matching builds may include `SuSFS` and `BBG`, with `SuSFS` enabled only on `ReSukiSU` releases.
+* **Version Identifier**: `-android15-Kokuban-Herta-BYIF`
 
-* **KernelSU Integrated**: Offers a streamlined build model with clean `LKM` and feature-rich `ReSukiSU` variants.
-* **SuSFS / BBG**: Matching builds can integrate `SuSFS` and `BBG`, with `SuSFS` enabled only for `ReSukiSU` builds.
-
-* **Version Info**: `-android15-Kokuban-Herta-BYIF`
-
-## 🧩 Available Variants Explained
+## Release Variants
 
 * **LKM (Loadable Kernel Module)**
-
-  * Does not include any built-in root solution, maintaining the purity of the stock kernel.
-
-  * **Usage**: Requires you to manually patch your device's `init_boot` partition using the KernelSU Manager App to achieve root.
+  * Does not include a built-in root solution and is intended for users who prefer a cleaner kernel environment.
+  * If root access is required, patch and flash the device `init_boot` image manually through the KernelSU Manager App.
 
 * **ReSuki (ReSukiSU)**
-
-  * Integrated with the powerful ReSukiSU, supporting SUSFS and KPM modules, offering advanced features for power users.
+  * Ships with ReSukiSU integration and supports advanced capabilities such as `SUSFS` and `KPM`.
+  * Recommended for users who need module extensibility, root hiding, or other advanced workflows.
 
 > This project no longer maintains the legacy built-in `KSU/MKSU` branch model.
 
-## ⚙️ Installation Guide
+## Installation
 
-1. **Unlock Bootloader**: Ensure your device's bootloader is unlocked.
+1. **Unlock the Bootloader**: Make sure the device bootloader is already unlocked.
+2. **Prepare a Recovery Environment**: A recent version of `TWRP` or `OrangeFox Recovery` is recommended.
+3. **Flash the Kernel**: Download the appropriate package from the [Releases page](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8750/releases) and flash the kernel `zip` through Recovery.
+4. **LKM Builds Only: Patch `init_boot`**
+   Back up your current `init_boot.img`, patch it with the KernelSU Manager App, and flash the patched image back to the `init_boot` partition using Fastboot or Recovery.
+5. **Reboot the Device**: Restart the system and verify the kernel is running as expected.
 
-2. **Flash Recovery**: It is recommended to use the latest version of TWRP or OrangeFox Recovery.
+## Downloads
 
-3. **Flash Kernel**: Flash the kernel `zip` package downloaded from the Releases page in this project via Recovery.
+All current builds are published on the [**Releases Page**](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8750/releases).
 
-4. **(LKM Version Only) Patch `init_boot`**:
+## Support
 
-   * Back up your current `init_boot.img`.
+For release notifications, discussion, or general support, join the [Telegram group](https://t.me/kokubanchat).
 
-   * Use the KernelSU Manager App to select and patch this image.
-
-   * Flash the resulting `kernelsu_boot.img` to your device's `init_boot` partition via Fastboot or Recovery.
-
-5. **Reboot your device** and enjoy the new kernel!
-
-## 📥 Downloads
-
-All the latest builds can be found on the [**Releases Page**](https://github.com/YuzakiKokuban/android_kernel_samsung_sm8750/releases).
-
-## ⚠️ Disclaimer
+## Disclaimer
 
 Flashing custom software carries inherent risks. Please make a full backup of your personal data before proceeding. I am not responsible for any damage to your device or data loss that may occur as a result of flashing this kernel.
 
----
-
-# 🥺 A Little Request
-
-## Please, please don't use this kernel for adapting KernelSU-Next~
-😭😭😭
-
-KernelSU-Next is NOT developed by the official KernelSU team, nor is it an officially endorsed improvement.
-Also, its developer has done some really confusing and questionable things...
-
-[Some Records](https://web.archive.org/web/20250211155215/https://github.com/rifsxd/KernelSU-Next/issues/145)
-
-If you need similar functionality, please use **ReSukiSU**, okay?
-It's much more stable and trustworthy!
-
----
-
-## If you still insist on adapting it to KernelSU-Next...
-I might actually burst into tears!!!
-(｡•́︿•̀｡)
-Pleaseee~ Thank you so much!
-
----
-<!-- END-EN -->
 
 <p align="center">
 <a href="https://www.paypal.me/LangQin280">☕ Support Me</a>
