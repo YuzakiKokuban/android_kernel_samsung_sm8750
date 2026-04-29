@@ -18,5 +18,7 @@ jobs:
               "project": "s25_sm8750",
               "branch": "${{ github.ref_name }}",
               "apply_susfs": true,
-              "apply_bbg": true
+              "apply_bbg": true,
+              "apply_rekernel": true,
+              "apply_zram": true
             }

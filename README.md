@@ -15,7 +15,7 @@
 
 * **性能优化**：提供面向日常使用与游戏场景的调度与性能调优。
 * **精简发行模式**：围绕 `LKM` 与 `ReSukiSU` 两种模式持续维护，减少历史分支带来的维护复杂度。
-* **扩展特性支持**：可按构建配置集成 `SuSFS` 与 `BBG`，其中 `SuSFS` 仅在 `ReSukiSU` 构建中启用。
+* **扩展特性支持**：可按构建配置集成 `SuSFS`、`BBG`、`Re-Kernel` 与 `zram` LZ4 NEON 支持，其中 `SuSFS` 仅在 `ReSukiSU` 构建中启用。
 * **版本标识**：`-android15-Kokuban-Herta-BYIF`
 
 ## 发行版本说明
@@ -70,7 +70,7 @@ This is a custom kernel project for the **Samsung Galaxy S25 Series**, built wit
 
 * **Performance Tuned**: Includes targeted scheduling and performance optimizations for smoother daily use and gaming.
 * **Streamlined Release Model**: Focuses on the actively maintained `LKM` and `ReSukiSU` variants to keep maintenance predictable and transparent.
-* **Optional Feature Integration**: Matching builds may include `SuSFS` and `BBG`, with `SuSFS` enabled only on `ReSukiSU` releases.
+* **Optional Feature Integration**: Matching builds may include `SuSFS`, `BBG`, `Re-Kernel`, and `zram` LZ4 NEON support, with `SuSFS` enabled only on `ReSukiSU` releases.
 * **Version Identifier**: `-android15-Kokuban-Herta-BYIF`
 
 ## Release Variants
