@@ -1,0 +1,31 @@
+aidl_interface {
+    name: "vendor.qti.hardware.display.color",
+    vendor_available: true,
+    owner: "qti",
+    srcs: ["vendor/qti/hardware/display/color/*.aidl"],
+    stability: "vintf",
+    backend: {
+        cpp: {
+            enabled: false,
+        },
+        java: {
+            enabled: true,
+            sdk_version: "module_current",
+        },
+        ndk: {
+            enabled: true,
+        },
+    },
+    versions_with_info: [
+        {
+            version: "1",
+            imports: [],
+        },
+        {
+            version: "2",
+            imports: [],
+        },
+
+    ],
+    frozen: true,
+}

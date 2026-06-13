@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.       -->
+<!--                                                                           -->
+<!-- Redistribution and use in source and binary forms, with or without        -->
+<!-- modification, are permitted provided that the following conditions are    -->
+<!-- met:                                                                      -->
+<!--     * Redistributions of source code must retain the above copyright      -->
+<!--       notice, this list of conditions and the following disclaimer.       -->
+<!--     * Redistributions in binary form must reproduce the above             -->
+<!--       copyright notice, this list of conditions and the following         -->
+<!--       disclaimer in the documentation and/or other materials provided     -->
+<!--       with the distribution.                                              -->
+<!--     * Neither the name of The Linux Foundation nor the names of its       -->
+<!--       contributors may be used to endorse or promote products derived     -->
+<!--       from this software without specific prior written permission.       -->
+<!--                                                                           -->
+<!-- THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED              -->
+<!-- WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF      -->
+<!-- MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT    -->
+<!-- ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS    -->
+<!-- BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR    -->
+<!-- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF      -->
+<!-- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR           -->
+<!-- BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,     -->
+<!-- WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE      -->
+<!-- OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN    -->
+<!-- IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                             -->
+<resource_manager_info>
+    <config_params>
+        <param key="native_audio_mode" value="multiple_mix_dsp"/>
+        <!-- Uncomment HIFI Filter Headphones related sections when set this
+             hifi_filter key to true -->
+        <param key="hifi_filter" value="false"/>
+        <param key="max_sessions" value="128"/>
+        <param key="max_nonTunnel_sessions" value="4"/>
+        <param key="logging_level" value ="15" />
+        <param key="context_manager_enable" value ="false" />
+        <param key="upd_dedicated_be" value ="true" />
+    </config_params>
+    <config_gapless key="gapless_supported" value="1"/>
+    <bt_codecs>
+        <codec codec_format="CODEC_TYPE_AAC" codec_type="enc|dec" codec_library="lib_bt_bundle.so" />
+        <codec codec_format="CODEC_TYPE_SBC" codec_type="enc|dec" codec_library="lib_bt_bundle.so" />
+        <codec codec_format="CODEC_TYPE_LDAC" codec_type="enc" codec_library="lib_bt_bundle.so" />
+        <codec codec_format="CODEC_TYPE_APTX" codec_type="enc" codec_library="lib_bt_aptx.so" />
+        <codec codec_format="CODEC_TYPE_APTX_HD" codec_type="enc" codec_library="lib_bt_aptx.so" />
+        <codec codec_format="CODEC_TYPE_APTX_AD" codec_type="enc" codec_library="lib_bt_aptx.so" />
+        <codec codec_format="CODEC_TYPE_APTX_DUAL_MONO" codec_type="enc" codec_library="lib_bt_aptx.so" />
+        <codec codec_format="CODEC_TYPE_APTX_AD_SPEECH" codec_type="enc|dec" codec_library="lib_bt_aptx.so" />
+        <codec codec_format="CODEC_TYPE_LC3" codec_type="enc|dec" codec_library="lib_bt_ble.so" />
+    </bt_codecs>
+    <gain_db_to_level_mapping>
+        <gain_level_map db="-59" level="5"/>
+        <gain_level_map db="-17.4" level="4"/>
+        <gain_level_map db="-13.8" level="3"/>
+        <gain_level_map db="-10.2" level="2"/>
+        <gain_level_map db="0" level="1"/>
+    </gain_db_to_level_mapping>
+    <config_voice>
+        <vsid>0xB3000000</vsid>
+        <loopbackDelay>1000</loopbackDelay>
+        <mode_map>
+            <modepair key="0x11C05000" value="0xB3000001"/>
+            <modepair key="0x11DC5000" value="0xB3000001"/>
+            <modepair key="0x12006000" value="0xB3000001"/>
+            <modepair key="0x121C6000" value="0xB3000001"/>
+        </mode_map>
+    </config_voice>
+    <device_profile>
+        <in-device>
+            <id>PAL_DEVICE_IN_VI_FEEDBACK</id>
+            <back_end_name>CODEC_DMA-LPAIF_WSA-TX-0</back_end_name>
+            <max_channels>2</max_channels>
+            <channels>2</channels>
+            <samplerate>48000</samplerate>
+            <bit_width>32</bit_width>
+            <snd_device_name>vi-feedback</snd_device_name>
+        </in-device>
+        <in-device>
+            <id>PAL_DEVICE_IN_HANDSET_MIC</id>
+            <back_end_name>CODEC_DMA-LPAIF_RXTX-TX-3</back_end_name>
+            <max_channels>4</max_channels>
+            <channels>1</channels>
+            <snd_device_name>handset-mic</snd_device_name>
+            <usecase>
+                <name>PAL_STREAM_LOW_LATENCY</name>
+            </usecase>
+            <usecase>
+                <name>PAL_STREAM_DEEP_BUFFER</name>
+            </usecase>
+            <usecase>
+                <name>PAL_STREAM_VOIP_TX</name>
+            </usecase>
+            <usecase>
+                <name>PAL_STREAM_VOICE_CALL</name>
+                <sidetone_mode>HW</sidetone_mode>
+                <custom-config key="dual-mic">
+                    <channels>2</channels>
+                    <snd_device_name>handset-dmic-endfire</snd_device_name>
+                </custom-config>
+                <custom-config key="quad-mic">
+                    <channels>4</channels>
+                    <snd_device_name>quad-mic</snd_device_name>
+                </custom-config>
+            </usecase>
+            <usecase>
+                <name>PAL_STREAM_ULTRA_LOW_LATENCY</name>
+            </usecase>
+            <usecase>
+                <name>PAL_STREAM_RAW</name>
+                <custom-config key="unprocessed-hdr-mic-landscape">
+                    <channels>4</channels>
+                    <snd_device_name>unprocessed-hdr-mic-landscape</snd_device_name>
+                </custom-config>
+                <custom-config key="unprocessed-hdr-mic-portrait">
+                    <channels>4</channels>
+                    <snd_device_name>unprocessed-hdr-mic-portrait</snd_device_name>
+                </custom-config>
+                <custom-config key="unprocessed-hdr-mic-inverted-landscape">
+                    <channels>4</channels>
+                    <snd_device_name>unprocessed-hdr-mic-inverted-landscape</snd_device_name>
+                </custom-config>
+                <custom-config key="unprocessed-hdr-mic-inverted-portrait">
+                    <channels>4</channels>
+                    <snd_device_name>unprocessed-hdr-mic-inverted-portrait</snd_device_name>
+                </custom-config>
+            </usecase>
+            <ec_rx_device>
+                <id>PAL_DEVICE_OUT_HANDSET</id>
+                <id>PAL_DEVICE_OUT_SPEAKER</id>
+            </ec_rx_device>
+        </in-device>
+        <in-device>
+            <id>PAL_DEVICE_IN_SPEAKER_MIC</id>
+            <back_end_name>CODEC_DMA-LPAIF_RXTX-TX-3</back_end_name>
+            <max_channels>4</max_channels>
+            <channels>1</channels>
+            <snd_device_name>speaker-mic</snd_device_name>
+            <usecase>
+                <name>PAL_STREAM_LOW_LATENCY</name>
+            </usecase>
+            <usecase>
+                <name>PAL_STREAM_DEEP_BUFFER</name>
+            </usecase>
+            <usecase>
+                <name>PAL_STREAM_VOIP_TX</name>
+            </usecase>
+            <usecase>
+                <name>PAL_STREAM_VOICE_CALL</name>
+                <sidetone_mode>OFF</sidetone_mode>
+                <custom-config key="dual-mic">
+                    <channels>2</channels>
+                    <snd_device_name>handset-dmic-endfire</snd_device_name>
+                </custom-config>
+            </usecase>
+            <usecase>
+                <name>PAL_STREAM_LOOPBACK</name>
+            </usecase>
+            <usecase>
+                <name>PAL_STREAM_ULTRA_LOW_LATENCY</name>
+            </usecase>
+            <ec_rx_device>
+                <id>PAL_DEVICE_OUT_SPEAKER</id>
+            </ec_rx_device>
+        </in-device>
+        <out-device>
+            <id>PAL_DEVICE_NONE</id>
+            <back_end_name>CODEC_DMA-LPAIF_WSA-RX-0</back_end_name>
+            <max_channels>2</max_channels>
+            <channels>1</channels>
+            <snd_device_name>none</snd_device_name>
+        </out-device>
+        <out-device>
+            <id>PAL_DEVICE_OUT_SPEAKER</id>
+            <back_end_name>CODEC_DMA-LPAIF_WSA-RX-0</back_end_name>
+            <max_channels>2</max_channels>
+            <channels>2</channels>
+            <samplerate>48000</samplerate>
+            <snd_device_name>speaker</snd_device_name>
+            <speaker_protection_enabled>1</speaker_protection_enabled>
+            <!-- To enable external EC reference the flag extec_ref_enabled must be added as 1 -->
+            <ext_ec_ref_enabled>0</ext_ec_ref_enabled>
+            <cps_enabled>0</cps_enabled>
+            <!--specify the supported bit format on speaker end point -->
+            <!--this should be in the form of pal_audio_fmt_id-->
+            <!--e.g <supported_bit_format >PAL_AUDIO_FMT_PCM_S24_LE</supported_bit_format>-->
+            <supported_bit_format>PAL_AUDIO_FMT_PCM_S16_LE</supported_bit_format>
+            <!-- RAS should be enabled with speaker protection always -->
+            <ras_enabled>0</ras_enabled>
+            <!-- Flag to specify speaker in case Voice call is switched from
+                 handset to speaker with only 1 speaker.
+                 Values: Both speaker : 0
+                         Right speaker: 1
+                         Left speaker : 2
+            -->
+            <speaker_mono_right>0</speaker_mono_right>
+            <!-- Time in seconds for Quick cal. Set 0 to disable -->
+            <quick_cal_time>0</quick_cal_time>
+            <usecase>
+                <name>PAL_STREAM_VOICE_CALL</name>
+                <channels>1</channels>
+                <snd_device_name>speaker-mono-2</snd_device_name>
+            </usecase>
+            <usecase>
+                <name>PAL_STREAM_ULTRASOUND</name>
+                <samplerate>96000</samplerate>
+            </usecase>
+        </out-device>
+        <out-device>
+            <id>PAL_DEVICE_OUT_HANDSET</id>
+            <back_end_name>CODEC_DMA-LPAIF_WSA-RX-0</back_end_name>
+            <max_channels>2</max_channels>
+            <channels>1</channels>
+            <!-- To enable external EC reference the flag extec_ref_enabled must be added as 1 -->
+            <ext_ec_ref_enabled>0</ext_ec_ref_enabled>
+            <samplerate>48000</samplerate>
+            <snd_device_name>handset</snd_device_name>
+            <usecase>
+                <name>PAL_STREAM_ULTRASOUND</name>
+                <samplerate>96000</samplerate>
+            </usecase>
+        </out-device>
+    </device_profile>
+    <in_streams>
+        <in_stream>
+            <name>PAL_STREAM_VOIP_TX</name>
+                <policies>
+                    <ec_ref>
+                        <disabled_stream>PAL_STREAM_LOW_LATENCY</disabled_stream>
+                        <disabled_stream>PAL_STREAM_GENERIC</disabled_stream>
+                    </ec_ref>
+                </policies>
+        </in_stream>
+        <in_stream>
+            <name>PAL_STREAM_DEEP_BUFFER</name>
+                <policies>
+                    <ec_ref>
+                        <disabled_stream>PAL_STREAM_LOW_LATENCY</disabled_stream>
+                        <disabled_stream>PAL_STREAM_GENERIC</disabled_stream>
+                    </ec_ref>
+                </policies>
+        </in_stream>
+        <in_stream>
+            <name>PAL_STREAM_VOICE_UI</name>
+                <policies>
+                    <ec_ref>
+                        <disabled_stream>PAL_STREAM_LOW_LATENCY</disabled_stream>
+                        <disabled_stream>PAL_STREAM_GENERIC</disabled_stream>
+                    </ec_ref>
+                </policies>
+        </in_stream>
+        <in_stream>
+            <name>PAL_STREAM_ACD</name>
+                <policies>
+                    <ec_ref>
+                        <disabled_stream>PAL_STREAM_LOW_LATENCY</disabled_stream>
+                        <disabled_stream>PAL_STREAM_GENERIC</disabled_stream>
+                    </ec_ref>
+                </policies>
+        </in_stream>
+        <in_stream>
+            <name>PAL_STREAM_PROXY</name>
+                <policies>
+                    <ec_ref>
+                        <disabled_stream>PAL_STREAM_ULTRA_LOW_LATENCY</disabled_stream>
+                        <disabled_stream>PAL_STREAM_LOW_LATENCY</disabled_stream>
+                        <disabled_stream>PAL_STREAM_GENERIC</disabled_stream>
+                    </ec_ref>
+                </policies>
+        </in_stream>
+        <in_stream>
+            <name>PAL_STREAM_RAW</name>
+                <policies>
+                    <ec_ref>
+                        <disabled_stream>PAL_STREAM_ULTRA_LOW_LATENCY</disabled_stream>
+                        <disabled_stream>PAL_STREAM_LOW_LATENCY</disabled_stream>
+                        <disabled_stream>PAL_STREAM_GENERIC</disabled_stream>
+                    </ec_ref>
+                </policies>
+        </in_stream>
+    </in_streams>
+</resource_manager_info>

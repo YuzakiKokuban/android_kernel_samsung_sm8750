@@ -1,0 +1,18 @@
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/clock/qcom,gcc-sun.h>
+#include <dt-bindings/clock/qcom,camcc-sun.h>
+#include <dt-bindings/clock/qcom,cambistmclkcc-sun.h>
+#include <dt-bindings/interconnect/qcom,sun.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/regulator/qcom,rpmh-regulator-levels.h>
+
+#include "../sun-camera.dts"
+#include "sun-camera-sensor-pa3q-r02.dtsi"
+#include "sun-camera-sensor-pa3q-pinctrl-r02.dtsi"
+
+/ {
+	model = "Samsung PA3Q PROJECT (board-id,08,c)";
+	qcom,board-id = <8 8>;
+};

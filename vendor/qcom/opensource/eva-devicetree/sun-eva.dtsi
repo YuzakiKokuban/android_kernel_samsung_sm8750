@@ -1,0 +1,151 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+&soc {
+	msm_cvp: qcom,cvp@ab00000 {
+		compatible = "qcom,msm-cvp", "qcom,sun-cvp";
+		status = "ok";
+		reg = <0xab00000 0x100000>;
+		interrupts = <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>, <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>;
+
+		/* LLCC Cache */
+		cache-slice-names = "cvpfw", "cvp";
+
+		/* Supply */
+		cvp-supply = <&eva_cc_mvs0c_gdsc>;
+		cvp-core-supply = <&eva_cc_mvs0_gdsc>;
+
+		/* Clocks */
+		clock-names = "cvp_axi_clock", "core_axi_clock", "sleep_clk", "cvp_freerun_clk", "core_freerun_clk",
+		"cvp_clk", "core_clk","eva_cc_mvs0_clk_src";
+		clock-ids = <GCC_EVA_AXI0C_CLK GCC_EVA_AXI0_CLK EVA_CC_SLEEP_CLK EVA_CC_MVS0C_FREERUN_CLK EVA_CC_MVS0_FREERUN_CLK EVA_CC_MVS0C_CLK
+			EVA_CC_MVS0_CLK EVA_CC_MVS0_CLK_SRC>;
+		clocks = <&gcc GCC_EVA_AXI0C_CLK>,
+		    <&gcc GCC_EVA_AXI0_CLK>,
+			<&evacc EVA_CC_SLEEP_CLK>,
+			<&evacc EVA_CC_MVS0C_FREERUN_CLK>,
+			<&evacc EVA_CC_MVS0_FREERUN_CLK>,
+			<&evacc EVA_CC_MVS0C_CLK>,
+			<&evacc EVA_CC_MVS0_CLK>,
+			<&evacc EVA_CC_MVS0_CLK_SRC>;
+		qcom,proxy-clock-names = "cvp_axi_clock", "core_axi_clock", "sleep_clk", "cvp_freerun_clk", "core_freerun_clk",
+		"cvp_clk", "core_clk", "eva_cc_mvs0_clk_src";
+
+		qcom,clock-configs = <0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x1>;
+		qcom,allowed-clock-rates = <350000000 400000000 450000000 500000000 550000000>;
+
+		/*To be added - GCC_EVA CLK_ARES and GCC_EVA_AXI0C_CLK_ARES*/
+		resets = <&evacc EVA_CC_MVS0C_CLK_ARES>;
+		reset-names = "cvp_core_reset";
+		reset-power-status = <0x0>;
+
+		qcom,reg-presets = <0xB0088 0x0>;
+		qcom,ipcc-reg = <0x400000 0x100000>;
+		qcom,gcc-reg = <0x110000 0x90000>;
+
+		pas-id = <26>;
+		soc_ver = <0x10000>;
+		memory-region = <&cvp_mem>;
+
+		/* UC region mapping */
+		ipclite_mappings = <0xFE500000 0x100000 0x82600000>;
+		/* DEVICE mapping */
+		aon_timer_mappings = <0xFFA00000 0x1000 0xc220000>;
+		/* DEVICE mapping */
+		hwmutex_mappings = <0xFFB00000 0x2000 0x1f4a000>;
+		/* DEVICE mapping */
+		aon_mappings = <0xFF80F000 0x1000 0x0ABE0000>;
+
+		/* CVP Firmware ELF image name */
+		cvp,firmware-name = "evass";
+
+		/* Buses */
+		cvp_cnoc {
+			compatible = "qcom,msm-cvp,bus";
+			qcom,bus-governor = "performance";
+			qcom,bus-range-kbps = <1000 1000>;
+			interconnects = <&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_EVA_CFG>;
+			interconnect-names = "eva-cfg";
+		};
+
+		cvp_bus_ddr {
+			compatible = "qcom,msm-cvp,bus";
+			qcom,bus-governor = "performance";
+			qcom,bus-range-kbps = <1000 6533000>;
+			interconnects = <&mmss_noc MASTER_VIDEO_EVA &mc_virt SLAVE_EBI1>;
+			interconnect-names = "eva-ddr";
+		};
+
+		/* MMUs */
+		/* Camera cb is used to get secure camera buffer IPA */
+		cvp_camera_cb {
+			compatible = "qcom,msm-cvp,context-bank";
+			label = "cvp_camera";
+			buffer-types = <0xfff>;
+			qti,smmu-proxy-cb-id = <QTI_SMMU_PROXY_EVA_CB>;
+		};
+
+		non_secure_cb_group: cvp_non_secure_cb_group {
+			qcom,iommu-faults = "non-fatal";
+		};
+
+		cvp_iommu_region_partition: cvp_iommu_region_partition {
+			/* These IOVA regions are unique per context bank */
+			iommu-addresses = <&cvp_non_secure_cb 0x0 0x4b000000>, <&cvp_non_secure_cb 0xdb000000 0x25000000>,
+				<&cvp_dsp_cb 0x0 0x4b000000>, <&cvp_dsp_cb 0xdb000000 0x25000000>,
+				<&cvp_secure_nonpixel_cb 0x0 0x01000000>, <&cvp_secure_nonpixel_cb 0x26800000 0xd9800000>,
+				<&cvp_secure_pixel_cb 0x0 0x26800000>, <&cvp_secure_pixel_cb 0x4b000000 0xb5000000>;
+		};
+
+		cvp_non_secure_cb: cvp_non_secure_cb {
+			compatible = "qcom,msm-cvp,context-bank";
+			label = "cvp_hlos";
+			iommus =
+				<&apps_smmu 0x1920 0x0020>;
+			buffer-types = <0xfff>;
+			dma-coherent;
+			qcom,iommu-group = <&non_secure_cb_group>;
+			memory-region = <&cvp_iommu_region_partition>;
+		};
+
+
+		cvp_secure_nonpixel_cb: cvp_secure_nonpixel_cb {
+			compatible = "qcom,msm-cvp,context-bank";
+			label = "cvp_sec_nonpixel";
+			iommus =
+				<&apps_smmu 0x1924 0x0020>;
+			buffer-types = <0x741>;
+			qcom,iommu-faults = "non-fatal";
+			memory-region = <&cvp_iommu_region_partition>;
+			qcom,iommu-vmid = <0xB>;
+		};
+
+		cvp_secure_pixel_cb: cvp_secure_pixel_cb {
+			compatible = "qcom,msm-cvp,context-bank";
+			label = "cvp_sec_pixel";
+			iommus =
+				<&apps_smmu 0x1923 0x0000>;
+			buffer-types = <0x106>;
+			qcom,iommu-faults = "non-fatal";
+			memory-region = <&cvp_iommu_region_partition>;
+			qcom,iommu-vmid = <0xA>;
+		};
+
+		cvp_dsp_cb: cvp_dsp_cb {
+			compatible = "qcom,msm-cvp,context-bank";
+			label = "cvp_dsp";
+			iommus =
+				<&apps_smmu 0x1920 0x0020>;
+			buffer-types = <0xfff>;
+			qcom,iommu-group = <&non_secure_cb_group>;
+			memory-region = <&cvp_iommu_region_partition>;
+		};
+		/* Memory Heaps */
+		qcom,msm-cvp,mem_cdsp {
+			compatible = "qcom,msm-cvp,mem-cdsp";
+			memory-region = <&cdsp_eva_mem>;
+		};
+	};
+};

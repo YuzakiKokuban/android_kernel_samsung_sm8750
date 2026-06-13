@@ -1,0 +1,52 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+
+config SENSORS_VL53L8
+	depends on SPI
+	tristate "VL53L8 driver"
+	default n
+	help
+	  Say Y here if you use VL53L5.
+	  This option enables range sensor using VL53L8.
+
+config SENSORS_VL53L8_SUPPORT_UAPI
+	tristate "STM VL53L8 ranging sensor UPAI interface"
+	default n
+	help
+	  STM VL53L8 ranging sensor UPAI interface.
+
+config SENSORS_VL53L8_SUPPORT_KERNEL_INTERFACE
+	tristate "STM VL53L8 ranging sensor Kernel Interface"
+	default n
+	help
+	  STM VL53L8 ranging sensor Kernel Interface.
+
+config SENSORS_VL53L8_QCOM
+	tristate "VL53L8 ranging sensor feature for Snapdragon"
+	default n
+	help
+	  VL53L8 ranging sensor feature for Snapdragon AP.
+
+config SENSORS_VL53L8_SLSI
+	tristate "VL53L8 ranging sensor feature for Exynos"
+	default n
+	help
+	  VL53L8 ranging sensor feature for Exynos AP.
+
+config SEPARATE_IO_CORE_POWER
+	tristate "VL53L8 ranging sensor feature for IO/CORE Power source"
+	default n
+	help
+	  This option enables IO and CORE power separation.
+
+config SENSORS_LAF_FAILURE_DEBUG
+	tristate "VL53L8 error code collection"
+	default n
+	help
+	  This option enables error code collection.
+
+config SENSORS_VL53L8_SUPPORT_RESUME_WORK
+	tristate "VL53L8 work func to reduce resume time"
+	default n
+	help
+	  VL53L8 ranging sensor feature to reduce resume time.

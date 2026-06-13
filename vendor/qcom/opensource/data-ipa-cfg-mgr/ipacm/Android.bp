@@ -1,0 +1,141 @@
+
+cc_binary {
+    name: "ipacm",
+
+    local_include_dirs: ["src"] + ["inc"],
+    header_libs: ["device_kernel_headers"]+["qti_kernel_headers",
+	"libutils_headers", "libcutils_headers"]+["qti_ipa_kernel_headers"],
+
+    cflags: ["-v"] + ["-DFEATURE_IPA_ANDROID"] + ["-DFEATURE_IPACM_RESTART"] + [
+        "-DFEATURE_IPACM_AIDL",
+	"-DDEBUG",
+        "-Wall",
+        "-Werror",
+        "-Wno-error=macro-redefined",
+    ],
+
+    srcs: [
+        "src/IPACM_Main.cpp",
+        "src/IPACM_EvtDispatcher.cpp",
+        "src/IPACM_Config.cpp",
+        "src/IPACM_CmdQueue.cpp",
+        "src/IPACM_Filtering.cpp",
+        "src/IPACM_Routing.cpp",
+        "src/IPACM_Header.cpp",
+        "src/IPACM_Lan.cpp",
+        "src/IPACM_Iface.cpp",
+        "src/IPACM_Wlan.cpp",
+        "src/IPACM_Wan.cpp",
+        "src/IPACM_IfaceManager.cpp",
+        "src/IPACM_Neighbor.cpp",
+        "src/IPACM_Netlink.cpp",
+        "src/IPACM_Xml.cpp",
+        "src/IPACM_Conntrack_NATApp.cpp",
+        "src/IPACM_ConntrackClient.cpp",
+        "src/IPACM_ConntrackListener.cpp",
+        "src/IPACM_Log.cpp",
+        "src/IPACM_OffloadManager.cpp",
+        "src/IPACM_LanToLan.cpp",
+    ],
+
+    init_rc: ["src/ipacm.rc"],
+    vintf_fragments: [
+        "src/vendor.qti.hardware.tetheroffload.service.xml",
+    ],
+    vendor: true,
+
+    shared_libs: [
+        "liboffloadhal",
+        "libipanat",
+        "libxml2",
+        "libnfnetlink",
+        "libnetfilter_conntrack",
+        "liblog",
+        "libcutils",
+        "libdl",
+        "libbinder_ndk",
+        "libutils",
+        "android.hardware.tetheroffload-V1-ndk",
+    ],
+}
+
+//###############################################################################
+
+prebuilt_etc {
+    name: "IPACM_cfg.xml",
+
+    vendor: true,
+    owner: "ipacm",
+    src: "src/IPACM_cfg.xml",
+
+}
+
+prebuilt_etc {
+    name: "IPACM_Filter_cfg.xml",
+
+    vendor: true,
+    owner: "ipacm",
+    src: "src/IPACM_Filter_cfg.xml",
+
+}
+
+cc_fuzz {
+    name: "aidl_fuzzer_ipacm",
+
+    local_include_dirs: ["src"] + ["inc"],
+    header_libs: ["device_kernel_headers"]+["qti_kernel_headers",
+	"libutils_headers", "libcutils_headers"]+["qti_ipa_kernel_headers"],
+
+    cflags: ["-v"] + ["-DFEATURE_IPA_ANDROID"] + ["-DFEATURE_IPACM_RESTART"] + [
+        "-DFEATURE_IPACM_AIDL",
+	    "-DDEBUG",
+        "-Wall",
+        "-Werror",
+        "-Wno-error=macro-redefined",
+    ],
+
+    srcs: [
+        "src/IPACM_AidlFuzzer.cpp",
+        "src/IPACM_EvtDispatcher.cpp",
+        "src/IPACM_Config.cpp",
+        "src/IPACM_CmdQueue.cpp",
+        "src/IPACM_Filtering.cpp",
+        "src/IPACM_Routing.cpp",
+        "src/IPACM_Header.cpp",
+        "src/IPACM_Lan.cpp",
+        "src/IPACM_Iface.cpp",
+        "src/IPACM_Wlan.cpp",
+        "src/IPACM_Wan.cpp",
+        "src/IPACM_IfaceManager.cpp",
+        "src/IPACM_Neighbor.cpp",
+        "src/IPACM_Netlink.cpp",
+        "src/IPACM_Xml.cpp",
+        "src/IPACM_Conntrack_NATApp.cpp",
+        "src/IPACM_ConntrackClient.cpp",
+        "src/IPACM_ConntrackListener.cpp",
+        "src/IPACM_Log.cpp",
+        "src/IPACM_OffloadManager.cpp",
+        "src/IPACM_LanToLan.cpp",
+    ],
+
+    vendor: true,
+
+    shared_libs: [
+        "liboffloadhal",
+        "libipanat",
+        "libxml2",
+        "libnfnetlink",
+        "libnetfilter_conntrack",
+        "liblog",
+        "libcutils",
+        "libdl",
+        "libbinder_ndk",
+        "libutils",
+        "android.hardware.tetheroffload-V1-ndk",
+        "libbinder",
+    ],
+
+    static_libs: [
+        "libbinder_random_parcel",
+    ],
+}

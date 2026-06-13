@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+#include "sun-audio-mtp-qmp.dtsi"
+
+&lpass_bt_swr {
+	status = "disabled";
+};
+
+&sun_snd {
+	qcom,model = "sun-mtp-wsa883x_qmp-snd-card";
+	qcom,msm_audio_ssr_devs = <&audio_gpr>, <&lpi_tlmm>,
+				<&lpass_cdc>;
+};
+

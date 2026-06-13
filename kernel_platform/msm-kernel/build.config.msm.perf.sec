@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: GPL-2.0
+# COPYRIGHT(C) 2024 Samsung Electronics Co., Ltd. All Right Reserved.
+
+if [ -f ${ROOT_DIR}/${KERNEL_DIR}/build.config.sec_env ]; then
+	. ${ROOT_DIR}/${KERNEL_DIR}/build.config.sec_env
+fi
+
+SEC_DEFCONFIG_FILE=${KERNEL_DIR}/arch/${ARCH}/configs/oem/${MSM_ARCH}_sec.config
+SEC_VARIANT_DEFCONFIG_FILE=${KERNEL_DIR}/arch/${ARCH}/configs/oem/${MSM_ARCH}_sec_${TARGET_BUILD_VARIANT}.config
+
+function build_defconfig_sec_fragments() {
+	apply_defconfig_fragment ${SEC_DEFCONFIG_FILE} vendor/${MSM_ARCH}-perf_defconfig
+
+	if [ -n "${TARGET_BUILD_VARIANT}" ] && [ "${TARGET_BUILD_VARIANT}" != "user" ]; then
+		apply_defconfig_fragment ${SEC_VARIANT_DEFCONFIG_FILE} vendor/${MSM_ARCH}-perf_defconfig
+	fi
+}
+build_defconfig_sec_fragments
+
+function apply_to_dot_config() {
+	${KERNEL_DIR}/scripts/config --file ${OUT_DIR}/.config $1 $2
+}
+
+function update_out_dir_dot_config() {
+	if [ ${SEC_FACTORY_BUILD} == "true" ]; then
+		apply_to_dot_config -e SEC_FACTORY
+	else
+		apply_to_dot_config -d SEC_FACTORY
+	fi
+
+	if [ ${SEC_PRODUCT_SHIP} == "true" ]; then
+		apply_to_dot_config -e SAMSUNG_PRODUCT_SHIP
+	else
+		apply_to_dot_config -d SAMSUNG_PRODUCT_SHIP
+	fi
+}
+append_cmd POST_DEFCONFIG_CMDS "update_out_dir_dot_config"

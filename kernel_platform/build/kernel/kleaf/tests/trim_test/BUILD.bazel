@@ -1,0 +1,27 @@
+# Copyright (C) 2023 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""Tests configurations related to trimming."""
+
+load(":notrim_transition_test.bzl", "notrim_transition_test")
+load(":trim_attr_test.bzl", "trim_attr_test")
+
+notrim_transition_test(name = "notrim_transition_test")
+
+trim_attr_test(name = "trim_attr_test")
+
+test_suite(
+    name = "trim_test",
+    tests = None,  # all tests
+)

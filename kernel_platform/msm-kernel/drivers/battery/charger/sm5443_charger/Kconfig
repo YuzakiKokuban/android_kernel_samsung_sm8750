@@ -1,0 +1,9 @@
+config CHARGER_SM5443
+	tristate "SM5443 charger driver"
+	default n
+	depends on DIRECT_CHARGING
+	help
+	  Say Y or M here,
+	  to enable support for the SM5443 charger.
+	  This is 2:1 switched capacitor direct charger.
+	  To compile the driver as a module, choose M here.

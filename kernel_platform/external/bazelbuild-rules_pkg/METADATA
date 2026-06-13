@@ -1,0 +1,19 @@
+# This project was upgraded with external_updater.
+# Usage: tools/external_updater/updater.sh update external/bazelbuild-rules_pkg
+# For more info, check https://cs.android.com/android/platform/superproject/+/main:tools/external_updater/README.md
+
+name: "rules_pkg"
+description: "Bazel package building"
+third_party {
+  license_type: NOTICE
+  last_upgrade_date {
+    year: 2024
+    month: 4
+    day: 4
+  }
+  identifier {
+    type: "Git"
+    value: "https://github.com/bazelbuild/rules_pkg"
+    version: "0.10.1"
+  }
+}

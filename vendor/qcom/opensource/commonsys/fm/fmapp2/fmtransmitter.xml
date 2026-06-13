@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (c) 2009, The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above copyright
+ *      notice, this list of conditions and the following disclaimer in the
+ *      documentation and/or other materials provided with the distribution.
+ *    * Neither the name of The Linux Foundation nor
+ *      the names of its contributors may be used to endorse or promote
+ *      products derived from this software without specific prior written
+ *      permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<!--
+		This LinearLayout contains Station Information display and the
+		function buttons
+	-->
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:orientation="horizontal">
+
+		<LinearLayout android:background="@drawable/station_border"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:orientation="vertical"
+			android:gravity="top|fill_vertical">
+
+			<RelativeLayout android:id="@+id/station_layout"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent">
+
+				<!-- This included layout contains Station Information to display -->
+				<LinearLayout android:id="@+id/stationinfo_layout"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="5px"
+					android:layout_marginLeft="5px"
+					android:layout_marginRight="5px"
+					android:orientation="vertical"
+					android:gravity="fill_vertical">
+
+					<LinearLayout android:id="@+id/station_frequency_row"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:orientation="vertical"
+						android:paddingTop="25px"
+						android:paddingBottom="25px"
+						android:gravity="fill_vertical|center">
+
+						<TextView android:id="@+id/transmit_msg_tv"
+							android:textAppearance="?android:attr/textAppearanceSmall"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textSize="15px"
+							android:layout_centerHorizontal="true"
+							android:layout_alignWithParentIfMissing="true"
+							android:text="@string/transmit_msg_string" />
+
+						<TextView android:id="@+id/prog_frequency_tv"
+							android:textAppearance="?android:attr/textAppearanceLarge"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_centerHorizontal="true"
+							android:layout_alignWithParentIfMissing="true"
+							android:layout_alignParentTop="true"
+							android:layout_alignParentLeft="true"
+							android:textSize="56px"
+							android:text="@string/frequency_string" />
+					</LinearLayout>
+
+					<!-- Station Radio Text information display -->
+					<TextView android:id="@+id/radio_text_tv"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:textAppearance="?android:attr/textAppearanceMedium"
+						android:textSize="16sp"
+						android:singleLine="true"
+						android:textStyle="bold"
+						android:paddingBottom="2px"
+						android:paddingLeft="5px"
+						android:paddingRight="5px"
+						android:gravity="center_horizontal"
+						android:text="@string/radio_text_string" />
+					<!-- android:gravity="center_horizontal" -->
+				</LinearLayout>
+
+				<ImageView android:id="@+id/btn_back"
+				    android:clickable="true"
+					android:focusable="true"
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:paddingLeft="10px"
+					android:paddingRight="2px"
+					android:layout_alignParentLeft="true"
+					android:layout_centerVertical="true"
+					android:visibility="visible"
+					android:src="@drawable/btn_arrow_left" />
+
+				<ImageView android:id="@+id/btn_forward"
+					android:clickable="true"
+					android:focusable="true"
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:paddingLeft="2px"
+					android:paddingRight="10px"
+					android:layout_alignParentRight="true"
+					android:layout_centerVertical="true"
+					android:visibility="visible"
+					android:src="@drawable/btn_arrow_right" />
+
+			</RelativeLayout>
+		</LinearLayout>
+		<LinearLayout android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_gravity="center"
+			android:layout_marginLeft="5px"
+			android:layout_marginRight="5px"
+			android:layout_marginBottom="2px">
+			<!-- On-Off button -->
+			<ImageButton android:id="@+id/btn_onoff"
+				android:layout_width="75px"
+				android:layout_height="75px"
+				android:src="@drawable/ic_btn_onoff"
+				android:layout_marginTop="15px"
+				android:layout_marginBottom="15px" />
+		</LinearLayout>
+
+	</LinearLayout>
+     <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#ffffffff" />
+
+	<!--
+		Layout contains the Next/Previous Presets and Tune buttons and status
+		msg text
+	-->
+     <LinearLayout android:id="@+id/presets_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+    		android:layout_weight="0"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dip"
+            android:layout_marginBottom="10dip"
+            android:gravity="center_horizontal">
+
+         <Button android:id="@+id/presets_button_1"
+         android:text="@string/default_station"
+         android:layout_marginLeft="20dip"
+         android:layout_marginRight="20dip"
+         android:textSize="24sp"
+         android:singleLine="true"
+         android:layout_width="110dip"
+         android:layout_height="65dip" />
+
+         <Button android:id="@+id/presets_button_2"
+             android:text="@string/default_station"
+             android:layout_marginRight="20dip"
+             android:textSize="24sp"
+             android:singleLine="true"
+             android:layout_width="110dip"
+             android:layout_height="65dip" />
+
+         <Button android:id="@+id/presets_button_3"
+         android:text="@string/default_station"
+         android:layout_marginRight="20dip"
+             android:textSize="24sp"
+             android:singleLine="true"
+             android:layout_width="110dip"
+             android:layout_height="65dip" />
+
+         <Button android:id="@+id/presets_button_4"
+             android:text="@string/default_blank"
+             android:layout_marginRight="20dip"
+             android:textSize="24sp"
+             android:singleLine="true"
+             android:layout_width="110dip"
+             android:layout_height="65dip" />
+
+         <Button android:id="@+id/presets_button_5"
+             android:text="@string/default_blank"
+             android:layout_marginRight="20dip"
+             android:textSize="24sp"
+             android:singleLine="true"
+             android:layout_width="110dip"
+             android:layout_height="65dip" />
+
+            <Button android:id="@+id/presets_button_6"
+                android:text="@string/default_blank"
+                android:layout_marginRight="20dip"
+                android:textSize="24sp"
+                android:singleLine="true"
+                android:layout_width="110dip"
+                android:layout_height="65dip"/>
+
+        </LinearLayout>
+
+
+</LinearLayout>

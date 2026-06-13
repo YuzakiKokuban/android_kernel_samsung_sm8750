@@ -1,0 +1,101 @@
+# @file Kconfig
+# @brief Kconfig for MST drivers
+# Copyright (c) 2015-2019, Samsung Electronics Corporation. All rights reserved.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 and
+# only version 2 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details. 
+
+config MST_LDO
+	tristate "MST LDO kernel driver"
+	default n
+	help
+	This enables the MST LDO kernel driver
+
+config MST_ARCH_EXYNOS
+	bool "MST S.LSI Architecture"
+	default n
+	help
+	This enables the MST S.LSI Architecture
+
+config MST_ARCH_QCOM
+	bool "MST QCOM Architecture"
+	default n
+	help
+	This enables the MST QCOM Architecture
+
+config MST_ARCH_MTK
+	bool "MST MediaTek Architecture"
+	default n
+	help
+	This enables the MST MediaTek Architecture
+
+config MST_V2
+	bool "MST Version 2"
+	default n
+	help
+	This enables the MST V2 Code
+
+config MST_SUPPORT_GPIO
+	bool "MST uses support gpio"
+	default n
+	help
+	This enables support gpio check code
+
+config MST_NONSECURE
+	bool "MST before TrustZone bringup"
+	default n
+	help
+	This enables the MST operation in Normal kernel
+
+config MST_IF_PMIC
+	bool "MST is used in IF PMIC"
+	default n
+	help
+	This enables the MST IF PMIC function
+
+config MFC_CHARGER
+	bool "MFC IC using model"
+	default n
+	help
+	This enables the MFC IC sysfs node
+
+config MST_PCR
+	bool "support for MST PCR mode"
+	default n
+	depends on MFC_CHARGER
+	help
+	  Say Y here to enable
+	  support for MST PCR mode
+	  It is for model using MFC IC
+	  Some MFC ICs support PCR mode.
+
+config MST_VOUT_SETTING
+	bool "setting vout for MST"
+	default n
+	depends on MFC_CHARGER
+	help
+	  Say Y here to enable
+	  support for setting vout
+	  It is for model using MFC IC
+	  Some MFC ICs support PCR mode.
+
+config MST_TEEGRIS
+	bool "MST running on TEEGRIS"
+	default n
+	help
+	This enables the MST TEEGRIS function
+
+config MST_DUMMY_DRV
+	bool "MST DUMMY DRVIER for MTK"
+	default n
+	help
+	  Say y here to enable
+	  This config is for mtk devices
+	  It can distinguish the regions
+	  This enables the MST DUMMY DRIVER

@@ -1,0 +1,5 @@
+config SEC_QC_QCOM_REBOOT_REASON
+	tristate "SEC Reboot Commands - Concrete writer using qcom-reboot-reason"
+	depends on SEC_QC_RBCMD && POWER_RESET_QCOM_DOWNLOAD_MODE && POWER_RESET_QCOM_REBOOT_REASON
+	help
+	  TODO: help is not ready.

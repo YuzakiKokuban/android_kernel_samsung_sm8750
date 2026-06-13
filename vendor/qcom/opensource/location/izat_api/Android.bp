@@ -1,0 +1,7 @@
+
+cc_library_headers {
+
+    name: "izat_remote_api_headers",
+    vendor: true,
+    export_include_dirs: ["."],
+}

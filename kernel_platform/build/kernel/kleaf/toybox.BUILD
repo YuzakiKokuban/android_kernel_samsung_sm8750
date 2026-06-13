@@ -1,0 +1,108 @@
+# Copyright (C) 2024 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+cc_binary(
+    name = "toybox",
+    srcs = glob(
+        [
+            "**/*.h",
+            "lib/*.c",
+        ],
+    ) + [
+        "main.c",
+        "toys/lsb/gzip.c",
+        "toys/lsb/hostname.c",
+        "toys/lsb/md5sum.c",
+        "toys/lsb/mktemp.c",
+        "toys/lsb/mount.c",
+        "toys/lsb/seq.c",
+        "toys/lsb/umount.c",
+        "toys/net/microcom.c",
+        "toys/other/dos2unix.c",
+        "toys/other/flock.c",
+        "toys/other/getopt.c",
+        "toys/other/nsenter.c",
+        "toys/other/readlink.c",
+        "toys/other/setsid.c",
+        "toys/other/stat.c",
+        "toys/other/taskset.c",
+        "toys/other/timeout.c",
+        "toys/other/truncate.c",
+        "toys/other/which.c",
+        "toys/other/xxd.c",
+        "toys/other/yes.c",
+        "toys/pending/diff.c",
+        "toys/pending/expr.c",
+        "toys/pending/tr.c",
+        "toys/posix/basename.c",
+        "toys/posix/cat.c",
+        "toys/posix/chmod.c",
+        "toys/posix/cmp.c",
+        "toys/posix/comm.c",
+        "toys/posix/cp.c",
+        "toys/posix/cpio.c",
+        "toys/posix/cut.c",
+        "toys/posix/date.c",
+        "toys/posix/dd.c",
+        "toys/posix/dirname.c",
+        "toys/posix/du.c",
+        "toys/posix/echo.c",
+        "toys/posix/env.c",
+        "toys/posix/file.c",
+        "toys/posix/find.c",
+        "toys/posix/getconf.c",
+        "toys/posix/grep.c",
+        "toys/posix/head.c",
+        "toys/posix/id.c",
+        "toys/posix/ln.c",
+        "toys/posix/ls.c",
+        "toys/posix/mkdir.c",
+        "toys/posix/nl.c",
+        "toys/posix/od.c",
+        "toys/posix/paste.c",
+        "toys/posix/patch.c",
+        "toys/posix/printf.c",
+        "toys/posix/ps.c",
+        "toys/posix/pwd.c",
+        "toys/posix/rm.c",
+        "toys/posix/rmdir.c",
+        "toys/posix/sed.c",
+        "toys/posix/sleep.c",
+        "toys/posix/sort.c",
+        "toys/posix/tail.c",
+        "toys/posix/tar.c",
+        "toys/posix/tee.c",
+        "toys/posix/test.c",
+        "toys/posix/touch.c",
+        "toys/posix/true.c",
+        "toys/posix/uname.c",
+        "toys/posix/uniq.c",
+        "toys/posix/wc.c",
+        "toys/posix/xargs.c",
+    ],
+    copts = [
+        "-O3",
+        "-Wno-string-plus-int",
+        "-funsigned-char",
+        "-ffunction-sections",
+        "-fdata-sections",
+        '-DTOYBOX_VENDOR=\\"-kleaf\\"',
+    ],
+    includes = ["android/linux"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@//prebuilts/kernel-build-tools:linux_x86_libcrypto",
+        "@zlib",
+    ],
+)

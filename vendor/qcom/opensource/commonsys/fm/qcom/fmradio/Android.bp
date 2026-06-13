@@ -1,0 +1,11 @@
+java_defaults {
+    name: "qcom.fmradio_defaults",
+    jni_libs: ["libqcomfm_jni"],
+}
+
+java_library {
+    name: "qcom.fmradio",
+    defaults: ["qcom.fmradio_defaults"],
+    installable: true,
+    srcs: ["**/*.java"],
+}

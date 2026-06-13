@@ -1,0 +1,7 @@
+# modules.vendor_blocklist.kunit
+#
+# During LEGO build process, contents are occupied to this file.
+# Then, these will be copied to modules.blocklist
+
+blocklist kunit_manager.ko
+blocklist kunit_notifier.ko

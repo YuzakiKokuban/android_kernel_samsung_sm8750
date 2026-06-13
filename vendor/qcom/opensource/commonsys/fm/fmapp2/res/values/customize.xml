@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (c) 2014, The Linux Foundation. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above
+      copyright notice, this list of conditions and the following
+      disclaimer in the documentation and/or other materials provided
+      with the distribution.
+    * Neither the name of The Linux Foundation nor the names of its
+      contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<resources>
+
+    <!-- enabled the headset button function to seek next station or not,default value is false -->
+    <bool name="def_headset_next_enabled">false</bool>
+
+    <!--
+        customize the the country for fm,
+        default value is false,true is for INDIA
+    -->
+    <bool name="def_fm_country_location_enabled">false</bool>
+
+    <!--
+        customize the the special carrier for fm,
+        default value is false,true is for Micromax
+    -->
+    <bool name="def_fm_special_carrier_enabled">false</bool>
+
+    <!--
+        customize the output list,true is stereo only, false is stereo and mono,
+            default value is false
+    -->
+    <bool name="def_only_stereo_enabled">false</bool>
+
+    <!-- enabled the name format of recordings files or not, default value is false -->
+    <bool name="def_save_name_format_enabled">false</bool>
+
+    <!-- the prefix of recordings files name, file name like this "FM-yyyy-MM-dd-HH-mm-ss.3gpp" -->
+    <string name="def_save_name_prefix" translatable="false">FM</string>
+
+    <!-- the suffix of recordings files, default value is ".3gpp" -->
+    <string name="def_save_name_suffix" translatable="false">.3gpp</string>
+
+    <!-- the name format of recordings files -->
+    <string name="def_save_name_format" translatable="false">yyyy-MM-dd-HH-mm-ss</string>
+
+    <!-- the save path of recordings files -->
+    <string name="def_fmRecord_savePath" translatable="false"></string>
+
+</resources>

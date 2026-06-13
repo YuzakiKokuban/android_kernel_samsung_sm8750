@@ -1,0 +1,19 @@
+# This project was upgraded with external_updater.
+# Usage: tools/external_updater/updater.sh update external/bazelbuild-rules_cc
+# For more info, check https://cs.android.com/android/platform/superproject/+/main:tools/external_updater/README.md
+
+name: "bazelbuild-rules_cc"
+description: "A repository of Starlark implementation of C++ rules in Bazel"
+third_party {
+  license_type: NOTICE
+  last_upgrade_date {
+    year: 2024
+    month: 5
+    day: 9
+  }
+  identifier {
+    type: "Git"
+    value: "https://github.com/bazelbuild/rules_cc"
+    version: "f88663dc502aacb6a6f377030d0652309412c8a9"
+  }
+}

@@ -1,0 +1,21 @@
+{
+    "homepage": "https://github.com/fmeum/rules_jni",
+    "maintainers": [
+        {
+            "email": "fabian@meumertzhe.im",
+            "github": "fmeum",
+            "name": "Fabian Meumertzheim"
+        }
+    ],
+    "versions": [
+        "0.3.1",
+        "0.4.0",
+        "0.6.0",
+        "0.6.1",
+        "0.7.0",
+        "0.8.0",
+        "0.9.1",
+        "0.10.1"
+    ],
+    "yanked_versions": {}
+}

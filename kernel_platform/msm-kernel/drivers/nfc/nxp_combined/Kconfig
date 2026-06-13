@@ -1,0 +1,146 @@
+#
+# near field communication configuration
+#
+config SAMSUNG_NFC
+	tristate "Samsung NFC driver"
+	default n
+	help
+	  Say Y here if you want to build support for NFC (Near field
+	  communication) devices.
+	  To compile this support as a module, choose M here: the module will
+	  be called nfc.
+
+config NFC_NXP_COMBINED
+	bool "NXP COMBINED driver Feature"
+	default n
+	help
+	  NXP Near Field Communication controller support.
+	  If this feature is enabled, sn2xx driver can support various ICs
+	  such as PN557, sn1xx and sn2xx.
+	  For one binary, this driver should be used.
+
+config NFC_SN2XX
+	bool "NXP SN2XX Feature"
+	default n
+	help
+	  NXP SN2XX Near Field Communication controller support
+	  This option enables device driver support for the NFC.
+	  It is used by many services. NFC is fully controlled using I2C
+	  to communicate the AP chip.
+
+config NFC_SN2XX_ESE_SUPPORT
+	tristate "Nxp secure element protocol driver (SPI) devices"
+	depends on SPI
+	help
+	  This enables the Secure Element driver for SNxxx based devices.
+	  If unsure, say N.
+	  This selects Secure Element support.
+	  If you want NFC support, you should say Y here and
+	  also to your specific host controller driver.
+
+config ESE_USE_TZ_API
+        bool "use tz api"
+        depends on NFC_SN2XX_ESE_SUPPORT
+        default n
+        help
+          Enable when using TZ API.
+	  You should select this feature if your NFC product
+          uses S.LSI AP and TZ API.
+	  Say Y here to compile support for TZ API.
+
+config SEC_NFC_LOGGER
+        bool "NFC logger"
+        default n
+        help
+          Enable NFC log.
+          NFC log will be recorded at proc folder.
+          but will not included at dumpstate log.
+          so need to copy this file to log folder.
+
+config NFC_LOGGER_LOWMEM
+       bool "NFC logger low memory"
+       default n
+       help
+         Reduces NFC log buffer size.
+         This option reduces the size of the nfc log buffer in order to save memory on low-memory devices.
+         By reducing its size, we can free up memory for other purposes,
+         but it may also result in some log messages being lost if the buffer fills up quickly.
+
+config SEC_NFC_WAKELOCK_METHOD
+        int "nfc wakelock method"
+        default 0
+        help
+          Different functions must be used depending on the kernel version
+          for wakelock initialization.
+          0 - auto selection
+          1 - wakeup_source_init
+          2 - wakeup_source_register
+
+config SEC_NFC_LOGGER_ADD_ACPM_LOG
+        bool "NFC logger: add acpm log"
+        default n
+        depends on SEC_NFC_LOGGER
+        help
+          add acpm log.
+          this feature is for particualr AP.
+          rtc reg addr is needed to compare time
+
+config SEC_NFC_LOGGER_RTC_REG_ADDR
+        hex "NFC logger: add acpm log"
+        default 0x0
+        depends on SEC_NFC_LOGGER_ADD_ACPM_LOG
+        help
+          RTC time is to compare between acpm and kernel.
+          address value is hex.
+
+config MAKE_NODE_USING_PLATFORM_DEVICE
+        bool "eSE platform driver"
+        default n
+        help
+          Using eSE platform driver.
+          Sometimes eSE node is created after permission setting
+          cause of SPI driver dependency.
+          So, use platform driver to make node first.
+
+config SEC_STAR
+        tristate "LSI star platform"
+        default n
+        help
+          LSI star platform
+          This driver provides support for LSI star platform.
+
+config STAR_MEMORY_LEAK
+        bool "memory leak test in sec-star"
+        help
+          memory leak test in sec-star.
+          All allocated memory are listed in array.
+
+config STAR_K250A
+        bool "S.LSI k250a driver"
+        help
+          S.LSI k250a driver except ISO7816 protocol layer
+          This driver provides support for S.LSI k250a product.
+
+config NFC_QTI_I2C
+        tristate "QTI NCI based NFC I2C Driver for SNxxx"
+        depends on I2C
+        help
+          This enables the NFC driver for SNxxx based devices.
+          This is for I2C connected version. NCI protocol logic
+          resides in the usermode and it has no other NFC dependencies.
+
+          If unsure, say N.
+
+config CLK_ACPM_INIT
+	bool "ACPM INIT"
+	default n
+	help
+	  ACPM INIT must be called to use CLK3 in S5910.
+
+config SEC_NFC_EINT_EXYNOS
+        bool "enable eint mode for nfc clk"
+        help
+          This feature enable eint mode for nfc clk
+          Need to trigger clk by clk req
+          It is necessary for slsi ap if clk_req is assigned to no dedicated gpio.
+

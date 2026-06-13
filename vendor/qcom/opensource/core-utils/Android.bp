@@ -1,0 +1,45 @@
+soong_config_module_type {
+    name: "qssi_vs_vendor_cc_base",
+    module_type: "cc_defaults",
+    config_namespace: "qssi_vs_vendor",
+    variables: ["qssi_or_vendor"],
+    properties: ["header_libs",
+                 "cflags",
+                 "ldflags",
+                 "srcs",
+                 "shared_libs",
+                 "static_libs"
+                ],
+}
+
+soong_config_string_variable {
+    name: "qssi_or_vendor",
+    values: ["qssi", "vendor"],
+}
+
+//================Usage Example===================//
+
+//in your Android.bp file, you must import this file so that your
+//Android.bp domain is aware of the module_type as follows
+
+//soong_config_module_type_import {
+//    from: "vendor/qcom/opensource/core-utils/Android.bp",
+//    module_types: ["qssi_vs_vendor_cc_base"],
+//}
+
+
+//After importing it, your subsequent modules can use it as follows
+
+//qssi_vs_vendor_cc_base {
+//    name: "<your module name>_defaults",
+//    soong_config_variables: {
+//        qssi_or_vendor: {
+//            vendor : {
+//                header_libs: ["some header only for vendor"], //can also add all the properties listed in the module type
+//            },
+//            qssi : {
+//                header_libs: ["some header only for qssi"],
+//            },
+//        },
+//    },
+//}

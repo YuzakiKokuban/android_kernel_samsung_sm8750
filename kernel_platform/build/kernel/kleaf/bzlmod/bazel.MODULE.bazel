@@ -1,0 +1,165 @@
+# Copyright (C) 2024 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""Kleaf: Build Android kernels with Bazel."""
+
+module(
+    name = "kleaf",
+    version = "0.0.0",
+)
+
+new_kleaf_local_repository = use_repo_rule(
+    "//build/kernel/kleaf/impl:local_repository.bzl",
+    "new_kleaf_local_repository",
+)
+
+new_kleaf_local_repository(
+    name = "libcap",
+    build_file = "build/kernel/kleaf/libcap.BUILD",
+    path = "external/libcap",
+)
+
+new_kleaf_local_repository(
+    name = "libcap_ng",
+    build_file = "build/kernel/kleaf/libcap_ng.BUILD",
+    path = "external/libcap-ng",
+)
+
+new_kleaf_local_repository(
+    name = "lz4",
+    build_file = "build/kernel/kleaf/lz4.BUILD",
+    path = "external/lz4",
+)
+
+new_kleaf_local_repository(
+    name = "toybox",
+    build_file = "build/kernel/kleaf/toybox.BUILD",
+    path = "external/toybox",
+)
+
+new_kleaf_local_repository(
+    name = "zlib",
+    build_file = "build/kernel/kleaf/zlib.BUILD",
+    path = "external/zlib",
+)
+
+new_kleaf_local_repository(
+    name = "zopfli",
+    build_file = "build/kernel/kleaf/zopfli.BUILD",
+    path = "external/zopfli",
+)
+
+new_kleaf_local_repository(
+    name = "pigz",
+    build_file = "build/kernel/kleaf/pigz.BUILD",
+    path = "external/pigz",
+)
+
+new_kleaf_local_repository(
+    name = "prebuilt_ndk",
+    build_file = "build/kernel/kleaf/ndk.BUILD",
+    path = "prebuilts/ndk-r26",
+)
+
+new_kleaf_local_repository(
+    name = "dtc",
+    build_file = "msm-kernel/BUILD.dtc",
+    path = "external/dtc",
+)
+
+kernel_toolchain_ext = use_extension("//build/kernel/kleaf:kernel_toolchain_ext.bzl", "kernel_toolchain_ext")
+use_repo(kernel_toolchain_ext, "kernel_toolchain_info")
+use_repo(kernel_toolchain_ext, "kleaf_clang_toolchain")
+use_repo(kernel_toolchain_ext, "kleaf_host_tools")
+
+register_toolchains(
+    "@kleaf_clang_toolchain//:all",
+    "//build/kernel:hermetic_tools_toolchain",
+    "//prebuilts/build-tools:py_toolchain",
+)
+
+# TODO(b/276493276): Resolve the issue of these versions getting outdated.
+bazel_dep(
+    name = "abseil-py",
+    version = "1.4.0",
+    repo_name = "io_abseil_py",
+)
+bazel_dep(
+    name = "bazel_skylib",
+    version = "1.5.0",
+)
+bazel_dep(
+    name = "platforms",
+    version = "0.0.10",
+)
+bazel_dep(
+    name = "rules_cc",
+    version = "0.0.4",
+)
+bazel_dep(
+    name = "rules_pkg",
+    version = "0.10.1",
+)
+
+bazel_dep(
+    name = "stardoc",
+    version = "0.6.2",
+    dev_dependency = True,
+    repo_name = "io_bazel_stardoc",
+)
+
+local_path_override(
+    module_name = "abseil-py",
+    path = "external/python/absl-py",
+)
+
+local_path_override(
+    module_name = "apple_support",
+    path = "external/bazelbuild-apple_support",
+)
+
+local_path_override(
+    module_name = "bazel_skylib",
+    path = "external/bazel-skylib",
+)
+
+local_path_override(
+    module_name = "platforms",
+    path = "external/bazelbuild-platforms",
+)
+
+local_path_override(
+    module_name = "rules_cc",
+    path = "external/bazelbuild-rules_cc",
+)
+
+local_path_override(
+    module_name = "rules_java",
+    path = "external/bazelbuild-rules_java",
+)
+
+local_path_override(
+    module_name = "rules_license",
+    path = "external/bazelbuild-rules_license",
+)
+
+local_path_override(
+    module_name = "rules_pkg",
+    path = "external/bazelbuild-rules_pkg",
+)
+
+local_path_override(
+    module_name = "rules_python",
+    path = "external/bazelbuild-rules_python",
+)

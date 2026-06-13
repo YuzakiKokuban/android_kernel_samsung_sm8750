@@ -1,0 +1,14 @@
+cc_binary {
+     name: "usbudev",
+     init_rc: ["usbudev.rc"],
+     srcs: ["udev_daemon.cpp"],
+     system_ext_specific: true,
+     shared_libs: [
+        "libcutils",
+        "libutils",
+        "liblog",
+    ],
+    header_libs: [
+        "libcutils_headers",
+    ],
+}

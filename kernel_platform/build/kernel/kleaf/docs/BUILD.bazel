@@ -1,0 +1,86 @@
+# Copyright (C) 2023 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""Kleaf API Docs.
+
+To update:
+
+```
+tools/bazel run --config=internet //build/kernel/kleaf/docs:docs_dist
+```
+"""
+
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@io_bazel_stardoc//stardoc:stardoc.bzl", "stardoc")
+load("//build/bazel_common_rules/dist:dist.bzl", "copy_to_dist_dir")
+
+_SRCS = [
+    "//build/kernel/kleaf:common_kernels.bzl",
+    "//build/kernel/kleaf:constants.bzl",
+    "//build/kernel/kleaf:directory_with_structure.bzl",
+    "//build/kernel/kleaf:fail.bzl",
+    "//build/kernel/kleaf:hermetic_tools.bzl",
+    "//build/kernel/kleaf:kernel.bzl",
+    "//build/kernel/kleaf:kernel_prebuilt_ext.bzl",
+    "//build/kernel/kleaf:key_value_repo.bzl",
+    "//build/kernel/kleaf:print_debug.bzl",
+    "//build/kernel/kleaf:update_source_file.bzl",
+]
+
+bzl_library(
+    name = "deps",
+    srcs = [
+        "//build/bazel_common_rules/dist",
+        "//build/bazel_common_rules/exec",
+        "//build/bazel_common_rules/workspace",
+        "//build/kernel/kleaf/artifact_tests",
+        "//build/kernel/kleaf/impl",
+        "//prebuilts/clang/host/linux-x86/kleaf:clang_toolchain_repository",
+        "@bazel_skylib//:workspace",
+        "@bazel_skylib//lib:dicts",
+        "@bazel_skylib//lib:paths",
+        "@bazel_skylib//lib:selects",
+        "@bazel_skylib//lib:unittest",
+        "@bazel_skylib//rules:common_settings",
+        "@kernel_toolchain_info//:dict",
+    ] + _SRCS,
+)
+
+[
+    stardoc(
+        name = package_relative_label(src).name,
+        out = package_relative_label(src).name.removesuffix(".bzl") + ".md",
+        input = src,
+        deps = [":deps"],
+    )
+    for src in _SRCS
+]
+
+filegroup(
+    name = "docs",
+    srcs = [package_relative_label(src).name for src in _SRCS],
+    visibility = ["//build/kernel/kleaf:__subpackages__"],
+)
+
+copy_to_dist_dir(
+    name = "docs_dist",
+    data = [":docs"],
+    dist_dir = package_name() + "/api_reference",
+    flat = True,
+    mode_overrides = {
+        "*": 644,
+    },
+    visibility = ["//build/kernel/kleaf:__subpackages__"],
+    wipe_dist_dir = True,
+)

@@ -1,0 +1,600 @@
+# Copyright 2023 The Bazel Authors. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+---
+buildifier:
+  # keep these arguments in sync with .pre-commit-config.yaml
+  # Use a specific version to avoid skew issues when new versions are released.
+  version: 6.1.0
+  warnings: "all"
+.minimum_supported_version: &minimum_supported_version
+  # For testing minimum supported version.
+  # NOTE: Keep in sync with //:version.bzl
+  bazel: 5.4.0
+.minimum_supported_bzlmod_version: &minimum_supported_bzlmod_version
+  bazel: 6.0.0 # test minimum supported version of bazel for bzlmod tests
+.reusable_config: &reusable_config
+  build_targets:
+    - "--"
+    - "..."
+    # As a regression test for #225, check that wheel targets still build when
+    # their package path is qualified with the repo name.
+    - "@rules_python//examples/wheel/..."
+  build_flags:
+    - "--keep_going"
+  test_targets:
+    - "--"
+    - "..."
+  test_flags:
+    - "--test_tag_filters=-integration-test"
+.common_bzlmod_flags: &common_bzlmod_flags
+  test_flags:
+    - "--experimental_enable_bzlmod"
+  build_flags:
+    - "--experimental_enable_bzlmod"
+.reusable_build_test_all: &reusable_build_test_all
+  build_targets: ["..."]
+  test_targets: ["..."]
+.coverage_targets_example_bzlmod: &coverage_targets_example_bzlmod
+  coverage_targets: ["//:test"]
+.coverage_targets_example_bzlmod_build_file_generation: &coverage_targets_example_bzlmod_build_file_generation
+  coverage_targets: ["//:bzlmod_build_file_generation_test"]
+.coverage_targets_example_multi_python: &coverage_targets_example_multi_python
+  coverage_targets:
+    - //tests:my_lib_3_10_test
+    - //tests:my_lib_3_11_test
+    - //tests:my_lib_3_8_test
+    - //tests:my_lib_3_9_test
+    - //tests:my_lib_default_test
+    - //tests:version_3_10_test
+    - //tests:version_3_11_test
+    - //tests:version_3_8_test
+    - //tests:version_3_9_test
+    - //tests:version_default_test
+tasks:
+  gazelle_extension_min:
+    <<: *minimum_supported_version
+    name: Test the Gazelle extension using minimum supported Bazel version
+    platform: ubuntu2004
+    build_targets: ["//..."]
+    test_targets: ["//..."]
+    working_directory: gazelle
+  gazelle_extension:
+    name: Test the Gazelle extension
+    platform: ubuntu2004
+    build_targets: ["//..."]
+    test_targets: ["//..."]
+    working_directory: gazelle
+  gazelle_extension_bzlmod:
+    <<: *common_bzlmod_flags
+    name: Test the Gazelle extension under bzlmod
+    platform: ubuntu2004
+    build_targets: ["//..."]
+    test_targets: ["//..."]
+    working_directory: gazelle
+
+  ubuntu_min:
+    <<: *minimum_supported_version
+    <<: *reusable_config
+    name: Default test on Ubuntu using minimum supported Bazel version
+    platform: ubuntu2004
+  ubuntu:
+    <<: *reusable_config
+    name: Default test on Ubuntu
+    platform: ubuntu2004
+  debian:
+    <<: *reusable_config
+    name: Default test on Debian
+    platform: debian11
+  macos:
+    <<: *reusable_config
+    name: Default test on macOS
+    platform: macos
+  windows:
+    <<: *reusable_config
+    name: Default test on Windows
+    platform: windows
+    test_flags:
+      - "--test_tag_filters=-integration-test,-fix-windows"
+
+  rbe_min:
+    <<: *minimum_supported_version
+    <<: *reusable_config
+    name: Test on RBE using minimum supported Bazel version
+    platform: rbe_ubuntu1604
+    build_flags:
+      # BazelCI sets --action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1,
+      # which prevents cc toolchain autodetection from working correctly
+      # on Bazel 5.4 and earlier. To workaround this, manually specify the
+      # build kite cc toolchain.
+      - "--extra_toolchains=@buildkite_config//config:cc-toolchain"
+    test_flags:
+      - "--test_tag_filters=-integration-test,-acceptance-test"
+      # BazelCI sets --action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1,
+      # which prevents cc toolchain autodetection from working correctly
+      # on Bazel 5.4 and earlier. To workaround this, manually specify the
+      # build kite cc toolchain.
+      - "--extra_toolchains=@buildkite_config//config:cc-toolchain"
+  rbe:
+    <<: *reusable_config
+    name: Test on RBE
+    platform: rbe_ubuntu1604
+    test_flags:
+      - "--test_tag_filters=-integration-test,-acceptance-test"
+
+  integration_test_build_file_generation_ubuntu_minimum_supported:
+    <<: *minimum_supported_version
+    <<: *reusable_build_test_all
+    name: build_file_generation integration tests on Ubuntu using minimum supported Bazel version
+    working_directory: examples/build_file_generation
+    platform: ubuntu2004
+  integration_test_build_file_generation_ubuntu:
+    <<: *reusable_build_test_all
+    name: build_file_generation integration tests on Ubuntu
+    working_directory: examples/build_file_generation
+    platform: ubuntu2004
+  integration_test_build_file_generation_debian:
+    <<: *reusable_build_test_all
+    name: build_file_generation integration tests on Debian
+    working_directory: examples/build_file_generation
+    platform: debian11
+  integration_test_build_file_generation_macos:
+    <<: *reusable_build_test_all
+    name: build_file_generation integration tests on macOS
+    working_directory: examples/build_file_generation
+    platform: macos
+  integration_test_build_file_generation_windows:
+    <<: *reusable_build_test_all
+    name: build_file_generation integration tests on Windows
+    working_directory: examples/build_file_generation
+    platform: windows
+
+  integration_test_bzlmod_ubuntu_min:
+    <<: *minimum_supported_bzlmod_version
+    <<: *reusable_build_test_all
+    <<: *coverage_targets_example_bzlmod
+    name: bzlmod integration tests on Ubuntu using minimum supported Bazel version
+    working_directory: examples/bzlmod
+    platform: ubuntu2004
+  integration_test_bzlmod_ubuntu:
+    <<: *reusable_build_test_all
+    <<: *coverage_targets_example_bzlmod
+    name: bzlmod integration tests on Ubuntu
+    working_directory: examples/bzlmod
+    platform: ubuntu2004
+  integration_test_bzlmod_debian:
+    <<: *reusable_build_test_all
+    <<: *coverage_targets_example_bzlmod
+    name: bzlmod integration tests on Debian
+    working_directory: examples/bzlmod
+    platform: debian11
+  integration_test_bzlmod_macos:
+    <<: *reusable_build_test_all
+    <<: *coverage_targets_example_bzlmod
+    name: bzlmod integration tests on macOS
+    working_directory: examples/bzlmod
+    platform: macos
+  integration_test_bzlmod_windows:
+    <<: *reusable_build_test_all
+    # coverage is not supported on Windows
+    name: bzlmod integration tests on Windows
+    working_directory: examples/bzlmod
+    platform: windows
+
+  integration_test_bzlmod_generate_build_file_generation_ubuntu_min:
+    <<: *minimum_supported_bzlmod_version
+    <<: *reusable_build_test_all
+    <<: *coverage_targets_example_bzlmod_build_file_generation
+    name: example bzlmod build file min bazel version integration test
+    working_directory: examples/bzlmod_build_file_generation
+    platform: ubuntu2004
+  integration_test_bzlmod_generation_build_files_ubuntu:
+    <<: *reusable_build_test_all
+    <<: *coverage_targets_example_bzlmod_build_file_generation
+    name: example bzlmod build file integration test
+    working_directory: examples/bzlmod_build_file_generation
+    platform: ubuntu2004
+  integration_test_bzlmod_generation_build_files_ubuntu_run:
+    <<: *reusable_build_test_all
+    name: example bzlmod build file running gazelle and pip integration test
+    working_directory: examples/bzlmod_build_file_generation
+    platform: ubuntu2004
+    shell_commands:
+    - "bazel run //:gazelle_python_manifest.update"
+    - "bazel run //:gazelle -- update"
+  integration_test_bzlmod_build_file_generation_debian:
+    <<: *reusable_build_test_all
+    <<: *coverage_targets_example_bzlmod_build_file_generation
+    name: example bzlmod build file integration test
+    working_directory: examples/bzlmod_build_file_generation
+    platform: debian11
+  integration_test_bzlmod_build_file_generation_macos:
+    <<: *reusable_build_test_all
+    <<: *coverage_targets_example_bzlmod_build_file_generation
+    name: example bzlmod build file integration test
+    working_directory: examples/bzlmod_build_file_generation
+    platform: macos
+  integration_test_bzlmod_build_file_generation_windows:
+    <<: *reusable_build_test_all
+    # coverage is not supported on Windows
+    name: example bzlmod build file integration test
+    working_directory: examples/bzlmod_build_file_generation
+    platform: windows
+
+  integration_test_multi_python_versions_ubuntu_min:
+    <<: *minimum_supported_version
+    <<: *reusable_build_test_all
+    name: multi_python_versions integration tests on Ubuntu using minimum supported Bazel version
+    working_directory: examples/multi_python_versions
+    platform: ubuntu2004
+  integration_test_multi_python_versions_ubuntu:
+    <<: *reusable_build_test_all
+    <<: *coverage_targets_example_multi_python
+    name: multi_python_versions integration tests on Ubuntu
+    working_directory: examples/multi_python_versions
+    platform: ubuntu2004
+  integration_test_multi_python_versions_debian:
+    <<: *reusable_build_test_all
+    <<: *coverage_targets_example_multi_python
+    name: multi_python_versions integration tests on Debian
+    working_directory: examples/multi_python_versions
+    platform: debian11
+  integration_test_multi_python_versions_macos:
+    <<: *reusable_build_test_all
+    <<: *coverage_targets_example_multi_python
+    name: multi_python_versions integration tests on macOS
+    working_directory: examples/multi_python_versions
+    platform: macos
+  integration_test_multi_python_versions_windows:
+    <<: *reusable_build_test_all
+    # coverage is not supported on Windows
+    name: multi_python_versions integration tests on Windows
+    working_directory: examples/multi_python_versions
+    platform: windows
+
+  integration_test_pip_install_ubuntu_min:
+    <<: *minimum_supported_version
+    <<: *reusable_build_test_all
+    name: pip_install integration tests on Ubuntu using minimum supported Bazel version
+    working_directory: examples/pip_install
+    platform: ubuntu2004
+  integration_test_pip_install_ubuntu:
+    <<: *reusable_build_test_all
+    name: pip_install integration tests on Ubuntu
+    working_directory: examples/pip_install
+    platform: ubuntu2004
+  integration_test_pip_install_debian:
+    <<: *reusable_build_test_all
+    name: pip_install integration tests on Debian
+    working_directory: examples/pip_install
+    platform: debian11
+  integration_test_pip_install_macos:
+    <<: *reusable_build_test_all
+    name: pip_install integration tests on macOS
+    working_directory: examples/pip_install
+    platform: macos
+  integration_test_pip_install_windows:
+    <<: *reusable_build_test_all
+    name: pip_install integration tests on Windows
+    working_directory: examples/pip_install
+    platform: windows
+
+  integration_test_pip_parse_ubuntu_min:
+    <<: *minimum_supported_version
+    <<: *reusable_build_test_all
+    name: pip_parse integration tests on Ubuntu using minimum supported Bazel version
+    working_directory: examples/pip_parse
+    platform: ubuntu2004
+  integration_test_pip_parse_ubuntu:
+    <<: *reusable_build_test_all
+    name: pip_parse integration tests on Ubuntu
+    working_directory: examples/pip_parse
+    platform: ubuntu2004
+  integration_test_pip_parse_debian:
+    <<: *reusable_build_test_all
+    name: pip_parse integration tests on Debian
+    working_directory: examples/pip_parse
+    platform: debian11
+  integration_test_pip_parse_macos:
+    <<: *reusable_build_test_all
+    name: pip_parse integration tests on macOS
+    working_directory: examples/pip_parse
+    platform: macos
+  integration_test_pip_parse_windows:
+    <<: *reusable_build_test_all
+    name: pip_parse integration tests on Windows
+    working_directory: examples/pip_parse
+    platform: windows
+
+  integration_test_pip_parse_vendored_ubuntu_min:
+    <<: *minimum_supported_version
+    <<: *reusable_build_test_all
+    name: pip_parse_vendored integration tests on Ubuntu using minimum supported Bazel version
+    working_directory: examples/pip_parse_vendored
+    platform: ubuntu2004
+  integration_test_pip_parse_vendored_ubuntu:
+    <<: *reusable_build_test_all
+    name: pip_parse_vendored integration tests on Ubuntu
+    working_directory: examples/pip_parse_vendored
+    platform: ubuntu2004
+  integration_test_pip_parse_vendored_debian:
+    <<: *reusable_build_test_all
+    name: pip_parse_vendored integration tests on Debian
+    working_directory: examples/pip_parse_vendored
+    platform: debian11
+  integration_test_pip_parse_vendored_macos:
+    <<: *reusable_build_test_all
+    name: pip_parse_vendored integration tests on macOS
+    working_directory: examples/pip_parse_vendored
+    platform: macos
+  # We don't run pip_parse_vendored under Windows as the file checked in is
+  # generated from a repository rule containing OS-specific rendered paths.
+
+  integration_test_py_proto_library_ubuntu_min:
+    <<: *minimum_supported_version
+    <<: *reusable_build_test_all
+    name: py_proto_library integration tests on Ubuntu using minimum supported Bazel version
+    working_directory: examples/py_proto_library
+    platform: ubuntu2004
+  integration_test_py_proto_library_ubuntu:
+    <<: *reusable_build_test_all
+    name: py_proto_library integration tests on Ubuntu
+    working_directory: examples/py_proto_library
+    platform: ubuntu2004
+  integration_test_py_proto_library_debian:
+    <<: *reusable_build_test_all
+    name: py_proto_library integration tests on Debian
+    working_directory: examples/py_proto_library
+    platform: debian11
+  integration_test_py_proto_library_macos:
+    <<: *reusable_build_test_all
+    name: py_proto_library integration tests on macOS
+    working_directory: examples/py_proto_library
+    platform: macos
+  integration_test_py_proto_library_windows:
+    <<: *reusable_build_test_all
+    name: py_proto_library integration tests on Windows
+    working_directory: examples/py_proto_library
+    platform: windows
+
+  # Check the same using bzlmod as well
+  integration_test_py_proto_library_bzlmod_ubuntu_min:
+    <<: *minimum_supported_bzlmod_version
+    <<: *common_bzlmod_flags
+    <<: *reusable_build_test_all
+    name: py_proto_library bzlmod integration tests on Ubuntu using minimum supported Bazel version
+    working_directory: examples/py_proto_library
+    platform: ubuntu2004
+  integration_test_py_proto_library_bzlmod_ubuntu:
+    <<: *reusable_build_test_all
+    <<: *common_bzlmod_flags
+    name: py_proto_library bzlmod integration tests on Ubuntu
+    working_directory: examples/py_proto_library
+    platform: ubuntu2004
+  integration_test_py_proto_library_bzlmod_debian:
+    <<: *reusable_build_test_all
+    <<: *common_bzlmod_flags
+    name: py_proto_library bzlmod integration tests on Debian
+    working_directory: examples/py_proto_library
+    platform: debian11
+  integration_test_py_proto_library_bzlmod_macos:
+    <<: *reusable_build_test_all
+    <<: *common_bzlmod_flags
+    name: py_proto_library bzlmod integration tests on macOS
+    working_directory: examples/py_proto_library
+    platform: macos
+  integration_test_py_proto_library_bzlmod_windows:
+    <<: *reusable_build_test_all
+    <<: *common_bzlmod_flags
+    name: py_proto_library bzlmod integration tests on Windows
+    working_directory: examples/py_proto_library
+    platform: windows
+
+  integration_test_pip_repository_annotations_ubuntu_min:
+    <<: *minimum_supported_version
+    <<: *reusable_build_test_all
+    name: pip_repository_annotations integration tests on Ubuntu using minimum supported Bazel version
+    working_directory: examples/pip_repository_annotations
+    platform: ubuntu2004
+  integration_test_pip_repository_annotations_ubuntu:
+    <<: *reusable_build_test_all
+    name: pip_repository_annotations integration tests on Ubuntu
+    working_directory: examples/pip_repository_annotations
+    platform: ubuntu2004
+  integration_test_pip_repository_annotations_debian:
+    <<: *reusable_build_test_all
+    name: pip_repository_annotations integration tests on Debian
+    working_directory: examples/pip_repository_annotations
+    platform: debian11
+  integration_test_pip_repository_annotations_macos:
+    <<: *reusable_build_test_all
+    name: pip_repository_annotations integration tests on macOS
+    working_directory: examples/pip_repository_annotations
+    platform: macos
+  integration_test_pip_repository_annotations_windows:
+    <<: *reusable_build_test_all
+    name: pip_repository_annotations integration tests on Windows
+    working_directory: examples/pip_repository_annotations
+    platform: windows
+
+  integration_test_compile_pip_requirements_ubuntu_min:
+    <<: *minimum_supported_version
+    <<: *reusable_build_test_all
+    name: compile_pip_requirements integration tests on Ubuntu using minimum supported Bazel version
+    working_directory: tests/compile_pip_requirements
+    platform: ubuntu2004
+  integration_test_compile_pip_requirements_ubuntu:
+    <<: *reusable_build_test_all
+    name: compile_pip_requirements integration tests on Ubuntu
+    working_directory: tests/compile_pip_requirements
+    platform: ubuntu2004
+    shell_commands:
+    # Make a change to the locked requirements and then assert that //:requirements.update does the
+    # right thing.
+    - "echo '' > requirements_lock.txt"
+    - "! git diff --exit-code"
+    - "bazel run //:requirements.update"
+    - "git diff --exit-code"
+    # Make a change to the locked requirements and then assert that //:os_specific_requirements.update does the
+    # right thing.
+    - "echo '' > requirements_lock_linux.txt"
+    - "! git diff --exit-code"
+    - "bazel run //:os_specific_requirements.update"
+    - "git diff --exit-code"
+  integration_test_compile_pip_requirements_debian:
+    <<: *reusable_build_test_all
+    name: compile_pip_requirements integration tests on Debian
+    working_directory: tests/compile_pip_requirements
+    platform: debian11
+    shell_commands:
+    # Make a change to the locked requirements and then assert that //:requirements.update does the
+    # right thing.
+    - "echo '' > requirements_lock.txt"
+    - "! git diff --exit-code"
+    - "bazel run //:requirements.update"
+    - "git diff --exit-code"
+    # Make a change to the locked requirements and then assert that //:os_specific_requirements.update does the
+    # right thing.
+    - "echo '' > requirements_lock_linux.txt"
+    - "! git diff --exit-code"
+    - "bazel run //:os_specific_requirements.update"
+    - "git diff --exit-code"
+  integration_test_compile_pip_requirements_macos:
+    <<: *reusable_build_test_all
+    name: compile_pip_requirements integration tests on macOS
+    working_directory: tests/compile_pip_requirements
+    platform: macos
+    shell_commands:
+    # Make a change to the locked requirements and then assert that //:requirements.update does the
+    # right thing.
+    - "echo '' > requirements_lock.txt"
+    - "! git diff --exit-code"
+    - "bazel run //:requirements.update"
+    - "git diff --exit-code"
+    # Make a change to the locked requirements and then assert that //:os_specific_requirements.update does the
+    # right thing.
+    - "echo '' > requirements_lock_darwin.txt"
+    - "! git diff --exit-code"
+    - "bazel run //:os_specific_requirements.update"
+    - "git diff --exit-code"
+  integration_test_compile_pip_requirements_windows:
+    <<: *reusable_build_test_all
+    name: compile_pip_requirements integration tests on Windows
+    working_directory: tests/compile_pip_requirements
+    platform: windows
+    shell_commands:
+    # Make a change to the locked requirements and then assert that //:requirements.update does the
+    # right thing.
+    - "echo '' > requirements_lock.txt"
+    - "! git diff --exit-code"
+    - "bazel run //:requirements.update"
+    - "git diff --exit-code"
+    # Make a change to the locked requirements and then assert that //:os_specific_requirements.update does the
+    # right thing.
+    - "echo '' > requirements_lock_windows.txt"
+    - "! git diff --exit-code"
+    - "bazel run //:os_specific_requirements.update"
+    - "git diff --exit-code"
+
+  integration_test_pip_repository_entry_points_ubuntu_min:
+    <<: *minimum_supported_version
+    <<: *reusable_build_test_all
+    name: pip_repository_entry_points integration tests on Ubuntu using minimum supported Bazel version
+    working_directory: tests/pip_repository_entry_points
+    platform: ubuntu2004
+  integration_test_pip_repository_entry_points_ubuntu:
+    <<: *reusable_build_test_all
+    name: pip_repository_entry_points integration tests on Ubuntu
+    working_directory: tests/pip_repository_entry_points
+    platform: ubuntu2004
+  integration_test_pip_repository_entry_points_debian:
+    <<: *reusable_build_test_all
+    name: pip_repository_entry_points integration tests on Debian
+    working_directory: tests/pip_repository_entry_points
+    platform: debian11
+  integration_test_pip_repository_entry_points_macos:
+    <<: *reusable_build_test_all
+    name: pip_repository_entry_points integration tests on macOS
+    working_directory: tests/pip_repository_entry_points
+    platform: macos
+  integration_test_pip_repository_entry_points_windows:
+    <<: *reusable_build_test_all
+    name: pip_repository_entry_points integration tests on Windows
+    working_directory: tests/pip_repository_entry_points
+    platform: windows
+
+  integration_test_ignore_root_user_error_ubuntu_min:
+    <<: *minimum_supported_version
+    <<: *reusable_build_test_all
+    name: ignore_root_user_error integration tests on Ubuntu using minimum supported Bazel version
+    working_directory: tests/ignore_root_user_error
+    platform: ubuntu2004
+  integration_test_ignore_root_user_error_ubuntu:
+    <<: *reusable_build_test_all
+    name: ignore_root_user_error integration tests on Ubuntu
+    working_directory: tests/ignore_root_user_error
+    platform: ubuntu2004
+  integration_test_ignore_root_user_error_debian:
+    <<: *reusable_build_test_all
+    name: ignore_root_user_error integration tests on Debian
+    working_directory: tests/ignore_root_user_error
+    platform: debian11
+  integration_test_ignore_root_user_error_macos:
+    <<: *reusable_build_test_all
+    name: ignore_root_user_error integration tests on macOS
+    working_directory: tests/ignore_root_user_error
+    platform: macos
+  integration_test_ignore_root_user_error_windows:
+    <<: *reusable_build_test_all
+    name: ignore_root_user_error integration tests on Windows
+    working_directory: tests/ignore_root_user_error
+    platform: windows
+
+  integration_compile_pip_requirements_test_from_external_repo_ubuntu_min:
+    <<: *minimum_supported_version
+    name: compile_pip_requirements test from external repo on Ubuntu using minimum supported Bazel version
+    working_directory: tests/compile_pip_requirements_test_from_external_workspace
+    platform: ubuntu2004
+    shell_commands:
+    # Assert that @external_repository//:requirements_test does the right thing.
+    - "bazel test @external_repository//..."
+  integration_compile_pip_requirements_test_from_external_repo_ubuntu:
+    name: compile_pip_requirements test from external repo on Ubuntu
+    working_directory: tests/compile_pip_requirements_test_from_external_workspace
+    platform: ubuntu2004
+    shell_commands:
+    # Assert that @external_repository//:requirements_test does the right thing.
+    - "bazel test @external_repository//..."
+  integration_compile_pip_requirements_test_from_external_repo_debian:
+    name: compile_pip_requirements test from external repo on Debian
+    working_directory: tests/compile_pip_requirements_test_from_external_workspace
+    platform: debian11
+    shell_commands:
+    # Assert that @external_repository//:requirements_test does the right thing.
+    - "bazel test @external_repository//..."
+  integration_compile_pip_requirements_test_from_external_repo_macos:
+    name: compile_pip_requirements test from external repo on macOS
+    working_directory: tests/compile_pip_requirements_test_from_external_workspace
+    platform: macos
+    shell_commands:
+    # Assert that @external_repository//:requirements_test does the right thing.
+    - "bazel test @external_repository//..."
+  integration_compile_pip_requirements_test_from_external_repo_windows:
+    name: compile_pip_requirements test from external repo on Windows
+    working_directory: tests/compile_pip_requirements_test_from_external_workspace
+    platform: windows
+    shell_commands:
+    # Assert that @external_repository//:requirements_test does the right thing.
+    - "bazel test @external_repository//..."
+

@@ -1,0 +1,32 @@
+# Copyright (C) 2023 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Define various platforms
+
+# --config=android_arm: Build against the arm platform.
+build:android_arm --platforms=//build/kernel/kleaf/impl:android_arm
+
+# --config=android_arm64: Build against the arm64 platform.
+build:android_arm64 --platforms=//build/kernel/kleaf/impl:android_arm64
+
+# --config=android_i386: Build against the x86 (32-bit) platform.
+build:android_i386 --platforms=//build/kernel/kleaf/impl:android_i386
+
+# --config=android_riscv64: Build against the riscv64 platform.
+build:android_riscv64 --platforms=//build/kernel/kleaf/impl:android_riscv64
+
+# --config=android_x86_64: Build against the x86_64 platform.
+build:android_x86_64 --platforms=//build/kernel/kleaf/impl:android_x86_64
+
+# --config=hermetic_cc is already the default.

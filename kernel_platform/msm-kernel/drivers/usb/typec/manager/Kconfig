@@ -1,0 +1,37 @@
+#
+# USB TypeC Manager driver
+#
+
+comment "USB TypeC Manager configs"
+
+config USB_TYPEC_MANAGER_NOTIFIER
+    tristate "USB TypeC Manager driver"
+    help
+    If you say yes here you will get support for
+      USB TypeC Manager function
+
+config IF_CB_MANAGER
+    tristate "IF CallBack function Manager"
+    default n
+    help
+    If you say yes here you will use if_cb_manager structure
+    that makes functions to callback functions
+
+config USB_TYPEC_MANAGER_NOTIFIER_TEST
+        tristate "KUnit test for usb_typec_manager_notifier_test"
+        depends on SEC_KUNIT
+        depends on USB_TYPEC_MANAGER_NOTIFIER
+        default y
+
+        help
+          TODO: Describe config fully.
+
+config SBU_SWITCH_CONTROL
+    bool "Support controlling SBU switch open/close"
+    depends on IF_CB_MANAGER
+    default n
+    help
+        If you say yes here you will use if_cb_manager function
+        to control SBU switch (controlled by displayport TG)
+        This config indicates that switch will be controlled
+        manually by drivers, not automatically by FW or HW.

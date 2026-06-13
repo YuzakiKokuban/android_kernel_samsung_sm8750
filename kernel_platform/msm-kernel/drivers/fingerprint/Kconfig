@@ -1,0 +1,121 @@
+#
+# Sensor  drivers configuration
+#
+menuconfig SENSORS_FINGERPRINT
+	tristate "Finger Print Sensor devices"
+	help
+	  Say Y here, and a list of sensors drivers will be displayed.
+	  Everything that didn't fit into the other categories is here. This option
+	  doesn't affect the kernel.
+	  If unsure, say Y.
+
+config FINGERPRINT_SECURE
+	tristate "fingerprint sensor support"
+	default n
+	help
+	  If you say yes here you get support for Trustzone.
+
+config SENSORS_FPRINT_SECURE
+	tristate "fingerprint sensor support"
+	default n
+	help
+	  If you say yes here you get support for Trustzone.
+	  In case of user binary, fingerprint sensor operates within trustzone.
+	  If this feature enabled, spi communication is controlled by Trusted Application.
+	  Then it should be enabled in the user binary.
+
+config SENSORS_FINGERPRINT_MODULE
+	bool "module build"
+	default n
+	help
+	  You choose yes if you are using module build on fingerprint.
+
+config SENSORS_FINGERPRINT_LSI
+	tristate "System LSI AP support"
+	default n
+	help
+	  If you say yes here you get support for System LSI AP.
+
+config SENSORS_FINGERPRINT_QCOM
+	tristate "Qualcomm AP support"
+	default n
+	help
+	  If you say yes here you get support for Qualcomm AP.
+
+config SENSORS_FINGERPRINT_MTK
+	tristate "Mediatek AP support"
+	default n
+	help
+	  If you say yes here you get support for Mediatek AP.
+
+config SENSORS_FINGERPRINT_NORMALSPI
+	tristate "Goodix SPI normal mode"
+	default n
+	help
+	  If you say yes here you get to use spi normal mode on goodix sensor.
+
+config SENSORS_FINGERPRINT_32BITS_PLATFORM_ONLY
+	tristate "32bits platform support"
+	default n
+	help
+	  If you say yes here you get support for 32bits platform.
+
+config SENSORS_QBT2000
+	tristate "QBT2000 fingerprint sensor support"
+	default n
+	help
+	  If you say yes here you get support for Qualcomm's
+	  fingerprint sensor QBT2000.
+
+config SENSORS_QFS4008
+	tristate "QFS4008 fingerprint sensor support"
+	default n
+	help
+	  If you say yes here you get support for Qualcomm's
+	  fingerprint sensor QFS4008.
+
+config SENSORS_ET5XX
+	tristate "ET5XX fingerprint sensor support"
+	default n
+	help
+	  Fingerprint sensor driver.
+	  If you say yes here you get support for ET5XX sensor.
+	  ET5XX is the touch type fingerprint sensor.
+	  ET5XX module can support WOF mode.
+
+config SENSORS_EC6XX
+	tristate "EC6XX fingerprint sensor support"
+	default n
+	help
+	  Fingerprint sensor driver.
+	  If you say yes here you get support for EC6XX sensor.
+	  EC6XX is the touch type fingerprint sensor.
+	  EC6XX module can support WOF mode.
+
+config SENSORS_ET7XX
+	tristate "ET7XX fingerprint sensor support"
+	default n
+	help
+	  If you say yes here you get support for Egistec's
+	  fingerprint sensor ET7XX.
+
+config SENSORS_EL7XX
+	tristate "EL7XX fingerprint sensor support"
+	default n
+	help
+	  If you say yes here you get support for Egistec's
+	  fingerprint sensor EL7XX.
+
+config SENSORS_GW3X
+	tristate "generic goodix fingerprint driver"
+	default n
+	help
+	  If you say yes here you get support for Goodix's
+	  fingerprint sensor GW36X.
+
+config SENSORS_GW9558X
+	tristate "generic goodix fingerprint driver"
+	default n
+	help
+	  If you say yes here you get support for Goodix's
+	  fingerprint sensor GW9558X.

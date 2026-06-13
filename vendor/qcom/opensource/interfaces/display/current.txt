@@ -1,0 +1,119 @@
+#Copyright (c) 2018-2021, The Linux Foundation. All rights reserved.
+
+#Redistribution and use in source and binary forms, with or without
+#modification, are permitted provided that the following conditions are
+#met:
+#    * Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the following disclaimer.
+#    * Redistributions in binary form must reproduce the above
+#      copyright notice, this list of conditions and the following
+#      disclaimer in the documentation and/or other materials provided
+#      with the distribution.
+#    * Neither the name of The Linux Foundation nor the names of its
+#      contributors may be used to endorse or promote products derived
+#      from this software without specific prior written permission.
+
+#THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+#WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+#ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+#BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+#BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+#OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+#IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#Changes from Qualcomm Innovation Center are provided under the following license:
+
+#Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+
+#Redistribution and use in source and binary forms, with or without
+#modification, are permitted (subject to the limitations in the
+#disclaimer below) provided that the following conditions are met:
+
+#    * Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the following disclaimer.
+
+#    * Redistributions in binary form must reproduce the above
+#      copyright notice, this list of conditions and the following
+#      disclaimer in the documentation and/or other materials provided
+#      with the distribution.
+
+#    * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its
+#      contributors may be used to endorse or promote products derived
+#      from this software without specific prior written permission.
+
+#NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+#GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+#HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+#WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+#IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+#ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+#DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+#GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+#INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+#IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+#IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
+
+#HAL released in Android O
+0f53273ad37cc730b1fb4ea953fa0697ec0cc529b5b5a0a960aa5b276cea8143 vendor.display.config@1.0::IDisplayConfig
+
+#HAL released in Android O-MR1
+fcc31b8e0d422752cf4f4c69618488ea9cd5a4e0f21404adca087dc4ef23d6df vendor.display.config@1.1::IDisplayConfig
+
+#HAL released in Android P
+44a03774c9931f3779affaa88bb0217a3666420c38ca0c98170a7cf40a581419 vendor.qti.hardware.display.allocator@1.0::IQtiAllocator
+db19f93c419a59c901c1530a9241480b047a0f026b2eef7fe0c55cf3874c56c0 vendor.qti.hardware.display.mapper@1.0::IQtiMapper
+60c78b8bb8728d6826d8a57dd5d8112120541c2be130d7d7cd62345c3e9eaf1a vendor.qti.hardware.display.composer@2.0::IQtiComposer
+c22f5d631432b98b5f40a845a0797b5ed0fe42e9facb517fc8a98811835fb4a2 vendor.qti.hardware.display.composer@2.0::IQtiComposerClient
+5c479b5d32d3d5eb669904dd05c004895625d79e0f2d65a307f43c3dd0fc5c44 vendor.qti.hardware.display.composer@2.1::IQtiComposer
+97befe9b69d6ec918fdb76bee572aa95b07b789aa70ec3711c0c9a3e45a35fbe vendor.qti.hardware.display.composer@2.1::IQtiComposerClient
+f955d3cd7704809f64a6e1f5b1e6cf92b3765386af5e7e485ec4563c975467ba vendor.qti.hardware.display.mapper@1.1::IQtiMapper
+503415d1b4d8aefe231fd751cc36e374e91d561f3d3dd3459f31f3a67aa6dfe5 vendor.display.config@1.2::IDisplayConfig
+e89567ed6383dc0e5fd168babaf046352962b571f47fba26804c2c7690256b1f vendor.display.config@1.3::IDisplayConfig
+cbdb70cc5999b9537497b1e56955278ce1c3510245c82f861bf847ed1609f05b vendor.display.config@1.4::IDisplayConfig
+f852a7cf003eaf02a26784dff919ea1f334308df888f406962bfdb08ab51b59e vendor.display.config@1.5::IDisplayConfig
+bff30d77ca2327e719a4bd6938bad222c5f1a87f0517b8baf9ef5c3edd0bdc35 vendor.display.config@1.6::IDisplayConfig
+ccf20944596b1cd140769257bdb93d10244b256d47e296ec84d41ed1261c1089 vendor.display.config@1.7::IDisplayConfig
+a34b984a4eee8b76a123390002843f050288a92f0f0c6b8d576930f738858f4c vendor.display.config@1.8::IDisplayConfig
+fd36f8dbe80403d93f0e94651ae4efa1aa22053351e7783f5d99457cff9dbacc vendor.display.config@1.9::IDisplayConfig
+f78bba2991501438ad9ca1a0812f6a2a3991cb178bec4c00bd8eec841777d8d9 vendor.display.config@1.10::IDisplayConfig
+50369a070405a1f0cac44648f39ca32864c1339896d6eb16524b32fff9e95f03 vendor.display.config@1.10::IDisplayCWBCallback
+10a290fc22df7680d00c53370870d5e941b7d60afcb94e90d2dd03369e7ccebc vendor.display.config@1.11::IDisplayConfig
+ec808064f9829b3c124edf70042b651aac29ec0c3ebc842626c42da4a327ff2c vendor.display.config@1.12::IDisplayConfig
+c3ee03cf51ea11b6093a67d78be71085f1b5208e4ffbdbced1013c02246edc96 vendor.display.config@1.13::IDisplayConfig
+fe3a84ee6c6231badb64b5331813fd29aa8df5146113cca0490255102a15a1be vendor.display.config@1.14::IDisplayConfig
+
+#HAL released in Android Q
+72889f3c7812efb6e00cd59d17dca3ee392b029eef83622758d206e1e835722c vendor.qti.hardware.display.mapper@3.0::IQtiMapper
+7a1372c94ff50960e4f3c3c4262021527eb77c6d4eb8726ebdea9c36dc82eb56 vendor.qti.hardware.display.allocator@3.0::IQtiAllocator
+9e960ad971bfeb1ccc3102caf0a2d94e95457a1ff9ff0c72156faa94f2500c5d vendor.qti.hardware.display.mapperextensions@1.1::IQtiMapperExtensions
+b750c6dd2233e7d102f0a4f3d5124e358d134b80dfc86066d84e6f0722615881 vendor.qti.hardware.display.mapperextensions@1.0::types
+13eca267916c940ad44e08ee5e43e22bb24fa6afe7f2b824ea9d6c753d17e1d9 vendor.qti.hardware.display.mapperextensions@1.0::IQtiMapperExtensions
+cc81da1cfc8f045fa4183a7ab2f5f34cb863b310b8d04bf7db661a58ec9ea5c3 vendor.display.config@1.15::IDisplayConfig
+be4de6eea1098375e80d26bd86d0e239a3d739ec7dfa43b1b2fa5e6f75c86966 vendor.display.config@1.15::IDisplayQsyncCallback
+5862c0c085c9e0b6d8b8a11e4a9765a6a9250874d7c1a9b0f6b566598da31593 vendor.display.config@2.0::IDisplayConfig
+14fcf170f04a9878bf085b2aa4d75ef5e3d241926bef18e58d6d254e000ff689 vendor.display.config@2.0::IDisplayConfigCallback
+ada1c82f1ba85c9f403c4b91d24ebc6dfc2e796a7727bcca23f4e2ea68800f35 vendor.display.config@1.16::IDisplayConfig
+f0e4b206e3357cff0399f4a696dd57bb385d68d2c13865ea7bb5180eca06cd61 vendor.display.config@1.17::IDisplayConfig
+9c7bd67f95c98f95c0c97a80e7ab1d79cbe298a42cb6bcd2e915f749c30552b6 vendor.display.config@1.18::IDisplayConfig
+cbc4f4bf866904bb4b57d32efff12666c60d2cf8306ffb7ceb81c45fca65a23e vendor.display.config@1.19::IDisplayConfig
+294d1a6f3e517fd676c320995db12fcdd895e7588d9f28449f126d0bc3be3408 vendor.display.config@1.20::IDisplayConfig
+
+#HAL released in Android R
+7f8c47a47524e1ac21646578c7545fffdc08cec60df37d28ce8796b6461ef0c2 vendor.qti.hardware.display.composer@3.0::IQtiComposer
+f724000c84dd66ffaea8b3edc610f13381a62513854e35d89b3f4a4daad620d0 vendor.qti.hardware.display.composer@3.0::IQtiComposerClient
+c85fce19541fb31c8ce4927166a4b50da1e5d50a98594bcaae2f8b2eec12fb7d vendor.qti.hardware.display.allocator@4.0::IQtiAllocator
+f49205d41f011a96c6d238ea69f7b6c9d159809f4ecabef04ca4ccdb195d57b5 vendor.qti.hardware.display.mapper@4.0::IQtiMapper
+9f484e68c3e4faef0a0f601ff7074d0431499cfaceba43b42fbc35c8264fbddf vendor.qti.hardware.display.mapperextensions@1.2::IQtiMapperExtensions
+fa035077927f2dff68d2b1ad6e6379822d29364999aa3fd70c5d2ffe93707d9b vendor.qti.hardware.display.demura@1.0::IDemuraFileFinder
+e609d77b00158060ca222ccd13e0ba8019a42336e3b6a6a32c6396f7b7ea2077 vendor.qti.hardware.display.composer@3.1::IQtiComposer
+ee6870d17e33bf8e2365165637b75559ceffda57770b1a35f3a9a8bbf3769266 vendor.qti.hardware.display.composer@3.1::IQtiComposerClient
+550322847ebc31fd2c13a34aefa1f75df1c879cb423422831d5a5f35ba77aca4 vendor.qti.hardware.display.demura@2.0::IDemuraFileFinder
+
+#HAL released in Android T
+1e8de36267058910c4a1b4b0d92322640c5c24f961d1c9e05b5b033e65e8e0e6 vendor.qti.hardware.display.mapperextensions@1.3::IQtiMapperExtensions

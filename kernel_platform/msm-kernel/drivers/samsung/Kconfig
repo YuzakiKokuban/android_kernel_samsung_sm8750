@@ -1,0 +1,4 @@
+source "drivers/samsung/bsp/Kconfig"
+source "drivers/samsung/debug/Kconfig"
+source "drivers/samsung/power/Kconfig"
+source "drivers/samsung/ipc/Kconfig"

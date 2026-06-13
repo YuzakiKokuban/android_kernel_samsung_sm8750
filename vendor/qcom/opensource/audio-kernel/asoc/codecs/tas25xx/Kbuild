@@ -1,0 +1,87 @@
+ifeq ($(MODNAME),)
+	KERNEL_BUILD := 1
+else
+	KERNEL_BUILD := 0
+endif
+
+ifeq ($(KERNEL_BUILD), 1)
+	AUDIO_BLD_DIR := $(srctree)
+	AUDIO_ROOT := $(AUDIO_BLD_DIR)/techpack/audio
+endif
+
+
+ifeq ($(KERNEL_BUILD), 0)
+	ifeq ($(CONFIG_ARCH_WAIPIO), y)
+		include $(AUDIO_ROOT)/config/waipioauto.conf
+		INCS    +=  -include $(AUDIO_ROOT)/config/waipioautoconf.h
+	endif
+endif
+
+############ COMMON ############
+COMMON_DIR :=	include
+COMMON_INC :=	-I$(AUDIO_ROOT)/$(COMMON_DIR)
+
+ifdef CONFIG_SND_SOC_TAS25XX
+	TAS25XX_OBJS += src/tas25xx-codec.o
+	TAS25XX_OBJS += src/tas25xx-regmap.o
+	TAS25XX_OBJS += src/tas25xx.o
+	TAS25XX_OBJS += src/tas25xx-logic.o
+	TAS25XX_OBJS += src/tas25xx-regbin-parser.o
+endif
+
+
+ifneq ($(CONFIG_TAS25XX_ALGO),)
+TAS25XX_OBJS += algo/src/tas25xx-algo-intf.o
+TAS25XX_OBJS += algo/src/tas25xx-calib.o
+TAS25XX_OBJS += algo/src/tas25xx-algo-common.o
+endif
+
+ifneq ($(CONFIG_PLATFORM_MTK),)
+TAS25XX_OBJS += algo/platform/mtk/tas25xx-mtk-wrapper.o
+endif
+
+ifneq ($(CONFIG_TAS25XX_MISC),)
+TAS25XX_OBJS += src/tas25xx-misc.o
+endif
+
+ifneq ($(CONFIG_PLATFORM_QCOM),)
+TAS25XX_OBJS += algo/platform/qcom/tas25xx-algo-qdsp-intf.o
+endif
+
+ifneq ($(CONFIG_TISA_KBIN_INTF),)
+TAS25XX_OBJS += algo/src/tas25xx-algo-kbin-intf.o
+TAS25XX_OBJS += algo/src/tas25xx-algo-bin-utils.o
+endif
+
+ifneq ($(CONFIG_TAS25XX_CALIB_VAL_BIG),)
+TAS25XX_OBJS += algo/src/tas25xx-calib-validation.o
+endif
+
+ifneq ($(CONFIG_TISA_SYSFS_INTF),)
+TAS25XX_OBJS += algo/src/tas25xx-sysfs-debugfs-utils.o
+TAS25XX_OBJS += algo/src/smartpa-debug-common.o
+endif
+
+ifneq ($(CONFIG_TISA_BIN_INTF),)
+TAS25XX_OBJS += algo/src/tas25xx-algo-bin-intf.o
+endif
+
+ifneq ($(CONFIG_PLATFORM_EXYNOS),)
+TAS25XX_OBJS += algo/platform/exynos/tas25xx-algo-exynos-dsp-intf.o
+TAS25XX_OBJS += algo/platform/exynos/skinprot-sysfs-cb.o
+endif
+
+LINUX_INC += -Iinclude/linux
+TAS25XX_INC = -I$(AUDIO_ROOT)/asoc/codecs/tas25xx
+TAS25XX_INC += -I$(AUDIO_ROOT)/asoc/codecs/tas25xx/inc
+INCS += $(COMMON_INC) $(TAS25XX_INC)
+EXTRA_CFLAGS += $(INCS)
+
+
+# Module information used by KBuild framework
+obj-$(CONFIG_SND_SOC_TAS25XX) += tas25xx_dlkm.o
+tas25xx_dlkm-y := $(TAS25XX_OBJS)
+
+# inject some build related information
+DEFINES += -DBUILD_TIMESTAMP=\"$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')\"
+

@@ -1,0 +1,26 @@
+cc_library_headers {
+    name: "common_interface_headers",
+    vendor: true,
+    export_include_dirs : [
+        "common",
+    ],
+}
+
+cc_library_headers {
+    name: "snapalloc_interface_headers",
+    vendor: true,
+    export_include_dirs : [
+        "snapalloc",
+    ],
+}
+
+cc_library_headers {
+    name: "sdmclient_interface_headers",
+    vendor: true,
+    export_include_dirs : [
+        "sdmclient",
+    ],
+    header_libs: [
+        "snapalloc_interface_headers",
+    ],
+}

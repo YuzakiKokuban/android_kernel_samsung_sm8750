@@ -1,0 +1,190 @@
+#include "sun-camera-sensor-q7q-common.dtsi"
+
+/delete-node/ &actuator_rear_wide;
+/delete-node/ &actuator_rear_tele;
+/delete-node/ &ois_rear_wide;
+/delete-node/ &ois_rear_tele;
+/delete-node/ &actuator_rear_uw;
+
+&reg_dio8018_0_ldo1 {
+	regulator-min-microvolt = <1104000>;
+	regulator-max-microvolt = <1104000>;
+};
+
+&reg_dio8018_0_ldo3 {
+	regulator-min-microvolt = <2804000>;
+	regulator-max-microvolt = <2804000>;
+};
+
+&reg_dio8018_0_ldo6 {
+	regulator-min-microvolt = <1804000>;
+	regulator-max-microvolt = <1804000>;
+};
+
+&s2mpb02_l14 {
+	regulator-min-microvolt = <3300000>;
+	regulator-max-microvolt = <3300000>;
+};
+
+&cam_cci2 {
+	actuator_rear_wide: qcom,actuator0 {
+		status = "ok";
+
+		cell-index = <0>;
+		compatible = "qcom,actuator";
+		reg = <0x0C>;
+		slave-addr = <0x18>;
+
+		cam_vaf-supply = <&s2mpb02_l14>;			/* VDD_WIDECAM_AF_3P3 */
+		cam_vio-supply = <&s2mpb02_l7>;			/* VDD_WIDECAM_IO_1P8 */
+
+		regulator-names = "cam_vaf", "cam_vio";
+		rgltr-cntrl-support;
+		rgltr-min-voltage = <3300000 1800000>;
+		rgltr-max-voltage = <3300000 1800000>;
+		rgltr-load-current = <10000 10000>;
+
+		qcom,cam-power-seq-type = "cam_vio", "cam_vaf";
+		qcom,cam-power-seq-cfg-val = <1 1>;
+		qcom,cam-power-seq-delay = <1 12>;
+
+		cci-master = <CCI_MASTER_0>;
+	};
+};
+
+&qupv3_se8_i2c {
+	status = "ok";
+	qcom,clk-freq-out = <1000000>; 		/* 1MHz */
+
+	ois_rear_wide: qcom,ois@0E  {
+		status = "ok";
+
+		compatible = "qcom,cam-i2c-ois";
+		cell-index = <0>;
+		reg = <0x0E>;
+
+		cam_vaf-supply = <&s2mpb02_l18>;		/* VDD_WIDECAM_OIS_3P3 */
+		cam_vio-supply = <&s2mpb02_l7>;		/* VDD_WIDECAM_IO_1P8 */
+
+		regulator-names = "cam_vaf", "cam_vio";
+		rgltr-cntrl-support;
+		rgltr-min-voltage = <3300000 1800000>;
+		rgltr-max-voltage = <3300000 1800000>;
+		rgltr-load-current = <5000 5000>;
+
+		qcom,cam-power-seq-type = "cam_vaf", "cam_vio";
+		qcom,cam-power-seq-cfg-val = <1 1>;
+		qcom,cam-power-seq-delay = <1 14>;
+		gpio-no-mux = <0>;
+	};
+};
+
+&qupv3_se9_i2c {
+	status = "ok";
+	qcom,clk-freq-out = <1000000>; 		/* 1MHz */
+	qcom,shared; /* Enabling MultiEE */
+	qcom,pm-ctrl-client;
+
+	actuator_rear_tele: qcom,actuator3 {
+		status = "ok";
+
+		cell-index = <3>;
+		compatible = "qcom,cam-i2c-actuator";
+		reg = <0x1E>;
+		slave-addr = <0x1E>;
+
+		cam_vaf-supply = <&pm_humu_l2>;		/* VDD_TELECAM_AF_2P8 */
+		cam_vio-supply = <&s2mpb02_l6>;		/* VDD_TELE_UW_IO_1P8 */
+
+		regulator-names = "cam_vaf", "cam_vio";
+		rgltr-cntrl-support;
+		rgltr-min-voltage = <2800000 1800000>;
+		rgltr-max-voltage = <2800000 1800000>;
+		rgltr-load-current = <10000 10000>;
+
+		qcom,cam-power-seq-type = "cam_vio", "cam_vaf";
+		qcom,cam-power-seq-cfg-val = <1 1>;
+		qcom,cam-power-seq-delay = <1 12>;
+
+	};
+
+	ois_rear_tele: qcom,ois@74  {
+		status = "ok";
+
+		compatible = "qcom,cam-i2c-ois";
+		cell-index = <3>;
+		reg = <0x74>;
+
+		cam_vaf-supply = <&pm_humu_l9>;		/* VDD_TELECAM_OIS_2P8 */
+		cam_vio-supply = <&s2mpb02_l7>;		/* VDD_WIDECAM_IO_1P8 */
+
+		regulator-names = "cam_vaf", "cam_vio";
+		rgltr-cntrl-support;
+		rgltr-min-voltage = <2800000 1800000>;
+		rgltr-max-voltage = <2800000 1800000>;
+		rgltr-load-current = <5000 5000>;
+
+		qcom,cam-power-seq-type = "cam_vaf", "cam_vio";
+		qcom,cam-power-seq-cfg-val = <1 1>;
+		qcom,cam-power-seq-delay = <1 14>;
+		gpio-no-mux = <0>;
+	};
+};
+
+&qupv3_hub_i2c1 {
+	/delete-property/ qcom,clk-freq-out;
+	/delete-property/ qcom,pm-ctrl-client;
+};
+
+&qupv3_hub_i2c2 {
+	status = "ok";
+	qcom,clk-freq-out = <1000000>; 		/* 1MHz */
+	qcom,pm-ctrl-client;
+
+	actuator_rear_uw: qcom,actuator2 {
+		status = "ok";
+
+		cell-index = <2>;
+		compatible = "qcom,cam-i2c-actuator";
+		slave-addr = <0x6A>;
+		reg = <0x6A>;
+		cam_vaf-supply = <&s2mpb02_l17>;		/* VDD_UW_AF_3P3 */
+		cam_vio-supply = <&s2mpb02_l6>;			/* VDD_TELE_UW_IO_1P8 */
+
+		regulator-names = "cam_vaf", "cam_vio";
+		rgltr-cntrl-support;
+		rgltr-min-voltage = <3300000 1800000>;
+		rgltr-max-voltage = <3300000 1800000>;
+		rgltr-load-current = <10000 10000>;
+
+		qcom,cam-power-seq-type = "cam_vaf", "cam_vio";
+		qcom,cam-power-seq-cfg-val = <1 1>;
+		qcom,cam-power-seq-delay = <1 12>;
+	};
+};
+
+&sensor_front_top_full {
+	cam_vdig-supply = <&reg_dio8018_0_ldo1>;
+	cam_vio-supply = <&reg_dio8018_0_ldo6>;
+	cam_vana-supply = <&reg_dio8018_0_ldo3>;
+
+	rgltr-min-voltage = <1104000 1804000 2804000 0>;
+	rgltr-max-voltage = <1104000 1804000 2804000 0>;
+	rgltr-load-current = <200000 200000 200000 0>;
+};
+
+&sensor_front_top {
+	cam_vdig-supply = <&reg_dio8018_0_ldo1>;
+	cam_vio-supply = <&reg_dio8018_0_ldo6>;
+	cam_vana-supply = <&reg_dio8018_0_ldo3>;
+
+	rgltr-min-voltage = <1104000 1804000 2804000 0>;
+	rgltr-max-voltage = <1104000 1804000 2804000 0>;
+	rgltr-load-current = <200000 200000 200000 0>;
+};
+
+&eeprom_front_top {
+	cam_vio-supply = <&reg_dio8018_0_ldo6>;
+	rgltr-min-voltage = <1804000>;
+	rgltr-max-voltage = <1804000>;
+};

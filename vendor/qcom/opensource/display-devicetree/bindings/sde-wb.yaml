@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/sde-wb.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Qualcomm Technologies, Inc. Snapdragon Display Engine (SDE) writeback display
+
+maintainers:
+  - Veera Sundaram Sankaran <quic_veeras@quicinc.com>
+  - Kalyan Thota <quic_kalyant@quicinc.com>
+  - Ravi Teja Tamatam <quic_travitej@quicinc.com>
+
+properties:
+  compatible:
+    const: qcom,wb-display
+
+  cell-index:
+    description: Index of writeback device instance. Default to 0 if not specified.
+    default: 0
+
+  label:
+    description: String to describe this writeback display. Default to "unknown" if not specified.
+    default: "unknown"
+
+required:
+  - compatible
+
+examples:
+  - |
+    sde_wb: qcom,wb-display {
+      compatible = "qcom,wb-display";
+      cell-index = <2>;
+      label = "wb_display";
+    };
+...

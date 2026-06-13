@@ -1,0 +1,7 @@
+
+
+cc_binary_host {
+    name: "meta_image",
+    cflags: ["-Wall"],
+    srcs: ["meta_image.c"],
+}

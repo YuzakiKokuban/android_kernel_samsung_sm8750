@@ -1,0 +1,21 @@
+#include "sun-camera-sensor-pa3q-pinctrl-r02.dtsi"
+
+&flash_led_active {
+	mux {
+		pins = "gpio170";
+	};
+
+	config {
+		pins = "gpio170";
+	};
+};
+
+&flash_led_suspend {
+	mux {
+		pins = "gpio170";
+	};
+
+	config {
+		pins = "gpio170";
+	};
+};

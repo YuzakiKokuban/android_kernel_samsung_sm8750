@@ -1,0 +1,143 @@
+/*
+ * Copyright (c) 2019 The Linux Foundation. All rights reserved.
+ * Not a contribution.
+ */
+
+/*
+ * Copyright 2018 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package vendor.qti.hardware.bluetooth_audio@2.1;
+
+import @2.0::CodecType;
+import @2.0::SampleRate;
+import @2.0::ChannelMode;
+import @2.0::SbcParameters;
+import @2.0::AacParameters;
+import @2.0::LdacParameters;
+import @2.0::AptxParameters;
+import @2.0::AptxAdaptiveParameters;
+import @2.0::AptxTwsParameters;
+import @2.0::BaCeltParameters;
+import @2.0::PcmParameters;
+import @2.0::BitsPerSample;
+
+
+enum CodecType : @2.0::CodecType {
+    LC3 = 0x18,
+};
+
+enum ExtSampleRate : @2.0::SampleRate {
+    RATE_24000_2 = 0x100,
+    RATE_8000 = 0x200,
+};
+
+enum LC3ChannelMode : uint8_t {
+    UNKNOWN = 0x00,
+    STEREO = 0x01,
+    JOINT_STEREO = 0x02,
+    DUAL = 0x04,
+    MONO = 0x08,
+    CH_5_1 = 0x10,
+};
+/** Used for Hardware Encoding LC3 codec parameters */
+struct lc3CodecConfig {
+    ExtSampleRate sampleRate;
+    LC3ChannelMode channelMode;
+    uint16_t octetsPerFrame; //Octets Per Codec Frame
+    uint16_t frameDuration; //7.5msec, 10msec
+    uint32_t bitrate;
+    BitsPerSample bitsPerSample;
+    uint8_t numBlocks;
+};
+
+/** Used for Hardware Encoding LC3 codec parameters */
+struct LC3Parameters {
+    lc3CodecConfig txConfig;
+    lc3CodecConfig rxConfig;
+    uint8_t rxConfigSet; //this shall be set if fromAirConfig Config is present
+    uint16_t rxLatency;
+    uint8_t decoderOuputChannels;
+    uint8_t mode; //0x01-Connected, 0x02-Broadcast, 0x03-Simulcast
+    uint8_t[16] codecSpecific;
+    uint8_t defaultQlevel;
+    uint8_t NumStreamIDGroup;
+    uint32_t[48] streamMap;//upto 16 stream id support
+};
+
+/**
+ * Used to specify the capabilities of the codecs supported by Hardware Encoding.
+ * AptX and AptX-HD both use the AptxParameters field.
+ */
+struct CodecCapabilities {
+    CodecType codecType;
+
+    union Capabilities {
+      SbcParameters sbcCapabilities;
+      AacParameters aacCapabilities;
+      LdacParameters ldacCapabilities;
+      AptxParameters aptxCapabilities;
+      AptxAdaptiveParameters aptxAdaptiveCapabilities;
+      AptxTwsParameters aptxTwsCapabilities;
+      BaCeltParameters baCeltCapabilities;
+      LC3Parameters lc3Capabilities;
+    } capabilities;
+};
+
+
+/** Used to specify the capabilities of the different session types. */
+union AudioCapabilities {
+    PcmParameters pcmCapabilities;
+    CodecCapabilities codecCapabilities;
+};
+
+/**
+ * Used to configure a Hardware Encoding session.
+ * AptX and AptX-HD both use the AptxParameters field.
+ */
+struct CodecConfiguration {
+    CodecType codecType;
+    /**
+     * The encoded audio bitrate in bits / second.
+     * 0x00000000 - The audio bitrate is not specified / unused
+     * 0x00000001 - 0x00FFFFFF - Encoded audio bitrate in bits/second
+     * 0x01000000 - 0xFFFFFFFF - Reserved
+     *
+     * The HAL needs to support all legal bitrates for the selected codec.
+     */
+    uint32_t encodedAudioBitrate;
+    /** Peer MTU (in octets) */
+    uint16_t peerMtu;
+    /** Content protection by SCMS-T */
+    bool isScmstEnabled;
+    /** Scrambling Requirement */
+    bool isScramblingEnabled;
+    union CodecSpecific {
+        SbcParameters sbcConfig;
+        AacParameters aacConfig;
+        LdacParameters ldacConfig;
+        AptxParameters aptxConfig;
+        AptxAdaptiveParameters aptxAdaptiveConfig;
+        AptxTwsParameters aptxTwsConfig;
+        BaCeltParameters baCeltConfig;
+        LC3Parameters lc3Config;
+    } config;
+};
+
+/** Used to configure either a Hardware or Software Encoding session based on session type */
+union AudioConfiguration {
+    PcmParameters pcmConfig;
+    CodecConfiguration codecConfig;
+};

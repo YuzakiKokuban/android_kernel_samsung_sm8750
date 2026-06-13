@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+&sun_snd {
+	qcom,quat-mi2s-gpios = <&cdc_quat_mi2s_gpios>; /* For satelite */
+};
+
+&cdc_quat_mi2s_gpios {
+	status = "okay";
+	pinctrl-names = "aud_active", "aud_sleep";
+	pinctrl-0 = <&quat_mi2s_sck_active &quat_mi2s_ws_active
+			&quat_mi2s_sd0_active &quat_mi2s_sd1_active>;
+	pinctrl-1 = <&quat_mi2s_sck_sleep &quat_mi2s_ws_sleep
+			&quat_mi2s_sd0_sleep &quat_mi2s_sd1_sleep>;
+};

@@ -1,0 +1,213 @@
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
+load("//build/kernel/kleaf:hermetic_tools.bzl", "hermetic_genrule")
+load("//build/kernel/kleaf/impl:android_filegroup.bzl", "android_filegroup")
+
+_LINUX_X86_64 = [
+    "@platforms//os:linux",
+    "@platforms//cpu:x86_64",
+]
+
+cc_binary(
+    name = "hello_world_linux_x86_64",
+    srcs = ["hello_world.c"],
+    target_compatible_with = _LINUX_X86_64,
+)
+
+cc_library(
+    name = "mylib_linux_x86_64",
+    srcs = [
+        "lib.c",
+        "lib.h",
+    ],
+    target_compatible_with = _LINUX_X86_64,
+)
+
+cc_binary(
+    name = "mybin_fully_static_linux_x86_64",
+    srcs = [
+        "bin.c",
+        "lib.h",
+    ],
+    features = ["fully_static_link"],
+    linkstatic = True,
+    target_compatible_with = _LINUX_X86_64,
+    deps = [":mylib_linux_x86_64"],
+)
+
+cc_binary(
+    name = "mybin_static_linux_x86_64",
+    srcs = [
+        "bin.c",
+        "lib.h",
+    ],
+    linkstatic = True,
+    target_compatible_with = _LINUX_X86_64,
+    deps = [":mylib_linux_x86_64"],
+)
+
+cc_binary(
+    name = "mybin_dynamic_linux_x86_64",
+    srcs = [
+        "bin.c",
+        "lib.h",
+    ],
+    linkstatic = False,
+    target_compatible_with = _LINUX_X86_64,
+    deps = [":mylib_linux_x86_64"],
+)
+
+cc_binary(
+    name = "openssl_client_linux_x86_64",
+    srcs = [
+        "openssl_client.c",
+    ],
+    target_compatible_with = _LINUX_X86_64,
+    deps = [
+        "//prebuilts/kernel-build-tools:linux_x86_imported_libs",
+    ],
+)
+
+cc_binary(
+    name = "cpp_linux_x86_64",
+    srcs = ["cpp.cpp"],
+    target_compatible_with = _LINUX_X86_64,
+)
+
+cc_binary(
+    name = "pthread_linux_x86_64",
+    srcs = ["pthread.c"],
+    linkopts = [
+        "-lpthread",
+    ],
+    target_compatible_with = _LINUX_X86_64,
+)
+
+# genrule that applies the `cfg = exec` transition. This ensures that all these
+# tools are built for the execution platform, not the target platform.
+hermetic_genrule(
+    name = "linux_x86_64_tests_genrule",
+    outs = ["linux_x86_64_tests_genrule.txt"],
+    cmd = """
+        $(location :hello_world_linux_x86_64) > $@
+        $(location :mybin_dynamic_linux_x86_64) >> $@
+        $(location :mybin_fully_static_linux_x86_64) >> $@
+        $(location :mybin_static_linux_x86_64) >> $@
+        $(location :openssl_client_linux_x86_64) >> $@
+        $(location :cpp_linux_x86_64) >> $@
+    """,
+    tools = [
+        ":cpp_linux_x86_64",
+        ":hello_world_linux_x86_64",
+        ":mybin_dynamic_linux_x86_64",
+        ":mybin_fully_static_linux_x86_64",
+        ":mybin_static_linux_x86_64",
+        ":mylib_linux_x86_64",
+        ":openssl_client_linux_x86_64",
+    ],
+)
+
+# Build with --config=hermetic_cc
+build_test(
+    name = "linux_x86_64_tests",
+    targets = [
+        ":linux_x86_64_tests_genrule",
+    ],
+)
+
+# Android arm64
+
+cc_binary(
+    name = "hello_world_android",
+    srcs = ["hello_world.c"],
+    target_compatible_with = ["@platforms//os:android"],
+)
+
+cc_library(
+    name = "mylib_android",
+    srcs = [
+        "lib.c",
+        "lib.h",
+    ],
+    target_compatible_with = ["@platforms//os:android"],
+)
+
+cc_binary(
+    name = "mybin_full_static_android",
+    srcs = [
+        "bin.c",
+        "lib.h",
+    ],
+    features = ["fully_static_link"],
+    linkstatic = True,
+    target_compatible_with = ["@platforms//os:android"],
+    deps = [":mylib_android"],
+)
+
+cc_binary(
+    name = "mybin_static_android",
+    srcs = [
+        "bin.c",
+        "lib.h",
+    ],
+    linkstatic = True,
+    target_compatible_with = ["@platforms//os:android"],
+    deps = [":mylib_android"],
+)
+
+cc_binary(
+    name = "mybin_dynamic_android",
+    srcs = [
+        "bin.c",
+        "lib.h",
+    ],
+    linkstatic = False,
+    target_compatible_with = ["@platforms//os:android"],
+    deps = [":mylib_android"],
+)
+
+# Build with --config=hermetic_cc
+android_filegroup(
+    name = "android_tests_arm64",
+    srcs = [
+        ":hello_world_android",
+        ":mybin_dynamic_android",
+        ":mybin_full_static_android",
+        ":mybin_static_android",
+        ":mylib_android",
+    ],
+    cpu = "arm64",
+)
+
+# Build with --config=hermetic_cc
+android_filegroup(
+    name = "android_tests_x86_64",
+    srcs = [
+        ":hello_world_android",
+        ":mybin_dynamic_android",
+        ":mybin_full_static_android",
+        ":mybin_static_android",
+        ":mylib_android",
+    ],
+    cpu = "x86_64",
+)
+
+# TODO(b/228238975): Add tests for riscv
+
+# Build with --config=hermetic_cc
+build_test(
+    name = "android_tests",
+    targets = [
+        ":android_tests_arm64",
+        ":android_tests_x86_64",
+    ],
+)
+
+# Build with --config=hermetic_cc
+build_test(
+    name = "cc_testing",
+    targets = [
+        ":linux_x86_64_tests_genrule",
+        ":android_tests_arm64",
+        ":android_tests_x86_64",
+    ],
+)

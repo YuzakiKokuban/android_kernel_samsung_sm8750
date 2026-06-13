@@ -1,0 +1,81 @@
+genrule {
+  name: "gen-locationapi-msg-proto-srcs",
+  srcs: [
+    "LocationApiMsg.proto",
+    "LocationApiDataTypes.proto"
+  ],
+  tools: [
+    "aprotoc",
+  ],
+  cmd: "mkdir -p $(genDir) && $(location aprotoc) --cpp_out=$(genDir) --proto_path=external/protobuf/src/google/protobuf --proto_path=vendor/qcom/opensource/location/location_api_msg_proto $(in)",
+  out: [
+    "LocationApiMsg.pb.cc",
+    "LocationApiDataTypes.pb.cc"
+  ]
+}
+
+genrule {
+  name: "gen-locationapi-msg-proto-headers",
+  srcs: [
+    "LocationApiMsg.proto",
+    "LocationApiDataTypes.proto"
+  ],
+  tools: [
+    "aprotoc",
+  ],
+  cmd: "mkdir -p $(genDir) && $(location aprotoc) --cpp_out=$(genDir) --proto_path=external/protobuf/src/google/protobuf --proto_path=vendor/qcom/opensource/location/location_api_msg_proto $(in)",
+  out: [
+    "LocationApiMsg.pb.h",
+    "LocationApiDataTypes.pb.h"
+  ]
+}
+
+
+
+
+
+cc_library_shared {
+
+    name: "liblocation_api_msg",
+    vendor: true,
+
+    generated_sources: ["gen-locationapi-msg-proto-srcs"],
+    generated_headers: ["gen-locationapi-msg-proto-headers"],
+    export_generated_headers: ["gen-locationapi-msg-proto-headers"],
+
+    //# Libs
+    shared_libs: [
+        "libgps.utils",
+        "liblog",
+        "libprotobuf-cpp-lite",
+    ],
+
+    srcs: [
+        "src/LocationApiMsg.cpp",
+        "src/LocationApiPbMsgConv.cpp"
+    ],
+
+    local_include_dirs: ["src"],
+
+    cflags: [
+        "-fno-short-enums",
+        "-D_ANDROID_",
+    ] + GNSS_CFLAGS,
+
+    //# Includes
+    ldflags: ["-Wl,--export-dynamic"],
+
+    header_libs: [
+        "libutils_headers",
+        "libgps.utils_headers",
+        "libloc_pla_headers",
+        "liblocation_api_headers",
+    ],
+}
+
+cc_library_headers {
+
+    name: "liblocation_api_msg.headers",
+    export_include_dirs: ["."] +["src"],
+    vendor: true,
+}

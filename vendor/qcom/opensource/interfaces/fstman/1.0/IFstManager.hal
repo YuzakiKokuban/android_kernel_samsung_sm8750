@@ -1,0 +1,118 @@
+/* Copyright (c) 2019, The Linux Foundation. All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are
+* met:
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above
+*       copyright notice, this list of conditions and the following
+*       disclaimer in the documentation and/or other materials provided
+*       with the distribution.
+*     * Neither the name of The Linux Foundation nor the names of its
+*       contributors may be used to endorse or promote products derived
+*       from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+*/
+package vendor.qti.hardware.fstman@1.0;
+
+import IFstGroup;
+
+/**
+ * interface for communicating with fst-manager
+ */
+interface IFstManager {
+
+  /**
+   * Debug levels for the fst-manager.
+   * Only log messages with a level greater than the set level
+   * (via |setDebugParams|) will be logged.
+   */
+  enum DebugLevel : uint32_t {
+    EXCESSIVE = 0,
+    MSGDUMP = 1,
+    DEBUG = 2,
+    INFO = 3,
+    WARNING = 4,
+    ERROR = 5
+  };
+
+  /**
+   * Gets a HIDL interface object for the group corresponding to group
+   * name which the fst-manager already controls.
+   *
+   * @param groupName The group name.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|,
+   *         |FstManagerStatusCode.FAILURE_GROUP_UNKOWN|
+   * @return group HIDL interface object representing the group if
+   *         successful, null otherwise.
+   */
+  getGroup(string groupName)
+      generates (FstManagerStatus status, IFstGroup group);
+
+  /**
+   * Retrieve a list of all the groups controlled by the fst-manager.
+   *
+   * The corresponding |IFstGroup| object for any group can be
+   * retrieved using |getGroup| method.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|
+   * @return groupNames List of all group names controlled by the fst-manager.
+   */
+  listGroups() generates (FstManagerStatus status, vec<string> groupNames);
+
+  /**
+   * Set debug parameters for the fst-manager.
+   *
+   * @param level Debug logging level for the fst-manager.
+   *        (one of |DebugLevel| values).
+   * @param timestamp Determines whether to show timestamps in logs or
+   *        not.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|
+   */
+  setDebugParams(DebugLevel level, bool showTimestamp)
+      generates (FstManagerStatus status);
+
+  /**
+   * Get the debug level set.
+   *
+   * @return level one of |DebugLevel| values.
+   */
+  getDebugLevel() generates (DebugLevel level);
+
+  /**
+   * Get whether the timestamps are shown in the debug logs or not.
+   *
+   * @return enabled true if set, false otherwise.
+   */
+  isDebugShowTimestampEnabled() generates (bool enabled);
+
+  /**
+   * Terminate the service.
+   * This must de-register the service and clear all state. If this HAL
+   * supports the lazy HAL protocol, then this may trigger daemon to exit and
+   * wait to be restarted.
+   */
+  oneway terminate();
+};

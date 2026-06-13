@@ -1,0 +1,44 @@
+cc_binary {
+    name: "vendor.qti.hardware.lights.service",
+    relative_install_path: "hw",
+    init_rc: ["vendor.qti.hardware.lights.service.rc"],
+    vintf_fragments: ["vendor.qti.hardware.lights.service.xml"],
+    vendor: true,
+    shared_libs: [
+        "libbase",
+        "liblog",
+        "libhardware",
+        "libbinder_ndk",
+        "android.hardware.light-V2-ndk",
+    ],
+    srcs: [
+        "Lights.cpp",
+        "main.cpp",
+    ],
+}
+
+cc_fuzz {
+    name: "vendor.qti.hardware.lights-service.aidl_fuzzer",
+    vendor: true,
+
+    shared_libs: [
+        "liblog",
+        "libutils",
+        "libcutils",
+        "libbinder",
+        "libbinder_ndk",
+        "libhardware",
+        "android.hardware.light-V2-ndk",
+    ],
+
+    static_libs: [
+        "libbinder_random_parcel",
+    ],
+
+    srcs: ["fuzzer.cpp", "Lights.cpp"],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}

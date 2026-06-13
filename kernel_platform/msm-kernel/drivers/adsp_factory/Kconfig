@@ -1,0 +1,403 @@
+#
+# factory sensor drivers configuration
+#
+config ADSP_FACTORY
+	tristate "MSM ADSP factory driver"
+	help
+	  This driver communicate with SSC DAEMON.
+	  register each sensor device.
+	  send selftest request using netlink.
+	  receive test result using netlink.
+
+config LSM6DSO_FACTORY
+	bool "factory test for SSC - LSM6DSO"
+	depends on ADSP_FACTORY
+	help
+	  lsm6dso factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config LSM6DSL_FACTORY
+	bool "factory test for SSC - LSM6DSL"
+    depends on ADSP_FACTORY
+	help
+	  lsm6dsl factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config LSM6DSV_FACTORY
+	bool "factory test for SSC - LSM6DSV"
+	depends on ADSP_FACTORY
+	help
+	  lsm6dsv factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config SUPPORT_ACCEL_HIGHG
+	bool "support HIGH G ACCEL"
+	depends on ADSP_FACTORY
+	help
+	  highg accel factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config AK09918_FACTORY
+	bool "factory test for SSC - ak09918"
+    depends on ADSP_FACTORY
+	help
+	  ak09918 factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config SUPPORT_MAG_ABS_SUM
+	tristate "mag abs sum for SSC"
+	depends on AK09918_FACTORY
+	help
+	  Support the mag abs sum check
+	  check the mag abs sum value.
+
+config LPS22HH_FACTORY
+	bool "factory test for SSC - lps22hh"
+    depends on ADSP_FACTORY
+	help
+	  lps22hh factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config LPS22DF_FACTORY
+	bool "factory test for SSC - lps22df"
+    depends on ADSP_FACTORY
+	help
+	  lps22df factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config PRESSURE_FACTORY
+	bool "factory test for SSC - pressure"
+    depends on ADSP_FACTORY
+	help
+	  pressure factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config LIGHT_FACTORY
+	bool "factory test for SSC - light"
+    depends on ADSP_FACTORY
+	help
+	  light factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config LIGHT_SUB_FACTORY
+	bool "factory test for SSC - light sub"
+    depends on ADSP_FACTORY
+	help
+	  light sub factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config PROX_FACTORY
+	bool "factory test for SSC - prox"
+    depends on ADSP_FACTORY
+	help
+	  prox factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config STK33610_FACTORY
+	bool "factory test for SSC - STK33610"
+	depends on ADSP_FACTORY
+	help
+	  stk33610 factory driver.
+	  provide sysfs for factory test.
+	  request selftest through factory daemon to slpi.
+	  receive test result through factory daemon from slpi.
+
+config STK33610_SUB_FACTORY
+	bool "factory test for SSC - STK33610"
+	depends on ADSP_FACTORY
+	help
+	  stk33610 factory driver.
+	  provide sysfs for factory test.
+	  request selftest through factory daemon to slpi.
+	  receive test result through factory daemon from slpi.
+
+config SUPPORT_LIGHT_CALIBRATION
+	bool "light cal for SSC"
+    depends on ADSP_FACTORY
+	help
+	  light calibration feature.
+	  provide sysfs for light calibration.
+	  request light cal to adsp_factory.
+	  receive cal value from adsp_factory.
+
+config SUPPORT_PROX_CALIBRATION
+	bool "prox cal for SSC"
+    depends on ADSP_FACTORY
+	help
+	  prox calibration feature.
+	  provide sysfs for prox calibration.
+	  request prox cal to adsp_factory.
+	  receive cal value from adsp_factory.
+
+config SUPPORT_CONTROL_PROX_LED_GPIO
+	bool "control prox led gpio for SSC"
+	depends on ADSP_FACTORY
+	help
+	  Support to control prox led gpio.
+
+config SUPPORT_PROX_POWER_ON_CAL
+	bool "Sensors support proximity sensor power on cal"
+    depends on ADSP_FACTORY
+	help
+	  Support power on calibration for proximity sensor
+	  make calibration process done as the device power up.
+
+config SUPPORT_BRIGHTNESS_NOTIFY_FOR_LIGHT_SENSOR
+	bool "Sensors support brightness notify"
+    depends on ADSP_FACTORY
+	help
+	  Support brightness notify for light sensor.
+	  receive aor and brightness level from lcd driver.
+
+config SUPPORT_PANEL_STATE_NOTIFY_FOR_LIGHT_SENSOR
+	bool "Sensors support panel state notify"
+    depends on ADSP_FACTORY
+	help
+	  Support panel state notify for light sensor.
+	  receive  panel state from lcd driver.
+
+config SUPPORT_DDI_COPR_FOR_LIGHT_SENSOR
+	bool "Sensors support ddi copr"
+    depends on ADSP_FACTORY
+	help
+	  Support ddi copr for light sensor.
+	  provide copr sysfs for factory and afc service.
+	  DDI must be connected with sensor core
+
+config SUPPORT_AP_COPR_FOR_LIGHT_SENSOR
+	bool "Sensors support ap copr"
+    depends on ADSP_FACTORY
+	help
+	  Support ap copr for light sensor.
+	  provide copr sysfs for factory and afc service.
+	  The display driver must provide copr data as notify.
+
+config SUPPORT_DUAL_DDI_COPR_FOR_LIGHT_SENSOR
+	bool "Sensors support dual ddi copr"
+    depends on ADSP_FACTORY
+	help
+	  Support dual ddi copr for light sensor.
+	  provide copr sysfs for factory and afc service.
+	  DDI must be connected with sensor core
+
+config SUPPORT_DUAL_6AXIS
+	bool "Sensors support dual 6axis"
+    depends on ADSP_FACTORY
+	help
+	  Support the dual accel and gyro function. 
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config SUPPORT_TRIPLE_6AXIS
+	bool "Sensors support triple 6axis"
+    depends on ADSP_FACTORY
+	help
+	  Support the triple accel and gyro function. 
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config SUPPORT_DUAL_MAG
+	bool "Sensors support dual magnetic sensors"
+    depends on ADSP_FACTORY
+	help
+	  Support the dual mag function. 
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config SUPPORT_DUAL_OPTIC
+	bool "Sensors support dual optic"
+    depends on ADSP_FACTORY
+	help
+	  Support the dual prox and light function. 
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config SUPPORT_VIRTUAL_OPTIC
+	bool "Sensors support virtual optic"
+    depends on ADSP_FACTORY
+	help
+	  Support the virtual prox and light function. 
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config SUPPORT_DUAL_OPTIC_BUT_SUPPORT_SINGLE_PROX
+	bool "Sensors support virtual optic but support single prox"
+    depends on ADSP_FACTORY
+	help
+	  Support the virtual prox and light function. 
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config SUPPORT_SENSOR_FLIP_MODEL
+	bool "Sensors support sensor flip model"
+	depends on ADSP_FACTORY
+	help
+	  Support sensor flip model. 
+	  Separate the flip model from the factory test.
+
+config SUPPORT_AK09973
+	bool "Support ak09973"
+    depends on ADSP_FACTORY
+	help
+	  Support ak09973.
+
+config SUPPORT_DHALL_SWITCH
+	bool "Support DHALL_SWITCH"
+    depends on ADSP_FACTORY
+	help
+	  Support ak09973.
+
+config SUPPORT_DEVICE_MODE
+	bool "Support device mode"
+    depends on ADSP_FACTORY
+	help
+	  Support device mode.
+
+config SUPPORT_SENSOR_FOLD
+	bool "Support fold state by sensor algorithm"
+    depends on ADSP_FACTORY
+	help
+	  Support fold state by sensor algorithm.
+
+config VEML3235_FACTORY
+	bool "factory test for SSC - veml3235"
+	depends on ADSP_FACTORY
+	help
+	  veml3235 factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config VEML3235_SUB_FACTORY
+	bool "factory test for SSC - veml3235_sub"
+	depends on ADSP_FACTORY
+	help
+	  veml3235_sub factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config VEML3328_FACTORY
+	bool "factory test for SSC - veml3328"
+	depends on ADSP_FACTORY
+	help
+	  veml3328 factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config VEML3328_SUB_FACTORY
+	bool "factory test for SSC - veml3328_sub"
+	depends on ADSP_FACTORY
+	help
+	  veml3328_sub factory driver.
+	  provide sysfs for factory test.
+	  request selftest to adsp_factory.
+	  receive test result from adsp_factory.
+
+config SUPPORT_LIGHT_SEAMLESS
+	bool "Support Light seamless"
+    depends on ADSP_FACTORY
+	help
+	  Support Light seamless.
+
+config BACKTAP_FACTORY
+	bool "factory test for SSC - Back Tap Sensor"
+	depends on ADSP_FACTORY
+	help
+	  backtap factory driver.
+	  provide sysfs for setting back tap peak threshold
+
+config FLIP_COVER_DETECTOR_FACTORY
+	bool "factory test for SSC - Flip Cover Detector"
+	depends on ADSP_FACTORY
+	help
+	  flip_cover_detector factory driver.
+	  provide sysfs for cover status by nfc
+
+config FLIP_COVER_DETECTOR_NOTIFIER
+	bool "flip cover detector notifier"
+	depends on FLIP_COVER_DETECTOR_FACTORY
+	default y
+	help
+	  Support notifier for flip cover attach/detach events
+
+config SSC_WAKEUP_DEBUG
+	bool "debug to ap wakeup due to SSC"
+	depends on SEC_SENSORS_SSC
+	help
+	  debug to ap wakeup due to SSC event frequently
+
+config SLPI_LOADING_FAILURE_DEBUG
+	bool "debug to slpi loading fail"
+	depends on SEC_SENSORS_SSC
+	help
+	  debug to to slpi loading fail
+
+config SUPPORT_REF_ANGLE_WITHOUT_DIGITAL_HALL
+	bool "support ref angle without digital hall"
+	depends on ADSP_FACTORY
+	help
+	  support ref angle without digital hall
+
+config SENSOR_FACTORY_KUNIT_FOR_ON_DEVICE
+	tristate "KUnit test for sensor factory kunit"
+	depends on SEC_KUNIT
+	depends on ADSP_FACTORY
+
+config SENSOR_FACTORY_KUNIT_FOR_ONLY_UML
+	tristate "KUnit test for sensor factory kunit"
+	depends on SEC_KUNIT
+	depends on UML
+	depends on ADSP_FACTORY
+
+config AK09973_DIGITAL_HALL_TEST_FOR_ON_DEVICE
+	tristate "KUnit test for ak09973_digital_hall_test"
+	depends on SEC_KUNIT
+	depends on SUPPORT_AK09973
+	help
+	  TODO: Describe config fully.
+	  If you run this test driver on device, SHOULD set this config as 'm' to build test driver modulraly.
+
+config AK09973_DIGITAL_HALL_TEST_FOR_ONLY_UML
+	tristate "KUnit test for ak09973_digital_hall_test"
+	depends on SEC_KUNIT
+	depends on UML
+	depends on SUPPORT_AK09973
+	help
+	  TODO: Describe config fully.
+	  This CONFIG is recommended to set to y.
+
+config SEC_SENSORS_RECOVERY
+	bool "recovery slpi or adsp for sensor"
+	depends on SEC_SENSORS_SSC
+	help
+	  recovery to slpi or adsp for sensor

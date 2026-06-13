@@ -1,0 +1,6 @@
+include platform/build/bazel:/OWNERS
+
+# Kleaf
+# https://android.googlesource.com/kernel/build/+/refs/heads/master/kleaf/README.md
+elsk@google.com
+maennich@google.com

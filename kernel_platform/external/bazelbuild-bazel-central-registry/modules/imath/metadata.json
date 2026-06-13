@@ -1,0 +1,20 @@
+{
+    "homepage": "https://github.com/AcademySoftwareFoundation/Imath",
+    "maintainers": [
+        {
+            "email": "julian.amann@tum.de",
+            "github": "Vertexwahn",
+            "name": "Julian Amann"
+        }
+    ],
+    "repository": [
+        "github:AcademySoftwareFoundation/Imath"
+    ],
+    "versions": [
+        "3.1.9",
+        "3.1.10",
+        "3.1.11",
+        "3.1.11.bcr.1"
+    ],
+    "yanked_versions": {}
+}

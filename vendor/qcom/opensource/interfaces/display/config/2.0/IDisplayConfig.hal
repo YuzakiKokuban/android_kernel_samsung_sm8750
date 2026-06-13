@@ -1,0 +1,65 @@
+/*
+ * Copyright (c) 2020 The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above
+ *      copyright notice, this list of conditions and the following
+ *      disclaimer in the documentation and/or other materials provided
+ *      with the distribution.
+ *    * Neither the name of The Linux Foundation. nor the names of its
+ *      contributors may be used to endorse or promote products derived
+ *      from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package vendor.display.config@2.0;
+
+import IDisplayConfigCallback;
+
+interface IDisplayConfig {
+    /*
+     * Registers a client with the IDisplayConfig service. The client name will be a combination
+     * of the original name of the client and possibly the client's PID. This is needed to ensure
+     * unique identification of the client by the service. This can happen in cases where the
+     * client restarts and re-registers which causes multiple registration with the service.
+     *
+     * @param clientName String representing the unique name of the client.
+     * @param callback is the HIDL callback if any, for the callback operations to the client.
+     * @return error is the error code of the RegisterClient call to the service.
+     * @return clientHandle is a unique unsigned integer assigned to the client by service.
+     */
+    @callflow(next="*")
+    registerClient(string clientName, IDisplayConfigCallback callback)
+        generates (int32_t error, uint64_t clientHandle);
+
+    /*
+     * Perform API for the client to handle multiple requests by the IDisplayConfig service.
+     *
+     * @param clientHandle the unique unsigned integer assigned to client by service.
+     * @param opCode is the identifier for the operation requested by client.
+     * @param inputParams vector of input data structures.
+     * @param inputHandles vector of input buffer handles, if any.
+     * @return error is the error code of the requested operation.
+     * @return outputParams is vector of output data as part of sync API execution, if any.
+     * @return outputHandles is vector of output buffer handles, if any.
+     */
+    @callflow(next="*")
+    perform(uint64_t clientHandle, uint32_t opCode, vec<uint8_t> inputParams,
+            vec<handle> inputHandles) generates (int32_t error, vec<uint8_t> outputParams,
+            vec<handle> outputHandles);
+};

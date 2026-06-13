@@ -1,0 +1,6 @@
+CONFIG_GCOV_KERNEL=y
+CONFIG_GCOV_PROFILE_ALL=y
+
+# TODO(b/291710318) Allow section mismatch when using GCOV_PROFILE_ALL
+#  modpost: vmlinux.o: section mismatch in reference: cpumask_andnot (section: .text) -> efi_systab_phys (section: .init.data)
+CONFIG_SECTION_MISMATCH_WARN_ONLY=y

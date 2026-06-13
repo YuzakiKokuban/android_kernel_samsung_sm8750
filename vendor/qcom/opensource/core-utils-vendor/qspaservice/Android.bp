@@ -1,0 +1,40 @@
+cc_binary{
+    name: "vendor.qti.qspa-service",
+    init_rc: ["vendor.qti.qspa-service.rc"],
+    srcs:[
+        "src/main.cpp",
+        "src/Qspa.cpp"
+    ],
+    vendor:true,
+    vintf_fragments: ["vendor.qti.qspa-service.xml"],
+    shared_libs: [
+        "libbase",
+        "liblog",
+        "libcutils",
+        "libbinder_ndk",
+        "vendor.qti.hardware.qspa-V1-ndk",
+   ],
+}
+
+cc_fuzz{
+    name: "vendor.qti.qspa-service.aidl_fuzzer",
+    srcs:[
+        "src/fuzzer.cpp",
+        "src/Qspa.cpp"
+    ],
+    vendor:true,
+
+    shared_libs: [
+        "libbase",
+        "liblog",
+        "libutils",
+        "libcutils",
+        "libbinder",
+        "libbinder_ndk",
+        "vendor.qti.hardware.qspa-V1-ndk",
+   ],
+
+    static_libs: [
+        "libbinder_random_parcel",
+    ],
+}

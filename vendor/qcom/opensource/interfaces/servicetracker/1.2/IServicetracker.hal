@@ -1,0 +1,81 @@
+/*
+* Copyright (c) 2019-2020 The Linux Foundation. All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are
+* met:
+*    * Redistributions of source code must retain the above copyright
+*      notice, this list of conditions and the following disclaimer.
+*    * Redistributions in binary form must reproduce the above
+*      copyright notice, this list of conditions and the following
+*      disclaimer in the documentation and/or other materials provided
+*      with the distribution.
+*    * Neither the name of The Linux Foundation. nor the names of its
+*      contributors may be used to endorse or promote products derived
+*      from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+package vendor.qti.hardware.servicetracker@1.2;
+
+import @1.1::IServicetracker;
+import @1.0::types;
+import IActivityEventInfoCallback;
+
+interface IServicetracker extends @1.1::IServicetracker {
+    /**
+     * Register a callback for any activity lifecycle events.
+     *
+     * Registering a new callback must not unregister the old one; the old
+     * callback remains registered until one of the following happens:
+     * - client explicitly calls {@link unregisterCallback} to unregister it.
+     * - The client process that hosts the callback dies.
+     *
+     * @param callback the callback to register.
+     * @param aNotify Type of notification client wants to listen for.
+     * @param userdata userdata passed by client when registered
+     * @return result SUCCESS if successful,
+                      CALLBACK_EXIST if callback is already registered,
+                      ERROR_INVALID_ARGS if invalid callback tries to register,
+     *                UNKNOWN for other errors.
+     */
+    registerCallback(IActivityEventInfoCallback callback, NotifyType aNotify, int32_t userdata) generates (Status result);
+
+
+    /**
+     * Explicitly unregister a callback that is previously registered through
+     * {@link registerCallback}.
+     *
+     * @param callback the callback to unregister
+     * @return result SUCCESS if successful,
+     *                NOT_FOUND if callback is not registered previously,
+     *                UNKNOWN for other errors.
+     */
+    unregisterCallback(IActivityEventInfoCallback callback) generates (Status result);
+
+    /**
+     * Get notified whenever there is a change in activity state in ActivityManagerService
+     *
+     * @param aState New state attained by activity
+     * @param aDetails Information associated with an activity with every state change.
+     * @param aStats activity's statistics w.r.t it's create time, no. of launch etc.
+     * @param early_notify If notification is received as a part of early notification.
+     * @return result SUCCESS if successful,
+     *                UNKNOWN for other errors.
+     */
+    oneway OnActivityStateChange(ActivityStates aState, ActivityDetails aDetails, ActivityStats aStats, bool early_notify);
+
+};
+
+

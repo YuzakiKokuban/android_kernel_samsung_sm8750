@@ -1,0 +1,7 @@
+#ifndef __DT_BINDINGS__SEC_ARM64_VH_IPI_STOP_H__
+#define __DT_BINDINGS__SEC_ARM64_VH_IPI_STOP_H__
+
+/* crc32 <(echo -n "SEC_ARM64_VH_IPI_STOP_MAGIC") | tr '[a-z]' '[A-Z]' */
+#define SEC_ARM64_VH_IPI_STOP_MAGIC	0x86655958
+
+#endif /* __DT_BINDINGS__SEC_ARM64_VH_IPI_STOP_H__ */

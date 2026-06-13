@@ -1,0 +1,8 @@
+# Platform build
+include platform/build/soong:/OWNERS
+
+# Kernel build
+#
+# The kernel follows a different branching model than that of platform, which
+# needs the 'master' branch to be explicitly declared.
+include kernel/build:main:/OWNERS

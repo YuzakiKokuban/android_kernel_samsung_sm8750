@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear
+-->
+<xs:schema version="2.0" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="modules">
+<!-- TODO may add version attribute-->
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="module" minOccurs="1">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="mixPorts" type="mixPorts" minOccurs="0" />
+                <xs:element name="devicePorts" type="devicePorts" minOccurs="0" />
+                <xs:element name="routes" type="routes" minOccurs="0" />
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required" />
+        </xs:complexType>
+        <xs:unique name="mixPortNameUniqueness">
+            <xs:selector xpath="mixPorts/mixPort" />
+            <xs:field xpath="@name" />
+        </xs:unique>
+        <xs:unique name="devicePortUniqueness">
+            <xs:selector xpath="devicePorts/devicePort" />
+            <xs:field xpath="@deviceType" />
+            <xs:field xpath="@connection" />
+        </xs:unique>
+        <xs:unique name="routeUniqueness">
+            <xs:selector xpath="routes/route" />
+            <xs:field xpath="@sink" />
+        </xs:unique>
+        <xs:key name="devicePortNameKey">
+            <xs:selector xpath="devicePorts/devicePort" />
+            <xs:field xpath="@tagName" />
+        </xs:key>
+        <xs:key name="routeSinkKey">
+            <!-- predicate [@type='sink'] does not work in xsd 1.0 -->
+            <xs:selector xpath="devicePorts/devicePort|mixPorts/mixPort" />
+            <xs:field xpath="@tagName|@name" />
+        </xs:key>
+        <xs:keyref name="routeSinkRef" refer="routeSinkKey">
+            <xs:selector xpath="routes/route" />
+            <xs:field xpath="@sink" />
+        </xs:keyref>
+    </xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+    <xs:simpleType name="role">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="sink" />
+            <xs:enumeration value="source" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="audioInputFlag">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FAST" />
+            <xs:enumeration value="HW_HOTWORD" />
+            <xs:enumeration value="RAW" />
+            <xs:enumeration value="SYNC" />
+            <xs:enumeration value="MMAP_NOIRQ" />
+            <xs:enumeration value="VOIP_TX" />
+            <xs:enumeration value="HW_AV_SYNC" />
+            <xs:enumeration value="DIRECT" />
+            <xs:enumeration value="ULTRASOUND" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="audioOutputFlag">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DIRECT" />
+            <xs:enumeration value="PRIMARY" />
+            <xs:enumeration value="FAST" />
+            <xs:enumeration value="DEEP_BUFFER" />
+            <xs:enumeration value="COMPRESS_OFFLOAD" />
+            <xs:enumeration value="NON_BLOCKING" />
+            <xs:enumeration value="HW_AV_SYNC" />
+            <xs:enumeration value="TTS" />
+            <xs:enumeration value="RAW" />
+            <xs:enumeration value="SYNC" />
+            <xs:enumeration value="IEC958_NONAUDIO" />
+            <xs:enumeration value="DIRECT_PCM" />
+            <xs:enumeration value="MMAP_NOIRQ" />
+            <xs:enumeration value="VOIP_RX" />
+            <xs:enumeration value="INCALL_MUSIC" />
+            <xs:enumeration value="GAPLESS_OFFLOAD" />
+            <xs:enumeration value="SPATIALIZER" />
+            <xs:enumeration value="ULTRASOUND" />
+            <!-- SEC_AUDIO_HDMI -->
+            <xs:enumeration value="MULTI_CH" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="audioIOFlag">
+        <xs:union memberTypes="audioInputFlag audioOutputFlag" />
+    </xs:simpleType>
+    <xs:simpleType name="audioIOFlagList">
+        <xs:list itemType="audioIOFlag" />
+    </xs:simpleType>
+    <xs:simpleType name="audioUsage">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AUDIOUSAGE_INVALID" />
+            <xs:enumeration value="AUDIOUSAGE_UNKNOWN" />
+            <xs:enumeration value="AUDIOUSAGE_MEDIA" />
+            <xs:enumeration value="AUDIOUSAGE_VOICE_COMMUNICATION" />
+            <xs:enumeration value="AUDIOUSAGE_VOICE_COMMUNICATION_SIGNALLING" />
+            <xs:enumeration value="AUDIOUSAGE_ALARM" />
+            <xs:enumeration value="AUDIOUSAGE_NOTIFICATION" />
+            <xs:enumeration value="AUDIOUSAGE_NOTIFICATION_TELEPHONY_RINGTONE" />
+            <xs:enumeration value="AUDIOUSAGE_SYS_RESERVED_NOTIFICATION_COMMUNICATION_REQUEST" />
+            <xs:enumeration value="AUDIOUSAGE_SYS_RESERVED_NOTIFICATION_COMMUNICATION_INSTANT" />
+            <xs:enumeration value="AUDIOUSAGE_SYS_RESERVED_NOTIFICATION_COMMUNICATION_DELAYED" />
+            <xs:enumeration value="AUDIOUSAGE_NOTIFICATION_EVENT" />
+            <xs:enumeration value="AUDIOUSAGE_ASSISTANCE_ACCESSIBILITY" />
+            <xs:enumeration value="AUDIOUSAGE_ASSISTANCE_NAVIGATION_GUIDANCE" />
+            <xs:enumeration value="AUDIOUSAGE_ASSISTANCE_SONIFICATION" />
+            <xs:enumeration value="AUDIOUSAGE_GAME" />
+            <xs:enumeration value="AUDIOUSAGE_VIRTUAL_SOURCE" />
+            <xs:enumeration value="AUDIOUSAGE_ASSISTANT" />
+            <xs:enumeration value="AUDIOUSAGE_CALL_ASSISTANT" />
+            <xs:enumeration value="AUDIOUSAGE_EMERGENCY" />
+            <xs:enumeration value="AUDIOUSAGE_SAFETY" />
+            <xs:enumeration value="AUDIOUSAGE_VEHICLE_STATUS" />
+            <xs:enumeration value="AUDIOUSAGE_ANNOUNCEMENT" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="audioUsageList">
+        <xs:list itemType="audioUsage" />
+    </xs:simpleType>
+    <xs:complexType name="mixPorts">
+        <xs:sequence>
+            <xs:element name="mixPort" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="profile" type="profile" minOccurs="0" maxOccurs="unbounded" />
+                        <xs:element name="gains" type="gains" minOccurs="0" />
+                    </xs:sequence>
+                    <xs:attribute name="name" type="xs:token" use="required" />
+                    <xs:attribute name="role" type="role" use="required" />
+                    <xs:attribute name="flags" type="audioIOFlagList" />
+                    <xs:attribute name="maxOpenCount" type="xs:unsignedInt" />
+                    <xs:attribute name="maxActiveCount" type="xs:unsignedInt" />
+                    <xs:attribute name="preferredUsage" type="audioUsageList" />
+                    <xs:attribute name="recommendedMuteDurationMs" type="xs:unsignedInt" />
+                </xs:complexType>
+                <xs:unique name="mixPortProfileUniqueness">
+                    <xs:selector xpath="profile" />
+                    <xs:field xpath="samplingRate" />
+                    <xs:field xpath="channelLayouts" />
+                    <xs:field xpath="encoding" />
+                    <xs:field xpath="formatType" />
+                    <xs:field xpath="pcmType" />
+                </xs:unique>
+                <xs:unique name="mixPortGainUniqueness">
+                    <xs:selector xpath="gains/gain" />
+                    <xs:field xpath="@name" />
+                </xs:unique>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="audioDeviceType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NONE" />
+            <xs:enumeration value="IN_DEFAULT" />
+            <xs:enumeration value="IN_ACCESSORY" />
+            <xs:enumeration value="IN_AFE_PROXY" />
+            <xs:enumeration value="IN_DEVICE" />
+            <xs:enumeration value="IN_ECHO_REFERENCE" />
+            <xs:enumeration value="IN_FM_TUNER" />
+            <xs:enumeration value="IN_HEADSET" />
+            <xs:enumeration value="IN_LOOPBACK" />
+            <xs:enumeration value="IN_MICROPHONE" />
+            <xs:enumeration value="IN_MICROPHONE_BACK" />
+            <xs:enumeration value="IN_SUBMIX" />
+            <xs:enumeration value="IN_TELEPHONY_RX" />
+            <xs:enumeration value="IN_TV_TUNER" />
+            <xs:enumeration value="IN_DOCK" />
+            <!-- SEC_AUDIO_SAMSUNGRECORD -->
+            <xs:enumeration value="IN_MICROPHONE_MULTI" />
+            <xs:enumeration value="OUT_DEFAULT" />
+            <xs:enumeration value="OUT_ACCESSORY" />
+            <xs:enumeration value="OUT_AFE_PROXY" />
+            <xs:enumeration value="OUT_CARKIT" />
+            <xs:enumeration value="OUT_DEVICE" />
+            <xs:enumeration value="OUT_ECHO_CANCELLER" />
+            <xs:enumeration value="OUT_FM" />
+            <xs:enumeration value="OUT_HEADPHONE" />
+            <xs:enumeration value="OUT_HEADSET" />
+            <xs:enumeration value="OUT_HEARING_AID" />
+            <xs:enumeration value="OUT_LINE_AUX" />
+            <xs:enumeration value="OUT_SPEAKER" />
+            <xs:enumeration value="OUT_SPEAKER_EARPIECE" />
+            <xs:enumeration value="OUT_SPEAKER_SAFE" />
+            <xs:enumeration value="OUT_SUBMIX" />
+            <xs:enumeration value="OUT_TELEPHONY_TX" />
+            <xs:enumeration value="OUT_DOCK" />
+            <xs:enumeration value="OUT_BROADCAST" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="connectionType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="analog" />
+            <xs:enumeration value="bt-a2dp" />
+            <xs:enumeration value="bt-le" />
+            <xs:enumeration value="bt-sco" />
+            <xs:enumeration value="bus" />
+            <xs:enumeration value="hdmi" />
+            <xs:enumeration value="hdmi-arc" />
+            <xs:enumeration value="hdmi-earc" />
+            <xs:enumeration value="ip-v4" />
+            <xs:enumeration value="spdif" />
+            <xs:enumeration value="wireless" />
+            <xs:enumeration value="usb" />
+            <xs:enumeration value="virtual" />
+            <!-- SEC_AUDIO_FMRADIO -->
+            <xs:enumeration value="fm" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="devicePorts">
+        <xs:sequence>
+            <xs:element name="devicePort" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <!-- Attached device ports should have atleast one profile -->
+                        <!-- External device ports are only for templatation purpose -->
+                        <!-- Even though template device ports need not require profiles, enforce them to have atleast one profile for the sake of default profile -->
+                        <xs:element name="profile" type="profile" minOccurs="1" maxOccurs="unbounded" />
+                        <xs:element name="gains" type="gains" minOccurs="0" />
+                    </xs:sequence>
+                    <xs:attribute name="tagName" type="xs:token" use="required" />
+                    <!-- can used to
+                    check whether deviceport is permanent or not -->
+                    <!-- only permanent deviceports must have static profiles loaded -->
+                    <xs:attribute name="attached" type="xs:boolean" use="optional" default="false" />
+                    <!-- This attribute indicates whether the device treated as default device by framework -->
+                    <!-- By convention, defaultDevice is also an attached device -->
+                    <xs:attribute name="defaultDevice" type="xs:boolean" use="optional" default="false" />
+                    <xs:attribute name="deviceType" type="audioDeviceType" use="required" />
+                    <xs:attribute name="role" type="role" use="required" />
+                    <!-- some of the device needs address ex: bulit in mic address as bottom -->
+                    <xs:attribute name="address" type="xs:string" use="optional" default="" />
+                    <xs:attribute name="connection" type="connectionType" use="optional" />
+                    <!-- encodings is expected to have series of valid mime strings which are seperated by space -->
+                    <xs:attribute name="encodings" type="audioMimeList" use="optional" />
+                    <!-- Note that XSD 1.0 can not check that a type only has one default. -->
+                    <xs:attribute name="default" type="xs:boolean" use="optional" />
+                </xs:complexType>
+                <xs:unique name="devicePortProfileUniqueness">
+                    <xs:selector xpath="profile" />
+                    <xs:field xpath="samplingRate" />
+                    <xs:field xpath="channelLayouts" />
+                    <xs:field xpath="encoding" />
+                    <xs:field xpath="formatType" />
+                    <xs:field xpath="pcmType" />
+                </xs:unique>
+                <xs:unique name="devicePortGainUniqueness">
+                    <xs:selector xpath="gains/gain" />
+                    <xs:field xpath="@name" />
+                </xs:unique>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="mixType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="mix" />
+            <xs:enumeration value="mux" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="routes">
+        <xs:sequence>
+            <xs:element name="route" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:attribute name="type" type="mixType" use="required" />
+                    <xs:attribute name="sink" type="xs:string" use="required" />
+                    <xs:attribute name="sources" type="xs:string" use="required" />
+                    <!-- TODO write validation for sources attribute-->
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="audioSamplingRates">
+        <xs:list itemType="xs:nonNegativeInteger" />
+    </xs:simpleType>
+    <xs:simpleType name="audioChannelIndexMask">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="INDEX_MASK_1" />
+            <xs:enumeration value="INDEX_MASK_2" />
+            <xs:enumeration value="INDEX_MASK_3" />
+            <xs:enumeration value="INDEX_MASK_4" />
+            <xs:enumeration value="INDEX_MASK_5" />
+            <xs:enumeration value="INDEX_MASK_6" />
+            <xs:enumeration value="INDEX_MASK_7" />
+            <xs:enumeration value="INDEX_MASK_8" />
+            <xs:enumeration value="INDEX_MASK_9" />
+            <xs:enumeration value="INDEX_MASK_10" />
+            <xs:enumeration value="INDEX_MASK_11" />
+            <xs:enumeration value="INDEX_MASK_12" />
+            <xs:enumeration value="INDEX_MASK_13" />
+            <xs:enumeration value="INDEX_MASK_14" />
+            <xs:enumeration value="INDEX_MASK_15" />
+            <xs:enumeration value="INDEX_MASK_16" />
+            <xs:enumeration value="INDEX_MASK_17" />
+            <xs:enumeration value="INDEX_MASK_18" />
+            <xs:enumeration value="INDEX_MASK_19" />
+            <xs:enumeration value="INDEX_MASK_20" />
+            <xs:enumeration value="INDEX_MASK_21" />
+            <xs:enumeration value="INDEX_MASK_22" />
+            <xs:enumeration value="INDEX_MASK_23" />
+            <xs:enumeration value="INDEX_MASK_24" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="audioChannelIndexMaskList">
+        <xs:list itemType="audioChannelIndexMask" />
+    </xs:simpleType>
+    <xs:simpleType name="audioChannelLayout">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LAYOUT_MONO" />
+            <xs:enumeration value="LAYOUT_STEREO" />
+            <xs:enumeration value="LAYOUT_2POINT1" />
+            <xs:enumeration value="LAYOUT_TRI" />
+            <xs:enumeration value="LAYOUT_TRI_BACK" />
+            <xs:enumeration value="LAYOUT_3POINT1" />
+            <xs:enumeration value="LAYOUT_2POINT0POINT2" />
+            <xs:enumeration value="LAYOUT_2POINT1POINT2" />
+            <xs:enumeration value="LAYOUT_3POINT0POINT2" />
+            <xs:enumeration value="LAYOUT_3POINT1POINT2" />
+            <xs:enumeration value="LAYOUT_QUAD" />
+            <xs:enumeration value="LAYOUT_QUAD_SIDE" />
+            <xs:enumeration value="LAYOUT_SURROUND" />
+            <xs:enumeration value="LAYOUT_PENTA" />
+            <xs:enumeration value="LAYOUT_5POINT1" />
+            <xs:enumeration value="LAYOUT_5POINT1_SIDE" />
+            <xs:enumeration value="LAYOUT_5POINT1POINT2" />
+            <xs:enumeration value="LAYOUT_5POINT1POINT4" />
+            <xs:enumeration value="LAYOUT_6POINT1" />
+            <xs:enumeration value="LAYOUT_7POINT1" />
+            <xs:enumeration value="LAYOUT_7POINT1POINT2" />
+            <xs:enumeration value="LAYOUT_7POINT1POINT4" />
+            <xs:enumeration value="LAYOUT_9POINT1POINT4" />
+            <xs:enumeration value="LAYOUT_9POINT1POINT6" />
+            <xs:enumeration value="LAYOUT_13POINT_360RA" />
+            <xs:enumeration value="LAYOUT_22POINT2" />
+            <xs:enumeration value="LAYOUT_MONO_HAPTIC_A" />
+            <xs:enumeration value="LAYOUT_STEREO_HAPTIC_A" />
+            <xs:enumeration value="LAYOUT_HAPTIC_AB" />
+            <xs:enumeration value="LAYOUT_MONO_HAPTIC_AB" />
+            <xs:enumeration value="LAYOUT_STEREO_HAPTIC_AB" />
+            <xs:enumeration value="LAYOUT_FRONT_BACK" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="audioChannelLayoutList">
+        <xs:list itemType="audioChannelLayout" />
+    </xs:simpleType>
+    <xs:simpleType name="audioEncapsulationType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NONE" />
+            <xs:enumeration value="IEC61937" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="audioFormatType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DEFAULT" />
+            <xs:enumeration value="NON_PCM" />
+            <xs:enumeration value="PCM" />
+            <xs:enumeration value="SYS_RESERVED_INVALID" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="audioPcmType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DEFAULT" />
+            <xs:enumeration value="UINT_8_BIT" />
+            <xs:enumeration value="INT_16_BIT" />
+            <xs:enumeration value="INT_32_BIT" />
+            <xs:enumeration value="FIXED_Q_8_24" />
+            <xs:enumeration value="FLOAT_32_BIT" />
+            <xs:enumeration value="INT_24_BIT" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="audioMimeList">
+        <xs:list itemType="xs:string" />
+    </xs:simpleType>
+    <xs:complexType name="profile">
+        <xs:attribute name="name" type="xs:token" use="optional" />
+        <xs:attribute name="samplingRates" type="audioSamplingRates" use="required" />
+        <xs:attribute name="channelLayouts" type="audioChannelLayoutList" use="required" />
+        <xs:attribute name="channelMasks" type="audioChannelIndexMaskList" use="optional" />
+        <xs:attribute name="encapsulationType" type="audioEncapsulationType" use="optional" default="NONE" />
+        <xs:attribute name="formatType" type="audioFormatType" use="required" />
+        <xs:attribute name="pcmType" type="audioPcmType" use="optional" />
+        <!-- encoding value is expected to be a valid mime string such as "audio/flac" -->
+        <xs:attribute name="encoding" type="xs:string" use="optional" />
+    </xs:complexType>
+    <xs:simpleType name="audioGainMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="JOINT" />
+            <xs:enumeration value="CHANNELS" />
+            <xs:enumeration value="RAMP" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="audioGainModeListUnrestricted">
+        <xs:list itemType="audioGainMode" />
+    </xs:simpleType>
+    <xs:simpleType name='audioGainModeList'>
+        <xs:restriction base='audioGainModeListUnrestricted'>
+            <xs:minLength value='1' />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="gains">
+        <xs:sequence>
+            <xs:element name="gain" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:attribute name="name" type="xs:token" use="required" />
+                    <xs:attribute name="mode" type="audioGainModeList" use="required" />
+                    <xs:attribute name="channel_layout" type="audioChannelLayout" use="optional" />
+                    <xs:attribute name="minValueMB" type="xs:int" use="optional" />
+                    <xs:attribute name="maxValueMB" type="xs:int" use="optional" />
+                    <xs:attribute name="defaultValueMB" type="xs:int" use="optional" />
+                    <xs:attribute name="stepValueMB" type="xs:int" use="optional" />
+                    <xs:attribute name="minRampMs" type="xs:int" use="optional" />
+                    <xs:attribute name="maxRampMs" type="xs:int" use="optional" />
+                    <xs:attribute name="useForVolume" type="xs:boolean" use="optional" />
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

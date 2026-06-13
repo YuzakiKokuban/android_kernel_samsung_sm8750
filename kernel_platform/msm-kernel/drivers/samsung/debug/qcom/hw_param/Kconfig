@@ -1,0 +1,5 @@
+config SEC_QC_HW_PARAM
+	tristate "SEC HW Paramter Driver for Qualcomm based devices"
+	depends on SEC_QC_USER_RESET
+	help
+	  TODO: help is not ready.

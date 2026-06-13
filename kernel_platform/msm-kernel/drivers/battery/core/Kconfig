@@ -1,0 +1,93 @@
+#
+# SB Core
+#
+
+menu "SB Core configs"
+
+config SB_CORE
+	tristate "sb-core"
+	default n
+	help
+	  Say Y here to enable.
+	  support for sec battery core API.
+	  (module: pq/notify/sysfs/vote)
+	  refer to API headers.
+
+config SB_PQUEUE
+	bool "sb-pqueue"
+	default n
+	help
+	  Say Y here to enable.
+	  support for priority queue.
+	  (api: push/pop/remove)
+	  If you use the data type,
+	  you should set the compare function.
+	  refer to sb_pqueue.h
+
+config SB_NOTIFY
+	bool "sb-notify"
+	default n
+	help
+	  Say Y here to enable.
+	  support for notifier.
+	  (type: probe/exit/external/others event)
+	  refer to sb_notify.h
+
+config SB_SYSFS
+	bool "sb-sysfs"
+	default n
+	depends on SYSFS
+	help
+	  Say Y here to enable.
+	  support for common sysfs.
+	  If you want to make sysfs node in battery folder,
+	  please use this API to work.
+	  refer to sb_sysfs.h
+
+config SB_VOTE
+	bool "sb-vote"
+	default n
+	depends on SB_PQUEUE
+	help
+	  Say Y here to enable.
+	  support for vote.
+	  (set/get/find)
+	  refer to sb_voter.h
+
+config SB_PQUEUE_TEST
+	tristate "KUnit test for sb_pqueue_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sb_pqueue_test
+
+config SB_NOTIFY_TEST
+	tristate "KUnit test for sb_notify_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sb_notify_test
+
+config SB_SYSFS_TEST
+	tristate "KUnit test for sb_sysfs_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sb_sysfs_test
+
+config SB_VOTE_TEST
+	tristate "KUnit test for sb_vote_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sb_vote_test
+
+endmenu

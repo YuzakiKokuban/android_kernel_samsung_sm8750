@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# HALL IC driver configuration
+#
+
+config INPUT_HALL_IC
+	tristate "Enable HALL IC"
+	default n
+	help
+	  Enable Hall IC Feature
+
+config HALL_NOTIFIER
+	tristate "use hall ic notifier"
+	depends on INPUT_HALL_IC
+	default n
+	help
+	  Enable notifier functions to notify hall ic status
+
+config HALL_LOGICAL
+	tristate "use logical hall ic"
+	depends on INPUT_HALL_IC
+	default n
+	help
+	  Enable logical hall ic feature
+	  It is used for pogo keyboard usually
+
+config HALL_DUMP_KEY_MODE
+	tristate "use hall dump key"
+	default n
+	help
+	  Enable hall dump key
+

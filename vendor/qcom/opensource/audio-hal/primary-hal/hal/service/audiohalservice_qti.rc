@@ -1,0 +1,36 @@
+service vendor.audio-hal-aidl /vendor/bin/hw/audiohalservice.qti
+    class hal
+    user audioserver
+    group audio media mediadrm drmrpc inet net_bt net_bt_admin net_bw_acct wakelock context_hub oem_2901 oem_2912
+    capabilities BLOCK_SUSPEND SYS_NICE
+    # setting RLIMIT_RTPRIO allows binder RT priority inheritance
+    rlimit rtprio 10 10
+    ioprio rt 4
+    task_profiles ProcessCapacityHigh HighPerformance
+    writepid /dev/cpuset/foreground/tasks /dev/stune/foreground/tasks
+    onrestart restart audioserver
+
+# SSR trigger for audio subsystem
+on property:vendor.audio.ssr.trigger=1
+    write /sys/kernel/boot_adsp/ssr 1
+
+# crash trigger for audio subsystem
+on property:vendor.audio.crash.kernel.trigger=1
+    write /sys/kernel/boot_adsp/crash 1
+
+on boot
+    chown media audio /sys/kernel/snd_card/card_state
+
+on post-fs-data
+    # Create directory used by audio subsystem
+    mkdir /data/vendor/audio 0770 audio audio
+    mkdir /data/vendor/audio_dsp 0770 media media
+    mkdir /data/vendor/audio/audio_feature_stats 0770 audio audio
+    mkdir /data/vendor/audio/memlog 0770 audio audio
+
+    # Create directory for audio delta files
+    mkdir /data/vendor/audio/acdbdata 0770 media audio
+    mkdir /data/vendor/audio/acdbdata/delta 0770 media audio
+
+on property:sys.boot_completed=1
+    chown media audio /sys/kernel/aud_dev/state

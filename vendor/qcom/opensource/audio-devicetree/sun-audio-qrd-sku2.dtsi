@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+#include "sun-audio-qrd.dtsi"
+&wsa_macro {
+	qcom,wsa-bat-cfgs = <1>, <1>;
+};
+
+&wsa2_macro {
+	qcom,wsa-bat-cfgs = <1>, <1>;
+};
+
+&sun_snd {
+	qcom,model = "sun-qrd-sku2-snd-card";
+};

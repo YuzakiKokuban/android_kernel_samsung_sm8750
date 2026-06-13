@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+/*Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimer in the documentation and/or other materials provided
+ *       with the distribution.
+ *     * Neither the name of The Linux Foundation nor the names of its
+ *       contributors may be used to endorse or promote products derived
+ *       from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * Changes from Qualcomm Innovation Center are provided under the following
+ * license:
+ *Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification,are permitted (subject to the limitations in the disclaimer
+ * below) provided that the following conditions are met:
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer inthe
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of Qualcomm Innovation Center, Inc. nor the names
+ *       of its contributors may be used to endorse or promote products
+ *       derived from this software without specific prior written permission.
+
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY
+ * THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+ * BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+ * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+-->
+<HintConfigs>
+    <Powerhint>
+        <!--video encode 30 fps-->
+        <Config
+            Id="0x00001203" Enable="true" Target="kalama"
+            Resources="" />
+
+        <!--sustained performance-->
+        <Config
+            Id="0x00001206" Enable="true" Target="kalama"
+            Resources=""/>
+
+        <!--vr mode-->
+        <Config
+            Id="0x00001207" Enable="true" Target="kalama"
+            Resources=""/>
+
+        <!--vr mode sustained performance-->
+        <Config
+            Id="0x00001301" Enable="true" Target="kalama"
+            Resources=""/>
+
+        <!-- qvr level cpu1 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.902 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.092 Ghz -->
+        <!-- L CPU - Cluster min freq ~. 595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.286 Ghz -->
+        <!-- P CPU - PRIME CPU min freq ~.921 Ghz-->
+        <!-- P CPU - PRIME CPU max freq ~2.112 Ghz -->
+        <!-- GPU - min pwrlevel 9 (freq 315 Mhz) -->
+        <!-- GPU - max pwrlevel 5 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 3 -->
+        <!-- Min Prime CPUs 1 -->
+        <!-- Indefinite Duration -->
+        <Config
+            Id="0x0000130A" Enable="true" Target="kalama" Timeout="0"
+            Resources="0x40800000, 0x386, 0x40804000, 0x82C, 0x40800100, 0x253, 0x40804100, 0x506,
+            0x40800200, 0x399, 0x40804200, 0x840, 0x42804000, 0x9, 0x42808000, 0x5, 0x41000000, 0x3,
+            0x41000200, 0x1"/>
+
+        <!-- qvr level cpu1 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.902 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.092 Ghz -->
+        <!-- L CPU - Cluster min freq ~. 595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.286 Ghz -->
+        <!-- P CPU - PRIME CPU min freq ~.921 Ghz-->
+        <!-- P CPU - PRIME CPU max freq ~2.112 Ghz -->
+        <!-- GPU - min pwrlevel 9 (freq 315 Mhz) -->
+        <!-- GPU - max pwrlevel 5 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 3 -->
+        <!-- Min Prime CPUs 1 -->
+        <!-- Indefinite Duration -->
+        <Config
+            Id="0x0000130B" Enable="true" Target="kalama" Timeout="0"
+            Resources="0x40800000, 0x386, 0x40804000, 0x82C, 0x40800100, 0x253, 0x40804100, 0x506,
+            0x40800200, 0x399, 0x40804200, 0x840, 0x42804000, 0x9, 0x42808000, 0x5, 0x41000000, 0x3,
+            0x41000200, 0x1"/>
+
+        <!-- qvr level cpu1 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.902 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.092 Ghz -->
+        <!-- L CPU - Cluster min freq ~. 595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.286 Ghz -->
+        <!-- P CPU - PRIME CPU min freq ~.921 Ghz-->
+        <!-- P CPU - PRIME CPU max freq ~2.112 Ghz -->
+        <!-- GPU - min pwrlevel 9 (freq 315 Mhz) -->
+        <!-- GPU - max pwrlevel 5 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 3 -->
+        <!-- Min Prime CPUs 1 -->
+        <!-- Indefinite Duration -->
+        <Config
+            Id="0x0000130C" Enable="true" Target="kalama" Timeout="0"
+            Resources="0x40800000, 0x386, 0x40804000, 0x82C, 0x40800100, 0x253, 0x40804100, 0x506,
+            0x40800200, 0x399, 0x40804200, 0x840, 0x42804000, 0x9, 0x42808000, 0x5, 0x41000000, 0x3,
+            0x41000200, 0x1"/>
+
+        <!-- qvr level cpu2 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.902 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.092 Ghz -->
+        <!-- L CPU - Cluster min freq ~. 595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.286 Ghz -->
+        <!-- P CPU - PRIME CPU min freq ~.921 Ghz-->
+        <!-- P CPU - PRIME CPU max freq ~2.112 Ghz -->
+        <!-- GPU - min pwrlevel 9 (freq 315 Mhz) -->
+        <!-- GPU - max pwrlevel 5 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 3 -->
+        <!-- Min Prime CPUs 1 -->
+        <!-- Indefinite Duration -->
+        <Config
+            Id="0x0000130D" Enable="true" Target="kalama" Timeout="0"
+            Resources="0x40800000, 0x386, 0x40804000, 0x82C, 0x40800100, 0x253, 0x40804100, 0x506,
+            0x40800200, 0x399, 0x40804200, 0x840, 0x42804000, 0x9, 0x42808000, 0x5, 0x41000000, 0x3,
+            0x41000200, 0x1"/>
+
+        <!-- qvr level cpu2 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.902 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.092 Ghz -->
+        <!-- L CPU - Cluster min freq ~. 595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.286 Ghz -->
+        <!-- P CPU - PRIME CPU min freq ~.921 Ghz-->
+        <!-- P CPU - PRIME CPU max freq ~2.112 Ghz -->
+        <!-- GPU - min pwrlevel 9 (freq 315 Mhz) -->
+        <!-- GPU - max pwrlevel 5 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 3 -->
+        <!-- Min Prime CPUs 1 -->
+        <!-- Indefinite Duration -->
+        <Config
+            Id="0x0000130E" Enable="true" Target="kalama" Timeout="0"
+            Resources="0x40800000, 0x386, 0x40804000, 0x82C, 0x40800100, 0x253, 0x40804100, 0x506,
+            0x40800200, 0x399, 0x40804200, 0x840, 0x42804000, 0x9, 0x42808000, 0x5, 0x41000000, 0x3,
+            0x41000200, 0x1"/>
+
+        <!-- qvr level cpu2 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.902 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.092 Ghz -->
+        <!-- L CPU - Cluster min freq ~. 595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.286 Ghz -->
+        <!-- P CPU - PRIME CPU min freq ~.921 Ghz-->
+        <!-- P CPU - PRIME CPU max freq ~2.112 Ghz -->
+        <!-- GPU - min pwrlevel 9 (freq 315 Mhz) -->
+        <!-- GPU - max pwrlevel 5 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 3 -->
+        <!-- Min Prime CPUs 1 -->
+        <!-- Indefinite Duration -->
+        <Config
+            Id="0x0000130F" Enable="true" Target="kalama" Timeout="0"
+            Resources="0x40800000, 0x386, 0x40804000, 0x82C, 0x40800100, 0x253, 0x40804100, 0x506,
+            0x40800200, 0x399, 0x40804200, 0x840, 0x42804000, 0x9, 0x42808000, 0x5, 0x41000000, 0x3,
+            0x41000200, 0x1"/>
+
+        <!-- qvr level cpu3 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.902 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.092 Ghz -->
+        <!-- L CPU - Cluster min freq ~. 595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.286 Ghz -->
+        <!-- P CPU - PRIME CPU min freq ~.921 Ghz-->
+        <!-- P CPU - PRIME CPU max freq ~2.112 Ghz -->
+        <!-- GPU - min pwrlevel 9 (freq 315 Mhz) -->
+        <!-- GPU - max pwrlevel 5 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 3 -->
+        <!-- Min Prime CPUs 1 -->
+        <!-- Indefinite Duration -->
+        <Config
+            Id="0x00001310" Enable="true" Target="kalama" Timeout="0"
+            Resources="0x40800000, 0x386, 0x40804000, 0x82C, 0x40800100, 0x253, 0x40804100, 0x506,
+            0x40800200, 0x399, 0x40804200, 0x840, 0x42804000, 0x9, 0x42808000, 0x5, 0x41000000, 0x3,
+            0x41000200, 0x1"/>
+
+        <!-- qvr level cpu3 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.902 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.092 Ghz -->
+        <!-- L CPU - Cluster min freq ~. 595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.286 Ghz -->
+        <!-- P CPU - PRIME CPU min freq ~.921 Ghz-->
+        <!-- P CPU - PRIME CPU max freq ~2.112 Ghz -->
+        <!-- GPU - min pwrlevel 9 (freq 315 Mhz) -->
+        <!-- GPU - max pwrlevel 5 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 3 -->
+        <!-- Min Prime CPUs 1 -->
+        <!-- Indefinite Duration -->
+        <Config
+            Id="0x00001311" Enable="true" Target="kalama" Timeout="0"
+            Resources="0x40800000, 0x386, 0x40804000, 0x82C, 0x40800100, 0x253, 0x40804100, 0x506,
+            0x40800200, 0x399, 0x40804200, 0x840, 0x42804000, 0x9, 0x42808000, 0x5, 0x41000000, 0x3,
+            0x41000200, 0x1"/>
+
+        <!-- qvr level cpu3 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.902 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.092 Ghz -->
+        <!-- L CPU - Cluster min freq ~. 595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.286 Ghz -->
+        <!-- P CPU - PRIME CPU min freq ~.921 Ghz-->
+        <!-- P CPU - PRIME CPU max freq ~2.112 Ghz -->
+        <!-- GPU - min pwrlevel 9 (freq 315 Mhz) -->
+        <!-- GPU - max pwrlevel 5 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 3 -->
+        <!-- Min Prime CPUs 1 -->
+        <!-- Indefinite Duration -->
+        <Config
+            Id="0x00001312" Enable="true" Target="kalama" Timeout="0"
+            Resources="0x40800000, 0x386, 0x40804000, 0x82C, 0x40800100, 0x253, 0x40804100, 0x506,
+            0x40800200, 0x399, 0x40804200, 0x840, 0x42804000, 0x9, 0x42808000, 0x5, 0x41000000, 0x3,
+            0x41000200, 0x1"/>
+
+        <!--camera ZSLPreview-->
+        <!--CPU-LLC BWMON - Set sample_ms 33-->
+        <!--CPU-LLC BWMON - Set io_percent 100 -->
+        <!--CPU-LLC BWMON - Set hyst_length hist memory 0 -->
+        <!--CPU-LLC-DDR BWMON - Set sample_ms 33 -->
+        <!--CPU-LLC-DDR BWMON - Set io_percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set hyst_length hist memory 0 -->
+        <!--L CPU - Disable schedutil PL -->
+        <!--L CPU - Set hispeed load 99 -->
+        <!--L CPU - max freq 729000 -->
+        <!--B CPU - Disable Core Control -->
+        <!--L CPU - Disable Core Control -->
+        <!--P CPU - Disable Core Control -->
+        <Config
+            Id="0x00001330" Enable="true" Timeout="0" Target="kalama"
+            Resources="0x4183C000, 0x21, 0x41834000, 0x64, 0x41838000, 0, 0x43034000, 0x21,
+            0x43020000, 0x64, 0x43024000, 0, 0x41444100, 0, 0x41440100, 0x63, 0x40804100, 0x339, 0x41008000, 0, 0x41008100, 0, 0x41008200, 0"/>
+
+        <!--camera 30fps-->
+        <!--CPU-LLC BWMON - Set sample_ms 33 -->
+        <!--CPU-LLC BWMON - Set io_percent 100 -->
+        <!--CPU-LLC BWMON - Set hyst_length hist memory 0 -->
+        <!--CPU-LLC-DDR BWMON - Set sample_ms 33 -->
+        <!--CPU-LLC-DDR BWMON - Set io_percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set hyst_length hist memory 0 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 547 -->
+        <!--L CPU max freq 1113600 -->
+        <!--L CPU - Disable schedutil PL -->
+        <!--B CPU - Disable schedutil PL -->
+        <!--B CPU - Set hispeed load 99 -->
+        <!--UPMIGRATE - 50 85 -->
+        <!--DOWNMIGRATE - 10 85 -->
+        <!--B CPU - Disable Core Control -->
+        <!--L CPU - Disable Core Control -->
+        <!--P CPU - Disable Core Control -->
+        <!--SCHED_IDLE_ENOUGH Set 0 -->
+        <!--L CPU - Set hispeed freq 556800 -->
+        <Config
+            Id="0x00001331" Enable="true" Timeout="0" Target="kalama"
+            Resources="0x4183C000, 0x21, 0x41834000, 0x64, 0x41838000, 0, 0x43034000, 0x21,
+            0x43020000, 0x64, 0x43024000, 0, 0x4303C000, 0x858B8 ,0x40804100, 0x459, 0x41444100, 0, 0x41444000, 0, 0x41440000, 0x63,
+            0x40CE0000, 0x0032000A, 0x40CE0200, 0x00550055, 0x41008000, 0, 0x41008100, 0, 0x41008200, 0, 0x43C0C000, 0, 0x4143C100, 0x22C"/>
+
+        <!--camera 60fps-->
+        <!--CPU-LLC BWMON - Set sample_ms 16 -->
+        <!--CPU-LLC BWMON - Set io_percent 100 -->
+        <!--CPU-LLC BWMON - Set hyst_length hist memory 0 -->
+        <!--CPU-LLC-DDR BWMON - Set sample_ms 16 -->
+        <!--CPU-LLC-DDR BWMON - Set io_percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set hyst_length hist memory 0 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 1555 -->
+        <!--L CPU max freq 1113600 -->
+        <!--L CPU - Disable schedutil PL -->
+        <!--B CPU - Disable schedutil PL -->
+        <!--B CPU - Set hispeed load 99 -->
+        <!--UPMIGRATE - 50 85-->
+        <!--DOWNMIGRATE - 10 85-->
+        <!--B CPU - Disable Core Control -->
+        <!--L CPU - Disable Core Control -->
+        <!--P CPU - Disable Core Control -->
+        <!--SCHED_IDLE_ENOUGH Set 0 -->
+        <!--L CPU - Set hispeed freq 556800 -->
+        <Config
+            Id="0x00001332" Enable="true" Timeout="0" Target="kalama"
+            Resources="0x4183C000, 0x10, 0x41834000, 0x64, 0x41838000, 0, 0x43034000, 0x10,
+            0x43020000, 0x64, 0x43024000, 0, 0x4303C000, 0x17BA38,  0x40804100, 0x459, 0x41444100, 0, 0x41444000, 0, 0x41440000, 0x63,
+            0x40CE0000, 0x0032000A, 0x40CE0200, 0x00550055, 0x41008000, 0, 0x41008100, 0, 0x41008200, 0, 0x43C0C000, 0, 0x4143C100, 0x22C"/>
+
+        <!--camera HFR 120/240 fps-->
+        <!--CPU-LLC BWMON - Set sample_ms 16 -->
+        <!--CPU-LLC BWMON - Set io_percent 100 -->
+        <!--CPU-LLC BWMON - Set hyst_length hist memory 0 -->
+        <!--CPU-LLC-DDR BWMON - Set sample_ms 16 -->
+        <!--CPU-LLC-DDR BWMON - Set io_percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set hyst_length hist memory 0 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 1555 -->
+        <!--L CPU max freq 1113600 -->
+        <!--L CPU - Disable schedutil PL -->
+        <!--B CPU - Disable schedutil PL -->
+        <!--B CPU - Set hispeed load 99 -->
+        <!--UPMIGRATE - 50 85-->
+        <!--DOWNMIGRATE - 10 85-->
+        <!--B CPU - Disable Core Control -->
+        <!--L CPU - Disable Core Control -->
+        <!--P CPU - Disable Core Control -->
+        <Config
+            Id="0x00001333" Enable="true" Timeout="0" Target="kalama"
+            Resources="0x4183C000, 0x10, 0x41834000, 0x64, 0x41838000, 0, 0x43034000, 0x10,
+            0x43020000, 0x64, 0x43024000, 0, 0x4303C000, 0x17BA38,  0x40804100, 0x459, 0x41444100, 0, 0x41444000, 0, 0x41440000, 0x63,
+            0x40CE0000, 0x0032000A, 0x40CE0200, 0x00550055, 0x41008000, 0, 0x41008100, 0, 0x41008200, 0"/>
+
+        <!--camera 8k30-->
+        <!--CPU-LLC BWMON - Set sample_ms 33 -->
+        <!--CPU-LLC BWMON - Set io_percent 100 -->
+        <!--CPU-LLC BWMON - Set hyst_length hist memory 0 -->
+        <!--CPU-LLC-DDR BWMON - Set sample_ms 33 -->
+        <!--CPU-LLC-DDR BWMON - Set io_percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set hyst_length hist memory 0 -->
+        <!--L CPU max freq 1113600 -->
+        <!--L CPU - Disable schedutil PL -->
+        <!--B CPU - Disable schedutil PL -->
+        <!--B CPU - Set hispeed load 99 -->
+        <!--UPMIGRATE - 40 85-->
+        <!--DOWNMIGRATE - 10 85-->
+        <!--B CPU - Disable Core Control -->
+        <!--L CPU - Disable Core Control -->
+        <!--P CPU - Disable Core Control -->
+        <!--SCHED_IDLE_ENOUGH Set 0 -->
+        <!--L CPU - Set hispeed freq 556800 -->
+        <Config
+            Id="0x00001335" Enable="true" Timeout="0" Target="kalama"
+            Resources="0x4183C000, 0x21, 0x41834000, 0x64, 0x41838000, 0, 0x43034000, 0x21,
+            0x43020000, 0x64, 0x43024000, 0, 0x40804100, 0x459, 0x41444100, 0, 0x41444000, 0, 0x41440000, 0x63,
+            0x40CE0000, 0x0028000A, 0x40CE0200, 0x00550055, 0x41008000, 0, 0x41008100, 0, 0x41008200, 0, 0x43C0C000, 0, 0x4143C100, 0x22C"/>
+
+        <!--video encode HFR 480 fps-->
+        <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, 0x40C -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0x4CC -->
+        <!-- MPCTLV3_SCHED_DOWNMIGRATE, 0x14 -->
+        <!-- MPCTLV3_SCHED_UPMIGRATE, 0x1E -->
+        <!-- MPCTLV3_CPUBW_HWMON_SAMPLE_MS , 0x0A -->
+        <!-- MPCTLV3_CPUBW_HWMON_IO_PERCENT, 0x50 -->
+        <!-- MPCTLV3_CPUBW_HWMON_HYST_OPT, 0 -->
+        <Config
+            Id="0x00001334" Enable="true" Timeout="0" Target="kalama"
+            Resources="0x40400000, 0x1, 0x40800100, 0x40C, 0x40800000, 0x4CC, 0x40C20000, 0x14,
+            0x40C1C000, 0x1E, 0x41820000, 0x0A, 0x41808000, 0x50, 0x4180C000, 0"/>
+
+        <!-- camera open tunings-->
+        <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+        <!-- MPCTLV3_SCHED_BOOST, 0x1 -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0, 1671000 -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 1671000 -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_LITTLE_CORE_0, 1632000 -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, 1632000 -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_PLUS_CORE_0, 2016000 -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_PLUS_CORE_0, 2016000 -->
+        <Config
+            Id="0x00001337" Enable="true" Timeout="0" Target="kalama"
+            Resources="0x40400000, 0x1, 0x40C00000, 0x1, 0x40804000, 0X687, 0x40800000, 0X687,
+            0x40804100, 0X660, 0x40800100, 0X660, 0x40800200, 0X8C6, 0x40804200, 0X8C6"/>
+
+        <!-- camera close tunings-->
+        <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+        <!-- MPCTLV3_SCHED_BOOST, 0x1 -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0, 1632000 -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 1632000 -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_LITTLE_CORE_0, 1671000 -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, 1671000 -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_PLUS_CORE_0, 2016000 -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_PLUS_CORE_0, 2016000 -->
+        <Config
+            Id="0x00001338" Enable="true" Timeout="0" Target="kalama"
+            Resources="0x40400000, 0x1, 0x40C00000, 0x1, 0x40804000, 0X687, 0x40800000, 0X687,
+            0x40804100, 0X660, 0x40800100, 0X660, 0x40800200, 0X8C6, 0x40804200, 0X8C6"/>
+
+        <!-- camera snapshot tunings-->
+        <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+        <!-- Silver cluster min freq to 1.132GHz -->
+        <!-- Gold cluster min freq to 1.363GHz -->
+        <!-- MPCTLV3_SCHED_DOWNMIGRATE, 0x14 -->
+        <!-- MPCTLV3_SCHED_UPMIGRATE, 0x1E -->
+        <Config
+            Id="0x00001339" Enable="true" Timeout="0" Target="kalama"
+            Resources="0x40400000, 0x1, 0x40800100, 0x46C, 0x40800000, 0x553, 0x40C20000, 0X14,
+            0x40C1C000, 0X1E"/>
+
+        <!-- decode 240 fps tunings-->
+        <!--L CPU - max freq 700000 -->
+         <Config
+            Id="0X00001505" Enable="true" Timeout="0" Target="kalama"
+            Resources="0x40804100, 0x2BC"/>
+
+        <!-- video decode 30 fps non secure content tunings-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0X00001502" Enable="true" Timeout="0" Target="kalama"
+            Resources="0x40800000, 0XA"/>
+
+        <!-- video decode 30 fps secure content tunings-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0X00001504" Enable="true" Timeout="0" Target="kalama"
+            Resources="0x40800000, 0XA"/>
+
+        <!-- psm light mode power hint-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0x000015E0" Type="0x81" Enable="true" Timeout="0" Taget="kalama"
+            Resources="0x40800000, 0XA"/>
+
+        <!-- psm medium mode power hint-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0x000015E0" Type="0x82" Enable="true" Timeout="0" Taget="kalama"
+            Resources="0x40800000, 0XA"/>
+
+        <!-- psm deep mode power hint-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0x000015E0" Type="0x83" Enable="true" Timeout="0" Taget="kalama"
+            Resources="0x40800000, 0XA"/>
+
+        <!-- psm release mode power hint-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0x000015E0" Type="0x80" Enable="true" Timeout="0" Taget="kalama"
+            Resources="0x40800000, 0XA"/>
+
+    </Powerhint>
+</HintConfigs>

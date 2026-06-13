@@ -1,0 +1,25 @@
+{
+  "presubmit": [
+    {
+      "name": "toybox-tests"
+    },
+    {
+      "name": "aidl_integration_test"
+    }
+  ],
+  "postsubmit": [
+    {
+      "name": "toybox-gtests"
+    }
+  ],
+  "hwasan-postsubmit": [
+    {
+      "name": "toybox-tests"
+    }
+  ],
+  "kernel-presubmit": [
+    {
+      "name": "toybox-tests"
+    }
+  ]
+}

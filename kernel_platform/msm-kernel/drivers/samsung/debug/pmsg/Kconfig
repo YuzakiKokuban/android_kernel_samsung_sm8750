@@ -1,0 +1,21 @@
+config SEC_PMSG
+	tristate "PSTORE backend for saving android platform log"
+	help
+	  TODO: help is not ready.
+
+config SEC_PMSG_TEST_FOR_ON_DEVICE
+	tristate "KUnit test for sec_pmsg_test"
+	depends on KUNIT
+	depends on SEC_PMSG
+	help
+	  TODO: Describe config fully.
+	  If you run this test driver on device, SHOULD set this config as 'm' to build test driver modulraly.
+
+config SEC_PMSG_TEST_FOR_ONLY_UML
+	tristate "KUnit test for sec_pmsg_test"
+	depends on KUNIT
+	depends on UML
+	depends on SEC_PMSG
+	help
+	  TODO: Describe config fully.
+	  This CONFIG is recommended to set to y.

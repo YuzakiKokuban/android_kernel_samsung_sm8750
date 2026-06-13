@@ -1,0 +1,21 @@
+{
+    "homepage": "https://docs.aspect.build/rules/aspect_rules_terser",
+    "maintainers": [
+        {
+            "email": "hello@aspect.dev",
+            "github": "aspect-build",
+            "name": "Aspect team"
+        }
+    ],
+    "repository": [
+        "github:aspect-build/rules_terser"
+    ],
+    "versions": [
+        "0.14.1",
+        "0.14.3",
+        "1.0.0",
+        "1.0.1",
+        "2.0.0-rc0"
+    ],
+    "yanked_versions": {}
+}

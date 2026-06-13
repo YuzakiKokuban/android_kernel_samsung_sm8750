@@ -1,0 +1,8 @@
+config SEC_PM_THERMISTOR
+    tristate "SEC Thermistor support"
+    depends on SEC_PM && IIO
+    default n
+    help
+      This driver supports SEC Thermistor sensor readinga nd its
+      interpretation. This driver uses the industrial I/O subsystem
+      and need adc-termperature mapping table for conversion.

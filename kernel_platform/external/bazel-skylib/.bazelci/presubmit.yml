@@ -1,0 +1,142 @@
+---
+.reusable_config: &reusable_config
+  build_targets:
+    - "--"
+    - "//..."
+    - "@bazel_skylib_gazelle_plugin//..."
+  test_targets:
+    - "--"
+    - "//..."
+    - "@bazel_skylib_gazelle_plugin//..."
+
+tasks:
+  ubuntu1804_latest:
+    <<: *reusable_config
+    name: "Latest Bazel"
+    platform: ubuntu1804
+    bazel: latest
+    build_flags:
+    - "--incompatible_config_setting_private_default_visibility"
+    - "--incompatible_disallow_empty_glob"
+    test_flags:
+    - "--test_env=PATH"
+
+  ubuntu1604_latest:
+    name: "Latest Bazel"
+    platform: ubuntu1604
+    bazel: latest
+    build_flags:
+    - "--incompatible_config_setting_private_default_visibility"
+    - "--incompatible_disallow_empty_glob"
+    build_targets:
+    - "--"
+    - "//..."
+    - "@bazel_skylib_gazelle_plugin//..."
+    # //distribution requires Python >= 3.6 for some rules_pkg scripts; Ubuntu 16.04 has Python 3.5
+    - "-//distribution/..."
+    test_flags:
+    - "--test_env=PATH"
+    test_targets:
+    - "--"
+    - "//..."
+    - "@bazel_skylib_gazelle_plugin//..."
+    # //distribution requires Python >= 3.6 for some rules_pkg scripts; Ubuntu 16.04 has Python 3.5
+    - "-//distribution/..."
+
+  macos_latest:
+    <<: *reusable_config
+    name: "Latest Bazel"
+    platform: macos
+    bazel: latest
+    build_flags:
+    - "--incompatible_config_setting_private_default_visibility"
+    - "--incompatible_disallow_empty_glob"
+    test_flags:
+    - "--test_env=PATH"
+
+  windows_latest:
+    <<: *reusable_config
+    name: "Latest Bazel"
+    platform: windows
+    bazel: latest
+    build_flags:
+    - "--incompatible_config_setting_private_default_visibility"
+    - "--incompatible_disallow_empty_glob"
+    test_flags:
+    # TODO(laszlocsomor): remove "--test_env=LOCALAPPDATA" after
+    # https://github.com/bazelbuild/bazel/issues/7761 is fixed
+    - "--test_env=LOCALAPPDATA"
+    - "--test_tag_filters=-no_windows"
+
+  ubuntu1804_last_green:
+    <<: *reusable_config
+    name: "Last Green Bazel"
+    platform: ubuntu1804
+    bazel: last_green
+    build_flags:
+    - "--incompatible_config_setting_private_default_visibility"
+    - "--incompatible_disallow_empty_glob"
+    test_flags:
+    - "--test_env=PATH"
+
+  ubuntu1604_last_green:
+    name: "Last Green Bazel"
+    platform: ubuntu1604
+    bazel: last_green
+    build_flags:
+    - "--incompatible_config_setting_private_default_visibility"
+    - "--incompatible_disallow_empty_glob"
+    build_targets:
+    - "--"
+    - "//..."
+    - "@bazel_skylib_gazelle_plugin//..."
+    # //distribution requires Python >= 3.6 for some rules_pkg scripts; Ubuntu 16.04 has Python 3.5
+    - "-//distribution/..."
+    test_flags:
+    - "--test_env=PATH"
+    test_targets:
+    - "--"
+    - "//..."
+    - "@bazel_skylib_gazelle_plugin//..."
+    # //distribution requires Python >= 3.6 for some rules_pkg scripts; Ubuntu 16.04 has Python 3.5
+    - "-//distribution/..."
+
+  macos_last_green:
+    <<: *reusable_config
+    name: "Last Green Bazel"
+    platform: macos
+    bazel: last_green
+    build_flags:
+    - "--incompatible_config_setting_private_default_visibility"
+    - "--incompatible_disallow_empty_glob"
+    test_flags:
+    - "--test_env=PATH"
+
+  windows_last_green:
+    <<: *reusable_config
+    name: "Last Green Bazel"
+    platform: windows
+    bazel: last_green
+    build_flags:
+    - "--incompatible_config_setting_private_default_visibility"
+    - "--incompatible_disallow_empty_glob"
+    test_flags:
+    # TODO(laszlocsomor): remove "--test_env=LOCALAPPDATA" after
+    # https://github.com/bazelbuild/bazel/issues/7761 is fixed
+    - "--test_env=LOCALAPPDATA"
+    - "--test_tag_filters=-no_windows"
+
+  ubuntu1804_last_green_bzlmod:
+    <<: *reusable_config
+    name: "Last Green Bazel (with bzlmod)"
+    platform: ubuntu1804
+    bazel: last_green
+    build_flags:
+    - "--enable_bzlmod"
+    - "--incompatible_config_setting_private_default_visibility"
+    - "--incompatible_disallow_empty_glob"
+    test_flags:
+    - "--enable_bzlmod"
+    - "--test_env=PATH"
+
+buildifier: latest

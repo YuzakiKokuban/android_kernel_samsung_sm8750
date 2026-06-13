@@ -1,0 +1,7 @@
+#
+# Dev-Ril-Bridge driver
+#
+
+config DEV_RIL_BRIDGE
+	tristate "Support a bridge between device and RIL"
+	default n

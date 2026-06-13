@@ -1,0 +1,83 @@
+# Copyright (C) 2023 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load(
+    "@rules_pkg//pkg:mappings.bzl",
+    "pkg_files",
+)
+load("@rules_pkg//pkg:pkg.bzl", "pkg_zip")
+
+cc_binary(
+    name = "hello_world",
+    srcs = ["hello_world.c"],
+)
+
+pkg_files(
+    name = "hello_world_files",
+    srcs = [":hello_world"],
+    prefix = "bin",
+)
+
+pkg_files(
+    name = "all_srcs",
+    srcs = glob(
+        ["**"],
+        exclude = [
+            "BUILD.bazel",
+            "zip_content_test.py",
+        ],
+    ),
+    prefix = "all_srcs",
+)
+
+pkg_files(
+    name = "stripped_srcs",
+    srcs = [
+        "dir1/dir_random_name/dir3/d.txt",
+        "dir1/dir_random_name/dir3/e.txt",
+    ],
+    prefix = "new_dir1/new_dir2",
+    strip_prefix = "dir1/dir_random_name",
+)
+
+pkg_zip(
+    name = "pkg_zip_archive",
+    srcs = [
+        "a.txt",
+        "b.txt",
+        ":all_srcs",
+        ":hello_world_files",
+        ":stripped_srcs",
+    ],
+    out = "tests.zip",
+)
+
+py_test(
+    name = "zip_content_test",
+    srcs = ["zip_content_test.py"],
+    args = [
+        "--zip_file $(location :pkg_zip_archive)",
+    ],
+    data = [
+        ":pkg_zip_archive",
+    ],
+    deps = [
+        "@io_abseil_py//absl/testing:absltest",
+    ],
+)
+
+test_suite(
+    name = "zip_test",
+    tests = None,  # All tests in this package
+)

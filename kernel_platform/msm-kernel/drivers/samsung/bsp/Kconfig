@@ -1,0 +1,28 @@
+menu "Samsung Factory Feature"
+config SEC_FACTORY
+	bool "when it comes to sec factory mode"
+	default n
+	select SEC_PANIC_PCIE_ERR
+	help
+	  It will support a sec factory mode
+endmenu
+
+config SEC_FACTORY_INTERPOSER
+	bool "Samsung Factory interposer binary"
+	default n
+	help
+	  Samsung Factory interposer binary
+
+config SAMSUNG_PRODUCT_SHIP
+	bool "set up for product shipping"
+	default n
+
+source "drivers/samsung/bsp/class/Kconfig"
+source "drivers/samsung/bsp/param/Kconfig"
+source "drivers/samsung/bsp/key_notifier/Kconfig"
+source "drivers/samsung/bsp/reloc_gpio/Kconfig"
+source "drivers/samsung/bsp/argos/Kconfig"
+source "drivers/samsung/bsp/of_kunit/Kconfig"
+source "drivers/samsung/bsp/blk_helper/Kconfig"
+
+source "drivers/samsung/bsp/qcom/Kconfig"

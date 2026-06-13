@@ -1,0 +1,19 @@
+{
+    "homepage": "https://github.com/bufbuild/rules_buf",
+    "maintainers": [
+        {
+            "email": "alex@aspect.dev",
+            "github": "alexeagle",
+            "name": "Alex Eagle"
+        }
+    ],
+    "repository": [
+        "github:bufbuild/rules_buf"
+    ],
+    "versions": [
+        "0.1.1",
+        "0.2.0",
+        "0.3.0"
+    ],
+    "yanked_versions": {}
+}

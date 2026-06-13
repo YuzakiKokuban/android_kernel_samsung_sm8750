@@ -1,0 +1,4 @@
+config SEC_IPC_TIANTONG
+    tristate "Tiantong driver"
+    help
+      TODO: help is not ready

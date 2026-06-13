@@ -1,0 +1,38 @@
+cc_library_shared {
+
+    name: "libloc_base_util",
+    vendor: true,
+    owner: "qti",
+
+    cflags: [
+        "-fno-short-enums",
+    ] + GNSS_CFLAGS,
+
+    arch: {
+        arm: {
+            cflags: ["-DANDROID_32_BIT_PTR_SUPPORT"],
+        },
+    },
+
+    header_libs: [
+        "libutils_headers",
+        "libloc_base_util_headers",
+    ],
+
+    shared_libs: [
+        "libsqlite",
+        "libssl",
+        "liblog",
+    ],
+
+    srcs: [
+        "src/config_file.cpp",
+        "src/log.cpp",
+        "src/memorystream.cpp",
+        "src/nvparam_mgr.cpp",
+        "src/postcard.cpp",
+        "src/sync.cpp",
+        "src/string_routines.cpp",
+        "src/time_routines.cpp",
+    ],
+}

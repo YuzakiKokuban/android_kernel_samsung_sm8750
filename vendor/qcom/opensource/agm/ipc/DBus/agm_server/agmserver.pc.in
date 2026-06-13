@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: agmserver
+Description: agmserver library
+Version: @VERSION@
+Libs: -L${libdir} -lagmserver
+Cflags: -I${includedir}/mm-audio/qti-agm-server

@@ -1,0 +1,22 @@
+cc_library_shared {
+    name: "libqcomfm_jni",
+
+    system_ext_specific: true,
+    srcs: [
+        "android_hardware_fm.cpp",
+    ],
+
+    host_ldlibs: ["-ldl"],
+    shared_libs: [
+        "libandroid_runtime",
+        "libnativehelper",
+        "liblog",
+        "libcutils",
+    ],
+
+    include_dirs: [
+        "vendor/qcom/opensource/commonsys-intf/bluetooth/include",
+        "vendor/qcom/opensource/commonsys/fm/helium",
+    ],
+
+}

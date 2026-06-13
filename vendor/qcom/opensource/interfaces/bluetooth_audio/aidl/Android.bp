@@ -1,0 +1,31 @@
+aidl_interface {
+    name: "vendor.qti.hardware.bluetooth.audio",
+    host_supported: true,
+    vendor_available: true,
+    srcs: [
+        "vendor/qti//hardware/bluetooth/audio/*.aidl",
+    ],
+    stability: "vintf",
+    backend: {
+        ndk: {
+            apex_available: [
+                "//apex_available:platform",
+                "com.android.btservices",
+            ],
+            min_sdk_version: "31",
+        },
+        cpp: {
+            enabled: false,
+        },
+        java: {
+            sdk_version: "module_current",
+            enabled: false,
+        },
+    },
+    versions_with_info: [
+        {
+            version: "1",
+            imports: [],
+        },
+    ],
+}

@@ -1,0 +1,44 @@
+# Copyright (C) 2021 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Lock down the PATH variable in actions to /usr/bin and /usr/local/bin.
+build --experimental_strict_action_env
+
+# By default, output all the logs to stdout/stderr by disabling the console limit
+build --experimental_ui_max_stdouterr_bytes=-1
+
+# Show the full set of flags for observability and debuggability.
+# common --announce_rc
+
+# Make output directories writable so `rm -rf out/` works.
+build --experimental_writable_outputs
+
+# Use subrule()
+common --experimental_rule_extension_api
+
+# Ensure to always use @local_jdk; the checked-in JDK.
+# build --java_runtime_version=local_jdk
+build --tool_java_runtime_version=local_jdk
+
+# Always dump full test results
+test --test_output=errors --test_summary=terse
+
+# Support a device-specific bazelrc file
+try-import %workspace%/device.bazelrc
+
+# Support a local user-specific bazelrc file.
+try-import %workspace%/user.bazelrc
+
+# Do not add more flags below so that the flags set by device.bazelrc
+# and user.bazelrc are respected.

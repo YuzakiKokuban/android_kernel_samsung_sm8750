@@ -1,0 +1,26 @@
+#
+# samsung panel notifier
+#
+
+config SEC_PANEL_NOTIFIER_V2
+	tristate "samsung panel notifier"
+	help
+	  Samsung panel notifier.
+
+config SEC_PANEL_NOTIFIER_V2_TEST_FOR_ON_DEVICE
+	tristate "KUnit test for sec_panel_notifier_v2_test"
+	depends on KUNIT
+	depends on SEC_PANEL_NOTIFIER_V2
+	help
+	  TODO: Describe config fully.
+	  If you run this test driver on device, SHOULD set this config as 'm' to build test driver modulraly.
+
+config SEC_PANEL_NOTIFIER_V2_TEST_FOR_ONLY_UML
+	tristate "KUnit test for sec_panel_notifier_v2_test"
+	depends on KUNIT
+	depends on UML
+	depends on SEC_PANEL_NOTIFIER_V2
+	help
+	  TODO: Describe config fully.
+	  This CONFIG is recommended to set to y.
+

@@ -1,0 +1,30 @@
+aidl_interface {
+    name: "vendor.qti.hardware.agm",
+    vendor: true,
+    srcs: ["vendor/qti/hardware/agm/*.aidl"],
+    stability: "vintf",
+    owner: "qti",
+    backend: {
+        cpp: {
+            enabled: false,
+        },
+        java: {
+            sdk_version: "module_current",
+        },
+        ndk: {
+            enabled: true,
+        },
+    },
+
+    imports: [
+        "android.hardware.common-V2",
+    ],
+    versions_with_info: [
+        {
+            version: "1",
+            imports: ["android.hardware.common-V2"],
+        },
+    ],
+    frozen: true,
+
+}

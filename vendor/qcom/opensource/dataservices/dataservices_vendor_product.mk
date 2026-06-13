@@ -1,0 +1,4 @@
+#DATA_OSS
+DATA_OSS := librmnetctl
+
+PRODUCT_PACKAGES += $(DATA_OSS)

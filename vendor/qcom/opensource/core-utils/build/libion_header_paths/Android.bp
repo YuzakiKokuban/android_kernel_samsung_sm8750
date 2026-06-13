@@ -1,0 +1,7 @@
+
+cc_defaults {
+	name: "libion_header_paths",
+	include_dirs: ["system/memory/libion/include",
+		       "system/memory/libion/kernel-headers"]
+}
+

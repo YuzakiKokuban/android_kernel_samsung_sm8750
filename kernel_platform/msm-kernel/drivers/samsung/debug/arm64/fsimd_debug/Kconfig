@@ -1,0 +1,5 @@
+config SEC_ARM64_FSIMD_DEBUG
+	tristate "SEC Detecting undesired NEON usage in kernel"
+	depends on ARM64 && ANDROID_VENDOR_HOOKS
+	help
+	  TODO: help is not ready.

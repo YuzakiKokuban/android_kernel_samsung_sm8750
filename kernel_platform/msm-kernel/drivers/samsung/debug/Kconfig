@@ -1,0 +1,17 @@
+source "drivers/samsung/debug/common/Kconfig"
+source "drivers/samsung/debug/boot_stat/Kconfig"
+source "drivers/samsung/debug/log_buf/Kconfig"
+source "drivers/samsung/debug/pmsg/Kconfig"
+source "drivers/samsung/debug/reboot_cmd/Kconfig"
+source "drivers/samsung/debug/upload_cause/Kconfig"
+source "drivers/samsung/debug/crashkey/Kconfig"
+source "drivers/samsung/debug/crashkey_long/Kconfig"
+source "drivers/samsung/debug/debug_region/Kconfig"
+source "drivers/samsung/debug/rdx_bootdev/Kconfig"
+
+# TODO: architecture specific drivers at here
+source "drivers/samsung/debug/arm64/Kconfig"
+source "drivers/samsung/debug/riscv64/Kconfig"
+
+# TODO: soc specific drivers at here
+source "drivers/samsung/debug/qcom/Kconfig"

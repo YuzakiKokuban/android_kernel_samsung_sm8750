@@ -1,0 +1,6 @@
+CONFIG_SECDP=y # nocheck: It is intended for displayport, ignore it.
+CONFIG_SECDP_LOGGER=y # nocheck: It is intended for displayport, ignore it.
+CONFIG_SECDP_BIGDATA=y # nocheck: It is intended for displayport, ignore it.
+CONFIG_SECDP_SWITCH=y # nocheck: It is intended for displayport, ignore it.
+CONFIG_SECDP_DBG=y # nocheck: It is intended for displayport, ignore it.
+CONFIG_SECDP_FACTORY_DPSWITCH_TEST=y # nocheck: It is intended for displayport, ignore it.

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Copyright (c) 2021, The Linux Foundation. All rights reserved.            -->
+<!--                                                                           -->
+<!-- Redistribution and use in source and binary forms, with or without        -->
+<!-- modification, are permitted provided that the following conditions are    -->
+<!-- met:                                                                      -->
+<!--     * Redistributions of source code must retain the above copyright      -->
+<!--       notice, this list of conditions and the following disclaimer.       -->
+<!--     * Redistributions in binary form must reproduce the above             -->
+<!--       copyright notice, this list of conditions and the following         -->
+<!--       disclaimer in the documentation and/or other materials provided     -->
+<!--       with the distribution.                                              -->
+<!--     * Neither the name of The Linux Foundation nor the names of its       -->
+<!--       contributors may be used to endorse or promote products derived     -->
+<!--       from this software without specific prior written permission.       -->
+<!--                                                                           -->
+<!-- THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED              -->
+<!-- WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF      -->
+<!-- MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT    -->
+<!-- ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS    -->
+<!-- BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR    -->
+<!-- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF      -->
+<!-- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR           -->
+<!-- BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,     -->
+<!-- WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE      -->
+<!-- OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN    -->
+<!-- IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                             -->
+
+<graph_key_value_pair_info>
+    <streams>
+        <!-- Low-latency stream -->
+        <stream type="PAL_STREAM_LOW_LATENCY">
+            <keys_and_values Direction="TX" Instance="1">
+                <!-- STREAMTX - RAW_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB1000009"/>
+            </keys_and_values>
+            <keys_and_values Direction="RX" Instance="1">
+                <!-- STREAMRX - PCM_LL_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA100000E"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+        </stream>
+        <!-- Deep Buffer stream -->
+        <stream type="PAL_STREAM_DEEP_BUFFER">
+            <keys_and_values Direction="RX" Instance="1">
+                <!-- STREAMRX - PCM_DEEP_BUFFER -->
+                <graph_kv key="0xA1000000" value="0xA1000001"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+            <keys_and_values Direction="RX" Instance="2">
+                <!-- STREAMRX - PCM_DEEP_BUFFER -->
+                <graph_kv key="0xA1000000" value="0xA1000001"/>
+                <!-- INSTANCE - INSTANCE_2 -->
+                <graph_kv key="0xAB000000" value="0x2"/>
+            </keys_and_values>
+            <keys_and_values Direction="TX" Instance="1">
+                <!-- STREAMTX - PCM_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB1000001"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+            <keys_and_values Direction="TX" Instance="2">
+                <!-- STREAMTX - PCM_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB1000001"/>
+                <!-- INSTANCE - INSTANCE_2 -->
+                <graph_kv key="0xAB000000" value="0x2"/>
+            </keys_and_values>
+        </stream>
+    </streams>
+    <devices>
+        <!-- Speaker Device -->
+        <device id="PAL_DEVICE_OUT_SPEAKER">
+            <keys_and_values>
+                <!-- DEVICERX - SPEAKER -->
+                <graph_kv key="0xA2000000" value="0xA2000001"/>
+            </keys_and_values>
+        </device>
+        <!-- In Handset MIC Device -->
+        <device id="PAL_DEVICE_IN_HANDSET_MIC">
+            <keys_and_values>
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+            </keys_and_values>
+        </device>
+    </devices>
+    <devicepps>
+        <!-- OUT Speaker DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_SPEAKER">
+            <keys_and_values StreamType="PAL_STREAM_LOW_LATENCY">
+                <!-- DEVICERX - SPEAKER -->
+                <graph_kv key="0xA2000000" value="0xA2000001"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_AUDIO_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000002"/>
+            </keys_and_values>
+        </devicepp>
+    </devicepps>
+</graph_key_value_pair_info>

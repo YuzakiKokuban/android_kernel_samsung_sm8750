@@ -1,0 +1,56 @@
+# Copyright (C) 2023 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""Tests on hermetic_* rules."""
+
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
+load("//build/kernel/kleaf:hermetic_tools.bzl", "hermetic_genrule")
+
+test_suite(
+    name = "hermetic_test",
+    tests = None,  # all tests
+)
+
+hermetic_genrule(
+    name = "simple_genrule",
+    outs = ["simple_genrule_out.txt"],
+    cmd = """
+    if ! which cat; then
+        echo "ERROR: cat not found!" >&2
+        exit 1
+    fi
+    if [[ $$(which cat) != */build/kernel/hermetic-tools/cat ]]; then
+        echo "ERROR: cat is from absolute path!" >&2
+        exit 1
+    fi
+
+    cat > $(execpath simple_genrule_out.txt) <<< "okay"
+    """,
+)
+
+hermetic_genrule(
+    name = "simple_genrule_with_cc_toolchain",
+    outs = ["version.txt"],
+    # llvm-readelf comes from the resolved CC toolchain.
+    cmd = "llvm-readelf --version > $@",
+    use_cc_toolchain = True,
+)
+
+build_test(
+    name = "build_tests",
+    targets = [
+        ":simple_genrule",
+        ":simple_genrule_with_cc_toolchain",
+    ],
+)

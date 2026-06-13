@@ -1,0 +1,32 @@
+cc_library_headers {
+    name: "libiqtimapperext_stablec",
+    export_include_dirs: ["include"],
+    vendor_available: true,
+
+    // TODO(b/214400477) Remove apex_available
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.media.swcodec",
+        "test_com.android.media.swcodec",
+    ],
+    min_sdk_version: "29",
+}
+
+cc_library_headers {
+    name: "libiqtimapperext_providerutils",
+    vendor_available: true,
+    export_include_dirs: ["implutils/include"],
+    header_libs: [
+        "libiqtimapperext_stablec",
+    ],
+    export_header_lib_headers: [
+        "libiqtimapperext_stablec",
+    ],
+    // TODO(b/214400477) Remove apex_available
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.media.swcodec",
+        "test_com.android.media.swcodec",
+    ],
+    min_sdk_version: "29",
+}

@@ -1,0 +1,251 @@
+#!/usr/bin/env bash
+# Copyright (c) 2020, The Linux Foundation. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimer in the documentation and/or other materials provided
+#       with the distribution.
+#     * Neither the name of The Linux Foundation nor the names of its
+#       contributors may be used to endorse or promote products derived
+#       from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+SCRIPTS_DIR=$(dirname $(readlink -f $0))
+ROOT_DIR=${SCRIPTS_DIR}/../..
+
+function show_help {
+    echo "USAGE: $0 [target [variant]]"
+    echo
+    echo "Create a simple build.config"
+}
+
+if [ $(realpath "${ROOT_DIR}") != $(realpath "${PWD}") ]; then
+    echo "$0 must be run in $(realpath ${ROOT_DIR})"
+    echo
+    show_help
+    exit -1
+fi
+
+TARGET_CONFIGS=()
+CHOSEN_CONFIG=""
+CHOSEN_VARIANT=""
+
+which whiptail > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    DIALOG_TOOL=whiptail
+else
+    which dialog > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        DIALOG_TOOL=dialog
+    fi
+fi
+
+source ${SCRIPTS_DIR}/_wrapper_common.sh
+
+function catarr() {
+    local a="$1[*]"
+    cat <(IFS=$'\n'; printf '%s\n' "${!a}")
+}
+
+function menutargets {
+    local default_answer
+    local shortnames
+    local duplicates
+
+    create_targets_array TARGET_CONFIGS ORIGIN_DIRS
+
+    if [ ${#TARGET_CONFIGS[@]} -eq 0 ]; then
+        echo "No configs found!"
+        # TODO: helpful text?
+        return 1
+    fi
+
+    # when presenting the possible targets, we want to give something human-ly
+    # understandable. File names are typically of the format
+    # "build.config.gki.aarch64" or "build.config.msm.kona"
+    # The strategy is to use just the last component as the friendly name
+    # ("aarch64" or "kona"). If multiple build.configs would have the same name,
+    # then use everything after build.config. ("gki.aarch64" or "msm.kona").
+    # If there are still conflicts, then just use the whole path of the config
+
+    shortnames=("${TARGET_CONFIGS[@]}")
+    # Shortname should first be last component of build.config.x.y.z (i.e. "z")
+    for i in ${!shortnames[@]}; do
+        shortnames[$i]=${shortnames[$i]##*.}
+    done
+
+
+    # If there were conflicts, set shortname to everything after build.config. (i.e. "x.y.z")
+    duplicates=$(catarr shortnames | sort | uniq -d)
+    for i in "${!shortnames[@]}"; do
+        if sh -c "echo '${duplicates}' | grep -q '${shortnames[$i]}'"; then
+            shortnames[$i]=$(basename ${TARGET_CONFIGS[$i]} | sed 's/build.config.//')
+        fi
+    done
+
+    # Give full name if there are any conflicts
+    duplicates=$(catarr shortnames | sort | uniq -d)
+    for i in "${!shortnames[@]}"; do
+        if sh -c "echo '${duplicates}' | grep -q '${shortnames[$i]}'"; then
+            shortnames[$i]=${TARGET_CONFIGS[$i]}
+        fi
+    done
+
+    # Now, on to actually figuring out the build.config
+
+    default_answer=0
+
+    if [ -n "$1" ]; then
+        CHOSEN_CONFIG=$1
+    fi
+
+    if [ -t 0 ]; then
+        if [ -z "${CHOSEN_CONFIG}" ] && [ -n "${DIALOG_TOOL}" ]; then
+            local table=""
+            for i in ${!shortnames[@]}; do
+                table="${table} ${shortnames[$i]} ${TARGET_CONFIGS[$i]}"
+            done
+            CHOSEN_CONFIG=$(${DIALOG_TOOL} --title "Available build configs" \
+                            --menu "Please choose a build config" \
+                            0 0 20 ${table} 3>&1 1>&2 2>&3)
+        fi
+        if [ -z "${CHOSEN_CONFIG}" ]; then
+            echo
+            echo "Config choices are:"
+            for i in ${!shortnames[@]}; do
+                printf '\t%d.  %s\n' $i "${shortnames[$i]}"
+            done
+
+            echo -n "Which would you like? [${default_answer}] "
+            read CHOSEN_CONFIG
+        fi
+    fi
+
+    [ -z "${CHOSEN_CONFIG}" ] && CHOSEN_CONFIG=${default_answer}
+
+    # If response is a number, then use it as an index into TARGET_CONFIGS
+    if (echo -n ${CHOSEN_CONFIG} | grep -q -e "^[0-9][0-9]*$"); then
+        if [ ${CHOSEN_CONFIG} -lt "${#TARGET_CONFIGS[@]}" ]; then
+            KERNEL_DIR=${ORIGIN_DIRS[${CHOSEN_CONFIG}]}
+            CHOSEN_CONFIG=${TARGET_CONFIGS[${CHOSEN_CONFIG}]}
+        fi
+    fi
+
+    # If response matches something in the shortnames array, match with the
+    # TARGET_CONFIGS
+    idx=$(catarr shortnames | grep -m 1 -n "${CHOSEN_CONFIG}" | cut -f1 -d:)
+    if [ -n "${idx}" ]; then
+        ((idx--))
+        KERNEL_DIR=${ORIGIN_DIRS[${idx}]}
+        CHOSEN_CONFIG=${TARGET_CONFIGS[${idx}]}
+    fi
+
+    if ! [ -f ${CHOSEN_CONFIG} ]; then
+        echo
+        echo -n "${CHOSEN_CONFIG} does not exist! Continue? [y/N] "
+        read cont
+        if ! (echo -n $cont | grep -q -e "^[yY1]"); then
+            return 1
+        fi
+    fi
+
+    echo "Build config is ${CHOSEN_CONFIG}"
+}
+
+function menuvariants {
+    local default_answer
+    local variants
+    local ret
+
+    echo "Checking available variants for ${CHOSEN_CONFIG}"
+    create_variants_array variants ${CHOSEN_CONFIG}
+
+    default_answer=${variants[0]}
+
+    CHOSEN_VARIANT=$1
+
+    if [ -t 0 ]; then
+        if [ -z "${CHOSEN_VARIANT}" ] && [ -n "${DIALOG_TOOL}" ]; then
+            local table=""
+            for variant in ${variants[@]}; do
+                table="${table} ${variant} ${variant}"
+            done
+            CHOSEN_VARIANT=$(${DIALOG_TOOL} --notags \
+                            --title "Available build variants" \
+                            --menu "Please choose a build variant" 0 0 20 \
+                            ${table} 3>&1 1>&2 2>&3)
+        fi
+
+        if [ -z "${CHOSEN_VARIANT}" ]; then
+            echo
+            echo "Variant choices are:"
+            for i in ${!variants[@]}; do
+                printf '\t%d.  %s\n' $i "${variants[$i]}"
+            done
+
+            echo -n "Which would you like? [${default_answer}] "
+            read CHOSEN_VARIANT
+        fi
+    fi
+
+    [ -z "${CHOSEN_VARIANT}" ] && CHOSEN_VARIANT=${default_answer}
+
+    # If response is a number, then use it as an index into variants
+    if (echo -n ${CHOSEN_VARIANT} | grep -q -e "^[0-9][0-9]*$"); then
+        if [ ${CHOSEN_VARIANT} -lt "${#VARIANTS[@]}" ]; then
+            CHOSEN_VARIANT=${variants[${CHOSEN_VARIANT}]}
+        fi
+    fi
+
+    # Enforce that VARIANT is valid
+    if ! ( catarr variants | grep -q -e "^${CHOSEN_VARIANT}$" ); then
+        echo -n "${CHOSEN_VARIANT} wasn't an option! Continue? [y/N] "
+        read cont
+        if ! (echo -n $cont | grep -q -e "^[yY1]"); then
+            return 1
+        fi
+    fi
+
+    echo "Variant is ${CHOSEN_VARIANT}"
+}
+
+menutargets $1
+if [ $? -ne 0 ]; then
+    ret=$?
+    echo "Exiting..."
+    exit $ret
+fi
+
+menuvariants $2
+if [ $? -ne 0 ]; then
+    ret=$?
+    echo "Exiting..."
+    exit $ret
+fi
+
+rm -f build.config
+
+echo
+echo "Creating ./build.config:"
+echo "======================"
+echo """[ -z \"\${VARIANT}\" ] && VARIANT=${CHOSEN_VARIANT}
+KERNEL_DIR=${KERNEL_DIR}
+. ${CHOSEN_CONFIG}
+""" | tee ./build.config
+echo "======================"

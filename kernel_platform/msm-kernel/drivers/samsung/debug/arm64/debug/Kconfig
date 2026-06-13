@@ -1,0 +1,5 @@
+config SEC_ARM64_DEBUG
+	tristate "SEC Common debugging feature for ARM64 based devices"
+	depends on ARM64
+	help
+	  TODO: help is not ready.

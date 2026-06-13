@@ -1,0 +1,20 @@
+{
+    "homepage": "https://github.com/aherrmann/rules_zig",
+    "maintainers": [
+        {
+            "email": "andreash87@gmx.ch",
+            "github": "aherrmann",
+            "name": "Andreas Herrmann"
+        }
+    ],
+    "repository": [
+        "github:aherrmann/rules_zig"
+    ],
+    "versions": [
+        "0.1.0",
+        "0.2.0",
+        "0.3.0",
+        "0.4.0"
+    ],
+    "yanked_versions": {}
+}

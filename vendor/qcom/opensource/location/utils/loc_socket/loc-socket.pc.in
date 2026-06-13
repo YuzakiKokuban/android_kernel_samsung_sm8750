@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: loc-socket
+Description: location socket library
+Version: @VERSION@
+Libs: -L${libdir} -lloc_socket
+Cflags: -I${includedir} -I${includedir}/loc-socket

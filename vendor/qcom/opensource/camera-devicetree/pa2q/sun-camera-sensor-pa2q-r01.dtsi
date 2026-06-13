@@ -1,0 +1,43 @@
+#include "sun-camera-sensor-pa2q-common.dtsi"
+
+
+&reg_dio8018_0_ldo1 {
+	regulator-min-microvolt = <1056000>;
+	regulator-max-microvolt = <1056000>;
+};
+
+&tps62864_buck {
+	regulator-min-microvolt = <920000>;
+	regulator-max-microvolt = <920000>;
+};
+
+&BOB2 {
+	regulator-always-on;
+};
+
+&sensor_rear_wide {
+	cam_vdig-supply = <&tps62864_buck>;		/* VDD_WIDECAM_0P92 */
+	cam_vana-supply = <&reg_dio8018_0_ldo7>;		/* VDD_WIDECAM_A2P2 */
+};
+
+&eeprom_rear_wide {
+	cam_vana-supply = <&reg_dio8018_0_ldo7>;		/* VDD_WIDECAM_A2P2 */
+};
+
+&sensor_rear_tele {
+	cam_vdig-supply = <&reg_dio8018_0_ldo1>;		/* VDD_TELECAM_1P05 */
+
+	regulator-names = "cam_vdig", "cam_vio", "cam_clk", "cam_v_custom2";
+	rgltr-min-voltage = <1056000 1804000 0 3008000>;
+	rgltr-max-voltage = <1056000 1804000 0 3960000>;
+	rgltr-load-current = <200000 200000 0 700000>;
+
+};
+
+&sensor_front {
+	cam_vana-supply = <&reg_dio8018_1_ldo7>;		/* VDD_VTCAM_A2P2 */
+};
+
+&sensor_front_full {
+	cam_vana-supply = <&reg_dio8018_1_ldo7>;		/* VDD_VTCAM_A2P2 */
+};

@@ -1,0 +1,22 @@
+{
+    "homepage": "https://docs.aspect.build/rules/aspect_rules_py",
+    "maintainers": [
+        {
+            "email": "hello@aspect.dev",
+            "github": "aspect-build",
+            "name": "Aspect team"
+        }
+    ],
+    "repository": [
+        "github:aspect-build/rules_py"
+    ],
+    "versions": [
+        "0.3.0",
+        "0.4.0",
+        "0.5.0",
+        "0.7.1",
+        "0.7.2",
+        "0.7.3"
+    ],
+    "yanked_versions": {}
+}

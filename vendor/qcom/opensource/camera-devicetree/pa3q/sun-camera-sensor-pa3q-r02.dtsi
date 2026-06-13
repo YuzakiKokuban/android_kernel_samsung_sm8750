@@ -1,0 +1,10 @@
+#include "sun-camera-sensor-pa3q-common.dtsi"
+
+&sensor_rear_tele {
+
+	pinctrl-0 = <&cam_sensor_mclk3_active &tele3xcam_rst_n_active>;
+	pinctrl-1 = <&cam_sensor_mclk3_suspend &tele3xcam_rst_n_suspend>;
+
+	gpios = <&tlmm 92 0>, <&pm8550ve_i_gpios 3 0>, <&tlmm 94 0>;
+
+};

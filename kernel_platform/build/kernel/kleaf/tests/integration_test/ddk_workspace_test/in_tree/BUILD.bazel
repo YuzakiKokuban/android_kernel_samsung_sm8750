@@ -1,0 +1,79 @@
+load("@bazel_skylib//lib:paths.bzl", "paths")
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load(
+    "@kleaf//build/kernel/kleaf:kernel.bzl",
+    "ddk_module",
+    "kernel_build",
+    "kernel_build_config",
+    "kernel_images",
+    "kernel_modules_install",
+)
+
+# Workaround to set KERNEL_DIR correctly and
+#  avoid using the fallback (directory of the config).
+# TODO(b/338438451): Clean this up with kernel_build.kernel_dir attr.
+_set_kernel_dir_cmd = "KERNEL_DIR=\"{kernel_dir}\"".format(
+    kernel_dir = paths.join(
+        package_relative_label("@kleaf//:x").workspace_root,
+        "common",
+    ),
+)
+
+write_file(
+    name = "set_kernel_dir_build_config",
+    out = "set_kernel_dir_build_config/build.config",
+    content = [
+        _set_kernel_dir_cmd,
+        "",
+    ],
+)
+
+kernel_build_config(
+    name = "in_tree_build_config",
+    srcs = [
+        # do not sort
+        ":set_kernel_dir_build_config",
+        "build.config.in_tree",
+    ],
+)
+
+# Test building in-tree module against kernel from sources
+kernel_build(
+    name = "in_tree_kernel_build",
+    srcs = ["@kleaf//common:kernel_aarch64_sources"],
+    outs = [],
+    base_kernel = "@kleaf//common:kernel_aarch64",
+    build_config = ":in_tree_build_config",
+    defconfig_fragments = [
+        "in_tree_defconfig",
+    ],
+    make_goals = [
+        "modules",
+    ],
+    module_outs = [
+        "psmouse.ko",
+    ],
+)
+
+# Test building out-of-tree module against kernel with in-tree modules
+ddk_module(
+    name = "out_of_tree_driver",
+    srcs = ["mydriver.c"],
+    out = "out_of_tree_driver.ko",
+    kernel_build = ":in_tree_kernel_build",
+    deps = ["@kleaf//common:all_headers_aarch64"],
+)
+
+kernel_modules_install(
+    name = "device_modules_install",
+    kernel_modules = [
+        ":out_of_tree_driver",
+    ],
+)
+
+kernel_images(
+    name = "device_images",
+    build_vendor_dlkm = True,
+    kernel_modules_install = ":device_modules_install",
+    visibility = ["//tests:__pkg__"],
+)

@@ -1,0 +1,56 @@
+soong_config_module_type {
+    name: "ufsbsg_cc_defaults",
+    module_type: "cc_defaults",
+    config_namespace: "ufsbsg",
+    variables: ["ufsframework"],
+    properties: ["cflags"],
+}
+
+soong_config_string_variable {
+    name: "ufsframework",
+    values: ["sg", "bsg"],
+}
+
+ufsbsg_cc_defaults {
+    name: "ufsbsg_defaults",
+    soong_config_variables: {
+        ufsframework: {
+            bsg : {
+               cflags : ["-D_BSG_FRAMEWORK_KERNEL_HEADERS"],
+            },
+        },
+     },
+}
+
+cc_library {
+    name: "librecovery_updater",
+    vendor: true,
+    recovery_available: true,
+    defaults: ["libion_header_paths" ,"ufsbsg_defaults"],
+    srcs: [
+        "gpt-utils.cpp",
+        "recovery-ufs-bsg.cpp",
+    ],
+    static_libs: [
+            "libbase",
+    ],
+    shared_libs: [
+            "libcutils",
+            "libion",
+            "liblog",
+            "libz",
+    ],
+    cflags: [
+        "-Wall",
+        "-Wno-unused-parameter",
+    ],
+    sanitize: {
+        cfi: false,
+    },
+    owner: "qti",
+    export_include_dirs: ["."],
+    header_libs: [
+            "qti_kernel_headers",
+            "device_kernel_headers",
+    ],
+}

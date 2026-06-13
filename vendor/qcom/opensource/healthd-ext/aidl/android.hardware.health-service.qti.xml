@@ -1,0 +1,12 @@
+<!--
+  Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  SPDX-License-Identifier: BSD-3-Clause-Clear
+-->
+
+<manifest version="1.0" type="device">
+    <hal format="aidl">
+        <name>android.hardware.health</name>
+        <version>3</version>
+        <fqname>IHealth/default</fqname>
+    </hal>
+</manifest>

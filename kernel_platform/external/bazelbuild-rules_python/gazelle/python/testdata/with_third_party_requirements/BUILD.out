@@ -1,0 +1,24 @@
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+
+py_library(
+    name = "with_third_party_requirements",
+    srcs = [
+        "__init__.py",
+        "bar.py",
+        "foo.py",
+    ],
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "@gazelle_python_test_baz//:pkg",
+        "@gazelle_python_test_boto3//:pkg",
+        "@gazelle_python_test_djangorestframework//:pkg",
+    ],
+)
+
+py_binary(
+    name = "with_third_party_requirements_bin",
+    srcs = ["__main__.py"],
+    main = "__main__.py",
+    visibility = ["//:__subpackages__"],
+    deps = ["@gazelle_python_test_baz//:pkg"],
+)

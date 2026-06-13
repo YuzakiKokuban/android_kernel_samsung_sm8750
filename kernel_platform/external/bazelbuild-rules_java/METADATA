@@ -1,0 +1,13 @@
+name: "rules_java"
+description:
+    "Bazel rules for building java code"
+
+third_party {
+  url {
+    type: GIT
+    value: "https://github.com/bazelbuild/rules_java"
+  }
+  version: "6.1.1"
+  last_upgrade_date { year: 2023 month: 6 day: 23 }
+  license_type: NOTICE
+}

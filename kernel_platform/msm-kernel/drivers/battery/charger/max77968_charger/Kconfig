@@ -1,0 +1,7 @@
+config CHARGER_MAX77968
+	tristate "MAX77968 direct charger support"
+	default y
+	help
+		Say Y or M here to enable
+		support for the MAX77968 charger.
+		This is Direct Mode Charger.

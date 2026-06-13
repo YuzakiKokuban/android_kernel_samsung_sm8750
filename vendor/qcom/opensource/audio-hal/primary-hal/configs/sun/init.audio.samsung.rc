@@ -1,0 +1,168 @@
+
+# Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimer in the documentation and/or other materials provided
+#       with the distribution.
+#     * Neither the name of The Linux Foundation nor the names of its
+#       contributors may be used to endorse or promote products derived
+#       from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#
+on post-fs-data
+# Cirrus Amp Calibration
+    chown system audio /sys/class/cirrus/cirrus_cal/status
+    chown system audio /sys/class/cirrus/cirrus_cal/rdc
+    chown system audio /sys/class/cirrus/cirrus_cal/rdc_r
+    chown system audio /sys/class/cirrus/cirrus_cal/rdc_b
+    chown system audio /sys/class/cirrus/cirrus_cal/rdc_br
+    chown system audio /sys/class/cirrus/cirrus_cal/temp
+    chown system audio /sys/class/cirrus/cirrus_cal/temp_r
+    chown system audio /sys/class/cirrus/cirrus_cal/temp_b
+    chown system audio /sys/class/cirrus/cirrus_cal/temp_br
+    chown system audio /sys/class/cirrus/cirrus_cal/v_status
+    chown system audio /sys/class/cirrus/cirrus_cal/v_validation
+    chown system audio /sys/class/cirrus/cirrus_cal/v_validation_r
+    chown system audio /sys/class/cirrus/cirrus_cal/v_validation_b
+    chown system audio /sys/class/cirrus/cirrus_cal/v_validation_br
+    chown system audio /sys/class/cirrus/cirrus_cal/vsc
+    chown system audio /sys/class/cirrus/cirrus_cal/vsc_r
+    chown system audio /sys/class/cirrus/cirrus_cal/vsc_b
+    chown system audio /sys/class/cirrus/cirrus_cal/vsc_br
+    chown system audio /sys/class/cirrus/cirrus_cal/isc
+    chown system audio /sys/class/cirrus/cirrus_cal/isc_r
+    chown system audio /sys/class/cirrus/cirrus_cal/isc_b
+    chown system audio /sys/class/cirrus/cirrus_cal/isc_br
+    chown system audio /sys/class/cirrus/cirrus_cal/reinit
+    mkdir /efs/cirrus 0770 audioserver audio
+    chown audioserver audio /efs/cirrus/temp_cal
+    chown audioserver audio /efs/cirrus/rdc_cal
+    chown audioserver audio /efs/cirrus/rdc_cal_r
+    chown audioserver audio /efs/cirrus/rdc_cal_b
+    chown audioserver audio /efs/cirrus/rdc_cal_br
+    chown audioserver audio /efs/cirrus/vsc_cal
+    chown audioserver audio /efs/cirrus/vsc_cal_r
+    chown audioserver audio /efs/cirrus/vsc_cal_b
+    chown audioserver audio /efs/cirrus/vsc_cal_br
+    chown audioserver audio /efs/cirrus/isc_cal
+    chown audioserver audio /efs/cirrus/isc_cal_r
+    chown audioserver audio /efs/cirrus/isc_cal_b
+    chown audioserver audio /efs/cirrus/isc_cal_br
+
+    chmod 0660 /efs/cirrus/temp_cal
+    chmod 0660 /efs/cirrus/rdc_cal
+    chmod 0660 /efs/cirrus/rdc_cal_b
+    chmod 0660 /efs/cirrus/rdc_cal_r
+    chmod 0660 /efs/cirrus/rdc_cal_br
+    chmod 0660 /efs/cirrus/vsc_cal
+    chmod 0660 /efs/cirrus/vsc_cal_b
+    chmod 0660 /efs/cirrus/vsc_cal_r
+    chmod 0660 /efs/cirrus/vsc_cal_br
+    chmod 0660 /efs/cirrus/isc_cal
+    chmod 0660 /efs/cirrus/isc_cal_b
+    chmod 0660 /efs/cirrus/isc_cal_r
+    chmod 0660 /efs/cirrus/isc_cal_br
+
+# Cirrus Amp power
+    chown system audio /sys/class/cirrus/cirrus_pwr/status
+    chown system audio /sys/class/cirrus/cirrus_pwr/value
+    chown system audio /sys/class/cirrus/cirrus_pwr/value_r
+    chown system audio /sys/class/cirrus/cirrus_pwr/value_b
+    chown system audio /sys/class/cirrus/cirrus_pwr/value_br
+    chown system audio /sys/class/cirrus/cirrus_pwr/spk_t
+    chown system audio /sys/class/cirrus/cirrus_pwr/spk_t_r
+    chown system audio /sys/class/cirrus/cirrus_pwr/spk_t_b
+    chown system audio /sys/class/cirrus/cirrus_pwr/spk_t_br
+    chown system audio /sys/class/cirrus/cirrus_pwr/env_temp
+    chown system audio /sys/class/cirrus/cirrus_pwr/env_temp_r
+    chown system audio /sys/class/cirrus/cirrus_pwr/env_temp_b
+    chown system audio /sys/class/cirrus/cirrus_pwr/env_temp_br
+
+# Cirrus Amp Bigdata
+    chown system audio /sys/class/audio/amp/temperature_max_0
+    chown system audio /sys/class/audio/amp/temperature_keep_max_0
+    chown system audio /sys/class/audio/amp/temperature_overcount_0
+    chown system audio /sys/class/audio/amp/excursion_max_0
+    chown system audio /sys/class/audio/amp/excursion_overcount_0
+    chown system audio /sys/class/audio/amp/temperature_max_1
+    chown system audio /sys/class/audio/amp/temperature_keep_max_1
+    chown system audio /sys/class/audio/amp/temperature_overcount_1
+    chown system audio /sys/class/audio/amp/excursion_max_1
+    chown system audio /sys/class/audio/amp/excursion_overcount_1
+    chown system audio /sys/class/audio/amp/temperature_max_2
+    chown system audio /sys/class/audio/amp/temperature_keep_max_2
+    chown system audio /sys/class/audio/amp/temperature_overcount_2
+    chown system audio /sys/class/audio/amp/excursion_max_2
+    chown system audio /sys/class/audio/amp/excursion_overcount_2
+    chown system audio /sys/class/audio/amp/temperature_max_3
+    chown system audio /sys/class/audio/amp/temperature_keep_max_3
+    chown system audio /sys/class/audio/amp/temperature_overcount_3
+    chown system audio /sys/class/audio/amp/excursion_max_3
+    chown system audio /sys/class/audio/amp/excursion_overcount_3
+ 
+# Goodix Amp Calibration/Validation
+    chown system system /sys/class/tfa/tfa_cal/status
+    chown system system /sys/class/tfa/tfa_cal/rdc
+    chown system system /sys/class/tfa/tfa_cal/rdc_r
+    chown system system /sys/class/tfa/tfa_cal/temp
+    chown system system /sys/class/tfa/tfa_cal/temp_r
+    chown system audio /sys/class/tfa/tfa_vval/status
+    chown system audio /sys/class/tfa/tfa_vval/status_r
+    chown system audio /sys/class/tfa/tfa_vval/validation
+    chown system system /sys/class/tfa/tfa_stc/power_state
+    chown system system /sys/class/tfa/tfa_stc/power_state_r
+    chown system system /sys/class/tfa/tfa_cal/ref_temp
+    chown audioserver audio /sys/class/tfa/tfa_cal/config
+    chmod 0660 /sys/class/tfa/tfa_cal/status
+
+    mkdir /efs/tfa_cal 0770 audioserver audio
+    chown audioserver audio /efs/tfa_cal/status
+    chown audioserver audio /efs/tfa_cal/rdc
+    chown audioserver audio /efs/tfa_cal/rdc_r
+    chown audioserver audio /efs/tfa_cal/temp
+    chown audioserver audio /efs/tfa_cal/temp_r
+    chmod 0660 /efs/tfa_cal/status
+    chmod 0660 /efs/tfa_cal/rdc
+    chmod 0660 /efs/tfa_cal/rdc_r
+    chmod 0660 /efs/tfa_cal/temp
+    chmod 0660 /efs/tfa_cal/temp_r
+
+# TAS Amp
+    chown audioserver audio /sys/class/tas25xx_dev/cmd/temp
+    chown audioserver audio /sys/class/tas25xx_dev/cmd/drv_opmode
+    chown audioserver audio /sys/class/tas25xx_dev/cmd/iv_vbat
+    chown audioserver audio /sys/class/tas25xx_dev/cmd/calib
+
+    mkdir /efs/tas25xx 0770 audioserver audio
+    chown audioserver audio /efs/tas25xx/calibration
+    chown audioserver audio /efs/tas25xx/calib_re
+    chown audioserver audio /efs/tas25xx/amb_temp
+    chown audioserver audio /efs/tas25xx/calib_re_r
+    chown audioserver audio /efs/tas25xx/amb_temp_r
+    chmod 0660 /efs/tas25xx/calibration
+    chmod 0660 /efs/tas25xx/calib_re
+    chmod 0660 /efs/tas25xx/amb_temp
+    chmod 0660 /efs/tas25xx/calib_re_r
+    chmod 0660 /efs/tas25xx/amb_temp_r
+
+# SSRM Amp temperature
+    chown system system /sys/class/audio/amp/surface_temperature_0
+    chown system system /sys/class/audio/amp/surface_temperature_1

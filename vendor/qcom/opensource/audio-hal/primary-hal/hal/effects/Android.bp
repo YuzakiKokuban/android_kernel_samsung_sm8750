@@ -1,0 +1,68 @@
+/*
+// commenting compilation through Android.bp, as all vendor effects are
+// generated using Android.mk, in that case it would require us to have
+// version updated at different places. Moving base headers/shared lib
+// compilation to make file so all effects libraries can utitlize
+// common defaults intrdouced in target.mk to acheive behavior similar
+// to cc_default of Android.bp
+cc_defaults {
+    name: "aidlaudioeffectserviceqti_defaults",
+
+    vendor: true,
+    shared_libs: [
+        "libaudioaidlcommon",
+        "libbase",
+        "libbinder_ndk",
+        "libcutils",
+        "libfmq",
+        "liblog",
+        "libutils",
+        "android.hardware.common-V2-ndk",
+        "android.hardware.common.fmq-V1-ndk",
+        "android.hardware.audio.effect-V2-ndk",
+    ],
+    header_libs: [
+        "libaudioeffectsaidlqti_headers",
+        "libaudio_system_headers",
+        "libsystem_headers",
+    ],
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wthread-safety",
+    ],
+}
+
+cc_library_static {
+    name: "libaudioeffecthal_base_impl_static",
+    srcs: [
+        "EffectThread.cpp",
+        "EffectImpl.cpp",
+        "EffectContext.cpp",
+    ],
+    defaults: ["aidlaudioeffectserviceqti_defaults"],
+}
+
+cc_library_shared {
+    name: "libaudioeffecthal.qti",
+    relative_install_path: "hw",
+    vintf_fragments: ["audioeffectservice_qti.xml"],
+    defaults: ["aidlaudioeffectserviceqti_defaults"],
+    shared_libs: [
+        "libtinyxml2",
+    ],
+    srcs: [
+        "EffectConfig.cpp",
+        "EffectFactory.cpp",
+        "EffectMain.cpp",
+    ],
+}
+
+cc_library_headers {
+    name: "libaudioeffectsaidlqti_headers",
+    export_include_dirs: ["include"],
+    vendor_available: true,
+    host_supported: true,
+}
+*/

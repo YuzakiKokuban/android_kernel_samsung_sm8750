@@ -1,0 +1,277 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<!--
+Copyright (c) 2021, The Linux Foundation. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above
+      copyright notice, this list of conditions and the following
+      disclaimer in the documentation and/or other materials provided
+      with the distribution.
+    * Neither the name of The Linux Foundation nor the names of its
+      contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<!--
+Changes from Qualcomm Innovation Center are provided under the following license:
+Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear
+-->
+
+<displayConfiguration>
+  <screenBrightnessMap interpolation="linear">
+    <point>
+      <value>0.0000</value>
+      <nits>0.2289</nits>
+    </point>
+    <point>
+      <value>0.0195</value>
+      <nits>4.4509</nits>
+    </point>
+    <point>
+       <value>0.0392</value>
+       <nits>6.8769</nits>
+    </point>
+    <point>
+      <value>0.0587</value>
+      <nits>11.6512</nits>
+    </point>
+    <point>
+      <value>0.0784</value>
+      <nits>18.5109</nits>
+    </point>
+    <point>
+      <value>0.0980</value>
+      <nits>27.5286</nits>
+    </point>
+    <point>
+      <value>0.1176</value>
+      <nits>38.3354</nits>
+    </point>
+    <point>
+      <value>0.1372</value>
+      <nits>49.5442</nits>
+    </point>
+    <point>
+    <value>0.1568</value>
+      <nits>64.2686</nits>
+    </point>
+    <point>
+      <value>0.1764</value>
+      <nits>81.6825</nits>
+    </point>
+    <point>
+      <value>0.1961</value>
+      <nits>99.8549</nits>
+    </point>
+    <point>
+      <value>0.2156</value>
+      <nits>117.9603</nits>
+    </point>
+    <point>
+      <value>0.2353</value>
+      <nits>132.6605</nits>
+    </point>
+    <point>
+      <value>0.2548</value>
+      <nits>153.7292</nits>
+    </point>
+    <point>
+      <value>0.2744</value>
+      <nits>177.8811</nits>
+    </point>
+    <point>
+      <value>0.2941</value>
+      <nits>203.9206</nits>
+    </point>
+    <point>
+      <value>0.3136</value>
+      <nits>232.8468</nits>
+    </point>
+    <point>
+      <value>0.3333</value>
+      <nits>265.5024</nits>
+    </point>
+    <point>
+      <value>0.3528</value>
+      <nits>300.7833</nits>
+    </point>
+    <point>
+      <value>0.3725</value>
+      <nits>339.1603</nits>
+    </point>
+    <point>
+      <value>0.3921</value>
+      <nits>379.3092</nits>
+    </point>
+    <point>
+      <value>0.4117</value>
+      <nits>422.9130</nits>
+    </point>
+    <point>
+      <value>0.4313</value>
+      <nits>467.6717</nits>
+    </point>
+    <point>
+      <value>0.4509</value>
+      <nits>515.9362</nits>
+    </point>
+    <point>
+      <value>0.4705</value>
+      <nits>567.4022</nits>
+    </point>
+    <point>
+      <value>0.4902</value>
+      <nits>621.2638</nits>
+    </point>
+    <point>
+      <value>0.5097</value>
+      <nits>652.9980</nits>
+    </point>
+    <point>
+      <value>0.5294</value>
+      <nits>657.4003</nits>
+    </point>
+    <point>
+      <value>0.5490</value>
+      <nits>663.0907</nits>
+    </point>
+    <point>
+      <value>0.5686</value>
+      <nits>666.9472</nits>
+    </point>
+    <point>
+      <value>0.5882</value>
+      <nits>672.5456</nits>
+    </point>
+    <point>
+      <value>0.6077</value>
+      <nits>677.9654</nits>
+    </point>
+    <point>
+      <value>0.6274</value>
+      <nits>682.5966</nits>
+    </point>
+    <point>
+      <value>0.6471</value>
+      <nits>687.7337</nits>
+    </point>
+    <point>
+      <value>0.6666</value>
+      <nits>691.9226</nits>
+    </point>
+    <point>
+      <value>0.6862</value>
+      <nits>697.3131</nits>
+    </point>
+    <point>
+      <value>0.7058</value>
+      <nits>701.3130</nits>
+    </point>
+    <point>
+      <value>0.7254</value>
+      <nits>707.0514</nits>
+    </point>
+    <point>
+      <value>0.7451</value>
+      <nits>712.5063</nits>
+    </point>
+    <point>
+      <value>0.7646</value>
+      <nits>718.2969</nits>
+    </point>
+    <point>
+      <value>0.7843</value>
+      <nits>723.9837</nits>
+    </point>
+    <point>
+      <value>0.8038</value>
+      <nits>728.3262</nits>
+    </point>
+    <point>
+      <value>0.8235</value>
+      <nits>734.2028</nits>
+    </point>
+    <point>
+      <value>0.8431</value>
+      <nits>739.4332</nits>
+    </point>
+    <point>
+      <value>0.8627</value>
+      <nits>744.2439</nits>
+    </point>
+    <point>
+      <value>0.8823</value>
+      <nits>750.5568</nits>
+    </point>
+    <point>
+      <value>0.9018</value>
+      <nits>755.1467</nits>
+    </point>
+    <point>
+      <value>0.9215</value>
+      <nits>760.6885</nits>
+    </point>
+    <point>
+      <value>0.9412</value>
+      <nits>766.5874</nits>
+    </point>
+    <point>
+      <value>0.9607</value>
+      <nits>770.8062</nits>
+    </point>
+    <point>
+      <value>0.9803</value>
+      <nits>776.6059</nits>
+    </point>
+    <point>
+      <value>1.0000</value>
+      <nits>782.4283</nits>
+    </point>
+  </screenBrightnessMap>
+
+  <highBrightnessMode enabled="true">
+    <transitionPoint>0.85</transitionPoint>
+    <minimumHdrPercentOfScreen>0.1</minimumHdrPercentOfScreen>
+
+    <minimumLux>10000</minimumLux>
+    <timing>
+      <timeWindowSecs>1800</timeWindowSecs>  // Window in which we restrict HBM.
+      <timeMaxSecs>300</timeMaxSecs>         // Maximum time of HBM allowed in that window.
+      <timeMinSecs>60</timeMinSecs>          // Minimum time remaining required to switch
+    </timing>                                //   HBM on for.
+
+    <sdrHdrRatioMap>
+      <point>
+        <sdrNits>2.000</sdrNits>
+        <hdrRatio>8.000</hdrRatio>
+      </point>
+      <point>
+        <sdrNits>500.000</sdrNits>
+        <hdrRatio>1.5</hdrRatio>
+      </point>
+    </sdrHdrRatioMap>
+  </highBrightnessMode>
+  <screenBrightnessRampFastDecrease>0.06</screenBrightnessRampFastDecrease>
+  <screenBrightnessRampFastIncrease>0.06</screenBrightnessRampFastIncrease>
+  <screenBrightnessRampSlowDecrease>0.04</screenBrightnessRampSlowDecrease>
+  <screenBrightnessRampSlowIncrease>0.04</screenBrightnessRampSlowIncrease>
+  <screenBrightnessRampIncreaseMaxMillis>3000</screenBrightnessRampIncreaseMaxMillis>
+  <screenBrightnessRampDecreaseMaxMillis>3000</screenBrightnessRampDecreaseMaxMillis>
+</displayConfiguration>

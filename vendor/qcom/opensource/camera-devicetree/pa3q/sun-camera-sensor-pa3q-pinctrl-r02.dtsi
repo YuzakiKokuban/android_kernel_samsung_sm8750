@@ -1,0 +1,24 @@
+#include "sun-camera-sensor-pa3q-pinctrl-common.dtsi"
+
+&pm8550ve_i_gpios {
+
+	tele3xcam_rst_n_active: tele3xcam_rst_n_active {
+		/* GPIO_CONFIG_PUD_DRV(PM,pm8550ve_i_gpios,3, FUNC_OUTPUT_LOW, PULL_NONE, DRV_LV1); */
+		pins = "gpio3";
+		function = "normal";
+		qcom,drive-strength = <0>;
+		output-low;
+		bias-disable;
+		power-source = <1>;
+	};
+
+	tele3xcam_rst_n_suspend: tele3xcam_rst_n_suspend {
+		/* GPIO_CONFIG_PUD_DRV(PM,pm8550ve_i_gpios,3, FUNC_OUTPUT_LOW, PULL_DOWN, DRV_LV1); */
+		pins = "gpio3";
+		function = "normal";
+		qcom,drive-strength = <0>;
+		output-low;
+		bias-pull-down;
+		power-source = <1>;
+	};
+};

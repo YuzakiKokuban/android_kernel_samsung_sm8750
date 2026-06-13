@@ -1,0 +1,128 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+&mdss_mdp {
+	dsi_nt37801_amoled_dsc_10b_cmd: qcom,mdss_dsi_nt37801_amoled_dsc_10b_cmd {
+		qcom,mdss-dsi-panel-name =
+			"nt37801 amoled cmd mode dsi csot panel with DSC 10bit";
+		qcom,mdss-dsi-panel-type = "dsi_cmd_mode";
+		qcom,mdss-dsi-panel-physical-type = "oled";
+		qcom,mdss-dsi-virtual-channel-id = <0>;
+		qcom,mdss-dsi-stream = <0>;
+		qcom,mdss-dsi-bpp = <30>;
+		qcom,mdss-dsi-color-order = "rgb_swap_rgb";
+		qcom,mdss-dsi-underflow-color = <0xff>;
+		qcom,mdss-dsi-border-color = <0>;
+
+		qcom,dsi-ctrl-num = <0>;
+		qcom,dsi-phy-num = <0>;
+
+		qcom,mdss-dsi-traffic-mode = "non_burst_sync_event";
+		qcom,mdss-dsi-lane-map = "lane_map_0123";
+		qcom,mdss-dsi-bllp-eof-power-mode;
+		qcom,mdss-dsi-bllp-power-mode;
+		qcom,mdss-dsi-lane-0-state;
+		qcom,mdss-dsi-lane-1-state;
+		qcom,mdss-dsi-lane-2-state;
+		qcom,mdss-dsi-lane-3-state;
+		qcom,mdss-dsi-dma-trigger = "trigger_sw";
+		qcom,mdss-dsi-mdp-trigger = "none";
+		qcom,mdss-dsi-reset-sequence = <1 10>, <0 10>, <1 10>;
+
+		qcom,mdss-dsi-te-pin-select = <1>;
+		qcom,mdss-dsi-wr-mem-start = <0x2c>;
+		qcom,mdss-dsi-wr-mem-continue = <0x3c>;
+		qcom,mdss-dsi-te-dcs-command = <1>;
+		qcom,mdss-dsi-te-check-enable;
+		qcom,mdss-dsi-te-using-te-pin;
+		qcom,spr-pack-type = "pentile";
+		qcom,mdss-dsi-panel-hdr-enabled;
+		qcom,mdss-dsi-panel-hdr-color-primaries = <15150 15750 34250
+			15700 12250 35800 6750 2550>;
+		qcom,mdss-dsi-panel-peak-brightness = <13000000>;
+		qcom,mdss-dsi-panel-blackness-level = <10>;
+		qcom,mdss-dsi-display-timings {
+			timing@0 {
+				cell-index = <0>;
+				qcom,mdss-dsi-panel-framerate = <120>;
+				qcom,mdss-dsi-panel-width = <1440>;
+				qcom,mdss-dsi-panel-height = <3200>;
+				qcom,mdss-dsi-h-front-porch = <100>;
+				qcom,mdss-dsi-h-back-porch = <20>;
+				qcom,mdss-dsi-h-pulse-width = <20>;
+				qcom,mdss-dsi-h-sync-skew = <0>;
+				qcom,mdss-dsi-v-back-porch = <20>;
+				qcom,mdss-dsi-v-front-porch = <44>;
+				qcom,mdss-dsi-v-pulse-width = <2>;
+				qcom,mdss-dsi-h-left-border = <0>;
+				qcom,mdss-dsi-h-right-border = <0>;
+				qcom,mdss-dsi-v-top-border = <0>;
+				qcom,mdss-dsi-v-bottom-border = <0>;
+				qcom,mdss-dsi-panel-jitter = <0x4 0x1>;
+				qcom,mdss-dsi-panel-clockrate = <1223800000>;
+
+				qcom,mdss-dsi-on-command = [
+					39 01 00 00 00 00 06 f0 55 aa 52 08 01
+					39 01 00 00 00 00 02 c3 19
+					39 01 00 00 00 00 02 6f 01
+					39 01 00 00 00 00 04 c5 0b 0b 0b
+					39 01 00 00 00 00 05 ff aa 55 a5 81
+					39 01 00 00 00 00 02 6f 02
+					39 01 00 00 00 00 02 f5 10
+					39 01 00 00 00 00 02 6f 1b
+					39 01 00 00 00 00 02 f4 55
+					39 01 00 00 00 00 02 6f 18
+					39 01 00 00 00 00 02 f8 19
+					39 01 00 00 00 00 02 6f 0f
+					39 01 00 00 00 00 02 fc 00
+					39 01 00 00 00 00 05 2a 00 00 05 9f
+					39 01 00 00 00 00 05 2b 00 00 0c 7f
+					39 01 00 00 00 00 02 90 03
+					39 01 00 00 00 00 13 91 ab 28 00 28 f2
+					   00 02 c2 03 e1 00 0a 03 14 01 e9 10
+					   f0
+					39 01 00 00 00 00 05 ff aa 55 a5 81
+					39 01 00 00 00 00 02 6f 23
+					39 01 00 00 00 00 15 fb 00 03 04 55 77
+					   77 77 99 9b 10 00 1e 48 9a bb bc de
+					   f0 11 30
+					39 01 00 00 00 00 02 f3 dc
+					39 01 00 00 00 00 02 26 00
+					39 01 00 00 00 00 02 35 00
+					39 01 00 00 00 00 05 3b 00 14 00 2c
+					39 01 00 00 00 00 02 53 20
+					39 01 00 00 00 00 07 51 07 ff 07 ff 0f
+					   ff
+					39 01 00 00 00 00 02 5a 01
+					39 01 00 00 00 00 02 5f 00
+					39 01 00 00 00 00 02 9c 01
+					05 01 00 00 00 00 01 2c
+					39 01 00 00 00 00 02 2f 00
+					39 01 00 00 00 00 06 f0 55 aa 52 08 01
+					39 01 00 00 00 00 05 b2 55 01 ff 03
+					05 01 00 00 78 00 01 11
+					05 01 00 00 14 00 01 29
+				];
+
+				qcom,mdss-dsi-off-command = [
+					05 01 00 00 14 00 02 28 00
+					05 01 00 00 78 00 02 10 00];
+				qcom,mdss-dsi-on-command-state = "dsi_lp_mode";
+				qcom,mdss-dsi-off-command-state = "dsi_hs_mode";
+				qcom,mdss-dsi-timing-switch-command-state =
+					"dsi_lp_mode";
+				qcom,mdss-dsi-h-sync-pulse = <0>;
+				qcom,compression-mode = "dsc";
+				qcom,mdss-dsc-rc-override_v1;
+				qcom,mdss-dsc-slice-height = <40>;
+				qcom,mdss-dsc-slice-width = <720>;
+				qcom,mdss-dsc-slice-per-pkt = <1>;
+				qcom,mdss-dsc-bit-per-component = <10>;
+				qcom,mdss-dsc-bit-per-pixel = <8>;
+				qcom,mdss-dsc-block-prediction-enable;
+			};
+		};
+	};
+};

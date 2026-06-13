@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (c) 2009, 2012, The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above copyright
+ *      notice, this list of conditions and the following disclaimer in the
+ *      documentation and/or other materials provided with the distribution.
+ *    * Neither the name of The Linux Foundation nor
+ *      the names of its contributors may be used to endorse or promote
+ *      products derived from this software without specific prior written
+ *      permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+     <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="#ffffffff" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginBottom="2dip"
+        android:orientation="vertical"
+        android:gravity="bottom"
+        >
+            <RelativeLayout android:id="@+id/message_row"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView android:id="@+id/record_msg_tv"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="14dip"
+                    android:textStyle="bold"
+                    android:text="@string/default_record"
+                    />
+
+                <Button android:id="@+id/btn_presets_list"
+                    android:text= "@string/default_preset_list_name"
+                    android:textStyle="bold"
+                    android:singleLine="true"
+                    android:layout_gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:layout_width="140dip"
+                    android:layout_height="45dip" />
+
+                <TextView android:id="@+id/sleep_msg_tv"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignBaseline="@+id/btn_presets_list"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="14dip"
+                    android:textStyle="bold"
+                    android:text="@string/default_sleep"
+                    />
+            </RelativeLayout>
+         </LinearLayout>
+
+        <LinearLayout android:id="@+id/presets_upper_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dip"
+            android:gravity="center_horizontal">
+
+            <Button android:id="@+id/presets_button_1"
+                android:text="@string/default_station"
+                android:layout_width="80dip"
+                android:layout_height="50dip" />
+
+            <Button android:id="@+id/presets_button_2"
+                android:text="@string/default_station"
+                android:layout_width="80dp"
+                android:layout_height="50dp" />
+
+            <Button android:id="@+id/presets_button_3"
+                android:text="@string/default_station"
+                android:layout_width="80dip"
+                android:layout_height="50dip"
+                android:visibility="visible" />
+
+            <Button android:id="@+id/presets_button_4"
+                android:text="@string/default_blank"
+                android:layout_width="80dip"
+                android:layout_height="50dip"  />
+
+            <Button android:id="@+id/presets_button_5"
+                android:text="@string/default_blank"
+                android:layout_width="80dip"
+                android:layout_height="50dip"  />
+
+            <ImageButton android:id="@+id/btn_preset_page"
+                android:src="@drawable/ic_btn_forward"
+                android:layout_marginRight="2dp"
+                android:layout_width="80dip"
+                android:layout_height="50dip"
+                android:visibility="visible" />
+        </LinearLayout>
+</merge>

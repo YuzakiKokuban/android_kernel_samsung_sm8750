@@ -1,0 +1,32 @@
+cc_library_headers {
+    name: "librmnetctl_headers",
+    export_include_dirs: ["inc"],
+    vendor: true,
+}
+
+cc_defaults {
+    name: "librmnetctl_defaults",
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+    header_libs: ["librmnetctl_headers"],
+    vendor: true,
+}
+
+cc_library_shared {
+    name: "librmnetctl",
+    header_libs: [
+        "qti_kernel_headers",
+        "device_kernel_headers",
+    ],
+    defaults: ["librmnetctl_defaults"],
+    srcs: ["src/librmnetctl.c"],
+}
+
+cc_binary {
+    name: "rmnetcli",
+    shared_libs: ["librmnetctl"],
+    defaults: ["librmnetctl_defaults"],
+    srcs: ["cli/rmnetcli.c"],
+}

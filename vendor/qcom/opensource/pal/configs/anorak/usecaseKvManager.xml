@@ -1,0 +1,1439 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Copyright (c) 2021, The Linux Foundation. All rights reserved.
+
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are
+* met:
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above
+*       copyright notice, this list of conditions and the following
+*       disclaimer in the documentation and/or other materials provided
+*       with the distribution.
+*     * Neither the name of The Linux Foundation nor the names of its
+*       contributors may be used to endorse or promote products derived
+*       from this software without specific prior written permission.
+
+* THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+* Changes from Qualcomm Innovation Center are provided under the following license:
+* Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+* SPDX-License-Identifier: BSD-3-Clause-Clear
+*  -->
+
+<graph_key_value_pair_info>
+    <streams>
+        <!-- Low-latency stream -->
+        <stream type="PAL_STREAM_LOW_LATENCY">
+            <keys_and_values Direction="TX" Instance="1">
+                <!-- STREAMTX - RAW_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB1000009"/>
+            </keys_and_values>
+            <keys_and_values Direction="RX" Instance="1">
+                <!-- STREAMRX - PCM_LL_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA100000E"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+            <keys_and_values Direction="RX" Instance="2">
+                <!-- STREAMRX - PCM_LL_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA100000E"/>
+                <!-- INSTANCE - INSTANCE_2 -->
+                <graph_kv key="0xAB000000" value="0x2"/>
+            </keys_and_values>
+        </stream>
+        <!-- Deep Buffer stream -->
+        <stream type="PAL_STREAM_DEEP_BUFFER">
+            <keys_and_values Direction="RX" Instance="1">
+                <!-- STREAMRX - PCM_DEEP_BUFFER -->
+                <graph_kv key="0xA1000000" value="0xA1000001"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+            <keys_and_values Direction="RX" Instance="2">
+                <!-- STREAMRX - PCM_DEEP_BUFFER -->
+                <graph_kv key="0xA1000000" value="0xA1000001"/>
+                <!-- INSTANCE - INSTANCE_2 -->
+                <graph_kv key="0xAB000000" value="0x2"/>
+            </keys_and_values>
+            <keys_and_values Direction="TX" Instance="1">
+                <!-- STREAMTX - PCM_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB1000001"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+            <keys_and_values Direction="TX" Instance="2">
+                <!-- STREAMTX - PCM_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB1000001"/>
+                <!-- INSTANCE - INSTANCE_2 -->
+                <graph_kv key="0xAB000000" value="0x2"/>
+            </keys_and_values>
+        </stream>
+        <stream type="PAL_STREAM_VOICE_RECOGNITION">
+            <keys_and_values Direction="TX" Instance="1">
+                <!-- STREAMTX - PCM_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB1000011"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+        </stream>
+        <!-- Compress stream -->
+        <stream type="PAL_STREAM_COMPRESSED">
+            <keys_and_values Direction="RX" Instance="1">
+                <!-- STREAMRX - COMPRESSED_OFFLOAD_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA100000A"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+            <keys_and_values Direction="TX" Instance="1">
+                <!-- STREAMTX - compress capture stream -->
+                <graph_kv key="0xB1000000" value="0xB1000012"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+        </stream>
+        <!-- VOIP RX stream -->
+        <stream type="PAL_STREAM_VOIP_RX">
+            <keys_and_values>
+                <!-- STREAMRX - VOIP_RX_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA1000005"/>
+            </keys_and_values>
+        </stream>
+        <!-- VOIP TX stream -->
+        <stream type="PAL_STREAM_VOIP_TX">
+            <keys_and_values>
+                <!-- STREAMTX - VOIP_TX_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB1000004"/>
+            </keys_and_values>
+        </stream>
+        <!-- Voice Call Music stream -->
+        <stream type="PAL_STREAM_VOICE_CALL_MUSIC">
+            <keys_and_values>
+                <!-- STREAMRX - INCALL_MUSIC -->
+                <graph_kv key="0xA1000000" value="0xA1000013"/>
+            </keys_and_values>
+        </stream>
+        <!-- Generic-playback stream -->
+        <stream type="PAL_STREAM_GENERIC">
+            <keys_and_values Direction="RX" Instance="1">
+                <!-- STREAMRX - GENERIC_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA1000014"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+           </keys_and_values>
+           <keys_and_values Direction="RX" Instance="2">
+                <!-- STREAMRX - GENERIC_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA1000014"/>
+                <!-- INSTANCE - INSTANCE_2 -->
+                <graph_kv key="0xAB000000" value="0x2"/>
+           </keys_and_values>
+        </stream>
+        <!-- Voice Call Record stream -->
+        <stream type="PAL_STREAM_VOICE_CALL_RECORD">
+            <keys_and_values>
+                <!-- STREAMTX - INCALL_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB100000C"/>
+            </keys_and_values>
+        </stream>
+        <!-- Voice stream -->
+        <stream type="PAL_STREAM_VOICE_CALL">
+            <keys_and_values Direction="RX" VSID="VOICEMMODE1,VOICEMMODE2,VOICELBMMODE1,VOICELBMMODE2">
+                <!-- STREAMRX - VOICE_CALL_RX -->
+                <graph_kv key="0xA1000000" value="0xA1000010"/>
+                <!-- VSID - VSID_DEFAULT -->
+                <graph_kv key="0xB3000000" value="0xB3000001"/>
+            </keys_and_values>
+            <keys_and_values Direction="TX" VSID="VOICEMMODE1,VOICEMMODE2,VOICELBMMODE1,VOICELBMMODE2">
+                <!-- STREAMTX - VOICE_CALL_TX -->
+                <graph_kv key="0xB1000000" value="0xB1000007"/>
+                <!-- VSID - VSID_DEFAULT -->
+                <graph_kv key="0xB3000000" value="0xB3000001"/>
+            </keys_and_values>
+        </stream>
+        <!-- Loopback stream -->
+        <stream type="PAL_STREAM_LOOPBACK">
+            <keys_and_values Direction="RX" SubType="PAL_STREAM_LOOPBACK_HFP_RX">
+                <!-- STREAMRX - HFP_RX_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA100000C"/>
+            </keys_and_values>
+            <keys_and_values Direction="TX" SubType="PAL_STREAM_LOOPBACK_HFP_RX">
+                <!-- STREAMTX - HFP_RX_CAPTURE -->
+                <graph_kv key="0xB1000000" value="0xB1000005"/>
+            </keys_and_values>
+            <keys_and_values Direction="RX_TX" SubType="PAL_STREAM_LOOPBACK_PCM,PAL_STREAM_LOOPBACK_FM,PAL_STREAM_LOOPBACK_KARAOKE">
+                <!-- STREAMRX - PCM_RX_LOOPBACK -->
+                <graph_kv key="0xA1000000" value="0xA1000003"/>
+            </keys_and_values>
+        </stream>
+        <!-- Voice UI stream -->
+        <stream type="PAL_STREAM_VOICE_UI">
+            <keys_and_values VUIModuleType="GMM" Instance="1">
+                <!-- STREAM_CONFIG - STREAM_CFG_VUI_GMM -->
+                <graph_kv key="0xBC000000" value="0xBC000005"/>
+                <!-- STREAMTX - VOICE_UI -->
+                <graph_kv key="0xB1000000" value="0xB1000003"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+            <keys_and_values VUIModuleType="GMM" Instance="2">
+                <!-- STREAM_CONFIG - STREAM_CFG_VUI_GMM -->
+                <graph_kv key="0xBC000000" value="0xBC000005"/>
+                <!-- STREAMTX - VOICE_UI -->
+                <graph_kv key="0xB1000000" value="0xB1000003"/>
+                <!-- INSTANCE - INSTANCE_2 -->
+                <graph_kv key="0xAB000000" value="0x2"/>
+            </keys_and_values>
+            <keys_and_values VUIModuleType="PDK" Instance="1">
+                <!-- STREAM_CONFIG - STREAM_CFG_VUI_PDK -->
+                <graph_kv key="0xBC000000" value="0xBC000006"/>
+                <!-- STREAMTX - VOICE_UI -->
+                <graph_kv key="0xB1000000" value="0xB1000003"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+            <keys_and_values VUIModuleType="PDK" Instance="2">
+                 <!-- STREAM_CONFIG - STREAM_CFG_VUI_PDK -->
+                 <graph_kv key="0xBC000000" value="0xBC000006"/>
+                 <!-- STREAMTX - VOICE_UI -->
+                 <graph_kv key="0xB1000000" value="0xB1000003"/>
+                 <!-- INSTANCE - INSTANCE_2 -->
+                 <graph_kv key="0xAB000000" value="0x2"/>
+            </keys_and_values>
+            <keys_and_values VUIModuleType="PDK" Instance="3">
+                <!-- STREAM_CONFIG - STREAM_CFG_VUI_PDK -->
+                <graph_kv key="0xBC000000" value="0xBC000006"/>
+                <!-- STREAMTX - VOICE_UI -->
+                <graph_kv key="0xB1000000" value="0xB1000003"/>
+                <!-- INSTANCE - INSTANCE_3 -->
+                <graph_kv key="0xAB000000" value="0x3"/>
+            </keys_and_values>
+            <keys_and_values VUIModuleType="HOTWORD" Instance="1">
+                <!-- STREAM_CONFIG - STREAM_CFG_VUI_HW -->
+                <graph_kv key="0xBC000000" value="0xBC000002"/>
+                <!-- STREAMTX - VOICE_UI -->
+                <graph_kv key="0xB1000000" value="0xB1000003"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+        </stream>
+        <!-- PCM-Offload stream -->
+        <stream type="PAL_STREAM_PCM_OFFLOAD">
+            <keys_and_values Direction="RX" Instance="1">
+                <!-- STREAMRX - PCM_OFFLOAD_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA100000F"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+        </stream>
+        <!-- Ultra-Low-latency stream -->
+        <stream type="PAL_STREAM_ULTRA_LOW_LATENCY">
+            <keys_and_values Direction="RX" Instance="1">
+                <!-- STREAMRX - PCM_ULL_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA1000011"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+            <keys_and_values Direction="RX" Instance="2">
+                <!-- STREAMRX - PCM_ULL_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA1000011"/>
+                <!-- INSTANCE - INSTANCE_2 -->
+                <graph_kv key="0xAB000000" value="0x2"/>
+            </keys_and_values>
+            <keys_and_values Direction="TX" Instance="1">
+                <!-- STREAMTX - PCM_ULL_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB100000A"/>
+            </keys_and_values>
+        </stream>
+        <!-- Proxy stream -->
+        <stream type="PAL_STREAM_PROXY">
+            <keys_and_values Direction="TX">
+                <!-- STREAMTX - PCM_PROXY_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB100000B"/>
+            </keys_and_values>
+            <keys_and_values Direction="TX" SubType="PAL_STREAM_PROXY_TX_WFD">
+                <!-- STREAMTX - PCM_PROXY_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB100000B"/>
+                <!-- PROXY_TX_TYPE - PROXY_TX_WFD -->
+                <graph_kv key="0xD1000000" value="0xD1000002"/>
+            </keys_and_values>
+            <keys_and_values Direction="TX" SubType="PAL_STREAM_PROXY_TX_TELEPHONY_RX">
+                <!-- STREAMTX - PCM_PROXY_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB100000B"/>
+                <!-- PROXY_TX_TYPE - PROXY_TX_VOICE_RX -->
+                <graph_kv key="0xD1000000" value="0xD1000003"/>
+            </keys_and_values>
+            <keys_and_values Direction="RX">
+                <!-- STREAMRX - PCM_PROXY_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA1000012"/>
+            </keys_and_values>
+        </stream>
+        <!-- Non-Tunnel stream -->
+        <stream type="PAL_STREAM_NON_TUNNEL">
+            <keys_and_values AudioFormat="PAL_AUDIO_FMT_PCM" Instance="1">
+                <!-- STREAM - NT_ENCODE -->
+                <graph_kv key="0xD3000000" value="0xD2000002"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+            <keys_and_values AudioFormat="PAL_AUDIO_FMT_NON_PCM" Instance="1">
+                <!-- STREAM - NT_DECODE -->
+                <graph_kv key="0xD3000000" value="0xD2000001"/>
+                <!-- INSTANCE - INSTANCE_1 -->
+                <graph_kv key="0xAB000000" value="0x1"/>
+            </keys_and_values>
+            <keys_and_values AudioFormat="PAL_AUDIO_FMT_PCM" Instance="2">
+                <!-- STREAM - NT_ENCODE -->
+                <graph_kv key="0xD3000000" value="0xD2000002"/>
+                <!-- INSTANCE - INSTANCE_2 -->
+                <graph_kv key="0xAB000000" value="0x2"/>
+            </keys_and_values>
+            <keys_and_values AudioFormat="PAL_AUDIO_FMT_NON_PCM" Instance="2">
+                <!-- STREAM - NT_DECODE -->
+                <graph_kv key="0xD3000000" value="0xD2000001"/>
+                <!-- INSTANCE - INSTANCE_2 -->
+                <graph_kv key="0xAB000000" value="0x2"/>
+            </keys_and_values>
+        </stream>
+        <!-- Haptics stream -->
+        <stream type="PAL_STREAM_HAPTICS">
+            <keys_and_values>
+                <!-- STREAMRX - HAPTICS_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA1000015"/>
+            </keys_and_values>
+        </stream>
+        <!-- Raw stream -->
+        <stream type="PAL_STREAM_RAW">
+            <keys_and_values Direction="RX">
+                <!-- STREAMRX - RAW_PLAYBACK -->
+                <graph_kv key="0xA1000000" value="0xA1000019"/>
+            </keys_and_values>
+            <keys_and_values Direction="TX">
+                <!-- STREAMTX - RAW_RECORD -->
+                <graph_kv key="0xB1000000" value="0xB1000009"/>
+            </keys_and_values>
+            <keys_and_values Direction="RX_TX">
+                <!-- STREAMRX - PCM_RX_LOOPBACK -->
+                <graph_kv key="0xA1000000" value="0xA1000003"/>
+            </keys_and_values>
+        </stream>
+        <!-- ACD stream -->
+        <stream type="PAL_STREAM_ACD">
+            <keys_and_values ACDModuleType="QC_ACD">
+                <!-- STREAM_CONFIG - STREAM_CFG_ACD_QC -->
+                <graph_kv key="0xBC000000" value="0xBC000007"/>
+                <!-- STREAMTX - ACD -->
+                <graph_kv key="0xB1000000" value="0xB100000D"/>
+            </keys_and_values>
+        </stream>
+        <!-- Sensor PCM Data stream -->
+        <stream type="PAL_STREAM_SENSOR_PCM_DATA">
+            <keys_and_values ACDModuleType="QC_SENSOR_PCM_DATA">
+                <!-- STREAMTX - SENSOR_PCM_DATA -->
+                <graph_kv key="0xB1000000" value="0xB100000E"/>
+            </keys_and_values>
+        </stream>
+    </streams>
+    <streampps>
+        <!-- Voice Call stream PP -->
+        <streampp type="PAL_STREAM_VOICE_CALL">
+            <keys_and_values>
+                <!-- STREAMPP_RX - STREAMPP_RX_DEFAULT -->
+                <graph_kv key="0xAF000000" value="0xAF000001"/>
+            </keys_and_values>
+        </streampp>
+    </streampps>
+    <devices>
+        <!-- Speaker Device -->
+        <device id="PAL_DEVICE_OUT_SPEAKER">
+            <keys_and_values>
+                <!-- DEVICERX - SPEAKER -->
+                <graph_kv key="0xA2000000" value="0xA2000001"/>
+            </keys_and_values>
+        </device>
+        <!-- Handset Device -->
+        <device id="PAL_DEVICE_OUT_HANDSET">
+            <keys_and_values>
+                <!-- DEVICERX - HANDSET -->
+                <graph_kv key="0xA2000000" value="0xA2000004"/>
+            </keys_and_values>
+        </device>
+        <!-- AUX Device -->
+        <device id="PAL_DEVICE_OUT_AUX_DIGITAL,PAL_DEVICE_OUT_AUX_DIGITAL_1,PAL_DEVICE_OUT_HDMI">
+            <keys_and_values>
+                <!-- DEVICERX - HDMI_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000006"/>
+            </keys_and_values>
+        </device>
+        <!-- wired USB Device-->
+        <device id="PAL_DEVICE_OUT_WIRED_HEADSET,PAL_DEVICE_OUT_WIRED_HEADPHONE">
+            <keys_and_values>
+                <!-- DEVICERX - HEADPHONES -->
+                <graph_kv key="0xA2000000" value="0xA2000002"/>
+            </keys_and_values>
+        </device>
+        <!-- USB Device-->
+        <device id="PAL_DEVICE_OUT_USB_HEADSET,PAL_DEVICE_OUT_USB_DEVICE">
+            <keys_and_values>
+                <!-- DEVICERX - USB_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000005"/>
+            </keys_and_values>
+        </device>
+        <!-- In Handset MIC Device -->
+        <device id="PAL_DEVICE_IN_HANDSET_MIC">
+            <keys_and_values>
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+            </keys_and_values>
+            <keys_and_values SidetoneMode="SW">
+                <!-- SW_SIDETONE - SW_SIDETONE_ON -->
+                <graph_kv key="0xBA000000" value="0xBA000001"/>
+            </keys_and_values>
+        </device>
+        <!-- In speaker MIC Device-->
+        <device id="PAL_DEVICE_IN_SPEAKER_MIC">
+            <keys_and_values>
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+            </keys_and_values>
+            <keys_and_values CustomConfig="unprocessed-hdr-mic-landscape,unprocessed-hdr-mic-portrait,unprocessed-hdr-mic-inverted-landscape,unprocessed-hdr-mic-inverted-portrait">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+            </keys_and_values>
+            <keys_and_values SidetoneMode="SW">
+                <!-- SW_SIDETONE - SW_SIDETONE_ON -->
+                <graph_kv key="0xBA000000" value="0xBA000001"/>
+            </keys_and_values>
+        </device>
+        <!-- In wired Headset Device -->
+        <device id="PAL_DEVICE_IN_WIRED_HEADSET">
+            <keys_and_values>
+                <!-- DEVICETX - HEADPHONE_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000003"/>
+            </keys_and_values>
+            <keys_and_values SidetoneMode="SW">
+                <!-- SW_SIDETONE - SW_SIDETONE_ON -->
+                <graph_kv key="0xBA000000" value="0xBA000001"/>
+            </keys_and_values>
+        </device>
+        <!-- In USB Headset Device -->
+        <device id="PAL_DEVICE_IN_USB_DEVICE,PAL_DEVICE_IN_USB_HEADSET">
+            <keys_and_values>
+                <!-- DEVICETX - USB_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000005"/>
+            </keys_and_values>
+            <keys_and_values SidetoneMode="SW">
+                <!-- SW_SIDETONE - SW_SIDETONE_ON -->
+                <graph_kv key="0xBA000000" value="0xBA000001"/>
+            </keys_and_values>
+        </device>
+        <!-- In Handset VA MIC Device -->
+        <device id="PAL_DEVICE_IN_HANDSET_VA_MIC">
+            <keys_and_values>
+                <!-- DEVICETX - HANDSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000006"/>
+            </keys_and_values>
+        </device>
+        <!-- In Headset VA MIC Device -->
+        <device id="PAL_DEVICE_IN_HEADSET_VA_MIC">
+            <keys_and_values>
+                <!-- DEVICETX - HEADSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000007"/>
+            </keys_and_values>
+        </device>
+        <!-- Proxy IN Device -->
+        <device id="PAL_DEVICE_IN_PROXY">
+            <keys_and_values>
+                <!-- DEVICETX - PROXY_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000008"/>
+            </keys_and_values>
+            <keys_and_values SubType="PAL_STREAM_PROXY_TX_WFD">
+                <!-- DEVICETX - PROXY_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000008"/>
+                <!-- PROXY_TX_TYPE - PROXY_TX_WFD -->
+                <graph_kv key="0xD1000000" value="0xD1000002"/>
+            </keys_and_values>
+        </device>
+        <!-- Proxy Out Device -->
+        <device id="PAL_DEVICE_OUT_PROXY">
+            <keys_and_values>
+                <!-- DEVICERX - PROXY_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000007"/>
+            </keys_and_values>
+        </device>
+        <!-- In Telephony RX Device -->
+        <device id="PAL_DEVICE_IN_TELEPHONY_RX">
+            <keys_and_values>
+                <!-- DEVICETX - PROXY_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000008"/>
+            </keys_and_values>
+            <keys_and_values SubType="PAL_STREAM_PROXY_TX_TELEPHONY_RX">
+                <!-- DEVICETX - PROXY_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000008"/>
+                <!-- PROXY_TX_TYPE - PROXY_TX_VOICE_RX -->
+                <graph_kv key="0xD1000000" value="0xD1000003"/>
+            </keys_and_values>
+        </device>
+        <!-- In VI feedback Device -->
+        <device id="PAL_DEVICE_IN_VI_FEEDBACK">
+            <keys_and_values>
+                <!-- DEVICETX - VI_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000009"/>
+            </keys_and_values>
+        </device>
+        <!-- In CPS feedback Device -->
+        <device id="PAL_DEVICE_IN_CPS_FEEDBACK">
+            <keys_and_values>
+                <!-- DEVICETX - CPS_TX -->
+                <graph_kv key="0xA3000000" value="0xA300000E"/>
+            </keys_and_values>
+        </device>
+        <!-- Out hearing AID Device -->
+        <device id="PAL_DEVICE_OUT_HEARING_AID">
+            <keys_and_values>
+                <!-- DEVICERX - PROXY_RX_VOICE -->
+                <graph_kv key="0xA2000000" value="0xA2000008"/>
+            </keys_and_values>
+        </device>
+        <!-- Out Haptics Device -->
+        <device id="PAL_DEVICE_OUT_HAPTICS_DEVICE">
+            <keys_and_values>
+                <!-- DEVICERX - HAPTICS_DEVICE -->
+                <graph_kv key="0xA2000000" value="0xA2000009"/>
+            </keys_and_values>
+        </device>
+        <!-- In FM Tuner Device -->
+        <device id="PAL_DEVICE_IN_FM_TUNER">
+            <keys_and_values>
+                <!-- DEVICETX - FM_TX -->
+                <graph_kv key="0xA3000000" value="0xA300000A"/>
+            </keys_and_values>
+        </device>
+        <!-- Out Ultrasound Device -->
+        <device id="PAL_DEVICE_OUT_ULTRASOUND">
+            <keys_and_values>
+                <!-- DEVICERX - ULTRASOUND_RX -->
+                <graph_kv key="0xA2000000" value="0xA200000A"/>
+            </keys_and_values>
+        </device>
+        <!-- Out Ultrasound Device -->
+        <device id="PAL_DEVICE_OUT_ULTRASOUND_DEDICATED">
+            <keys_and_values>
+                <!-- DEVICERX - ULTRASOUND_RX -->
+                <graph_kv key="0xA2000000" value="0xA200000B"/>
+            </keys_and_values>
+        </device>
+        <!-- In Ultrasound Device -->
+        <device id="PAL_DEVICE_IN_ULTRASOUND_MIC">
+            <keys_and_values>
+                <!-- DEVICETX - ULTRASOUND_TX -->
+                <graph_kv key="0xA3000000" value="0xA300000B"/>
+            </keys_and_values>
+        </device>
+        <!-- In External EC Reference Device -->
+        <device id="PAL_DEVICE_IN_EXT_EC_REF">
+            <keys_and_values>
+                <!-- DEVICETX_EXT - EXT_EC_TX -->
+                <graph_kv key="0xD7000000" value="0xD7000001"/>
+            </keys_and_values>
+        </device>
+        <!-- BT A2DP OUT Device -->
+        <device id="PAL_DEVICE_OUT_BLUETOOTH_A2DP">
+            <keys_and_values CodecFormat="CODEC_TYPE_LDAC" AbrEnabled="TRUE,FALSE" Hostless="TRUE,FALSE">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - A2DP -->
+                <graph_kv key="0xB4000000" value="0xB4000002"/>
+                <!-- BT_FORMAT - LDAC -->
+                <graph_kv key="0xB5000000" value="0xB5000002"/>
+            </keys_and_values>
+            <!-- In APTX_AD ABR is always enabled -->
+            <keys_and_values CodecFormat="CODEC_TYPE_APTX_AD" AbrEnabled="TRUE,FALSE" Hostless="TRUE,FALSE">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - A2DP -->
+                <graph_kv key="0xB4000000" value="0xB4000002"/>
+                <!-- BT_FORMAT - APTX_ADAPTIVE -->
+                <graph_kv key="0xB5000000" value="0xB5000003"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_LC3" AbrEnabled="TRUE,FALSE" Hostless="TRUE">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - A2DP -->
+                <graph_kv key="0xB4000000" value="0xB4000002"/>
+                <!-- BT_FORMAT - LC3 -->
+                <graph_kv key="0xB5000000" value="0xB5000005"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_LC3" AbrEnabled="TRUE,FALSE" Hostless="FALSE">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - A2DP -->
+                <graph_kv key="0xB4000000" value="0xB4000002"/>
+                <!-- BT_FORMAT - LC3 -->
+                <graph_kv key="0xB5000000" value="0xB5000005"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_AAC" AbrEnabled="TRUE" Hostless="TRUE,FALSE">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - A2DP -->
+                <graph_kv key="0xB4000000" value="0xB4000002"/>
+                <!-- BT_FORMAT - AAC_ABR -->
+                <graph_kv key="0xB5000000" value="0xB5000006"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_AAC,CODEC_TYPE_SBC,CODEC_TYPE_APTX,CODEC_TYPE_APTX_HD,CODEC_TYPE_APTX_DUAL_MONO" AbrEnabled="FALSE" Hostless="TRUE,FALSE">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - A2DP -->
+                <graph_kv key="0xB4000000" value="0xB4000002"/>
+                <!-- BT_FORMAT - GENERIC -->
+                <graph_kv key="0xB5000000" value="0xB5000001"/>
+            </keys_and_values>
+        </device>
+        <!-- BT BLE OUT Device -->
+        <device id="PAL_DEVICE_OUT_BLUETOOTH_BLE">
+            <keys_and_values CodecFormat="CODEC_TYPE_LC3" AbrEnabled="TRUE,FALSE" Hostless="TRUE">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - BLE -->
+                <graph_kv key="0xB4000000" value="0xB4000003"/>
+                <!-- BT_FORMAT - LC3 -->
+                <graph_kv key="0xB5000000" value="0xB5000005"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_LC3" AbrEnabled="TRUE,FALSE" Hostless="FALSE">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - BLE -->
+                <graph_kv key="0xB4000000" value="0xB4000003"/>
+                <!-- BT_FORMAT - LC3 -->
+                <graph_kv key="0xB5000000" value="0xB5000005"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_APTX_AD_QLEA" AbrEnabled="TRUE,FALSE" Hostless="FALSE">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - BLE -->
+                <graph_kv key="0xB4000000" value="0xB4000003"/>
+                <!-- BT_FORMAT - APTX_AD_QLEA -->
+                <graph_kv key="0xB5000000" value="0xB5000007"/>
+            </keys_and_values>
+        </device>
+        <!-- BT BLE BROADCAST OUT Device -->
+        <device id="PAL_DEVICE_OUT_BLUETOOTH_BLE_BROADCAST">
+            <keys_and_values CodecFormat="CODEC_TYPE_LC3" AbrEnabled="TRUE,FALSE" Hostless="FALSE">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - BLE -->
+                <graph_kv key="0xB4000000" value="0xB4000003"/>
+                <!-- BT_FORMAT - LC3 -->
+                <graph_kv key="0xB5000000" value="0xB5000005"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_APTX_AD_QLEA" AbrEnabled="TRUE,FALSE" Hostless="FALSE">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - BLE -->
+                <graph_kv key="0xB4000000" value="0xB4000003"/>
+                <!-- BT_FORMAT - APTX_AD_QLEA -->
+                <graph_kv key="0xB5000000" value="0xB5000007"/>
+            </keys_and_values>
+        </device>
+        <!-- BT A2DP IN Device -->
+        <device id="PAL_DEVICE_IN_BLUETOOTH_A2DP">
+            <keys_and_values CodecFormat="CODEC_TYPE_LDAC,CODEC_TYPE_APTX_AD,CODEC_TYPE_AAC" Hostless="TRUE,FALSE">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+               </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_LC3" Hostless="TRUE">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- BT_PROFILE - A2DP -->
+                <graph_kv key="0xB4000000" value="0xB4000002"/>
+                <!-- BT_FORMAT - LC3 -->
+                <graph_kv key="0xB5000000" value="0xB5000005"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_LC3" Hostless="FALSE">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- BT_PROFILE - A2DP -->
+                <graph_kv key="0xB4000000" value="0xB4000002"/>
+                <!-- BT_FORMAT - LC3 -->
+                <graph_kv key="0xB5000000" value="0xB5000005"/>
+            </keys_and_values>
+        </device>
+        <!-- BT BLE IN Device -->
+        <device id="PAL_DEVICE_IN_BLUETOOTH_BLE">
+            <keys_and_values CodecFormat="CODEC_TYPE_LC3" Hostless="TRUE">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- BT_PROFILE - BLE -->
+                <graph_kv key="0xB4000000" value="0xB4000003"/>
+                <!-- BT_FORMAT - LC3 -->
+                <graph_kv key="0xB5000000" value="0xB5000005"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_LC3" Hostless="FALSE">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- BT_PROFILE - BLE -->
+                <graph_kv key="0xB4000000" value="0xB4000003"/>
+                <!-- BT_FORMAT - LC3 -->
+                <graph_kv key="0xB5000000" value="0xB5000005"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_APTX_AD_QLEA" Hostless="TRUE">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- BT_PROFILE - BLE -->
+                <graph_kv key="0xB4000000" value="0xB4000003"/>
+                <!-- BT_FORMAT - APTX_AD_QLEA -->
+                <graph_kv key="0xB5000000" value="0xB5000007"/>
+            </keys_and_values>
+        </device>
+        <!-- BT SCO OUT Device -->
+        <device id="PAL_DEVICE_OUT_BLUETOOTH_SCO">
+            <keys_and_values CodecFormat="CODEC_TYPE_INVALID">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - SCO -->
+                <graph_kv key="0xB4000000" value="0xB4000001"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_APTX_AD_SPEECH">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - SCO -->
+                <graph_kv key="0xB4000000" value="0xB4000001"/>
+                <!-- BT_FORMAT - SWB -->
+                <graph_kv key="0xB5000000" value="0xB5000004"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_LC3">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- BT_PROFILE - SCO -->
+                <graph_kv key="0xB4000000" value="0xB4000001"/>
+                <!-- BT_FORMAT - LC3 -->
+                <graph_kv key="0xB5000000" value="0xB5000005"/>
+            </keys_and_values>
+        </device>
+        <!-- BT SCO In Headset Device -->
+        <device id="PAL_DEVICE_IN_BLUETOOTH_SCO_HEADSET">
+             <keys_and_values CodecFormat="CODEC_TYPE_INVALID">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- BT_PROFILE - SCO -->
+                <graph_kv key="0xB4000000" value="0xB4000001"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_APTX_AD_SPEECH">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- BT_PROFILE - SCO -->
+                <graph_kv key="0xB4000000" value="0xB4000001"/>
+                <!-- BT_FORMAT - SWB -->
+                <graph_kv key="0xB5000000" value="0xB5000004"/>
+            </keys_and_values>
+            <keys_and_values CodecFormat="CODEC_TYPE_LC3">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- BT_PROFILE - SCO -->
+                <graph_kv key="0xB4000000" value="0xB4000001"/>
+                <!-- BT_FORMAT - LC3 -->
+                <graph_kv key="0xB5000000" value="0xB5000005"/>
+            </keys_and_values>
+        </device>
+        <!-- Echo Ref Device -->
+        <device id="PAL_DEVICE_IN_ECHO_REF">
+            <keys_and_values>
+                <!-- DEVICETX - ECHO_REF_TX -->
+                <graph_kv key="0xA3000000" value="0xA300000D"/>
+            </keys_and_values>
+        </device>
+    </devices>
+    <devicepps>
+        <!-- OUT Speaker DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_SPEAKER">
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_PCM_OFFLOAD,PAL_STREAM_COMPRESSED,PAL_STREAM_LOW_LATENCY,PAL_STREAM_GENERIC">
+                <!-- DEVICERX - SPEAKER -->
+                <graph_kv key="0xA2000000" value="0xA2000001"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_AUDIO_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_PCM_OFFLOAD,PAL_STREAM_COMPRESSED,PAL_STREAM_GENERIC,PAL_STREAM_LOW_LATENCY" CustomConfig="mspp">
+                <!-- DEVICERX - SPEAKER -->
+                <graph_kv key="0xA2000000" value="0xA2000001"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_AUDIO_MSPP -->
+                <graph_kv key="0xAC000000" value="0xAC00000B"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_RAW">
+                <!-- DEVICERX - SPEAKER -->
+                <graph_kv key="0xA2000000" value="0xA2000001"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000001"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_LOW_LATENCY" CustomConfig="speaker-safe">
+                <!-- DEVICERX - SPEAKER -->
+                <graph_kv key="0xA2000000" value="0xA2000001"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_AUDIO_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_RX">
+                <!-- DEVICERX - SPEAKER -->
+                <graph_kv key="0xA2000000" value="0xA2000001"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOIP_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000003"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_RX">
+                <!-- DEVICERX - SPEAKER -->
+                <graph_kv key="0xA2000000" value="0xA2000001"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOIP_MBDRC RX_NN_NS/CASCADE -->
+                <graph_kv key="0xAC000000" value="0xAC00000A"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_LOOPBACK" SubType="PAL_STREAM_LOOPBACK_HFP_RX">
+                <!-- DEVICERX - SPEAKER -->
+                <graph_kv key="0xA2000000" value="0xA2000001"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_HFPSINK -->
+                <graph_kv key="0xAC000000" value="0xAC000004"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICERX - SPEAKER -->
+                <graph_kv key="0xA2000000" value="0xA2000001"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOICE_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000005"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_ULTRASOUND">
+                <!-- DEVICERX - SPEAKER -->
+                <graph_kv key="0xA2000000" value="0xA2000001"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_ULTRASOUND_GENERATOR -->
+                <graph_kv key="0xAC000000" value="0xAC000006"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- OUT Handset DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_HANDSET">
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_PCM_OFFLOAD,PAL_STREAM_COMPRESSED,PAL_STREAM_LOW_LATENCY,PAL_STREAM_GENERIC">
+                <!-- DEVICERX - HANDSET -->
+                <graph_kv key="0xA2000000" value="0xA2000004"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_AUDIO_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_RAW">
+                <!-- DEVICERX - HANDSET -->
+                <graph_kv key="0xA2000000" value="0xA2000004"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000001"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_RX">
+                <!-- DEVICERX - HANDSET -->
+                <graph_kv key="0xA2000000" value="0xA2000004"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOIP_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000003"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_RX">
+                <!-- DEVICERX - HANDSET -->
+                <graph_kv key="0xA2000000" value="0xA2000004"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOIP_MBDRC RX_NN_NS/CASCADE -->
+                <graph_kv key="0xAC000000" value="0xAC00000A"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICERX - HANDSET -->
+                <graph_kv key="0xA2000000" value="0xA2000004"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOICE_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000005"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_ULTRASOUND">
+                <!-- DEVICERX - HANDSET -->
+                <graph_kv key="0xA2000000" value="0xA2000004"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_ULTRASOUND_GENERATOR -->
+                <graph_kv key="0xAC000000" value="0xAC000006"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL" CustomConfig="dual-mic-rve">
+                <!-- DEVICERX - HANDSET -->
+                <graph_kv key="0xA2000000" value="0xA2000004"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOICE_RVE -->
+                <graph_kv key="0xAC000000" value="0xAC000007"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- OUT Headset and Headphone Digital DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_WIRED_HEADSET,PAL_DEVICE_OUT_WIRED_HEADPHONE">
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_PCM_OFFLOAD,PAL_STREAM_COMPRESSED,PAL_STREAM_LOW_LATENCY,PAL_STREAM_GENERIC">
+                <!-- DEVICERX - HEADPHONES -->
+                <graph_kv key="0xA2000000" value="0xA2000002"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_AUDIO_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_RAW">
+                <!-- DEVICERX - HEADPHONES -->
+                <graph_kv key="0xA2000000" value="0xA2000002"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000001"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_RX">
+                <!-- DEVICERX - HEADPHONES -->
+                <graph_kv key="0xA2000000" value="0xA2000002"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOIP_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000003"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_RX">
+                <!-- DEVICERX - HEADPHONES -->
+                <graph_kv key="0xA2000000" value="0xA2000002"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOIP_MBDRC RX_NN_NS -->
+                <graph_kv key="0xAC000000" value="0xAC00000A"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICERX - HEADPHONES -->
+                <graph_kv key="0xA2000000" value="0xA2000002"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOICE_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000005"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- OUT Bluetooth A2DP DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_BLUETOOTH_A2DP">
+            <keys_and_values StreamType="PAL_STREAM_COMPRESSED,PAL_STREAM_DEEP_BUFFER,PAL_STREAM_LOW_LATENCY,PAL_STREAM_PCM_OFFLOAD,PAL_STREAM_GENERIC">
+                <!-- DEVICEPP_RX - DEVICEPP_RX_AUDIO_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_RX" >
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOIP_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000003"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- OUT Bluetooth BLE DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_BLUETOOTH_BLE">
+            <keys_and_values StreamType="PAL_STREAM_COMPRESSED,PAL_STREAM_DEEP_BUFFER,PAL_STREAM_LOW_LATENCY,PAL_STREAM_PCM_OFFLOAD">
+                <!-- DEVICEPP_RX - DEVICEPP_RX_AUDIO_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_RX" >
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOIP_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000003"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOICE_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000005"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- OUT Bluetooth BLE BROADCAST DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_BLUETOOTH_BLE_BROADCAST">
+            <keys_and_values StreamType="PAL_STREAM_COMPRESSED,PAL_STREAM_DEEP_BUFFER,PAL_STREAM_LOW_LATENCY,PAL_STREAM_PCM_OFFLOAD">
+                <!-- DEVICEPP_RX - DEVICEPP_RX_AUDIO_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000002"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- OUT BT SCO DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_BLUETOOTH_SCO">
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_PCM_OFFLOAD,PAL_STREAM_COMPRESSED,PAL_STREAM_LOW_LATENCY,PAL_STREAM_GENERIC">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_AUDIO_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_RX">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOIP_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000003"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICERX - BT_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000003"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOICE_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000005"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- OUT HDMI and AUX Digital DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_HDMI,PAL_DEVICE_OUT_AUX_DIGITAL,PAL_DEVICE_OUT_AUX_DIGITAL_1">
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_PCM_OFFLOAD,PAL_STREAM_COMPRESSED,PAL_STREAM_LOW_LATENCY,PAL_STREAM_GENERIC">
+                <!-- DEVICERX - HDMI_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000006"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_AUDIO_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_RAW">
+                <!-- DEVICERX - HDMI_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000006"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000001"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- OUT USB device and USB Headset DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_USB_DEVICE,PAL_DEVICE_OUT_USB_HEADSET">
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_PCM_OFFLOAD,PAL_STREAM_COMPRESSED,PAL_STREAM_LOW_LATENCY,PAL_STREAM_GENERIC">
+                <!-- DEVICERX - USB_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000005"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_AUDIO_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_RAW">
+                <!-- DEVICERX - USB_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000005"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000001"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_RX">
+                <!-- DEVICERX - USB_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000005"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOIP_MBDRC -->
+                <graph_kv key="0xAC000000" value="0xAC000003"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICERX - USB_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000005"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOICE_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000005"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- OUT Device Proxy DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_PROXY">
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_PCM_OFFLOAD,PAL_STREAM_COMPRESSED,PAL_STREAM_LOW_LATENCY">
+                <!-- DEVICERX - PROXY_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000007"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000001"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICERX - PROXY_RX -->
+                <graph_kv key="0xA2000000" value="0xA2000007"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOICE_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000005"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- OUT Hearing Aid DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_HEARING_AID">
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICERX - PROXY_RX_VOICE -->
+                <graph_kv key="0xA2000000" value="0xA2000008"/>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_VOICE_DEFAULT -->
+                <graph_kv key="0xAC000000" value="0xAC000005"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- IN Handset MIC DevicePPs -->
+        <devicepp id="PAL_DEVICE_IN_HANDSET_MIC">
+            <keys_and_values StreamType="PAL_STREAM_VOICE_RECOGNITION">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_RECOGNITION -->
+                <graph_kv key="0xAD000000" value="0xAD000017"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_COMPRESSED">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_AUDIO_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER" CustomConfig="unprocessed-hdr-mic-landscape,unprocessed-hdr-mic-portrait,unprocessed-hdr-mic-inverted-landscape,unprocessed-hdr-mic-inverted-portrait">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_AUDIO_RECORD_ENQORE -->
+                <graph_kv key="0xAD000000" value="0xAD000023"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_COMPRESSED" CustomConfig="dual-mic">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_AUDIO_FLUENCE_ENDFIRE -->
+                <graph_kv key="0xAD000000" value="0xAD000003"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_COMPRESSED" CustomConfig="quad-mic">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_AUDIO_FLUENCE_PRO -->
+                <graph_kv key="0xAD000000" value="0xAD000004"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000008"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL" CustomConfig="dual-mic">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_ENDFIRE -->
+                <graph_kv key="0xAD000000" value="0xAD000009"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL" CustomConfig="quad-mic">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_PRO -->
+                <graph_kv key="0xAD000000" value="0xAD00000A"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL" CustomConfig="nn-sm">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_NN_SM -->
+                <graph_kv key="0xAD000000" value="0xAD00000F"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL" CustomConfig="dual-mic-rve">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_ENDFIRE_RVE -->
+                <graph_kv key="0xAD000000" value="0xAD000013"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000007"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX" CustomConfig="dual-mic">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_ENDFIRE -->
+                <graph_kv key="0xAD000000" value="0xAD00000D"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX" CustomConfig="quad-mic">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_PRO -->
+                <graph_kv key="0xAD000000" value="0xAD000005"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX" CustomConfig="nn-sm">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_NN_SM -->
+                <graph_kv key="0xAD000000" value="0xAD000010"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX" CustomConfig="dual-mic-cascade">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_ENDFIRE_CASCADE -->
+                <graph_kv key="0xAD000000" value="0xAD00001F"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX" CustomConfig="quad-mic-cascade">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_PRO_CASCADE -->
+                <graph_kv key="0xAD000000" value="0xAD000020"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- IN Speaker MIC DevicePPs -->
+        <devicepp id="PAL_DEVICE_IN_SPEAKER_MIC">
+            <keys_and_values StreamType="PAL_STREAM_VOICE_RECOGNITION">
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_RECOGNITION -->
+                <graph_kv key="0xAD000000" value="0xAD000017"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER, PAL_STREAM_COMPRESSED">
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_AUDIO_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_COMPRESSED" CustomConfig="dual-mic">
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_AUDIO_FLUENCE_ENDFIRE -->
+                <graph_kv key="0xAD000000" value="0xAD000003"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_COMPRESSED" CustomConfig="quad-mic">
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_AUDIO_FLUENCE_PRO -->
+                <graph_kv key="0xAD000000" value="0xAD000004"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER" CustomConfig="unprocessed-hdr-mic-landscape,unprocessed-hdr-mic-portrait,unprocessed-hdr-mic-inverted-landscape,unprocessed-hdr-mic-inverted-portrait">
+                <!-- DEVICETX - HANDSETMIC -->
+                <graph_kv key="0xA3000000" value="0xA3000004"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_AUDIO_RECORD_ENQORE -->
+                <graph_kv key="0xAD000000" value="0xAD000023"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000008"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL" CustomConfig="dual-mic">
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_ENDFIRE -->
+                <graph_kv key="0xAD000000" value="0xAD000009"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL" CustomConfig="quad-mic">
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_PRO -->
+                <graph_kv key="0xAD000000" value="0xAD00000A"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL" CustomConfig="nn-sm">
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_NN_SM -->
+                <graph_kv key="0xAD000000" value="0xAD00000F"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX">
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000007"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX" CustomConfig="dual-mic">>
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_ENDFIRE -->
+                <graph_kv key="0xAD000000" value="0xAD00000D"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX" CustomConfig="quad-mic">>
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_PRO -->
+                <graph_kv key="0xAD000000" value="0xAD000005"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX" CustomConfig="nn-sm">>
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_NN_SM -->
+                <graph_kv key="0xAD000000" value="0xAD000010"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_LOOPBACK" SubType="PAL_STREAM_LOOPBACK_HFP_TX">
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_HFP_SINK_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000006"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX" CustomConfig="dual-mic-cascade">
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_ENDFIRE_CASCADE -->
+                <graph_kv key="0xAD000000" value="0xAD00001F"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX" CustomConfig="quad-mic-cascade">
+                <!-- DEVICETX - SPEAKER_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000001"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_PRO_CASCADE -->
+                <graph_kv key="0xAD000000" value="0xAD000020"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- IN BT_SCO_Headset DevicePPs  -->
+        <devicepp id="PAL_DEVICE_IN_BLUETOOTH_SCO_HEADSET">
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_COMPRESSED">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_AUDIO_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000008"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000007"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_RECOGNITION">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_RECOGNITION  -->
+                <graph_kv key="0xAD000000" value="0xAD000017"/>
+            </keys_and_values>
+        </devicepp>
+        <!--IN Wired headset_IN DevicePPs -->
+        <devicepp id="PAL_DEVICE_IN_WIRED_HEADSET">
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_COMPRESSED">
+                <!-- DEVICETX - HEADPHONE_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000003"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_AUDIO_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICETX - HEADPHONE_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000003"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000008"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX">
+                <!-- DEVICETX - HEADPHONE_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000003"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000007"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_RECOGNITION">
+                <!-- DEVICETX - HEADPHONE_MIC -->
+                <graph_kv key="0xA3000000" value="0xA3000003"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_RECOGNITION -->
+                <graph_kv key="0xAD000000" value="0xAD000017"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- IN USB device and USB headset DevicePPs -->
+        <devicepp id="PAL_DEVICE_IN_USB_DEVICE,PAL_DEVICE_IN_USB_HEADSET">
+            <keys_and_values StreamType="PAL_STREAM_DEEP_BUFFER,PAL_STREAM_COMPRESSED">
+                <!-- DEVICETX - USB_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000005"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_AUDIO_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000002"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICETX - USB_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000005"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000008"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX">
+                <!-- DEVICETX - USB_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000005"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000007"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_RECOGNITION">
+                <!-- DEVICETX - USB_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000005"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_RECOGNITION -->
+                <graph_kv key="0xAD000000" value="0xAD000017"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- IN Handset_VA_MIC DevicePPs -->
+        <devicepp id="PAL_DEVICE_IN_HANDSET_VA_MIC">
+            <keys_and_values StreamType="PAL_STREAM_ACD,PAL_STREAM_VOICE_UI,PAL_STREAM_SENSOR_PCM_DATA"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_FFECNS,DUAL_MIC_16KHZ_16BIT_FFECNS,TRI_MIC_16KHZ_16BIT_FFECNS,QUAD_MIC_16KHZ_16BIT_FFECNS">
+                <!-- DEVICETX - HANDSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000006"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_FLUENCE_FFECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000001"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_SENSOR_PCM_DATA"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_FFEC">
+                <!-- DEVICETX - HANDSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000006"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_FLUENCE_FFEC -->
+                <graph_kv key="0xAD000000" value="0xAD000012"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_UI,PAL_STREAM_SENSOR_PCM_DATA"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_FFNS,DUAL_MIC_16KHZ_16BIT_FFNS,TRI_MIC_16KHZ_16BIT_FFNS,QUAD_MIC_16KHZ_16BIT_FFNS">
+                <!-- DEVICETX - HANDSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000006"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_FLUENCE_FFNS_AAD -->
+                <graph_kv key="0xAD000000" value="0xAD00001A"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_UI,PAL_STREAM_SENSOR_PCM_DATA"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_RAW_LPI,DUAL_MIC_16KHZ_16BIT_RAW_LPI">
+                <!-- DEVICETX - HANDSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000006"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_RAW_LPI -->
+                <graph_kv key="0xAD000000" value="0xAD00000C"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_UI"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_RAW_LPI_AAD,DUAL_MIC_16KHZ_16BIT_RAW_LPI_AAD">
+                <!-- DEVICETX - HANDSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000006"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_RAW_LPI_AAD -->
+                <graph_kv key="0xAD000000" value="0xAD00001B"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_UI"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_RAW_NLPI,DUAL_MIC_16KHZ_16BIT_RAW_NLPI">
+                <!-- DEVICETX - HANDSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000006"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_RAW_NLPI -->
+                <graph_kv key="0xAD000000" value="0xAD00000E"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_ACD"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_LPI">
+                <!-- DEVICETX - HANDSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000006"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_AAD -->
+                <graph_kv key="0xAD000000" value="0xAD000019"/>
+            </keys_and_values>
+        </devicepp>
+        <!-- IN Headset VA MIC  DevicePPs -->
+        <devicepp id="PAL_DEVICE_IN_HEADSET_VA_MIC">
+            <keys_and_values StreamType="PAL_STREAM_ACD,PAL_STREAM_VOICE_UI,PAL_STREAM_SENSOR_PCM_DATA"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_HEADSET_FFECNS">
+                <!-- DEVICETX - HEADSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000007"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_FLUENCE_FFECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000001"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_SENSOR_PCM_DATA"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_HEADSET_FFEC">
+                <!-- DEVICETX - HEADSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000007"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_FLUENCE_FFEC -->
+                <graph_kv key="0xAD000000" value="0xAD000012"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_UI,PAL_STREAM_SENSOR_PCM_DATA"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_HEADSET_FFNS">
+                <!-- DEVICETX - HEADSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000007"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_FLUENCE_FFNS_AAD -->
+                <graph_kv key="0xAD000000" value="0xAD00001A"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_UI,PAL_STREAM_SENSOR_PCM_DATA"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_HEADSET_RAW_LPI">
+                <!-- DEVICETX - HEADSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000007"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_RAW_LPI -->
+                <graph_kv key="0xAD000000" value="0xAD00000C"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_UI"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_HEADSET_RAW_LPI_AAD">
+                <!-- DEVICETX - HEADSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000007"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_RAW_LPI_AAD -->
+                <graph_kv key="0xAD000000" value="0xAD00001B"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOICE_UI"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_HEADSET_RAW_NLPI">
+                <!-- DEVICETX - HEADSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000007"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_RAW_NLPI -->
+                <graph_kv key="0xAD000000" value="0xAD00000E"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_ACD"
+                DevicePPType="SINGLE_MIC_16KHZ_16BIT_HEADSET_LPI">
+                <!-- DEVICETX - HEADSETMIC_VA -->
+                <graph_kv key="0xA3000000" value="0xA3000007"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_AAD -->
+                <graph_kv key="0xAD000000" value="0xAD000019"/>
+            </keys_and_values>
+        </devicepp>
+       <!-- IN BT A2DP DevicePPs -->
+        <devicepp id="PAL_DEVICE_IN_BLUETOOTH_A2DP">
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX" >
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000007"/>
+            </keys_and_values>
+        </devicepp>
+       <!-- IN BT BLE DevicePPs -->
+        <devicepp id="PAL_DEVICE_IN_BLUETOOTH_BLE">
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOICE_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000008"/>
+            </keys_and_values>
+            <keys_and_values StreamType="PAL_STREAM_VOIP_TX">
+                <!-- DEVICETX - BT_TX -->
+                <graph_kv key="0xA3000000" value="0xA3000002"/>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_VOIP_FLUENCE_SMECNS -->
+                <graph_kv key="0xAD000000" value="0xAD000007"/>
+            </keys_and_values>
+        </devicepp>
+       <!-- IN Ultrasound DevicePPs -->
+        <devicepp id="PAL_DEVICE_IN_ULTRASOUND_MIC">
+            <keys_and_values>
+                <!-- DEVICEPP_TX - DEVICEPP_TX_ULTRASOUND_DETECTOR -->
+                <graph_kv key="0xAD000000" value="0xAD000011"/>
+            </keys_and_values>
+        </devicepp>
+       <!-- OUT Ultrasound DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_ULTRASOUND">
+            <keys_and_values>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_ULTRASOUND_GENERATOR -->
+                <graph_kv key="0xAC000000" value="0xAC000006"/>
+            </keys_and_values>
+        </devicepp>
+       <!-- OUT Ultrasound DevicePPs -->
+        <devicepp id="PAL_DEVICE_OUT_ULTRASOUND_DEDICATED">
+            <keys_and_values>
+                <!-- DEVICEPP_RX - DEVICEPP_RX_ULTRASOUND_GENERATOR -->
+                <graph_kv key="0xAC000000" value="0xAC000006"/>
+            </keys_and_values>
+        </devicepp>
+    </devicepps>
+</graph_key_value_pair_info>

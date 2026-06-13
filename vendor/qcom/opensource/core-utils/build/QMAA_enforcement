@@ -1,0 +1,94 @@
+#!/bin/sh
+# Copyright (c) 2018, The Linux Foundation. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above
+#       copyright notice, this list of conditions and the following
+#       disclaimer in the documentation and/or other materials provided
+#       with the distribution.
+#     * Neither the name of The Linux Foundation nor the names of its
+#       contributors may be used to endorse or promote products derived
+#       from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE US
+
+#This script will parse the params from QMAA_enforcement.mk, and compare
+#QMAA_HAL_LIST with QMAA_ENABLED_HAL_MODULES, output the result which tell
+#each HAL in QMAA_HAL_LIST enabled or not and highlight the HALs needed
+#but not enabled.
+#
+
+ECHO=`which echo`
+ECHO=${ECHO:-echo}
+ECHOE="${ECHO} -e"
+GREP=`which grep`
+GREP=${GREP:-grep}
+PRINTF=`which printf`
+PRINTF=${PRINTF:-printf}
+RM=`which rm`
+RM=${RM:-rm}
+SORT=`which sort`
+SORT=${SORT:-sort}
+TR=`which tr`
+TR=${TR:-tr}
+
+${ECHO} "QMAA enforcement begin..."
+
+if [ -z "$1" ]; then
+    ${ECHO} "QMAA: HAL list is empty!"
+    exit 0
+fi
+
+if [ -z "$2" ]; then
+    ${ECHO} "No QMAA HAL found!"
+    exit 0
+fi
+
+HAL_LIST=`${ECHO} $1 | ${TR} " " "\n" | ${SORT} | ${TR} "\n" " "`
+ENABLED_HALS=`${ECHO} $2 | ${TR} " " "\n" | ${SORT} | ${TR} "\n" " "`
+
+check_result=true
+expected_hals=""
+
+for item in $HAL_LIST
+do
+    flag=false
+    for hal in $ENABLED_HALS
+    do
+        if [ "$hal" = "$item" ]; then
+            flag=true
+            break
+        else
+            continue
+        fi
+    done
+
+    if [ $flag != "false" ];
+    then
+        ${ECHO} $item"->enable"
+    else
+        ${ECHO} $item"->disable"
+        expected_hals=$expected_hals" "$item
+        check_result=false
+    fi
+done
+
+if [ $check_result != "true" ]; then
+    ${ECHO} "QMAA needed but not enabled:" $expected_hals
+    ${ECHO} "QMAA enforcement failed!"
+else
+    ${ECHO} "QMAA enforcement pass!"
+fi

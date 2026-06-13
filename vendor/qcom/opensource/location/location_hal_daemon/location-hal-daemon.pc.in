@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: location-hal-daemon
+Description: location hal daemon service
+Version: @VERSION@
+Libs: -L${libdir} -llocation-hal-daemon
+Cflags: -I${includedir} -I${includedir}/location-hal-daemon

@@ -1,0 +1,24 @@
+{
+    "homepage": "https://github.com/tweag/rules_haskell/",
+    "maintainers": [
+        {
+            "email": "claudio.bley@tweag.io",
+            "github": "avdv",
+            "name": "Claudio Bley"
+        },
+        {
+            "email": "andreas.herrmann@tweag.io",
+            "github": "aherrmann",
+            "name": "Andreas Herrmann"
+        }
+    ],
+    "repository": [
+        "github:tweag/rules_haskell"
+    ],
+    "versions": [
+        "0.17",
+        "0.18",
+        "0.19"
+    ],
+    "yanked_versions": {}
+}

@@ -1,0 +1,5 @@
+python_binary_host {
+    name: "image_generation_tool",
+    main: "image_generation_tool.py",
+    srcs: ["image_generation_tool.py",],
+}

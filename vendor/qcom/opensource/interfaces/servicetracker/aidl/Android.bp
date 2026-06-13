@@ -1,0 +1,28 @@
+aidl_interface {
+    name: "vendor.qti.hardware.servicetrackeraidl",
+    vendor_available: true,
+    host_supported: true,
+    system_ext_specific: true,
+    srcs: ["vendor/qti/hardware/servicetrackeraidl/*.aidl"],
+    stability: "vintf",
+    backend: {
+        cpp: {
+            enabled: false,
+        },
+        ndk: {
+            enabled: true,
+        },
+        java: {
+            enabled: true,
+            sdk_version: "module_current",
+        },
+    },
+    versions_with_info: [
+        {
+            version: "1",
+            imports: [],
+        },
+    ],
+    frozen: true,
+
+}

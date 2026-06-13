@@ -1,0 +1,7 @@
+KERNEL_DIR=common
+
+. ${ROOT_DIR}/${KERNEL_DIR}/build.config.common
+. ${ROOT_DIR}/${KERNEL_DIR}/build.config.gki
+. ${ROOT_DIR}/${KERNEL_DIR}/build.config.aarch64
+
+DO_NOT_STRIP_MODULES=0

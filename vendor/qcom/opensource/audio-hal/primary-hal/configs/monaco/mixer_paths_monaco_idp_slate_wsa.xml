@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.    -->
+<!--                                                                        -->
+<!-- Redistribution and use in source and binary forms, with or without     -->
+<!-- modification, are permitted provided that the following conditions are -->
+<!-- met:                                                                   -->
+<!--     * Redistributions of source code must retain the above copyright   -->
+<!--       notice, this list of conditions and the following disclaimer.    -->
+<!--     * Redistributions in binary form must reproduce the above          -->
+<!--       copyright notice, this list of conditions and the following      -->
+<!--       disclaimer in the documentation and/or other materials provided  -->
+<!--       with the distribution.                                           -->
+<!--     * Neither the name of The Linux Foundation nor the names of its    -->
+<!--       contributors may be used to endorse or promote products derived  -->
+<!--       from this software without specific prior written permission.    -->
+<!--                                                                        -->
+<!-- THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED           -->
+<!-- WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF   -->
+<!-- MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT -->
+<!-- ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS -->
+<!-- BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR -->
+<!-- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF   -->
+<!-- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR        -->
+<!-- BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,  -->
+<!-- OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN -->
+<!-- IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                          -->
+
+<!---Changes from Qualcomm Innovation Center are provided under the following license: -->
+<!---Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.          -->
+<!---SPDX-License-Identifier: BSD-3-Clause-Clear                                       -->
+
+<mixer>
+    <!-- These are the initial mixer settings -->
+    <ctl name="TX0_MIXER TX1_CAP" value="0" />
+    <ctl name="I2S0_D0_L_MUX" value="ZERO" />
+    <ctl name="TXCH1 Switch" value="0" />
+    <ctl name="TX1_INP_MUX" value="ZERO" />
+    <ctl name="DMIC1_MUX" value="ZERO"/>
+    <ctl name="TX0_MIXER TX0_CAP" value="0" />
+    <ctl name="I2S0_D0_R_MUX" value="ZERO" />
+    <ctl name="TXCH0 Switch" value="0" />
+    <ctl name="TX0_INP_MUX" value="ZERO" />
+    <ctl name="DMIC0_MUX" value="ZERO"/>
+    <ctl name="CDC_RX0_MUX" value="ZERI" />
+    <ctl name="RX0_SWITCH Switch" value="0" />
+    <ctl name="LP_DEC1_MUX" value="ZERO" />
+    <ctl name="LP_DEC0_MUX" value="ZERO" />
+    <ctl name="VA_PCM0_MUX" value="ZERO" />
+    <ctl name="VA_PCM1_MUX" value="ZERO" />
+    <ctl name="VA_CAP_MIXER PCM_0" value="0" />
+    <ctl name="VA_CAP_MIXER PCM_1" value="0" />
+    <ctl name="SPKR_OUT_0_S Switch" value="0" />
+    <ctl name="DMIC0_IN_S Switch" value="0" />
+    <ctl name="DMIC1_IN_S Switch" value="0" />
+    <ctl name="DMIC2_IN_S Switch" value="0" />
+    <ctl name="DMIC3_IN_S Switch" value="0" />
+    <ctl name="BB_MIC_BIAS1" value="BIAS_OFF" />
+    <ctl name="BB_MIC_BIAS2" value="BIAS_OFF" />
+    <ctl name="VAD_OP_MODE" value="HW_VAD" />
+    <ctl name="V_IN_S Switch" value="0" />
+    <ctl name="TX2_INP_MUX" value="ZERO" />
+    <ctl name="TXCH2 Switch" value="0" />
+    <ctl name="CDC_TX2_RDDMA0_P2_MUX" value="ZERO" />
+    <ctl name="I2S0_D3_R_MUX" value="ZERO" />
+    <ctl name="VI_SENS_MIX V_SENS" value="0" />
+    <ctl name="I_IN_S Switch" value="0" />
+    <ctl name="TX3_INP_MUX" value="ZERO" />
+    <ctl name="TXCH3 Switch" value="0" />
+    <ctl name="CDC_TX3_RDDMA0_P3_MUX" value="ZERO" />
+    <ctl name="I2S0_D3_L_MUX" value="ZERO" />
+    <ctl name="VI_SENS_MIX I_SENS" value="0" />
+
+    <!-- split a2dp -->
+    <ctl name="BT SampleRate" value="KHZ_8" />
+    <ctl name="AFE Input Channels" value="Zero" />
+    <ctl name="SLIM7_RX ADM Channels" value="Zero" />
+    <!-- split a2dp end-->
+
+    <!-- These are actual sound device specific mixer settings -->
+    <path name="dmic1">
+        <ctl name="TX0_MIXER TX0_CAP" value="1" />
+        <ctl name="I2S0_D0_L_MUX" value="CDC_TX1" />
+        <ctl name="TXCH1 Switch" value="1" />
+        <ctl name="TX1_PGA_GAIN" value="205" />
+        <ctl name="TX1_INP_MUX" value="DMIC_1" />
+        <ctl name="DMIC1_MUX" value="DMIC1"/>
+        <ctl name="DMIC1_IN_S Switch" value="1" />
+        <ctl name="BB_MIC_BIAS1" value="BIAS_ON" />
+    </path>
+
+    <path name="dmic2">
+        <ctl name="TX0_MIXER TX1_CAP" value="1" />
+        <ctl name="I2S0_D0_R_MUX" value="CDC_TX0" />
+        <ctl name="TXCH0 Switch" value="1" />
+        <ctl name="TX0_PGA_GAIN" value="205" />
+        <ctl name="TX0_INP_MUX" value="DMIC_0" />
+        <ctl name="DMIC0_MUX" value="DMIC3"/>
+        <ctl name="DMIC3_IN_S Switch" value="1" />
+        <ctl name="BB_MIC_BIAS2" value="BIAS_ON" />
+    </path>
+
+    <path name="speaker">
+        <ctl name="CDC_RX0_MUX" value="I2S0_D2_L" />
+        <ctl name="RX0_SWITCH Switch" value="1" />
+        <ctl name="SPKR_OUT_0_S Switch" value="1" />
+        <ctl name="RX0_PGA_GAIN" value="169" />
+    </path>
+
+    <path name="v-sens">
+        <ctl name="V_IN_S Switch" value="1" />
+        <ctl name="TX2_INP_MUX" value="SWR_HQ2" />
+        <ctl name="TXCH2 Switch" value="1" />
+        <ctl name="CDC_TX2_RDDMA0_P2_MUX" value="CDC_TX2" />
+        <ctl name="I2S0_D3_R_MUX" value="CDC_TX2_RDDMA0_P2" />
+        <ctl name="VI_SENS_MIX V_SENS" value="1" />
+    </path>
+
+    <path name="i-sens">
+        <ctl name="I_IN_S Switch" value="1" />
+        <ctl name="TX3_INP_MUX" value="SWR_HQ3" />
+        <ctl name="TXCH3 Switch" value="1" />
+        <ctl name="CDC_TX3_RDDMA0_P3_MUX" value="CDC_TX3" />
+        <ctl name="I2S0_D3_L_MUX" value="CDC_TX3_RDDMA0_P3" />
+        <ctl name="VI_SENS_MIX I_SENS" value="1" />
+    </path>
+
+    <path name="vi-feedback">
+        <path name="v-sens" />
+        <path name="i-sens" />
+    </path>
+
+    <path name="speaker-protected">
+        <path name="speaker" />
+    </path>
+
+    <path name="speaker-mono">
+        <path name="speaker" />
+    </path>
+
+    <path name="speaker-mono-2">
+        <path name="speaker" />
+    </path>
+
+    <path name="speaker-safe">
+        <path name="speaker-mono" />
+    </path>
+
+    <path name="sidetone-iir">
+    </path>
+
+    <path name="sidetone-handset">
+    </path>
+
+    <path name="afe-sidetone">
+        <ctl name="Voice Sidetone Enable" value="1" />
+    </path>
+
+    <path name="speaker-mic">
+        <path name="dmic1" />
+    </path>
+
+    <path name="speaker-mic-liquid">
+        <path name="dmic1" />
+    </path>
+
+    <path name="speaker-mic-sbc">
+    </path>
+
+    <path name="handset">
+        <path name="speaker" />
+    </path>
+
+    <path name="handset-mic">
+        <path name="dmic1" />
+    </path>
+
+    <path name="va-mic-dmic">
+         <ctl name="DMIC0_MUX" value="DMIC1" />
+         <ctl name="DMIC1_MUX" value="DMIC3" />
+         <ctl name="TX0_INP_MUX" value="DMIC_0" />
+         <ctl name="TX1_INP_MUX" value="DMIC_1" />
+         <ctl name="LP_DEC1_MUX" value="PDM_0" />
+         <ctl name="LP_DEC0_MUX" value="PDM_1" />
+         <ctl name="VA_PCM0_MUX" value="LP_TX_0" />
+         <ctl name="VA_PCM1_MUX" value="LP_TX_1" />
+         <ctl name="VA_CAP_MIXER PCM_0" value="1" />
+         <ctl name="VA_CAP_MIXER PCM_1" value="1" />
+         <ctl name="DMIC3_IN_S Switch" value="1" />
+         <ctl name="DMIC1_IN_S Switch" value="1" />
+         <ctl name="BB_MIC_BIAS1" value="BIAS_ON" />
+         <ctl name="BB_MIC_BIAS2" value="BIAS_ON" />
+    </path>
+
+    <path name="va-mic-mono">
+         <ctl name="DMIC1_MUX" value="DMIC1" />
+         <ctl name="TX1_INP_MUX" value="DMIC_1" />
+         <ctl name="LP_DEC0_MUX" value="PDM_1" />
+         <ctl name="VA_PCM0_MUX" value="LP_TX_0" />
+         <ctl name="VA_CAP_MIXER PCM_0" value="1" />
+         <ctl name="DMIC1_IN_S Switch" value="1" />
+         <ctl name="BB_MIC_BIAS1" value="BIAS_ON" />
+    </path>
+
+    <path name="va-mic-dmic-hw">
+         <path name="va-mic-dmic" />
+         <ctl name="VAD_OP_MODE" value="HW_VAD" />
+    </path>
+
+    <path name="va-mic-dmic-ld">
+         <path name="va-mic-dmic" />
+         <ctl name="VAD_OP_MODE" value="LVL_DETECTOR" />
+    </path>
+
+    <path name="va-mic-mono-hw">
+         <path name="va-mic-mono" />
+         <ctl name="VAD_OP_MODE" value="HW_VAD" />
+    </path>
+
+    <path name="va-mic-mono-ld">
+         <path name="va-mic-mono" />
+         <ctl name="VAD_OP_MODE" value="LVL_DETECTOR" />
+    </path>
+
+    <path name="va-mic">
+        <path name="va-mic-dmic" />
+    </path>
+
+    <path name="hph-highquality-mode">
+    </path>
+
+    <path name="hph-lowpower-mode">
+    </path>
+
+    <path name="true-native-mode">
+    </path>
+
+    <path name="voice-handset">
+        <path name="handset" />
+    </path>
+
+    <path name="voice-handset-tmus">
+        <path name="handset" />
+    </path>
+
+    <path name="voice-handset-hdk">
+        <path name="handset" />
+    </path>
+
+    <path name="voice-handset-tmus-hdk">
+        <path name="handset" />
+    </path>
+
+    <path name="voice-speaker">
+        <path name="speaker-mono" />
+    </path>
+
+    <path name="voice-speaker-stereo">
+        <path name="speaker" />
+    </path>
+
+    <path name="voice-speaker-2">
+        <path name="speaker-mono-2" />
+    </path>
+
+    <path name="voice-speaker-hdk">
+        <path name="speaker-mono" />
+    </path>
+
+    <path name="voice-speaker-fluid">
+    </path>
+
+    <path name="voice-speaker-vbat">
+        <path name="speaker-vbat-mono" />
+    </path>
+
+    <path name="voice-speaker-2-vbat">
+        <path name="speaker-vbat-mono-2" />
+    </path>
+
+    <path name="voice-speaker-mic">
+        <path name="speaker-mic" />
+    </path>
+
+    <path name="afe-proxy">
+    </path>
+
+    <path name="display-port">
+    </path>
+
+    <path name="speaker-and-display-port">
+        <path name="speaker" />
+        <path name="display-port" />
+    </path>
+
+    <path name="speaker-safe-and-display-port">
+        <path name="speaker" />
+        <path name="display-port" />
+    </path>
+
+    <path name="voice-rec-mic">
+        <path name="handset-mic" />
+    </path>
+
+    <path name="camcorder-mic">
+        <path name="handset-mic" />
+    </path>
+
+    <path name="bt-sco-mic">
+    </path>
+
+    <path name="bt-sco-mic-wb">
+    </path>
+
+    <path name="bt-sco-mic-swb">
+    </path>
+
+    <path name="bt-sco">
+    </path>
+
+    <path name="bt-sco-wb">
+    </path>
+
+    <path name="bt-sco-swb">
+    </path>
+
+    <path name="bt-a2dp-mic">
+    </path>
+
+    <path name="capture-fm">
+    </path>
+
+    <!-- Dual MIC devices -->
+    <path name="handset-dmic-endfire">
+         <path name="dmic1" />
+         <path name="dmic2" />
+    </path>
+
+    <path name="speaker-dmic-endfire">
+         <path name="dmic1" />
+         <path name="dmic2" />
+    </path>
+
+    <path name="dmic-endfire">
+        <path name="handset-dmic-endfire" />
+    </path>
+
+    <path name="dmic-endfire-liquid">
+        <path name="handset-dmic-endfire" />
+    </path>
+
+    <path name="handset-stereo-dmic-ef">
+        <path name="handset-dmic-endfire" />
+    </path>
+
+    <path name="speaker-stereo-dmic-ef">
+        <path name="speaker-dmic-endfire" />
+    </path>
+
+    <path name="voice-dmic-ef-tmus">
+        <path name="dmic-endfire" />
+    </path>
+
+    <path name="voice-dmic-ef">
+        <path name="dmic-endfire" />
+    </path>
+
+    <path name="voice-speaker-dmic-ef">
+        <path name="speaker-dmic-endfire" />
+    </path>
+
+    <path name="voice-rec-dmic-ef">
+        <path name="dmic-endfire" />
+    </path>
+
+    <path name="voice-rec-dmic-ef-fluence">
+        <path name="dmic-endfire" />
+    </path>
+
+    <path name="handset-stereo-dmic-ef-liquid">
+        <path name="handset-dmic-endfire" />
+    </path>
+
+    <path name="speaker-stereo-dmic-ef-liquid">
+        <path name="speaker-dmic-endfire" />
+    </path>
+
+    <path name="voice-dmic-ef-liquid-liquid">
+        <path name="dmic-endfire-liquid" />
+    </path>
+
+    <path name="voice-speaker-dmic-ef-liquid">
+        <path name="dmic-endfire-liquid" />
+    </path>
+
+    <path name="voice-rec-dmic-ef-liquid">
+        <path name="dmic-endfire-liquid" />
+    </path>
+
+    <path name="voice-rec-dmic-ef-fluence-liquid">
+        <path name="dmic-endfire-liquid" />
+    </path>
+
+    <path name="speaker-dmic-broadside">
+         <path name="dmic1" />
+         <path name="dmic2" />
+    </path>
+
+    <path name="dmic-broadside">
+        <path name="speaker-dmic-broadside" />
+    </path>
+
+    <path name="voice-speaker-dmic-broadside">
+        <path name="dmic-broadside" />
+    </path>
+
+    <!-- TTY devices -->
+
+    <path name="voice-tty-hco-handset">
+        <path name="handset" />
+    </path>
+
+    <path name="voice-tty-hco-handset-hdk">
+        <path name="handset" />
+    </path>
+
+    <path name="voice-tty-vco-handset-mic">
+        <path name="dmic2" />
+    </path>
+
+    <path name="unprocessed-handset-mic">
+        <path name="handset-mic" />
+    </path>
+
+    <path name="unprocessed-mic">
+        <path name="unprocessed-handset-mic" />
+    </path>
+
+    <path name="unprocessed-stereo-mic">
+        <path name="voice-rec-dmic-ef" />
+    </path>
+
+    <!-- Added for ADSP testfwk -->
+    <path name="ADSP testfwk">
+    </path>
+
+    <path name="bt-a2dp">
+    </path>
+
+    <path name="speaker-and-bt-a2dp">
+        <path name="speaker" />
+        <path name="bt-a2dp" />
+    </path>
+
+    <path name="speaker-safe-and-bt-a2dp">
+        <path name="speaker-safe" />
+        <path name="bt-a2dp" />
+    </path>
+
+</mixer>

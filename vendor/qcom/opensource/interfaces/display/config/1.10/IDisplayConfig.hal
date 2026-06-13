@@ -1,0 +1,99 @@
+/*
+ * Copyright (c) 2019 The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above
+ *      copyright notice, this list of conditions and the following
+ *      disclaimer in the documentation and/or other materials provided
+ *      with the distribution.
+ *    * Neither the name of The Linux Foundation. nor the names of its
+ *      contributors may be used to endorse or promote products derived
+ *      from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package vendor.display.config@1.10;
+
+import @1.9::IDisplayConfig;
+import IDisplayCWBCallback;
+
+interface IDisplayConfig extends @1.9::IDisplayConfig {
+    struct Rect {
+        uint32_t left;
+        uint32_t top;
+        uint32_t right;
+        uint32_t bottom;
+    };
+
+    /*
+     * Sets the output buffer to be filled with the contents of the next
+     * composition performed for this display. Client can specify cropping
+     * rectangle for the partial concurrent writeback.
+     * Buffer must be ready for writeback before this API is called.
+     * If hardware protected content is displayed in next composition cycle,
+     * CWB output buffer will be returned as failure in callback and without
+     * any change in buffer.
+     *
+     * @param callback is the IDisplayCWBCallback object.
+     * @param disp_id display id where concurrent writeback shall be captured.
+     * @param post_processed whether to capture post processed or mixer output.
+     * @param rect cropping rectangle which shall be applied on blended output.
+     * @param buffer buffer where concurrent writeback output shall be written.
+     *
+     * @return error is NONE upon success.
+     */
+    @callflow(next="*")
+    setCWBOutputBuffer(IDisplayCWBCallback callback,
+                       uint32_t disp_id,
+                       Rect rect,
+                       bool post_processed,
+                       handle buffer)
+            generates (int32_t error);
+
+    /*
+     * Get supported bit clock values.
+     *
+     * @param disp_id display id.
+     *
+     * @return bit_clks vector of bit clock values.
+     */
+    @callflow(next="*")
+    getSupportedDSIBitClks(uint32_t disp_id)
+              generates (vec<uint64_t> bit_clks);
+
+    /*
+     * Retrieve current bit clock value.
+     *
+     * @param disp_id display id.
+     *
+     * @return current bit clock value.
+     */
+    @callflow(next="*")
+    getDSIClk(uint32_t disp_id)   generates (uint64_t bit_clk);
+
+    /*
+     * Retrieve current bit clock value.
+     *
+     * @param disp_id display id.
+     * @param bit_clk desired bit clock value.
+     *
+     * @return error is NONE upon success.
+     */
+    @callflow(next="*")
+    setDSIClk(uint32_t disp_id, uint64_t bit_clk)   generates (int32_t error);
+};

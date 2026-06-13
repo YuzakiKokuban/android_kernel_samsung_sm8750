@@ -1,0 +1,10 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+/*This is CDP with Hamilton wlan*/
+#include "sun-audio-cdp.dtsi"
+&lpass_bt_swr {
+	status = "disabled";
+};

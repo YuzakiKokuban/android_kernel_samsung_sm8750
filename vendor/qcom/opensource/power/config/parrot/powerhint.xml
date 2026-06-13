@@ -1,0 +1,1343 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+/*Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimer in the documentation and/or other materials provided
+ *       with the distribution.
+ *     * Neither the name of The Linux Foundation nor the names of its
+ *       contributors may be used to endorse or promote products derived
+ *       from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * Changes from Qualcomm Innovation Center, Inc. are provided under the following license:
+ *
+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause-Clear
+ *
+ */
+-->
+<HintConfigs>
+    <Powerhint>
+
+        <!-- decode 240 fps tunings-->
+        <!--L CPU - max freq 700000 -->
+         <Config
+            Id="0X00001505" Enable="true" Timeout="0" Target="parrot"
+            Resources="0x40804100, 0x2BC"/>
+
+        <!-- video decode 30 fps non secure content tunings-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0X00001502" Enable="true" Timeout="0" Target="parrot"
+            Resources="0x40800000, 0XA"/>
+
+        <!-- video decode 30 fps secure content tunings-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0X00001504" Enable="true" Timeout="0" Target="parrot"
+            Resources="0x40800000, 0XA"/>
+
+        <!--camera preview -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 940Mhz -->
+        <!--L CPU - Set hispeed load 95 -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--CPU MAX freq 1.5Ghz -->
+        <!--Sched downmigrate/group_downmigrate 40, Upmigrate/group_upmigrate 45 -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--AB-SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001330" Enable="true" Timeout="0" Target="parrot"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 940, 0x41440100, 0x5F,
+            0x43034000, 0x21, 0x40804100, 1497, 0x40CE0000, 0x002D0028, 0x40CF4000, 0x002D0028,
+            0x41000000, 0x4, 0x43048000, 0x32, 0x43020000, 100"/>
+
+        <!-- camera 30fps encode -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 940Mhz -->
+        <!--L CPU - Set hispeed load 95 -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--L CPU Min Freq 940Mhz, Max Freq 1.5Ghz -->
+        <!--Sched downmigrate/group_downmigrate 40, Upmigrate/group_upmigrate 45 -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001331" Enable="true" Timeout="0" Target="parrot"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 940, 0x41440100, 0x5F,
+            0x43034000, 0x21, 0x40800100, 940, 0x40804100, 1497, 0x40CE0000, 0x002D0028,
+            0x40CF4000, 0x002D0028, 0x41000000, 0x4, 0x43048000, 0x32, 0x43020000, 100"/>
+
+        <!-- camera 60 FPS -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--CPU MAX freq 1.5Ghz -->
+        <!--Sched downmigrate/group_downmigrate 30, Upmigrate/group_upmigrate 35 -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 1555 -->
+        <Config
+            Id="0x00001332" Enable="true" Timeout="0" Target="parrot"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x43034000, 0x21, 0x40804100, 1497,
+            0x40CE0000, 0x0023001E, 0x40CF4000, 0x0023001E, 0x41000000, 0x4, 0x43048000, 0x32,
+            0x43020000, 100, 0x4303C000, 0x17BA38"/>
+
+        <!-- camera sHDR -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 940Mhz -->
+        <!--L CPU - Set hispeed load 95 -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--L CPU Min Freq 940Mhz, Max Freq 1.5Ghz -->
+        <!--Sched downmigrate/group_downmigrate 40, Upmigrate/group_upmigrate 45 -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 1555 -->
+        <Config
+            Id="0x00001340" Enable="true" Timeout="0" Target="parrot"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 940, 0x41440100, 0x5F,
+            0x43034000, 0x21, 0x40800100, 940, 0x40804100, 1497, 0x40CE0000, 0x002D0028,
+            0x40CF4000, 0x002D0028, 0x41000000, 0x4, 0x43048000, 0x32, 0x43020000, 100,
+            0x4303C000, 0x17BA38"/>
+
+
+        <!-- camera HFR -->
+        <!--L CPU CORE 0 SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--CPU-DDR BWMON - Set sample ms 33 -->
+        <!--CPU CORE 0 Min freq to 1.113Ghz -->
+        <!--CPU MAX freq 1.5Ghz -->
+        <!--Sched downmigrate/group_downmigrate 30, Upmigrate/group_upmigrate 35 -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001333" Enable="true" Timeout="0" Target="parrot"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x43034000, 0x21, 0x40800100, 0x459,
+            0x40804100, 1497, 0x40CE0000, 0x0023001E, 0x40CF4000, 0x0023001E, 0x41000000, 0x4,
+            0x43020000, 100"/>
+
+        <!-- HFR 480fps -->
+        <!--L CPU CORE 0 SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--CPU-DDR BWMON - Set sample ms 33 -->
+        <!--CPU CORE 0 Min freq to 1.113Ghz -->
+        <!--CPU MAX freq 1.5Ghz -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001334" Enable="true" Timeout="0" Target="parrot"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x43034000, 0x21, 0x40800100, 0x459,
+            0x40804100, 1497, 0x41000000, 0x4, 0x43020000, 100"/>
+
+        <!-- multi camera 30fps-->
+        <!--L CPU CORE 0 SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 940Mhz -->
+        <!--CPU-DDR BWMON - Set sample_ms 20 -->
+        <!--L CPU Min Freq 940, Max Freq 1.5Ghz -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001336" Enable="true" Timeout="0" Target="parrot"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 940, 0x43034000, 0x21,
+            0x40800100, 1113, 0x40804100, 1497, 0x41000000, 0x4, 0x43048000, 0x32, 0x43020000, 100"/>
+
+        <!-- same settings for all the qvr power levels intentionally -->
+        <!-- qvr level cpu1 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130A" Enable="true" Target="parrot" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu1 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130B" Enable="true" Target="parrot" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu1 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130C" Enable="true" Target="parrot" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130D" Enable="true" Target="parrot" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130E" Enable="true" Target="parrot" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130F" Enable="true" Target="parrot" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001310" Enable="true" Target="parrot" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001311" Enable="true" Target="parrot" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001312" Enable="true" Target="parrot" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+         <!-- sustained performance -->
+         <!-- B CPU - Cluster min freq uncapped -->
+         <!-- L CPU - Cluster min freq uncapped -->
+         <!-- B CPU - Cluster max freq ~1.344 GHz -->
+         <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+         <!-- GPU - min freq 345Mhz -->
+         <!-- GPU - max freq 500Mhz -->
+         <!-- GPUBW freq uncapped -->
+         <Config
+             Id="0x00001206" Enable="true" Timeout="0" Target="parrot"
+             Resources="0x40800000, 0x0, 0x40800100, 0x0, 0x40804000, 0x540, 0x40804100, 0x459,
+             0X4280C000, 0x159, 0X42810000, 0x1F4, 0x42814000, 0x0"/>
+
+         <!-- vr mode -->
+         <!-- B CPU - Cluster min freq ~1.190 Ghz -->
+         <!-- L CPU - Cluster min freq ~0.940 Ghz -->
+         <!-- B CPU - Cluster max freq ~1.90 Ghz -->
+         <!-- L CPU - Cluster max freq ~1.804 Ghz -->
+         <!-- GPU - min freq 345Mhz -->
+         <!-- GPU - max freq 734Mhz -->
+         <!-- GPUBW uncapped -->
+         <Config
+             Id="0x00001207" Enable="true" Timeout="0" Target="parrot"
+             Resources="0x40800000, 0x4A6, 0x40800100, 0x3AC, 0x40804000, 0x76C, 0x40804100, 0x70C,
+             0X4280C000, 0x159, 0X4280C000, 0x2DE, 0x42814000, 0x0"/>
+
+         <!-- vr mode sustained performance -->
+         <!-- B CPU - Cluster min freq ~1.190 Ghz -->
+         <!-- L CPU - Cluster min freq ~1.113 Ghz -->
+         <!-- B CPU - Cluster max freq ~1.190 Ghz -->
+         <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+         <!-- GPU - min freq 500Mhz -->
+         <!-- GPU - max freq 500Mhz -->
+         <!-- GPUBW uncapped  -->
+         <Config
+             Id="0x00001301" Enable="true" Timeout="0" Target="parrot"
+             Resources="0x40800000, 0x4A6, 0x40800100, 0x459, 0x40804000, 0x4A6, 0x40804100, 0x459,
+             0X4280C000, 0x1F4, 0X42810000, 0x1F4, 0x42814000, 0x0"/>
+
+         <!-- camera open tunings-->
+         <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+         <!-- MPCTLV3_SCHED_BOOST, 0x1 -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_LITTLE_CORE_0, ~1.8 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, ~1.8 Ghz -->
+         <Config
+             Id="0x00001337" Enable="true" Timeout="0" Target="parrot"
+             Resources="0x40400000, 0x1, 0x40C00000, 0x1, 0x40804000, 0X834, 0x40800000, 0X834,
+             0x40804100, 0X708, 0x40800100, 0X708"/>
+
+         <!-- camera close tunings-->
+         <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+         <!-- MPCTLV3_SCHED_BOOST, 0x1 -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_LITTLE_CORE_0,~1.8 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, ~1.8 Ghz -->
+         <Config
+             Id="0x00001338" Enable="true" Timeout="0" Target="parrot"
+             Resources="0x40400000, 0x1, 0x40C00000, 0x1, 0x40804000, 0X834, 0x40800000, 0X834,
+             0x40804100, 0X708, 0x40800100, 0X708"/>
+
+         <!-- camera snapshot tunings-->
+         <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+         <!-- Silver cluster min freq to ~1.113 GHz -->
+         <!-- Gold cluster min freq to 1.190 GHz -->
+         <!-- MPCTLV3_SCHED_DOWNMIGRATE, 0x14 -->
+         <!-- MPCTLV3_SCHED_UPMIGRATE, 0x1E -->
+         <Config
+             Id="0x00001339" Enable="true" Timeout="0" Target="parrot"
+             Resources="0x40400000, 0x1, 0x40800100, 0x459, 0x40800000, 0x4A6, 0x40CE0000, 0x001E0014,"/>
+
+        <!-- decode 240 fps tunings-->
+        <!--L CPU - max freq 700000 -->
+         <Config
+            Id="0X00001505" Enable="true" Timeout="0" Target="ravelin"
+            Resources="0x40804100, 0x2BC"/>
+
+        <!-- video decode 30 fps non secure content tunings-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0X00001502" Enable="true" Timeout="0" Target="ravelin"
+            Resources="0x40800000, 0XA"/>
+
+        <!-- video decode 30 fps secure content tunings-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0X00001504" Enable="true" Timeout="0" Target="ravelin"
+            Resources="0x40800000, 0XA"/>
+
+        <!--camera preview -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 920Mhz -->
+        <!--L CPU - Set hispeed load 95 -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--CPU MAX freq 1.8Ghz -->
+        <!--B CPU core ctl min cpus 6 -->
+        <!--AB-SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001330" Enable="true" Timeout="0" Target="ravelin"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 920, 0x41440100, 0x5F,
+            0x43034000, 0x21, 0x40804100, 1804,0x41000100, 6,0x43048000, 0x32, 0x43020000, 100"/>
+
+        <!-- camera 30fps encode -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 920Mhz -->
+        <!--L CPU - Set hispeed load 95 -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--L CPU Min Freq 920Mhz, Max Freq 1.8Ghz -->
+        <!--B CPU core ctl min cpus 6 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001331" Enable="true" Timeout="0" Target="ravelin"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 920, 0x41440100, 0x5F,
+            0x43034000, 0x21, 0x40800100, 920, 0x40804100, 1804, 0x41000100, 6,
+            0x43048000, 0x32, 0x43020000, 100"/>
+
+        <!-- camera 60 FPS -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--CPU MAX freq 1.8Ghz -->
+        <!--B CPU core ctl min cpus 6 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 1555 -->
+        <Config
+            Id="0x00001332" Enable="true" Timeout="0" Target="ravelin"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x43034000, 0x21, 0x40804100, 1804,
+            0x41000100, 6, 0x43048000, 0x32, 0x43020000, 100, 0x4303C000, 0x17BA38"/>
+
+        <!-- camera sHDR -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 940Mhz -->
+        <!--L CPU - Set hispeed load 95 -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--L CPU Min Freq 940Mhz, Max Freq 1.5Ghz -->
+        <!--Sched downmigrate/group_downmigrate 40, Upmigrate/group_upmigrate 45 -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 1555 -->
+        <Config
+            Id="0x00001340" Enable="true" Timeout="0" Target="ravelin"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 940, 0x41440100, 0x5F,
+            0x43034000, 0x21, 0x40800100, 940, 0x40804100, 1497, 0x40CE0000, 0x002D0028,
+            0x40CF4000, 0x002D0028, 0x41000000, 0x4, 0x43048000, 0x32, 0x43020000, 100,
+            0x4303C000, 0x17BA38"/>
+
+
+        <!-- camera HFR -->
+        <!--L CPU CORE 0 SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--CPU-DDR BWMON - Set sample ms 33 -->
+        <!--CPU CORE 0 Min freq to 1Ghz -->
+        <!--CPU MAX freq 1.8Ghz -->
+        <!--B CPU core ctl min cpus 6 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001333" Enable="true" Timeout="0" Target="ravelin"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x43034000, 0x21, 0x40800100, 0x3E8,
+            0x40804100, 1804, 0x41000100, 6,
+            0x43020000, 100"/>
+
+        <!-- HFR 480fps -->
+        <!--L CPU CORE 0 SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--CPU-DDR BWMON - Set sample ms 33 -->
+        <!--CPU CORE 0 Min freq to 1.113Ghz -->
+        <!--CPU MAX freq 1.5Ghz -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001334" Enable="true" Timeout="0" Target="ravelin"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x43034000, 0x21, 0x40800100, 0x459,
+            0x40804100, 1497, 0x41000000, 0x4, 0x43020000, 100"/>
+
+        <!-- multi camera 30fps-->
+        <!--L CPU CORE 0 SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 940Mhz -->
+        <!--CPU-DDR BWMON - Set sample_ms 20 -->
+        <!--L CPU Min Freq 940, Max Freq 1.5Ghz -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001336" Enable="true" Timeout="0" Target="ravelin"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 940, 0x43034000, 0x21,
+            0x40800100, 1113, 0x40804100, 1497, 0x41000000, 0x4, 0x43048000, 0x32, 0x43020000, 100"/>
+
+        <!-- same settings for all the qvr power levels intentionally -->
+        <!-- qvr level cpu1 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130A" Enable="true" Target="ravelin" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu1 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130B" Enable="true" Target="ravelin" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu1 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130C" Enable="true" Target="ravelin" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130D" Enable="true" Target="ravelin" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130E" Enable="true" Target="ravelin" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130F" Enable="true" Target="ravelin" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001310" Enable="true" Target="ravelin" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001311" Enable="true" Target="ravelin" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001312" Enable="true" Target="ravelin" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+         <!-- sustained performance -->
+         <!-- B CPU - Cluster min freq uncapped -->
+         <!-- L CPU - Cluster min freq uncapped -->
+         <!-- B CPU - Cluster max freq ~1.344 GHz -->
+         <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+         <!-- GPU - min freq 345Mhz -->
+         <!-- GPU - max freq 500Mhz -->
+         <!-- GPUBW freq uncapped -->
+         <Config
+             Id="0x00001206" Enable="true" Timeout="0" Target="ravelin"
+             Resources="0x40800000, 0x0, 0x40800100, 0x0, 0x40804000, 0x540, 0x40804100, 0x459,
+             0X4280C000, 0x159, 0X42810000, 0x1F4, 0x42814000, 0x0"/>
+
+         <!-- vr mode -->
+         <!-- B CPU - Cluster min freq ~1.190 Ghz -->
+         <!-- L CPU - Cluster min freq ~0.940 Ghz -->
+         <!-- B CPU - Cluster max freq ~1.90 Ghz -->
+         <!-- L CPU - Cluster max freq ~1.804 Ghz -->
+         <!-- GPU - min freq 345Mhz -->
+         <!-- GPU - max freq 734Mhz -->
+         <!-- GPUBW uncapped -->
+         <Config
+             Id="0x00001207" Enable="true" Timeout="0" Target="ravelin"
+             Resources="0x40800000, 0x4A6, 0x40800100, 0x3AC, 0x40804000, 0x76C, 0x40804100, 0x70C,
+             0X4280C000, 0x159, 0X4280C000, 0x2DE, 0x42814000, 0x0"/>
+
+         <!-- vr mode sustained performance -->
+         <!-- B CPU - Cluster min freq ~1.190 Ghz -->
+         <!-- L CPU - Cluster min freq ~1.113 Ghz -->
+         <!-- B CPU - Cluster max freq ~1.190 Ghz -->
+         <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+         <!-- GPU - min freq 500Mhz -->
+         <!-- GPU - max freq 500Mhz -->
+         <!-- GPUBW uncapped  -->
+         <Config
+             Id="0x00001301" Enable="true" Timeout="0" Target="ravelin"
+             Resources="0x40800000, 0x4A6, 0x40800100, 0x459, 0x40804000, 0x4A6, 0x40804100, 0x459,
+             0X4280C000, 0x1F4, 0X42810000, 0x1F4, 0x42814000, 0x0"/>
+
+         <!-- camera open tunings-->
+         <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+         <!-- MPCTLV3_SCHED_BOOST, 0x1 -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_LITTLE_CORE_0, ~1.8 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, ~1.8 Ghz -->
+         <Config
+             Id="0x00001337" Enable="true" Timeout="0" Target="ravelin"
+             Resources="0x40400000, 0x1, 0x40C00000, 0x1, 0x40804000, 0X834, 0x40800000, 0X834,
+             0x40804100, 0X708, 0x40800100, 0X708"/>
+
+         <!-- camera close tunings-->
+         <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_LITTLE_CORE_0,~1.8 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, ~1.8 Ghz -->
+         <Config
+             Id="0x00001338" Enable="true" Timeout="0" Target="ravelin"
+             Resources="0x40400000, 0x1, 0x40804000, 0X834, 0x40800000, 0X834,
+             0x40804100, 0X708, 0x40800100, 0X708"/>
+
+         <!-- camera snapshot tunings-->
+         <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+         <!-- Silver cluster min freq to ~1.113 GHz -->
+         <!-- Gold cluster min freq to 1.190 GHz -->
+         <!-- MPCTLV3_SCHED_DOWNMIGRATE, 0x14 -->
+         <!-- MPCTLV3_SCHED_UPMIGRATE, 0x1E -->
+         <Config
+             Id="0x00001339" Enable="true" Timeout="0" Target="ravelin"
+             Resources="0x40400000, 0x1, 0x40800100, 0x459, 0x40800000, 0x4A6, 0x40CE0000, 0x001E0014,"/>
+
+        <!-- decode 240 fps tunings-->
+        <!--L CPU - max freq 700000 -->
+         <Config
+            Id="0X00001505" Enable="true" Timeout="0" Target="montague"
+            Resources="0x40804100, 0x2BC"/>
+
+        <!-- video decode 30 fps non secure content tunings-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0X00001502" Enable="true" Timeout="0" Target="montague"
+            Resources="0x40800000, 0XA"/>
+
+        <!-- video decode 30 fps secure content tunings-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0X00001504" Enable="true" Timeout="0" Target="montague"
+            Resources="0x40800000, 0XA"/>
+
+        <!--camera preview -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 920Mhz -->
+        <!--L CPU - Set hispeed load 95 -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--CPU MAX freq 1.8Ghz -->
+        <!--B CPU core ctl min cpus 6 -->
+        <!--AB-SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001330" Enable="true" Timeout="0" Target="montague"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 920, 0x41440100, 0x5F,
+            0x43034000, 0x21, 0x40804100, 1804,0x41000100, 6,0x43048000, 0x32, 0x43020000, 100"/>
+
+        <!-- camera 30fps encode -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 920Mhz -->
+        <!--L CPU - Set hispeed load 95 -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--L CPU Min Freq 920Mhz, Max Freq 1.8Ghz -->
+        <!--B CPU core ctl min cpus 6 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001331" Enable="true" Timeout="0" Target="montague"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 920, 0x41440100, 0x5F,
+            0x43034000, 0x21, 0x40800100, 920, 0x40804100, 1804, 0x41000100, 6,
+            0x43048000, 0x32, 0x43020000, 100"/>
+
+        <!-- camera 60 FPS -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--CPU MAX freq 1.8Ghz -->
+        <!--B CPU core ctl min cpus 6 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 1555 -->
+        <Config
+            Id="0x00001332" Enable="true" Timeout="0" Target="montague"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x43034000, 0x21, 0x40804100, 1804,
+            0x41000100, 6, 0x43048000, 0x32, 0x43020000, 100, 0x4303C000, 0x17BA38"/>
+
+        <!-- camera sHDR -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 940Mhz -->
+        <!--L CPU - Set hispeed load 95 -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--L CPU Min Freq 940Mhz, Max Freq 1.5Ghz -->
+        <!--Sched downmigrate/group_downmigrate 40, Upmigrate/group_upmigrate 45 -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 1555 -->
+        <Config
+            Id="0x00001340" Enable="true" Timeout="0" Target="montague"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 940, 0x41440100, 0x5F,
+            0x43034000, 0x21, 0x40800100, 940, 0x40804100, 1497, 0x40CE0000, 0x002D0028,
+            0x40CF4000, 0x002D0028, 0x41000000, 0x4, 0x43048000, 0x32, 0x43020000, 100,
+            0x4303C000, 0x17BA38"/>
+
+
+        <!-- camera HFR -->
+        <!--L CPU CORE 0 SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--CPU-DDR BWMON - Set sample ms 33 -->
+        <!--CPU CORE 0 Min freq to 1Ghz -->
+        <!--CPU MAX freq 1.8Ghz -->
+        <!--B CPU core ctl min cpus 6 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001333" Enable="true" Timeout="0" Target="montague"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x43034000, 0x21, 0x40800100, 0x3E8,
+            0x40804100, 1804, 0x41000100, 6,
+            0x43020000, 100"/>
+
+        <!-- HFR 480fps -->
+        <!--L CPU CORE 0 SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--CPU-DDR BWMON - Set sample ms 33 -->
+        <!--CPU CORE 0 Min freq to 1.113Ghz -->
+        <!--CPU MAX freq 1.5Ghz -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001334" Enable="true" Timeout="0" Target="montague"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x43034000, 0x21, 0x40800100, 0x459,
+            0x40804100, 1497, 0x41000000, 0x4, 0x43020000, 100"/>
+
+        <!-- multi camera 30fps-->
+        <!--L CPU CORE 0 SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 940Mhz -->
+        <!--CPU-DDR BWMON - Set sample_ms 20 -->
+        <!--L CPU Min Freq 940, Max Freq 1.5Ghz -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001336" Enable="true" Timeout="0" Target="montague"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 940, 0x43034000, 0x21,
+            0x40800100, 1113, 0x40804100, 1497, 0x41000000, 0x4, 0x43048000, 0x32, 0x43020000, 100"/>
+
+        <!-- same settings for all the qvr power levels intentionally -->
+        <!-- qvr level cpu1 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130A" Enable="true" Target="montague" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu1 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130B" Enable="true" Target="montague" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu1 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130C" Enable="true" Target="montague" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130D" Enable="true" Target="montague" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130E" Enable="true" Target="montague" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130F" Enable="true" Target="montague" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001310" Enable="true" Target="montague" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001311" Enable="true" Target="montague" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001312" Enable="true" Target="montague" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+         <!-- sustained performance -->
+         <!-- B CPU - Cluster min freq uncapped -->
+         <!-- L CPU - Cluster min freq uncapped -->
+         <!-- B CPU - Cluster max freq ~1.344 GHz -->
+         <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+         <!-- GPU - min freq 345Mhz -->
+         <!-- GPU - max freq 500Mhz -->
+         <!-- GPUBW freq uncapped -->
+         <Config
+             Id="0x00001206" Enable="true" Timeout="0" Target="montague"
+             Resources="0x40800000, 0x0, 0x40800100, 0x0, 0x40804000, 0x540, 0x40804100, 0x459,
+             0X4280C000, 0x159, 0X42810000, 0x1F4, 0x42814000, 0x0"/>
+
+         <!-- vr mode -->
+         <!-- B CPU - Cluster min freq ~1.190 Ghz -->
+         <!-- L CPU - Cluster min freq ~0.940 Ghz -->
+         <!-- B CPU - Cluster max freq ~1.90 Ghz -->
+         <!-- L CPU - Cluster max freq ~1.804 Ghz -->
+         <!-- GPU - min freq 345Mhz -->
+         <!-- GPU - max freq 734Mhz -->
+         <!-- GPUBW uncapped -->
+         <Config
+             Id="0x00001207" Enable="true" Timeout="0" Target="montague"
+             Resources="0x40800000, 0x4A6, 0x40800100, 0x3AC, 0x40804000, 0x76C, 0x40804100, 0x70C,
+             0X4280C000, 0x159, 0X4280C000, 0x2DE, 0x42814000, 0x0"/>
+
+         <!-- vr mode sustained performance -->
+         <!-- B CPU - Cluster min freq ~1.190 Ghz -->
+         <!-- L CPU - Cluster min freq ~1.113 Ghz -->
+         <!-- B CPU - Cluster max freq ~1.190 Ghz -->
+         <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+         <!-- GPU - min freq 500Mhz -->
+         <!-- GPU - max freq 500Mhz -->
+         <!-- GPUBW uncapped  -->
+         <Config
+             Id="0x00001301" Enable="true" Timeout="0" Target="montague"
+             Resources="0x40800000, 0x4A6, 0x40800100, 0x459, 0x40804000, 0x4A6, 0x40804100, 0x459,
+             0X4280C000, 0x1F4, 0X42810000, 0x1F4, 0x42814000, 0x0"/>
+
+         <!-- camera open tunings-->
+         <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+         <!-- MPCTLV3_SCHED_BOOST, 0x1 -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_LITTLE_CORE_0, ~1.8 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, ~1.8 Ghz -->
+         <Config
+             Id="0x00001337" Enable="true" Timeout="0" Target="montague"
+             Resources="0x40400000, 0x1, 0x40C00000, 0x1, 0x40804000, 0X834, 0x40800000, 0X834,
+             0x40804100, 0X708, 0x40800100, 0X708"/>
+
+         <!-- camera close tunings-->
+         <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_LITTLE_CORE_0,~1.8 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, ~1.8 Ghz -->
+         <Config
+             Id="0x00001338" Enable="true" Timeout="0" Target="montague"
+             Resources="0x40400000, 0x1, 0x40804000, 0X834, 0x40800000, 0X834,
+             0x40804100, 0X708, 0x40800100, 0X708"/>
+
+         <!-- camera snapshot tunings-->
+         <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+         <!-- Silver cluster min freq to ~1.113 GHz -->
+         <!-- Gold cluster min freq to 1.190 GHz -->
+         <!-- MPCTLV3_SCHED_DOWNMIGRATE, 0x14 -->
+         <!-- MPCTLV3_SCHED_UPMIGRATE, 0x1E -->
+         <Config
+             Id="0x00001339" Enable="true" Timeout="0" Target="montague"
+             Resources="0x40400000, 0x1, 0x40800100, 0x459, 0x40800000, 0x4A6, 0x40CE0000, 0x001E0014,"/>
+
+        <!-- decode 240 fps tunings-->
+        <!--L CPU - max freq 700000 -->
+         <Config
+            Id="0X00001505" Enable="true" Timeout="0" Target="montaguep"
+            Resources="0x40804100, 0x2BC"/>
+
+        <!-- video decode 30 fps non secure content tunings-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0X00001502" Enable="true" Timeout="0" Target="montaguep"
+            Resources="0x40800000, 0XA"/>
+
+        <!-- video decode 30 fps secure content tunings-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0X00001504" Enable="true" Timeout="0" Target="montaguep"
+            Resources="0x40800000, 0XA"/>
+
+        <!--camera preview -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 920Mhz -->
+        <!--L CPU - Set hispeed load 95 -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--CPU MAX freq 1.8Ghz -->
+        <!--B CPU core ctl min cpus 6 -->
+        <!--AB-SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001330" Enable="true" Timeout="0" Target="montaguep"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 920, 0x41440100, 0x5F,
+            0x43034000, 0x21, 0x40804100, 1804,0x41000100, 6,0x43048000, 0x32, 0x43020000, 100"/>
+
+        <!-- camera 30fps encode -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 920Mhz -->
+        <!--L CPU - Set hispeed load 95 -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--L CPU Min Freq 920Mhz, Max Freq 1.8Ghz -->
+        <!--B CPU core ctl min cpus 6 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001331" Enable="true" Timeout="0" Target="montaguep"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 920, 0x41440100, 0x5F,
+            0x43034000, 0x21, 0x40800100, 920, 0x40804100, 1804, 0x41000100, 6,
+            0x43048000, 0x32, 0x43020000, 100"/>
+
+        <!-- camera 60 FPS -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--CPU MAX freq 1.8Ghz -->
+        <!--B CPU core ctl min cpus 6 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 1555 -->
+        <Config
+            Id="0x00001332" Enable="true" Timeout="0" Target="montaguep"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x43034000, 0x21, 0x40804100, 1804,
+            0x41000100, 6, 0x43048000, 0x32, 0x43020000, 100, 0x4303C000, 0x17BA38"/>
+
+        <!-- camera sHDR -->
+        <!--L CPU SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 940Mhz -->
+        <!--L CPU - Set hispeed load 95 -->
+        <!--CPU-DDR BWMON - Set sample_ms 33 -->
+        <!--L CPU Min Freq 940Mhz, Max Freq 1.5Ghz -->
+        <!--Sched downmigrate/group_downmigrate 40, Upmigrate/group_upmigrate 45 -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 1555 -->
+        <Config
+            Id="0x00001340" Enable="true" Timeout="0" Target="montaguep"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 940, 0x41440100, 0x5F,
+            0x43034000, 0x21, 0x40800100, 940, 0x40804100, 1497, 0x40CE0000, 0x002D0028,
+            0x40CF4000, 0x002D0028, 0x41000000, 0x4, 0x43048000, 0x32, 0x43020000, 100,
+            0x4303C000, 0x17BA38"/>
+
+
+        <!-- camera HFR -->
+        <!--L CPU CORE 0 SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--CPU-DDR BWMON - Set sample ms 33 -->
+        <!--CPU CORE 0 Min freq to 1Ghz -->
+        <!--CPU MAX freq 1.8Ghz -->
+        <!--B CPU core ctl min cpus 6 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001333" Enable="true" Timeout="0" Target="montaguep"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x43034000, 0x21, 0x40800100, 0x3E8,
+            0x40804100, 1804, 0x41000100, 6,
+            0x43020000, 100"/>
+
+        <!-- HFR 480fps -->
+        <!--L CPU CORE 0 SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--CPU-DDR BWMON - Set sample ms 33 -->
+        <!--CPU CORE 0 Min freq to 1.113Ghz -->
+        <!--CPU MAX freq 1.5Ghz -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001334" Enable="true" Timeout="0" Target="montaguep"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x43034000, 0x21, 0x40800100, 0x459,
+            0x40804100, 1497, 0x41000000, 0x4, 0x43020000, 100"/>
+
+        <!-- multi camera 30fps-->
+        <!--L CPU CORE 0 SCHED LOAD BOOST -->
+        <!--B CPU SCHED LOAD BOOST -->
+        <!--L CPU Hispeed freq of 940Mhz -->
+        <!--CPU-DDR BWMON - Set sample_ms 20 -->
+        <!--L CPU Min Freq 940, Max Freq 1.5Ghz -->
+        <!--B CPU core ctl min cpus 4 -->
+        <!--AB_SCALE - 50 -->
+        <!--CPU-DDR BWMON - io percent 100 -->
+        <Config
+            Id="0x00001336" Enable="true" Timeout="0" Target="montaguep"
+            Resources="0x40C68100, -10, 0x40C68000, -10, 0x4143C100, 940, 0x43034000, 0x21,
+            0x40800100, 1113, 0x40804100, 1497, 0x41000000, 0x4, 0x43048000, 0x32, 0x43020000, 100"/>
+
+        <!-- same settings for all the qvr power levels intentionally -->
+        <!-- qvr level cpu1 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130A" Enable="true" Target="montaguep" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu1 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130B" Enable="true" Target="montaguep" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu1 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130C" Enable="true" Target="montaguep" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130D" Enable="true" Target="montaguep" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130E" Enable="true" Target="montaguep" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130F" Enable="true" Target="montaguep" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu1 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001310" Enable="true" Target="montaguep" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu2 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001311" Enable="true" Target="montaguep" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu3 -->
+        <!-- B CPU - Cluster min freq ~.691 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.131 Ghz -->
+        <!-- L CPU - Cluster min freq ~.691 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 7 (freq 345 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 940 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001312" Enable="true" Target="montaguep" Timeout="0"
+            Resources="0x40800000, 0x2B3, 0x40804000, 0x853, 0x40800100, 0x2B3, 0x40804100, 0x459,
+            0x42804000, 0x7, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+         <!-- sustained performance -->
+         <!-- B CPU - Cluster min freq uncapped -->
+         <!-- L CPU - Cluster min freq uncapped -->
+         <!-- B CPU - Cluster max freq ~1.344 GHz -->
+         <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+         <!-- GPU - min freq 345Mhz -->
+         <!-- GPU - max freq 500Mhz -->
+         <!-- GPUBW freq uncapped -->
+         <Config
+             Id="0x00001206" Enable="true" Timeout="0" Target="montaguep"
+             Resources="0x40800000, 0x0, 0x40800100, 0x0, 0x40804000, 0x540, 0x40804100, 0x459,
+             0X4280C000, 0x159, 0X42810000, 0x1F4, 0x42814000, 0x0"/>
+
+         <!-- vr mode -->
+         <!-- B CPU - Cluster min freq ~1.190 Ghz -->
+         <!-- L CPU - Cluster min freq ~0.940 Ghz -->
+         <!-- B CPU - Cluster max freq ~1.90 Ghz -->
+         <!-- L CPU - Cluster max freq ~1.804 Ghz -->
+         <!-- GPU - min freq 345Mhz -->
+         <!-- GPU - max freq 734Mhz -->
+         <!-- GPUBW uncapped -->
+         <Config
+             Id="0x00001207" Enable="true" Timeout="0" Target="montaguep"
+             Resources="0x40800000, 0x4A6, 0x40800100, 0x3AC, 0x40804000, 0x76C, 0x40804100, 0x70C,
+             0X4280C000, 0x159, 0X4280C000, 0x2DE, 0x42814000, 0x0"/>
+
+         <!-- vr mode sustained performance -->
+         <!-- B CPU - Cluster min freq ~1.190 Ghz -->
+         <!-- L CPU - Cluster min freq ~1.113 Ghz -->
+         <!-- B CPU - Cluster max freq ~1.190 Ghz -->
+         <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+         <!-- GPU - min freq 500Mhz -->
+         <!-- GPU - max freq 500Mhz -->
+         <!-- GPUBW uncapped  -->
+         <Config
+             Id="0x00001301" Enable="true" Timeout="0" Target="montaguep"
+             Resources="0x40800000, 0x4A6, 0x40800100, 0x459, 0x40804000, 0x4A6, 0x40804100, 0x459,
+             0X4280C000, 0x1F4, 0X42810000, 0x1F4, 0x42814000, 0x0"/>
+
+         <!-- camera open tunings-->
+         <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+         <!-- MPCTLV3_SCHED_BOOST, 0x1 -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_LITTLE_CORE_0, ~1.8 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, ~1.8 Ghz -->
+         <Config
+             Id="0x00001337" Enable="true" Timeout="0" Target="montaguep"
+             Resources="0x40400000, 0x1, 0x40C00000, 0x1, 0x40804000, 0X834, 0x40800000, 0X834,
+             0x40804100, 0X708, 0x40800100, 0X708"/>
+
+         <!-- camera close tunings-->
+         <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, ~2.1 Ghz -->
+         <!-- MPCTLV3_MAX_FREQ_CLUSTER_LITTLE_CORE_0,~1.8 Ghz -->
+         <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, ~1.8 Ghz -->
+         <Config
+             Id="0x00001338" Enable="true" Timeout="0" Target="montaguep"
+             Resources="0x40400000, 0x1, 0x40804000, 0X834, 0x40800000, 0X834,
+             0x40804100, 0X708, 0x40800100, 0X708"/>
+
+         <!-- camera snapshot tunings-->
+         <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+         <!-- Silver cluster min freq to ~1.113 GHz -->
+         <!-- Gold cluster min freq to 1.190 GHz -->
+         <!-- MPCTLV3_SCHED_DOWNMIGRATE, 0x14 -->
+         <!-- MPCTLV3_SCHED_UPMIGRATE, 0x1E -->
+         <Config
+             Id="0x00001339" Enable="true" Timeout="0" Target="montaguep"
+             Resources="0x40400000, 0x1, 0x40800100, 0x459, 0x40800000, 0x4A6, 0x40CE0000, 0x001E0014,"/>
+
+
+    </Powerhint>
+</HintConfigs>
+

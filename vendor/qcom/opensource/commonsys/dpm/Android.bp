@@ -1,0 +1,7 @@
+
+
+java_library {
+    installable: true,
+    name: "tcmiface",
+    srcs: ["**/*.java"],
+}

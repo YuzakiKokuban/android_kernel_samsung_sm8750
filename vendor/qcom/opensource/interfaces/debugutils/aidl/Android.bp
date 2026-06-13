@@ -1,0 +1,25 @@
+aidl_interface {
+    name: "vendor.qti.hardware.debugutils_aidl",
+    vendor_available: true,
+    srcs: ["vendor/qti/hardware/debugutils/*.aidl"],
+    stability: "vintf",
+    backend: {
+        cpp: {
+            enabled: false,
+        },
+        java: {
+            sdk_version: "module_current",
+        },
+        ndk: {
+            enabled: true,
+        },
+    },
+    versions_with_info: [
+        {
+            version: "1",
+            imports: [],
+        },
+    ],
+    frozen: true,
+
+}

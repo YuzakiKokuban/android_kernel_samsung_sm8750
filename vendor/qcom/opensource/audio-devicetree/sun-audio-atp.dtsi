@@ -1,0 +1,18 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+#include "sun-audio-cdp.dtsi"
+
+&wsa_macro {
+	qcom,wsa-bat-cfgs= <4>, <4>;
+};
+
+&wsa2_macro {
+	qcom,wsa-bat-cfgs= <4>, <4>;
+};
+
+&swr_haptics {
+	status = "disabled";
+};

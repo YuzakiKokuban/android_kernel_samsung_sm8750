@@ -1,0 +1,41 @@
+menu "SEC Memory Management Options"
+
+config SEC_MM
+	tristate "Enable SEC MM"
+	depends on ANDROID_VENDOR_HOOKS
+	default m
+	help
+	  SEC memory management module.
+	  With this feature enabled, system memory status and process lists
+	  are printed in kernel log when the device goes low on file cache or
+	  kernel panic events.
+          This also supports tuning mm params via vendor hook.
+
+config SEC_MM_DUMP_DMABUF_TASKS
+	bool "Support for printing dmabuf usage information"
+	depends on SEC_MM
+	depends on !DMABUF_HEAPS_SAMSUNG_SYSTEM
+	default y
+	help
+	  Print dmabuf usage information.
+
+config MMAP_READAROUND_LIMIT
+	int "Limit mmap readaround upperbound"
+	default 16
+	help
+	  Inappropriate mmap readaround size can hurt device performance
+	  during the sluggish situation. Add the hard upper-limit for
+	  mmap readaround.
+
+config HUGEPAGE_POOL
+	tristate "hugepage pool management"
+	default m
+	depends on !HIGHMEM
+	depends on !NEED_MULTIPLE_NODES
+	depends on TRANSPARENT_HUGEPAGE
+	depends on SEC_MM
+	help
+	  Enable this to provide 2MB hugepage to THP anon, ION, and GPU memory
+	  allocation requests efficiently.
+
+endmenu

@@ -1,0 +1,11 @@
+//###############################################################################
+// @file vendor/qcom/opensource/time_services/Android.bp
+// @brief Makefile for generating time services header library.
+//###############################################################################
+
+cc_library_headers {
+    name: "libtime_genoff_headers",
+    vendor_available: true,
+    host_supported: true,
+    export_include_dirs: ["."],
+}

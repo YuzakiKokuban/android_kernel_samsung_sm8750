@@ -1,0 +1,54 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+&soc {
+	msm_mmrm: qcom,mmrm {
+		compatible = "qcom,msm-mmrm", "qcom,sun-mmrm";
+		status = "okay";
+
+		/* MMRM clock threshold */
+		mmrm-peak-threshold = <10000>;
+
+		/* MM Rail info */
+		mm-rail-corners = "lowsvs", "svs", "svsl1", "nom", "noml1", "turbo";
+		mm-rail-fact-volt = <37487 41157 44827 47711 50332 52429>;
+
+		/* Scaling factors */
+		scaling-fact-dyn = <39977 48497 57672 66192 74056 81265>;
+		scaling-fact-leak = <827720 969278 1133118 1283851 1445069 1597768>;
+
+		/* Client info */
+		mmrm-client-info =
+			<0x1 CAM_CC_CAMNOC_RT_AXI_CLK_SRC	3193177		86508	1>,
+			<0x1 CAM_CC_CSID_CLK_SRC		1285358		55706	3>,
+			<0x1 CAM_CC_ICP_0_CLK_SRC		253232		17040	1>,
+			<0x1 CAM_CC_ICP_1_CLK_SRC		253232		17040	1>,
+			<0x1 CAM_CC_IFE_LITE_CLK_SRC		274531		10028	2>,
+			<0x1 CAM_CC_IPE_NPS_CLK_SRC		50230789	394986	1>,
+			<0x1 CAM_CC_JPEG_CLK_SRC		551486		17040	4>,
+			<0x1 CAM_CC_OFE_CLK_SRC			63019221	400622	1>,
+			<0x1 CAM_CC_TFE_0_CLK_SRC		17560437	241435	1>,
+			<0x1 CAM_CC_TFE_1_CLK_SRC		17560437	241435	1>,
+			<0x1 CAM_CC_TFE_2_CLK_SRC		17604543	248120	1>,
+			<0x1 CAM_CC_FAST_AHB_CLK_SRC		32768		6554	1>,
+			<0x1 CAM_CC_SLOW_AHB_CLK_SRC		58983		11797	1>,
+			<0x1 CAM_CC_CCI_0_CLK_SRC		0		656	1>,
+			<0x1 CAM_CC_CCI_1_CLK_SRC		0		656	1>,
+			<0x1 CAM_CC_CCI_2_CLK_SRC		0		656	1>,
+			<0x1 CAM_CC_CRE_CLK_SRC			65536		1967	1>,
+			<0x1 CAM_CC_CSI0PHYTIMER_CLK_SRC	6554		0	1>,
+			<0x1 CAM_CC_CSI1PHYTIMER_CLK_SRC	6554		0	1>,
+			<0x1 CAM_CC_CSI2PHYTIMER_CLK_SRC	6554		0	1>,
+			<0x1 CAM_CC_CSI3PHYTIMER_CLK_SRC	6554		0	1>,
+			<0x1 CAM_CC_CSI4PHYTIMER_CLK_SRC	6554		0	1>,
+			<0x1 CAM_CC_CSI5PHYTIMER_CLK_SRC	6554		0	1>,
+			<0x1 CAM_CC_CPHY_RX_CLK_SRC		19661		33424	10>,
+			<0x1 CAM_CC_IFE_LITE_CSID_CLK_SRC	262144		15074	2>,
+
+			<0x2 EVA_CC_MVS0_CLK_SRC		47360246	407372	1>,
+			<0x3 DISP_CC_MDSS_MDP_CLK_SRC		21561344	319816	1>,
+			<0x4 VIDEO_CC_MVS0_CLK_SRC		29233906	839582	1>;
+	};
+};

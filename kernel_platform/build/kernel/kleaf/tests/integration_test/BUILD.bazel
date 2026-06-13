@@ -1,0 +1,78 @@
+# Copyright (C) 2023 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
+load("//build/kernel/kleaf/tests:hermetic_test.bzl", "hermetic_test_binary")
+load("//build/kernel/kleaf/tests/utils:write_flag.bzl", "write_flag")
+
+# tools/bazel run //build/kernel/kleaf/tests/integration_test
+#
+# For other examples, run
+#   tools/bazel run //build/kernel/kleaf/tests/integration_test -- --help
+#
+# Note `tools/bazel run` not `tools/bazel test`. This is so because
+# - BUILD_WORKSPACE_DIRECTORY is needed and would be the CWD for execution
+# - The test involves running `tools/bazel clean` in between. If this were executed
+#   with `tools/bazel test`, the directory structure in output_base would be broken
+#   before results are reported back to bazel.
+hermetic_test_binary(
+    name = "integration_test",
+    actual = ":integration_test_internal",
+    # Preserve host PATH so:
+    # - The test can use `git`
+    # - The bazel wrapper can use `repo` when not running on CI
+    append_host_path = True,
+    use_cc_toolchain = True,
+)
+
+py_binary(
+    name = "integration_test_internal",
+    srcs = ["integration_test.py"],
+    main = "integration_test.py",
+    deps = [
+        "//build/kernel/kleaf:wrapper",
+        "//build/kernel/kleaf/analysis:inputs",
+        "@io_abseil_py//absl/testing:absltest",
+        "@io_abseil_py//absl/testing:xml_reporter",
+    ],
+)
+
+string_flag(
+    name = "raw_test_result_dir",
+    build_setting_default = "",
+)
+
+write_flag(
+    name = "raw_test_result_dir_value",
+    flag = ":raw_test_result_dir",
+)
+
+# Run the integration test and report to `tools/bazel test` with this snippet.
+# In practice, additional flags (e.g. --config=ants) may be added to the two
+# bazel commands accordingly.
+# buildifier: disable=no-effect
+"""
+    RAW_TEST_OUTPUT_DIR=$(mktemp -d)
+    tools/bazel run //build/kernel/kleaf/tests/integration_test \
+        -- --test_result_dir=$RAW_TEST_OUTPUT_DIR
+    tools/bazel test //build/kernel/kleaf/tests/integration_test:reporter \
+        --//build/kernel/kleaf/tests/integration_test:raw_test_result_dir=$RAW_TEST_OUTPUT_DIR
+"""
+
+py_test(
+    name = "reporter",
+    timeout = "short",
+    srcs = ["reporter.py"],
+    data = [":raw_test_result_dir_value"],
+)

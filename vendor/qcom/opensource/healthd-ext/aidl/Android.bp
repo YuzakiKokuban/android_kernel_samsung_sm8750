@@ -1,0 +1,48 @@
+cc_defaults {
+    name: "android.hardware.health-service.qti-defaults",
+    relative_install_path: "hw",
+    vintf_fragments: ["android.hardware.health-service.qti.xml"],
+    vendor: true,
+    recovery_available: true,
+
+    defaults: [
+        "libhealth_aidl_impl_user",
+    ],
+
+    include_dirs: [
+        "system/core/healthd",
+        "system/core/healthd/include",
+        "system/core/healthd/include_charger"
+    ],
+
+    static_libs: [
+        "libhealth_aidl_impl",
+    ],
+
+    srcs: [
+        "main.cpp",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}
+
+cc_binary {
+    name: "android.hardware.health-service.qti",
+    recovery: false,
+    vendor: true,
+    defaults: ["android.hardware.health-service.qti-defaults"],
+    init_rc: ["android.hardware.health-service.qti.rc"],
+    overrides: ["charger"],
+}
+
+cc_binary {
+    name: "android.hardware.health-service.qti_recovery",
+    vendor: false,
+    recovery: true,
+    defaults: ["android.hardware.health-service.qti-defaults"],
+    init_rc: ["android.hardware.health-service.qti_recovery.rc"],
+    overrides: ["charger.recovery"],
+}

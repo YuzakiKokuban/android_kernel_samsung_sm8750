@@ -1,0 +1,16 @@
+name: "pigz"
+description:
+    "A parallel implementation of gzip for modern multi-processor, multi-core "
+    "machines. "
+
+third_party {
+homepage: "https://zlib.net/pigz/"
+  identifier {
+    type: "Git"
+    value: "https://github.com/madler/pigz"
+    primary_source: true
+  }
+  version: "v2.8"
+  last_upgrade_date { year: 2023 month: 12 day: 15 }
+  license_type: NOTICE
+}

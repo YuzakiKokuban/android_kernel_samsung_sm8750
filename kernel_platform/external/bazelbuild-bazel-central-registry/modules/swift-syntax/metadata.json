@@ -1,0 +1,23 @@
+{
+    "homepage": "https://github.com/apple/swift-syntax",
+    "maintainers": [
+        {
+            "email": "keithbsmiley@gmail.com",
+            "github": "keith",
+            "name": "Keith Smiley"
+        }
+    ],
+    "repository": [
+        "github:apple/swift-syntax"
+    ],
+    "versions": [
+        "509.0.0",
+        "509.0.0.1",
+        "509.0.2",
+        "509.1.1",
+        "510.0.0",
+        "510.0.2",
+        "600.0.0-prerelease-2024-04-02"
+    ],
+    "yanked_versions": {}
+}

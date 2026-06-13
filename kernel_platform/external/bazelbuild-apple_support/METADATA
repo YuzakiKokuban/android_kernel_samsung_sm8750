@@ -1,0 +1,14 @@
+name: "apple_support"
+description:
+    "Apple Support for Bazel"
+
+third_party {
+  identifier {
+    type: "Git"
+    value: "https://github.com/bazelbuild/apple_support"
+    primary_source: true
+  }
+  version: "1.11.1"
+  last_upgrade_date { year: 2023 month: 12 day: 13 }
+  license_type: NOTICE
+}

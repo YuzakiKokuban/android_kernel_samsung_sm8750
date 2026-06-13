@@ -1,0 +1,139 @@
+# Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+
+title: Integrated connectivity Platform Driver
+
+description:
+   Integrated connectivity platform driver adds support for the Integrated WLAN
+   that runs on Q6 based platforms. WLAN FW on these architecture runs on Q6. This
+   platform driver communicates with WLAN FW over QMI, WLAN on/off messages
+   to FW are communicated thru this interface. This driver also listens to
+   WLAN PD restart notifications.
+
+properties:
+   compatible:
+     enum:
+      - qcom,icnss #for ADRASTEA architecture
+      - qcom,wcn6750 #for iWCN architecture
+      - qcom,wcn6450 #for evros architecture
+      - qcom,wcn7750 #for wcn7750 architecture
+
+   reg:
+     description: Memory regions defined as starting address and size.
+
+   reg-names:
+     description: Names of the memory regions defined in reg entry.
+
+   interrupts:
+     description: Copy engine interrupt table.
+
+   qcom,wlan-msa-memory:
+     description: MSA memory size.
+
+   clocks:
+     description: List of clock phandles.
+
+   clock-names:
+     description: List of clock names corresponding to the "clocks" property.
+
+   iommus:
+     description: SMMUs and corresponding Stream IDs needed by WLAN.
+
+   qcom,wlan-smmu-iova-address:
+     description: |
+       I/O virtual address range as <start length>
+       format to be used for allocations associated between WLAN and SMMU.
+
+   qcom,wlan:
+     description: |
+        Signature string for WLAN devices which all CNSS family drivers
+        are able to search for.
+
+   <supply-name>-supply:
+     description: |
+        phandle to the regulator device tree node
+        optional "supply-name" is "vdd-0.8-cx-mx".
+
+   qcom,<supply>-config:
+     description: |
+        Specifies voltage levels for supply. Should be
+        specified in pairs (min, max), units uV.  There can
+        be optional load in uA and Regulator settle delay in
+        uS.
+   qcom,icnss-vadc:
+     description: VADC handle for vph_pwr read APIs.
+
+   qcom,icnss-adc_tm:
+     description: VADC handle for vph_pwr notification APIs.
+
+   io-channels:
+     description: IIO channel to monitor for vph_pwr power.
+
+   io-channel-names:
+     description: IIO channel name as per the client name.
+
+   qcom,smmu-s1-bypass:
+     description: Boolean context flag to set SMMU to S1 bypass.
+
+   qcom,wlan-msa-fixed-region:
+     description: phandle, specifier pairs to children of /reserved-memory.
+
+   qcom,hyp_disabled:
+     description: Boolean context flag to disable hyperviser.
+
+   qcom,smp2p_map_wlan_1_in:
+     description: Represents the in smp2p to wlan driver from modem.
+
+required:
+  - compatible
+  - reg
+  - reg-names
+  - interrupts
+  - qcom,wlan-msa-memory
+  - clocks
+  - clock-names
+  - iommus
+  - qcom,wlan-smmu-iova-address
+  - qcom,wlan
+
+examples:
+  - |
+    qcom,icnss@0a000000 {
+        compatible = "qcom,icnss";
+        reg = <0x0a000000 0x1000000>;
+        reg-names = "membase";
+        clocks = <&clock_gcc clk_aggre2_noc_clk>;
+        clock-names = "smmu_aggre2_noc_clk";
+        iommus = <&anoc2_smmu 0x1900>,
+                 <&anoc2_smmu 0x1901>;
+        qcom,wlan-smmu-iova-address = <0 0x10000000>;
+        qcom,wlan;
+        interrupts = <0 130 0 /* CE0 */ >,
+		      <0 131 0 /* CE1 */ >,
+		      <0 132 0 /* CE2 */ >,
+		      <0 133 0 /* CE3 */ >,
+		      <0 134 0 /* CE4 */ >,
+		      <0 135 0 /* CE5 */ >,
+		      <0 136 0 /* CE6 */ >,
+		      <0 137 0 /* CE7 */ >,
+		      <0 138 0 /* CE8 */ >,
+		      <0 139 0 /* CE9 */ >,
+		      <0 140 0 /* CE10 */ >,
+		      <0 141 0 /* CE11 */ >;
+        qcom,wlan-msa-memory = <0x200000>;
+	qcom,wlan-msa-fixed-region = <&wlan_msa_mem>;
+	qcom,smmu-s1-bypass;
+	vdd-0.8-cx-mx-supply = <&pm8998_l5>;
+	qcom,vdd-0.8-cx-mx-config = <800000 800000 2400 1000>;
+	qcom,hyp_disabled;
+	qcom,smp2p_map_wlan_1_in {
+		interrupts-extended = <&smp2p_wlan_1_in 0 0>,
+			              <&smp2p_wlan_1_in 1 0>;
+		interrupt-names = "qcom,smp2p-force-fatal-error",
+			          "qcom,smp2p-early-crash-ind";
+	};
+    };
+...
+

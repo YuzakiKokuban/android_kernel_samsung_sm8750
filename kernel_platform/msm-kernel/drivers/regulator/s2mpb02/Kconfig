@@ -1,0 +1,10 @@
+if REGULATOR
+
+config REGULATOR_S2MPB02
+	tristate "Samsung S2MPB02 regulator"
+	depends on MFD_S2MPB02
+	help
+	 This driver controls a Samsung S2MPB02 regulator
+	 via I2C bus.
+
+endif

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear
+-->
+<xs:schema version="2.0" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="MicrophoneInfoAndDynamicInfo">
+<xs:complexType>
+    <xs:sequence>
+        <xs:element name="MicrophoneInfoList" type="MicrophoneInfoListType"/>
+        <xs:element name="MicrophoneDynamicInfoList" type="MicrophoneDynamicInfoListType"/>
+    </xs:sequence>
+</xs:complexType>
+</xs:element>
+
+<xs:complexType name="MicrophoneInfoListType">
+    <xs:sequence>
+        <xs:element name="MicrophoneInfo" type="MicrophoneInfoType" maxOccurs="unbounded" />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MicrophoneDynamicInfoListType">
+    <xs:sequence>
+        <xs:element name="MicrophoneDynamicInfo" type="MicrophoneDynamicInfoType" maxOccurs="unbounded" />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MicrophoneInfoType">
+    <xs:sequence>
+        <xs:element name="id" type="xs:token"/>
+        <xs:element name="device">
+            <xs:complexType>
+                <xs:attribute name="address" type="xs:token" use="required" />
+                <xs:attribute name="connection" type="xs:token" use="optional" default="" />
+                <xs:attribute name="name" type="AudioDeviceType" use="required" />
+            </xs:complexType>
+        </xs:element>
+        <xs:element name="location" type="LocationType" minOccurs="0"/>
+        <xs:element name="group" type="xs:int" minOccurs="0" />
+        <xs:element name="indexInTheGroup" type="xs:int" minOccurs="0"/>
+        <xs:element name="sensitivity">
+            <xs:complexType>
+                <xs:attribute name="leveldBFS" type="xs:float" use="required" />
+                <xs:attribute name="maxSpldB" type="xs:float" use="required" />
+                <xs:attribute name="minSpldB" type="xs:float" use="required" />
+            </xs:complexType>
+        </xs:element>
+        <xs:element name="directionality" type="DirectionalityType" />
+        <xs:element name="frequencyResponse" type="frequencyResponseType" maxOccurs="1"/>
+        <xs:element name="position" type="coordinatesType" minOccurs="0" maxOccurs="1" />
+        <xs:element name="orientation" type="coordinatesType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="MicrophoneDynamicInfoType">
+    <xs:sequence>
+        <xs:element name="device" type="PalInDevicesType"/>
+        <xs:element name="MicInfo" type="MicInfoType"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="AudioDeviceType">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="IN_MICROPHONE" />
+        <xs:enumeration value="IN_MICROPHONE_BACK" />
+        <xs:enumeration value="IN_AFE_PROXY" />
+        <xs:enumeration value="IN_DEVICE" />
+        <xs:enumeration value="IN_ECHO_REFERENCE" />
+        <xs:enumeration value="IN_FM_TUNER" />
+        <xs:enumeration value="IN_HEADSET" />
+        <xs:enumeration value="IN_LOOPBACK" />
+        <xs:enumeration value="IN_SUBMIX" />
+        <xs:enumeration value="IN_TELEPHONY_RX" />
+        <xs:enumeration value="IN_TV_TUNER" />
+        <xs:enumeration value="IN_DOCK" />
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="PalInDevicesType">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="PAL_DEVICE_IN_HANDSET_MIC" />
+        <xs:enumeration value="PAL_DEVICE_IN_SPEAKER_MIC" />
+        <xs:enumeration value="PAL_DEVICE_IN_BLUETOOTH_SCO_HEADSET" />
+        <xs:enumeration value="PAL_DEVICE_IN_WIRED_HEADSET" />
+        <xs:enumeration value="PAL_DEVICE_IN_AUX_DIGITAL" />
+        <xs:enumeration value="PAL_DEVICE_IN_HDMI" />
+        <xs:enumeration value="PAL_DEVICE_IN_USB_ACCESSORY" />
+        <xs:enumeration value="PAL_DEVICE_IN_USB_DEVICE" />
+        <xs:enumeration value="PAL_DEVICE_IN_USB_HEADSET" />
+        <xs:enumeration value="PAL_DEVICE_IN_FM_TUNER" />
+        <xs:enumeration value="PAL_DEVICE_IN_LINE" />
+        <xs:enumeration value="PAL_DEVICE_IN_SPDIF" />
+        <xs:enumeration value="PAL_DEVICE_IN_PROXY" />
+        <xs:enumeration value="PAL_DEVICE_IN_HANDSET_VA_MIC" />
+        <xs:enumeration value="PAL_DEVICE_IN_BLUETOOTH_A2DP" />
+        <xs:enumeration value="PAL_DEVICE_IN_HEADSET_VA_MIC" />
+        <xs:enumeration value="PAL_DEVICE_IN_VI_FEEDBACK" />
+        <xs:enumeration value="PAL_DEVICE_IN_TELEPHONY_RX" />
+        <xs:enumeration value="PAL_DEVICE_IN_ULTRASOUND_MIC" />
+        <xs:enumeration value="PAL_DEVICE_IN_EXT_EC_REF" />
+        <xs:enumeration value="PAL_DEVICE_IN_ECHO_REF" />
+        <xs:enumeration value="PAL_DEVICE_IN_HAPTICS_VI_FEEDBACK" />
+        <xs:enumeration value="PAL_DEVICE_IN_BLUETOOTH_BLE" />
+        <xs:enumeration value="PAL_DEVICE_IN_CPS_FEEDBACK" />
+        <xs:enumeration value="PAL_DEVICE_IN_DUMMY" />
+        <xs:enumeration value="PAL_DEVICE_IN_CPS2_FEEDBACK" />
+        <xs:enumeration value="PAL_DEVICE_IN_RECORD_PROXY" />
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="LocationType">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="MAINBODY" />
+        <xs:enumeration value="MAINBODY_MOVABLE" />
+        <xs:enumeration value="PERIPHERAL" />
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="sensitivityType">
+    <xs:sequence>
+        <xs:element name="leveldBFS" type="xs:float"/>
+        <xs:element name="maxSpldB" type="xs:float"/>
+        <xs:element name="minSpldB" type="xs:float"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="DirectionalityType">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="OMNI" />
+        <xs:enumeration value="BI_DIRECTIONAL" />
+        <xs:enumeration value="CARDIOID" />
+        <xs:enumeration value="HYPER_CARDIOID" />
+        <xs:enumeration value="SUPER_CARDIOID" />
+    </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="frequencyResponseType">
+    <xs:sequence>
+        <xs:element name="frequencyHz" type="frequencyHzListType"/>
+        <xs:element name="leveldB" type="leveldBListType"/>
+    </xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="frequencyHzListType">
+    <xs:list itemType="xs:float" />
+</xs:simpleType>
+
+<xs:simpleType name="leveldBListType">
+    <xs:list itemType="xs:float" />
+</xs:simpleType>
+
+
+<xs:complexType name="coordinatesType">
+    <xs:attribute name="x" type="xs:float" use="required" />
+    <xs:attribute name="y" type="xs:float" use="required" />
+    <xs:attribute name="z" type="xs:float" use="required" />
+</xs:complexType>
+
+<xs:complexType name="MicInfoType">
+    <xs:attribute name="id" type="xs:token" use="required"/>
+    <xs:attribute name="channelMapping" type="channelMappingListType" use="required"/>
+</xs:complexType>
+
+<xs:simpleType name="channelMappingListType">
+    <xs:list itemType="ChannelMappingType" />
+</xs:simpleType>
+
+<xs:simpleType name="ChannelMappingType">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="UNUSED" />
+        <xs:enumeration value="DIRECT" />
+        <xs:enumeration value="PROCESSED" />
+    </xs:restriction>
+</xs:simpleType>
+
+</xs:schema>

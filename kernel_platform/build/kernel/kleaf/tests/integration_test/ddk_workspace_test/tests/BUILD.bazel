@@ -1,0 +1,94 @@
+load("@bazel_skylib//rules:build_test.bzl", "build_test")
+load("@bazel_skylib//rules:write_file.bzl", "write_file")
+load(":files_test.bzl", "files_test", "single_file_test")
+
+label_flag(
+    name = "kernel",
+    build_setting_default = "@kleaf//common:kernel_aarch64",
+    visibility = ["//out_of_tree:__pkg__"],
+)
+
+config_setting(
+    name = "building_kernel_from_source",
+    flag_values = {
+        ":kernel": "@kleaf//common:kernel_aarch64",
+    },
+)
+
+filegroup(
+    name = "build_test_targets",
+    srcs = [
+        "//out_of_tree:device_images",
+    ] + select({
+        # If using prebuilts, we don't care about the tests against
+        # the kernel built from source.
+        ":building_kernel_from_source": [
+            "//in_tree:device_images",
+        ],
+        "//conditions:default": [],
+    }),
+)
+
+build_test(
+    name = "build_test",
+    targets = [":build_test_targets"],
+)
+
+# TODO: Add tests on the image content
+
+write_file(
+    name = "fake_zram",
+    out = "fake/zram.ko",
+    content = [],
+)
+
+write_file(
+    name = "fake_zsmalloc",
+    out = "fake/zsmalloc.ko",
+    content = [],
+)
+
+filegroup(
+    name = "fake_modules",
+    srcs = [
+        ":fake_zram",
+        ":fake_zsmalloc",
+    ],
+)
+
+# Test that @gki_prebuilts//kernel_aarch64:kernel_aarch64/drivers/block/zram/zram.ko
+# exists and contains a single file zram.ko
+single_file_test(
+    name = "zram_test",
+    src = select({
+        # Stub test when not using prebuilts
+        ":building_kernel_from_source": ":fake_zram",
+        "//conditions:default": "@gki_prebuilts//kernel_aarch64:kernel_aarch64/drivers/block/zram/zram.ko",
+    }),
+    expected_basename = "zram.ko",
+    tags = ["manual"],
+)
+
+# Test that @gki_prebuilts//kernel_aarch64:kernel_aarch64_modules contains modules,
+# including zram.ko and zsmalloc.ko.
+files_test(
+    name = "modules_test",
+    src = select({
+        # Stub test when not using prebuilts
+        ":building_kernel_from_source": ":fake_modules",
+        "//conditions:default": "@gki_prebuilts//kernel_aarch64:kernel_aarch64_modules",
+    }),
+    expected_basenames = [
+        "zram.ko",
+        "zsmalloc.ko",
+    ],
+)
+
+test_suite(
+    name = "tests",
+    tests = [
+        ":build_test",
+        ":modules_test",
+        ":zram_test",
+    ],
+)

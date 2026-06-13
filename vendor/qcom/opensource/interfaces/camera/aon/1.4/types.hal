@@ -1,0 +1,490 @@
+/*
+ * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above
+ *      copyright notice, this list of conditions and the following
+ *      disclaimer in the documentation and/or other materials provided
+ *      with the distribution.
+ *    * Neither the name of The Linux Foundation. nor the names of its
+ *      contributors may be used to endorse or promote products derived
+ *      from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/*
+ * Changes from Qualcomm Innovation Center are provided under the following license:
+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted (subject to the limitations in the
+ * disclaimer below) provided that the following conditions are met:
+ *
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *
+ *    * Redistributions in binary form must reproduce the above
+ *      copyright notice, this list of conditions and the following
+ *      disclaimer in the documentation and/or other materials provided
+ *      with the distribution.
+ *
+ *    * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its
+ *      contributors may be used to endorse or promote products derived
+ *      from this software without specific prior written permission.
+ *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+ * GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+ * HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+ * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package vendor.qti.hardware.camera.aon@1.4;
+
+import vendor.qti.hardware.camera.aon@1.3;
+
+enum AONServiceType : @1.3::AONServiceType
+{
+    // No new ServiceType is added in 1.4
+};
+
+/**
+ * Position type of an AON sensor.
+ */
+enum PositionType : uint32_t
+{
+    /**
+     * Rear main camera.
+     */
+    REAR        = 0,
+
+    /**
+     * Front main camera.
+     */
+    FRONT       = 1
+};
+
+/**
+ * The delivery mode of event detection
+ */
+enum DeliveryMode : uint32_t
+{
+    /**
+     * Detection is triggered to run based on motion detected by sensor.
+     */
+    MotionBased     = 0,
+
+    /**
+     * Detection is triggered to run periodically according to
+     * the value of deliveryPeriodMs set by client during RegisterClient.
+     */
+    TimeBased       = 1
+};
+
+/**
+ * The event type supported by FaceDetect and FaceDetectPro.
+ * These are bit values for client to assign to the fdEvtTypeMask in FDRegisterInfo during RegisterClient
+ * and to check the fdEvtTypeMask in FDEvtInfo when receiving the AONCallBackEvent.
+ */
+enum FDEvtType : uint32_t
+{
+    /**
+     * This indicates that face detection was performed and a face is detected.
+     */
+    FaceDetected    = 1,
+
+    /**
+     * This indicates that face detection was performed and a face is not detected.
+     */
+    FaceNotDetected = 2,
+
+    /**
+     * This indicates that face detection was performed and an eye gaze is detected.
+     */
+    GazeDetected    = 4,
+
+    /**
+     * This indicates that face detection was performed and an eye gaze is not detected.
+     */
+    GazeNotDetected = 8,
+};
+
+/**
+ * The event type supported by QRCode.
+ * These are bit values for client to assign to the qrEvtTypeMask in QRRegisterInfo during RegisterClient
+ * and to check the qrEvtTypeMask in QREvtInfo when receiving the AONCallBackEvent.
+ */
+enum QREvtType : uint32_t
+{
+    /**
+     * This indicates that QRCode detection was performed and a QRCode is detected.
+     */
+    QRCodeDetected    = 1,
+
+    /**
+     * This indicates that QRCode detection was performed and a QRCode is not detected.
+     */
+    QRCodeNotDetected = 2,
+};
+
+/**
+ * The underlying engine type of the algorithm
+ */
+enum FDEngineType : uint32_t
+{
+    /**
+     * CADL engine (Lower power, lower memory usage engine).
+     */
+    EngineCADL     = 0,
+
+    /**
+     * eNPU engine (Higher power, higher memory usage engine).
+     */
+    EngineENPU     = 1
+};
+
+/**
+ * The information of the FD algorithm mode
+ */
+struct FDAlgoMode {
+    /**
+     * Image resolution used for algo processing in this algo mode.
+     */
+    uint32_t width;
+
+    /**
+     * Image resolution used for algo processing in this algo mode.
+     */
+    uint32_t height;
+
+    /**
+     * Indiates whether this FD algo mode is island-capable.
+     */
+    bool isIslandModeCapable;
+
+    /**
+     * Indicates what the supporting engine is.
+     */
+    FDEngineType fdEngine;
+
+    /**
+     * A bit-mask indicating which FDEvtType are supported
+     * in this FDAlgoMode. If both FaceDetected & GazeDetected are
+     * supported, the supportedFDEvtTypeMask will be 0x5(0x1|0x4)
+     */
+    uint32_t supportedFDEvtTypeMask;
+};
+
+/**
+ * The FD register information filled by client.
+ * Only applicable when service type is FaceDetect or FaceDetectPro
+ */
+struct FDRegisterInfo {
+    /**
+     * Indicate which FDEvtType the client is interested in.
+     * If client need both FaceDetected & GazeDetected,
+     * the fdEvtTypeMask should be assigned as 0x5(0x1|0x4)
+     */
+    uint32_t fdEvtTypeMask;
+
+    /**
+     * Index to the algoModes described in AONSensorCap which returned in GetAONSensorInfoList
+     */
+    uint32_t fdAlgoModeIdx;
+
+    /**
+     * To configure the delivery mode of the detection callback event
+     * Since one AON sensor can only be configured one delivery mode at a time,
+     * AON service will take the value of the latest registered client as the final configuration.
+     */
+    DeliveryMode deliveryMode;
+
+    /**
+     * Period in ms of detection callback event.
+     * The value should be positive and only applicable when delivery mode is TimeBased.
+     * Since one AON sensor can only be configured one delivery mode at a time,
+     * AON service will take the value of the latest registered client as the final configuration.
+     */
+    uint32_t deliveryPeriodMs;
+
+    /**
+     * Number of times detections are performed per delivery
+     * Applicable for both deliveryMode - MotionBased & TimeBased
+     * If deliveryMode is MotionBased:
+     * This is the number of detections that will be performed each
+     * time a motion is detected.
+     * If deliveryMode is TimeBased:
+     * At the specified delivery periodicity, detection will be
+     * performed consecutively at the native streaming rate of the image sensor.
+     */
+    uint32_t detectionPerDelivery;
+};
+
+/**
+ * The QRCode register information filled by client.
+ * Only applicable when service type is QRCode
+ */
+struct QRRegisterInfo {
+    /**
+     * Indicate which QREvtType  the client is interested in.
+     * If client need both QRCodeDetected & QRCodeNotDetected,
+     * the qrEvtTypeMask should be assigned as 0x3(0x1|0x2)
+     */
+    uint32_t qrEvtTypeMask;
+
+    /**
+     * To configure the delivery mode of the detection callback event
+     * Since one AON sensor can only be configured one delivery mode at a time,
+     * AON service will take the value of the latest registered client as the final configuration.
+     */
+    DeliveryMode deliveryMode;
+
+    /**
+     * Period in ms of detection callback event.
+     * The value should be positive and only applicable when delivery mode is TimeBased.
+     * Since one AON sensor can only be configured one delivery mode at a time,
+     * AON service will take the value of the latest registered client as the final configuration.
+     */
+    uint32_t deliveryPeriodMs;
+
+    /**
+     * Number of times detections are performed per delivery
+     * Applicable for both deliveryMode - MotionBased & TimeBased
+     * If deliveryMode is MotionBased:
+     * This is the number of detections that will be performed each
+     * time a motion is detected.
+     * If deliveryMode is TimeBased:
+     * At the specified delivery periodicity, detection will be
+     * performed consecutively at the native streaming rate of the image sensor.
+     */
+    uint32_t detectionPerDelivery;
+};
+
+/**
+ * The register information filled by client
+ */
+struct AONRegisterInfo {
+    /**
+     * Index of to the sensorInfoList returned in GetAONSensorInfoList
+     * Indicate which aon sensor the client would like to register
+     */
+    uint32_t aonIdx;
+
+    /**
+     * Indicate which AONServiceType the client would like to register after knowing
+     * the capability of each AON sensor by parsing the AONSensorCap in sensorInfoList
+     */
+    AONServiceType srvType;
+
+    /**
+     * The FD register information filled by client.
+     * Only applicable when service type is FaceDetect or FaceDetectPro
+     */
+    FDRegisterInfo fdRegInfo;
+
+    /**
+     * The QRCode register information filled by client.
+     * Only applicable when service type is QRCode
+     */
+    QRRegisterInfo qrRegInfo;
+};
+
+/**
+ * The AONServiceType and corresponding algo mode list supported by AON sensor
+ */
+struct AONSensorCap {
+    /**
+     * Supported AONServiceType by AON sensor
+     */
+    AONServiceType srvType;
+
+    /**
+     * The supported fdAlgoMode list. Only applicable when srvType is FaceDetect or FaceDetectPro
+     */
+    vec<FDAlgoMode> fdAlgoModes;
+};
+
+/**
+ * The information of an AON sensor
+ */
+struct AONSensorInfo {
+    /**
+     * Position type of AON sensor
+     */
+    PositionType position;
+
+    /**
+     * List of supported AONServiceType by AON sensor
+     */
+    vec<AONSensorCap> sensorCaps;
+};
+
+/**
+ * The information passed from the event of FaceDetectPro service type
+ */
+struct FacePosType {
+    /**
+     * X coordinate of a position
+     * It is relative to the frame dimension width (exposed in FaceInfoPro)
+     * It can be negative (e.g. a facial part can be estimated to be outside of the
+     * frame boundary)
+     */
+    int32_t x;
+
+    /**
+     * Y coordinate of a position
+     * It is relative to the frame dimension height (exposed in FaceInfoPro)
+     * It can be negative (e.g. a facial part can be estimated to be outside of the
+     * frame boundary)
+     */
+    int32_t y;
+};
+
+/**
+ * The information per face passed from the event of FaceDetectPro service type
+ */
+struct FaceInfoProPerFace {
+    /**
+     * Indicates the roll (or rotate) angle of the face
+     * Valid values: -180 through 179, where a positive value means the face is
+     * rotated clockwise in-plane
+     */
+    int32_t angleRoll;
+
+    /**
+     * Indicates the left/right direction of the face
+     * Valid values: -180 through 179, where a positive value means the face is
+     * facing right
+     */
+    int32_t angleYaw;
+
+    /**
+     * Width of the face in the frame
+     */
+    uint32_t width;
+
+    /**
+     * height of the face in the frame
+     */
+    uint32_t height;
+
+    /**
+     * Position of the center of the face in the frame
+     */
+    FacePosType center;
+
+    /**
+     * Whether an eye gaze is detected
+     * Only applicable when the bit of GazeDetected or GazeNotDetected
+     * is set to 1 by client in RegisterClient.
+     */
+    bool isGazeDetected;
+};
+
+/**
+ * The information passed from the event of FaceDetectPro service type
+ */
+struct FaceInfoPro {
+    /**
+     * The frame dimension where the reported face ROI/Parts Coordinates will be based on
+     */
+    uint32_t frameDimWidth;
+    uint32_t frameDimHeight;
+
+    /**
+     * A vector of the per face information
+     */
+    vec<FaceInfoProPerFace>  perFace;
+};
+
+/**
+ * The event callback from AON service to client
+ */
+struct AONCallBackEvent {
+    /**
+     * Service type of the callback event.
+     */
+    AONServiceType srvType;
+
+    /**
+     * The event information for FaceDetect.
+     * Only applicable when srvType is FaceDetect.
+     */
+    FDEvtInfo fdEvtInfo;
+
+    /**
+     * The event information for FaceDetectPro.
+     * Only applicable when srvType is FaceDetectPro.
+     */
+    FDProEvtInfo fdProEvtInfo;
+
+    /**
+     * The event information for QRCode.
+     * Only applicable when srvType is QRCode.
+     */
+    QREvtInfo qrEvtInfo;
+};
+
+/**
+ * The event information for FaceDetect AONServiceType
+ */
+struct FDEvtInfo {
+    /**
+     * Bit Mask to indicate the FDEvtTypes of this event.
+     * If fdEvtTypeMask is 0x5(0x1|0x4), that means both
+     * face & gaze are detected by AONService
+     */
+    uint32_t fdEvtTypeMask;
+};
+
+/**
+ * The event information for FaceDetectPro AONServiceType
+ */
+struct FDProEvtInfo {
+    /**
+     * Bit Mask to indicate the FDEvtTypes of this event.
+     * If fdEvtTypeMask is 0x5(0x1|0x4), that means both
+     * face & gaze are detected by AONService
+     */
+    uint32_t fdEvtTypeMask;
+
+    /**
+     * Face information of detected faces or gazes.
+     * Only applicable when the BIT of FaceDetected or GazeDetected
+     * in fdEvtTypeMask is being set by AONService.
+     */
+    FaceInfoPro faceInfo;
+};
+
+/**
+ * The event information for QRCode AONServiceType
+ */
+struct QREvtInfo {
+    /**
+     * Bit Mask to indicate the QREvtTypes of this event.
+     */
+    uint32_t qrEvtTypeMask;
+};

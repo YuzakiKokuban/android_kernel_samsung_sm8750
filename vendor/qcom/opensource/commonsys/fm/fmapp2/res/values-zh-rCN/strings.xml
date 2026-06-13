@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright (C) 2012-2013, The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimer in the documentation and/or other materials provided
+ *       with the distribution.
+ *     * Neither the name of The Linux Foundation nor the names of its
+ *       contributors may be used to endorse or promote products derived
+ *       from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+ -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">调频收音机</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_record_start">开始录音</string>
+    <string name="menu_record_stop">停止录音</string>
+    <string name="menu_all_channels">全部频道</string>
+    <string name="app_label_all_channels">全部频道</string>
+    <string name="button_ok">确定</string>
+    <string name="button_cancel">取消</string>
+    <string name="button_delete">删除</string>
+    <string name="error_sdcard_access">不能访问SD卡</string>
+    <string name="fm_service_started">调频 服务</string>
+    <string name="menu_sleep">自动关闭</string>
+    <string name="menu_sleep_cancel">取消自动关闭</string>
+    <string name="menu_scan_start">搜索</string>
+    <string name="button_text_stop">停止</string>
+    <string name="menu_scan_stop">停止搜索</string>
+    <string name="msg_seeking">搜索 调频 电台</string>
+    <string name="msg_scanning">搜索所有 调频 电台</string>
+    <string name="msg_scanning_pty">搜索 "<xliff:g id="pty_name">%1$s</xliff:g>"</string>
+    <string name="msg_noantenna">请插入耳机</string>
+    <!-- The messsage shown when FM radio was turned on, headset was plugged out -->
+    <string name="msg_headset_plug_out">收音机播放中拔出了耳机，收音机已经自动关闭。</string>
+    <string name="dialog_sleep_title">收音机自动关闭</string>
+    <string name="preset_name_dialog_title">输入名称 </string>
+    <string name="preset_name_title">重命名</string>
+    <string name="preset_search_title">搜索</string>
+    <string name="preset_search_name">搜索 "<xliff:g id="preset_name">%1$s</xliff:g>"</string>
+    <string name="preset_add">添加</string>
+    <string name="preset_replace">替换</string>
+    <string name="preset_tune">设定频率</string>
+    <string name="preset_rename">重命名</string>
+    <string name="preset_delete">删除</string>
+    <string name="sel_band_menu">选择地区</string>
+    <string name="settings_menu">设置</string>
+    <string name="regional_band">地区</string>
+    <string name="aud_output_mode">音频输出模式</string>
+    <string name="sel_audio_output">选择音频输出</string>
+    <string name="record_dur">录音时长</string>
+    <string name="sel_rec_dur">选择录音时长</string>
+    <string name="auto_select_af">备用频率</string>
+    <string name="auto_select_af_enabled">自动选择开启</string>
+    <string name="auto_select_af_disabled">自动选择关闭</string>
+    <string name="settings_revert_confirm_title">确定清除设置</string>
+    <string name="settings_revert_confirm_msg">将删除所有设置</string>
+    <string name="settings_back_summary">Return to previous view</string>
+    <string name="settings_revert_defaults_title">恢复出厂设置</string>
+    <string name="settings_revert_defaults_summary">清除所有设置</string>
+    <string name="audio_type_stereo">立体声</string>
+    <string name="audio_type_mono">单声道</string>
+    <string name="alert_dialog_ok">确定</string>
+    <string name="alert_dialog_cancel">取消</string>
+    <string name="alert_dialog_hint">输入一个名称</string>
+    <string name="search_dialog_title">搜索电台</string>
+    <string name="msg_search_title">调频 - <xliff:g id="frequency_string">%1$s</xliff:g></string>
+	<string name="presetlist_prefix_name">调频 - </string>
+        <string name="fm_command_timeout_title">超时</string>
+        <string name="fm_tune_timeout_msg">打开调频电台无响应。
+                     如果问题持续, 请重新启动FM收音机。</string>
+        <string name="fm_command_failed_title">调频 操作失败</string>
+        <string name="fm_cmd_failed_msg">调频 操作失败。如果问题持续， 请重新启动调频收音机。
+        </string>
+        <string name="fm_cmd_failed_msg_hdmi">调频 操作失败。 不支持 调频 和 HDMI 并发 。
+        </string>
+        <string name="fm_cmd_failed_call_on">调频 操作失败。通话期间禁止调频音频 </string>
+
+    <string name="station_name">电台:</string>
+    <string name="station_exists">此频率已存在!</string>
+    <string name="stat_notif_frequency">调频 收音机 "<xliff:g id="frequency">%1$s</xliff:g>" MHz</string>
+    <string name="cannot_startup_during_call">通话中不能启动调频！</string>
+    <string name="cannot_startup_during_airplane">"飞行模式中不能启动调频！"</string>
+    <string name="station_list_delete_station">删除:<xliff:g id="name">%s</xliff:g></string>
+    <string name="station_list_delete_station_prompt">要删除 <xliff:g id="name">%s</xliff:g> 吗？</string>
+    <string name="sdcard_no_space_cannot_recording">SD卡空间不足,不能录音</string>
+    <string name="recording_stop_no_space">SD卡空间不足，录音停止</string>
+    <string name="station_name_empty">电台名字不能为空，请新重输入</string>
+    <string name="station_name_exist">已存在名为\"<xliff:g id="name">%s</xliff:g>\"的电台，请输入其他名称。</string>
+    <!-- the title of rename dialog lack of translation -->
+    <string name="dialog_presetlist_rename_title">"请输入名字"</string>
+    <string name="menu_display_tags">显示标签</string>
+    <string name="usr_def_band_min">下限频率（Mhz）</string>
+    <string name="usr_def_band_max">更高的频率限制(Mhz)</string>
+    <string name="sel_chanl_spacing">选择信道间隔</string>
+    <string name="chanl_spacing">信道间隔</string>
+    <string name="set">设置</string>
+    <string name="cancel">取消</string>
+    <string name="rt_plus_tags">标签</string>
+    <string name="user_defind_band_msg">请输入有效的频段范围 76.0 - 108.0</string>
+</resources>

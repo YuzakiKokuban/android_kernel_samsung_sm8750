@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<snap_release>
+  <image au_tag="AU_LINUX_KERNEL.PLATFORM.4.0.R1.00.00.00.061.054" hf_manifest_branch="" hf_manifest_git="" image_type="KERNEL" oss_manifest_git="clo/private/kernel-platform-4-0/kernelplatform/manifest" oss_url="https://git.codelinaro.org" prebuilts_dir="kernel_prebuilt_dir" prop_url="https://chipcode.qti.qualcomm.com" si_chipcode_path="KERNEL.PLATFORM.4.0.r1/kernel_platform" software_image="KERNEL.PLATFORM.4.0.r1"/>
+  <image image_type="combo" all="KERNEL.PLATFORM.4.0.r1"/>
+</snap_release>

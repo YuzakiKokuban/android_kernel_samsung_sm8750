@@ -1,0 +1,30 @@
+sourceFiles = ["cryptfs_hw.cpp"]
+
+commonSharedLibraries = [
+    "libcutils",
+    "libutils",
+    "libdl",
+    "libhardware",
+    "liblog",
+    "libhwbinder",
+    "libhidlbase",
+    "libhidltransport",
+    "libbinder",
+    "vendor.qti.hardware.cryptfshw@1.0",
+]
+
+cc_library_shared {
+    name: "libcryptfs_hw",
+    header_libs: ["libhardware_headers",
+                  "libcryptfshw_hidl_headers",],
+    srcs: sourceFiles,
+    shared_libs: commonSharedLibraries,
+
+    owner: "qti",
+    system_ext_specific: true,
+}
+
+cc_library_headers {
+    name: "libcryptfs_hw_headers",
+    export_include_dirs: ["."],
+}

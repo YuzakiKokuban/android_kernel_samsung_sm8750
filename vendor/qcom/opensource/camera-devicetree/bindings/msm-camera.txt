@@ -1,0 +1,41 @@
+* Qualcomm Technologies, Inc. MSM Camera
+
+Required properties:
+- compatible :
+    - "qcom,cam-req-mgr", "qcom,cam-sync"
+
+- cam-bypass-driver :
+  Usage: optional
+  Value type: <u32>
+  Definition: should contain drivers that required to bypass on camera,
+    including rgltr, rgltr_mode, clks, cesta, icc.
+
+- device-heap-size :
+  Usage: optional
+  Value type: <u32>
+  Definition: heap size used for camera internal allocations (exa - hfi memory) which stay forever.
+
+- session-heap-size :
+  Usage: optional
+  Value type: <u32>
+  Definition: heap size used for session based allocations. These allocations must be freed at the
+    end of session and the session-heap memory will be released to PVM at the end of usecase.
+
+Example:
+
+	qcom,cam-req-mgr {
+		compatible = "qcom,cam-req-mgr";
+		cam-bypass-driver = <(CAM_BYPASS_RGLTR |
+			CAM_BYPASS_RGLTR_MODE |
+			CAM_BYPASS_CLKS |
+			CAM_BYPASS_CESTA |
+			CAM_BYPASS_ICC)>;
+		device-heap-size = <0x400000>;
+		session-heap-size = <0xC800000>;
+		status = "ok";
+	};
+
+   qcom,cam-sync {
+       compatible = "qcom,cam-sync";
+       status = "ok";
+   };

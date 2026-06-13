@@ -1,0 +1,18 @@
+xsd_config {
+    name: "audio_module_config_qti",
+    srcs: ["audio_module_config_qti.xsd"],
+    package_name: "audio_module_config_qti",
+    nullability: true,
+}
+
+// Uncomment below to check the validity of XML with respect to XSD
+/*
+prebuilt_etc_xml {
+    name: "audio_module_config_primary.xml",
+    src: "audio_module_config_primary.xml",
+    schema:"audio_module_config_qti.xsd",
+    vendor: true,
+    relative_install_path : "audio"
+}
+*/
+

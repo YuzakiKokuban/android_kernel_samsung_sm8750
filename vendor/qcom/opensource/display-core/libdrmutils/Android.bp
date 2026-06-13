@@ -1,0 +1,35 @@
+cc_library_shared {
+
+    name: "libdrmutils",
+    defaults: ["qtidisplay_defaults"],
+    sanitize: {
+        integer_overflow: true,
+    },
+    vendor: true,
+    header_libs: [
+        "display_headers",
+        "qti_kernel_headers",
+        "qti_display_kernel_headers",
+        "device_kernel_headers",
+    ],
+    shared_libs: [
+        "libdrm",
+        "libdl",
+        "libdisplaydebug",
+        "libsdmutils",
+    ],
+    cflags: [
+        "-DLOG_TAG=\"DRMUTILS\"",
+        "-Wall",
+        "-std=c++11",
+        "-Werror",
+        "-fno-operator-names",
+    ],
+
+    srcs: [
+        "drm_master.cpp",
+        "drm_res_mgr.cpp",
+        "drm_lib_loader.cpp",
+    ],
+
+}

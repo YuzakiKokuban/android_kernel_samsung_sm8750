@@ -1,0 +1,384 @@
+/*
+ * Copyright (c) 2019 The Linux Foundation. All rights reserved.
+ * Not a contribution.
+ */
+
+/*
+ * Copyright 2018 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package vendor.qti.hardware.bluetooth_audio@2.0;
+
+/**
+ * The different audio parameter structs are used to provide a method to list
+ * all the Capabilities of a codec as well as to configure the codecs. All
+ * fields are bitfields unless specified. If used as a configuration, only one
+ * bit may be enabled. If used for Capabilities, enable all bits corresponding to
+ * supported features.
+ */
+
+/**
+ * POSIX timespec.
+ */
+struct TimeSpec {
+    uint64_t tvSec;   // seconds
+    uint64_t tvNSec;  // nanoseconds
+};
+
+enum Status : uint8_t {
+    SUCCESS = 0x00,
+    /** Codec configuration not supported by the audio platform */
+    UNSUPPORTED_CODEC_CONFIGURATION,
+    /** Any other failure */
+    FAILURE,
+    /* Pending response from Sink*/
+    SINK_NOT_READY,
+    /* Telephony Call in progress*/
+    CALL_IN_PROGRESS,
+    /* Short wait error */
+    SW_ERROR,
+    /* Long wait error */
+    LW_ERROR,
+    /* disconnection in progress */
+    FAILURE_DISC_IN_PROGRESS,
+    /* No wait failure  */
+    FAILURE_NO_WAIT
+};
+
+enum SessionType : uint8_t {
+    UNKNOWN,
+    /** A2DP legacy that AVDTP media is encoded by Bluetooth Stack */
+    A2DP_SOFTWARE_ENCODING_DATAPATH,
+    /** The encoding of AVDTP media is done by HW and there is control only */
+    A2DP_HARDWARE_OFFLOAD_DATAPATH,
+    /** Used when encoded by Bluetooth Stack and streaming to Hearing Aid */
+    HEARING_AID_SOFTWARE_ENCODING_DATAPATH,
+};
+
+enum CodecType : uint32_t {
+    UNKNOWN = 0x00,
+    SBC = 0x01,
+    AAC = 0x02,
+    APTX = 0x04,
+    APTX_HD = 0x08,
+    LDAC = 0x10,
+    BA_CELT = 0x11,
+    APTX_ADAPTIVE = 0x12,
+    APTX_TWS = 0x14,
+};
+
+enum SampleRate : uint32_t {
+    RATE_UNKNOWN = 0x00,
+    RATE_44100 = 0x01,
+    RATE_48000 = 0x02,
+    RATE_88200 = 0x04,
+    RATE_96000 = 0x08,
+    RATE_176400 = 0x10,
+    RATE_192000 = 0x20,
+    RATE_16000 = 0x40,
+    RATE_24000 = 0x60,
+    RATE_32000 = 0x80,
+};
+
+enum BitsPerSample : uint8_t {
+    BITS_UNKNOWN = 0x00,
+    BITS_16 = 0x01,
+    BITS_24 = 0x02,
+    BITS_32 = 0x04,
+};
+
+enum ChannelMode : uint8_t {
+    UNKNOWN = 0x00,
+    MONO = 0x01,
+    STEREO = 0x02,
+};
+
+enum SbcChannelMode : uint8_t {
+    /** Channel Mode: 4 bits */
+    UNKNOWN = 0x00,
+    JOINT_STEREO = 0x01,
+    STEREO = 0x02,
+    DUAL = 0x04,
+    MONO = 0x08,
+};
+
+enum SbcBlockLength : uint8_t {
+    BLOCKS_4 = 0x80,
+    BLOCKS_8 = 0x40,
+    BLOCKS_12 = 0x20,
+    BLOCKS_16 = 0x10,
+};
+
+enum SbcNumSubbands : uint8_t {
+    SUBBAND_4 = 0x08,
+    SUBBAND_8 = 0x04,
+};
+
+enum SbcAllocMethod : uint8_t {
+    /** SNR */
+    ALLOC_MD_S = 0x02,
+    /** Loudness */
+    ALLOC_MD_L = 0x01,
+};
+
+enum AacObjectType : uint8_t {
+    /** MPEG-2 Low Complexity. Support is Mandatory. */
+    MPEG2_LC = 0x80,
+    /** MPEG-4 Low Complexity. Support is Optional. */
+    MPEG4_LC = 0x40,
+    /** MPEG-4 Long Term Prediction. Support is Optional. */
+    MPEG4_LTP = 0x20,
+    /** MPEG-4 Scalable. Support is Optional. */
+    MPEG4_SCALABLE = 0x10,
+};
+
+enum AacVariableBitRate : uint8_t {
+    ENABLED = 0x80,
+    DISABLED = 0x00,
+};
+
+enum AptxAdaptiveChannelMode : int32_t {
+    /** Channel Mode: 5 bits */
+    UNCHANGED = -1,
+    JOINT_STEREO = 0,
+    MONO = 1,
+    DUAL_MONO = 2,
+    TWS_STEREO = 4,
+    EARBUD = 8,
+    TWS_MONO = 10,
+    UNKNOWN = 0xFF,
+};
+
+enum AptxMode : uint32_t {
+    /** Aptx Adaptive Mode: 32 bits */
+    UNKNOWN = 0x00,
+    HQ = 0x1000,
+    LL = 0x2000,
+    ULL = 0x4000,
+    SCAN_CONTROL = 0x8000,
+};
+
+enum InputMode : uint32_t {
+    /** Aptx Adaptive Input Mode: 32 bits */
+    STEREO = 0x00,
+    DUAL_MONO = 0x01,
+};
+
+struct AptxSinkBuffering {
+    uint8_t minSinkBuff_LL;
+    uint8_t maxSinkBuff_LL;
+    uint8_t minSinkBuff_HQ;
+    uint8_t maxSinkBuff_HQ;
+    uint8_t minSinkBuff_TWS;
+    uint8_t maxSinkBuff_TWS;
+};
+
+struct AptxAdaptive_TTP {
+    uint8_t TTP_LL_low;
+    uint8_t TTP_LL_high;
+    uint8_t TTP_HQ_low;
+    uint8_t TTP_HQ_high;
+    uint8_t TTP_TWS_low;
+    uint8_t TTP_TWS_high;
+};
+
+enum LdacChannelMode : uint8_t {
+    /** Channel Mode: 3 bits */
+    UNKNOWN = 0x00,
+    STEREO = 0x01,
+    DUAL = 0x02,
+    MONO = 0x04,
+};
+
+enum LdacQualityIndex : uint8_t {
+    // 990kbps
+    QUALITY_HIGH = 0x00,
+    // 660kbps
+    QUALITY_MID = 0x01,
+    // 330kbps
+    QUALITY_LOW = 0x02,
+    // Adaptive Bit Rate mode
+    QUALITY_ABR = 0x7F,
+};
+
+enum SessionParamType : uint8_t {
+    UNKNOWN = 0x00,
+    MTU = 0x01,
+    BITRATE = 0x02,
+    SINK_LATENCY = 0x03,
+};
+
+/** Used for Software Encoding audio feed parameters */
+struct PcmParameters {
+    SampleRate sampleRate;
+    ChannelMode channelMode;
+    BitsPerSample bitsPerSample;
+};
+
+/**
+ * Used for Hardware Encoding SBC codec parameters.
+ * minBitpool and maxBitpool are not bitfields.
+ */
+struct SbcParameters {
+    SampleRate sampleRate;
+    SbcChannelMode channelMode;
+    SbcBlockLength blockLength;
+    SbcNumSubbands numSubbands;
+    SbcAllocMethod allocMethod;
+    BitsPerSample bitsPerSample;
+    uint8_t minBitpool;
+    uint8_t maxBitpool;
+};
+
+/** Used for Hardware Encoding AAC codec parameters */
+struct AacParameters {
+    AacObjectType objectType;
+    SampleRate sampleRate;
+    ChannelMode channelMode;
+    AacVariableBitRate variableBitRateEnabled;
+    BitsPerSample bitsPerSample;
+    bool frameControlEnabled;
+};
+
+/**
+ * Used for Hardware Encoding LDAC codec parameters
+ * Only used when configuring the codec. When Capabilities are requested, this
+ * field is left empty since all qualities must be supported. Not a bitfield.
+ */
+struct LdacParameters {
+    SampleRate sampleRate;
+    LdacChannelMode channelMode;
+    LdacQualityIndex qualityIndex;
+    BitsPerSample bitsPerSample;
+};
+
+/** Used for Hardware Encoding AptX and AptX-HD codec parameters */
+struct AptxParameters {
+    SampleRate sampleRate;
+    ChannelMode channelMode;
+    BitsPerSample bitsPerSample;
+};
+
+/** Used for Hardware Encoding AptX-Adaptive codec parameters */
+struct AptxAdaptiveParameters {
+    SampleRate sampleRate;
+    AptxAdaptiveChannelMode channelMode;
+    BitsPerSample bitsPerSample;
+    AptxMode aptxMode;
+    AptxSinkBuffering sinkBuffering;
+    AptxAdaptive_TTP ttp;
+    InputMode inputMode;
+    uint32_t inputFadeDuration;
+    uint8_t[25] aptxAdaptiveConfigStream;
+};
+
+/** Used for Hardware Encoding AptX TWS codec parameters */
+struct AptxTwsParameters {
+    SampleRate sampleRate;
+    ChannelMode channelMode;
+    uint8_t syncMode;
+};
+
+/** Used for Hardware Encoding BA CELT codec parameters */
+struct BaCeltParameters {
+    SampleRate sampleRate;
+    ChannelMode channelMode;
+    uint16_t frameSize;
+    uint16_t complexity;
+    uint16_t predictionMode;
+    uint16_t vbrFlag;
+};
+
+/**
+ * Used to specify the capabilities of the codecs supported by Hardware Encoding.
+ * AptX and AptX-HD both use the AptxParameters field.
+ */
+struct CodecCapabilities {
+    CodecType codecType;
+
+    union Capabilities {
+      SbcParameters sbcCapabilities;
+      AacParameters aacCapabilities;
+      LdacParameters ldacCapabilities;
+      AptxParameters aptxCapabilities;
+      AptxAdaptiveParameters aptxAdaptiveCapabilities;
+      AptxTwsParameters aptxTwsCapabilities;
+      BaCeltParameters baCeltCapabilities;
+    } capabilities;
+};
+
+
+struct SinkLatency {
+    uint64_t remoteDeviceAudioDelay;
+    uint64_t transmittedOctets;
+    TimeSpec transmittedOctetsTimeStamp;
+};
+
+/**
+ * Used for proactive update of Session Parameters to server
+ */
+struct SessionParams {
+    SessionParamType paramType;
+
+    union Param {
+      uint16_t mtu;
+      uint32_t encodedAudioBitrate;
+      SinkLatency sinkLatency;
+    } param;
+};
+
+/** Used to specify the capabilities of the different session types. */
+union AudioCapabilities {
+    PcmParameters pcmCapabilities;
+    CodecCapabilities codecCapabilities;
+};
+
+/**
+ * Used to configure a Hardware Encoding session.
+ * AptX and AptX-HD both use the AptxParameters field.
+ */
+struct CodecConfiguration {
+    CodecType codecType;
+    /**
+     * The encoded audio bitrate in bits / second.
+     * 0x00000000 - The audio bitrate is not specified / unused
+     * 0x00000001 - 0x00FFFFFF - Encoded audio bitrate in bits/second
+     * 0x01000000 - 0xFFFFFFFF - Reserved
+     *
+     * The HAL needs to support all legal bitrates for the selected codec.
+     */
+    uint32_t encodedAudioBitrate;
+    /** Peer MTU (in octets) */
+    uint16_t peerMtu;
+    /** Content protection by SCMS-T */
+    bool isScmstEnabled;
+    /** Scrambling Requirement */
+    bool isScramblingEnabled;
+    union CodecSpecific {
+        SbcParameters sbcConfig;
+        AacParameters aacConfig;
+        LdacParameters ldacConfig;
+        AptxParameters aptxConfig;
+        AptxAdaptiveParameters aptxAdaptiveConfig;
+        AptxTwsParameters aptxTwsConfig;
+        BaCeltParameters baCeltConfig;
+    } config;
+};
+
+/** Used to configure either a Hardware or Software Encoding session based on session type */
+union AudioConfiguration {
+    PcmParameters pcmConfig;
+    CodecConfiguration codecConfig;
+};

@@ -1,0 +1,4 @@
+# This file's existence indicates build.sh is versioned.
+# To get version of build.sh, first check for the existence of this file and then do:
+# source build.sh --version
+# Do NOT call the above on a codebase which doesn't contain this file - build.sh.versioned

@@ -1,0 +1,36 @@
+cc_library_shared {
+    name: "libsdmclient",
+    defaults: ["qtidisplay_defaults"],
+    sanitize: {
+        integer_overflow: true,
+    },
+    vendor: true,
+    header_libs: [
+        "display_headers",
+        "qti_kernel_headers",
+        "qti_display_kernel_headers",
+        "device_kernel_headers",
+        "snapalloc_interface_headers",
+        "common_interface_headers",
+        "sdmclient_interface_headers",
+    ],
+    shared_libs: [
+        "libutils",
+        "libc++",
+        "libsdmcore",
+        "libdisplaydebug",
+        "libsdmutils",
+        "libdrm",
+        "libtinyxml2",
+    ],
+    cflags: [
+        "-DLOG_TAG=\"SDM\"",
+        "-Wall",
+        "-std=c++11",
+        "-Werror",
+        "-fno-operator-names",
+    ],
+
+    srcs: ["*.cpp"],
+
+}

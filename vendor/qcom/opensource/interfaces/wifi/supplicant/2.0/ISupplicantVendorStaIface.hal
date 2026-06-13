@@ -1,0 +1,241 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are
+* met:
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above
+*       copyright notice, this list of conditions and the following
+*       disclaimer in the documentation and/or other materials provided
+*       with the distribution.
+*     * Neither the name of The Linux Foundation nor the names of its
+*       contributors may be used to endorse or promote products derived
+*       from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+*/
+
+package vendor.qti.hardware.wifi.supplicant@2.0;
+
+import android.hardware.wifi.supplicant@1.0::types;
+import vendor.qti.hardware.wifi.supplicant@2.0::ISupplicantVendorIface;
+import vendor.qti.hardware.wifi.supplicant@2.0::ISupplicantVendorStaIfaceCallback;
+
+/**
+ * Vendor StaIface Interface
+ */
+interface ISupplicantVendorStaIface extends @2.0::ISupplicantVendorIface{
+  /**
+   * Register for vendorcallbacks from this interface.
+   *
+   * These callbacks are invoked for events that are specific to this interface.
+   * Registration of multiple vendor callback objects is supported. These objects
+   * must be automatically deleted when the corresponding client process is dead or
+   * if this interface is removed.
+   *
+   * @param callback An instance of the |ISupplicantVendorStaIfaceCallback| HIDL
+   *        interface object.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+   */
+  registerVendorCallback(ISupplicantVendorStaIfaceCallback callback)
+      generates (SupplicantStatus status);
+
+  /**
+   * Flush FILS HLP IEs
+   * Use this to flush all the HLP IEs in wpa_supplicant
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_DISABLED|
+   */
+  filsHlpFlushRequest() generates (SupplicantStatus status);
+
+  /**
+   * Add FILS HLP IEs
+   * Use this to add a HLP IE to wpa_supplicant
+   *
+   * @param dst_mac MAC address of the destination
+   * @param pkt The contents of the HLP IE starting from ethertype
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_DISABLED|
+   */
+  filsHlpAddRequest(MacAddress dst_mac, vec<uint8_t> pkt)
+     generates (SupplicantStatus status);
+
+  /**
+   * Query driver Capabilities.
+   *
+   * @param capaType ASCII string, capability type ex: key_mgmt.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|
+   *         |SupplicantStatusCode.FAILURE_IFACE_UNKNOWN|
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+   * @return String of capabilities fetched from driver
+   */
+  getCapabilities(string capaType)
+     generates (SupplicantStatus status, string capabilities);
+
+  /**
+   * Add the DPP bootstrap info obtained from QR code.
+   *
+   * @param uri The URI obtained from the QR code.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+   */
+  dppAddBootstrapQrcode(string uri)
+      generates (SupplicantStatus status, int32_t id);
+
+  /**
+   * Generate bootstrap URI based on the passed arguments
+   *
+   * @param config bootstrap generate config
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+   */
+  dppBootstrapGenerate(uint32_t type, string chan_list, MacAddress mac_addr,
+                       string info, string curve, string key)
+      generates (SupplicantStatus status, int32_t id);
+
+  /**
+   * Remove bootstrap URI based on bootstrap ID
+   *
+   * @param bootstrap_id Stored bootstrap ID
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+   */
+  dppBootstrapRemove(uint32_t id)
+      generates (SupplicantStatus status, int32_t dpp_status);
+
+  /**
+   * Get bootstrap URI based on bootstrap ID
+   *
+   * @param bootstrap_id Stored bootstrap ID
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+   */
+  dppGetUri(uint32_t id)
+      generates (SupplicantStatus status, string uri);
+
+  /**
+   * start listen on the channel specified waiting to receive
+   * the DPP Authentication request
+   *
+   * @param frequency: DPP listen frequency
+   * @param dpp_role: Configurator/Enrollee role
+   * @param qr_mutual: Mutual authentication required
+   * @param netrole_ap: network role
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+   */
+  dppStartListen(string frequency, uint32_t dpp_role, bool qr_mutual,
+                 bool netrole_ap)
+      generates (SupplicantStatus status, int32_t listen_status);
+
+  /**
+   * stop ongoing dpp listen
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+   */
+  dppStopListen()
+      generates (SupplicantStatus status);
+
+  /**
+   * Adds the DPP configurator
+   *
+   * @param curve curve used for dpp encryption
+   * @param key private key
+   * @param expiry timeout in seconds
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+   */
+  dppConfiguratorAdd(string curve, string key, uint32_t expiry)
+      generates (SupplicantStatus status, int32_t id);
+
+  /**
+   * Removed the DPP configurator
+   *
+   * @param id dpp configuration id
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+   */
+  dppConfiguratorRemove(uint32_t id)
+      generates (SupplicantStatus status, int32_t conf_status);
+
+  /**
+   * Start DPP Authentication
+   *
+   * @param config bootstrap generate config
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+   */
+  dppStartAuth(int32_t peer_bootstrap_id, int32_t own_bootstrap_id,
+    int32_t dpp_role, string ssid, string password, bool isAp,
+    bool isDpp, int32_t conf_id, int32_t expiry)
+      generates (SupplicantStatus status, int32_t auth_status);
+
+  /**
+   * Retrieve Private key of configurator
+   *
+   * @param id Configurator id
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+   */
+  dppConfiguratorGetKey(uint32_t id)
+      generates (SupplicantStatus status, string key);
+};

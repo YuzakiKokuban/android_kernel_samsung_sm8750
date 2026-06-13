@@ -1,0 +1,7 @@
+
+cc_library_headers {
+
+    name: "libloc_api_v02_headers",
+    export_include_dirs: ["."],
+    vendor: true,
+}

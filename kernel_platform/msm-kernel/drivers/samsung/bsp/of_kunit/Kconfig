@@ -1,0 +1,6 @@
+config SEC_OF_KUNIT
+	tristate "Samsung additional facilites for of / kunit testing"
+	depends on OF && KUNIT
+	default n
+	help
+	  TODO: help is not ready.

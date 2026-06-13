@@ -1,0 +1,7 @@
+xsd_config {
+    name: "libaudio_microphone_info",
+    srcs: ["microphone_info_schema.xsd"],
+    package_name: "qti.audio.microphone_info",
+    nullability: true,
+}
+

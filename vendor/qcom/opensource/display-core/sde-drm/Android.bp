@@ -1,0 +1,43 @@
+cc_library_shared {
+
+    name: "libsdedrm",
+    defaults: ["qtidisplay_defaults"],
+    sanitize: {
+        integer_overflow: true,
+    },
+
+    shared_libs: [
+        "libdrm",
+        "libdrmutils",
+        "libdisplaydebug",
+    ],
+    header_libs: [
+        "display_headers",
+        "qti_kernel_headers",
+        "qti_display_kernel_headers",
+        "device_kernel_headers",
+    ],
+    cflags: [
+        "-Wno-missing-field-initializers",
+        "-Wall",
+        "-Werror",
+        "-fno-operator-names",
+        "-Wno-unused-parameter",
+        "-DLOG_TAG=\"SDE_DRM\"",
+    ],
+    srcs: [
+        "drm_manager.cpp",
+        "drm_connector.cpp",
+        "drm_encoder.cpp",
+        "drm_crtc.cpp",
+        "drm_plane.cpp",
+        "drm_atomic_req.cpp",
+        "drm_utils.cpp",
+        "drm_pp_manager.cpp",
+        "drm_property.cpp",
+        "drm_dpps_mgr_imp.cpp",
+        "drm_panel_feature_mgr.cpp",
+    ],
+
+    vendor: true,
+}

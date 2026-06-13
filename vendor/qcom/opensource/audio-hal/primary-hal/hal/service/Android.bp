@@ -1,0 +1,30 @@
+cc_binary {
+    name: "audiohalservice.qti",
+    vendor: true,
+    relative_install_path: "hw",
+    init_rc: ["audiohalservice_qti.rc"],
+
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wthread-safety",
+    ],
+
+    srcs:
+        ["Service.cpp",
+         "ConfigManager.cpp",
+        ],
+
+    shared_libs: [
+        "libcutils",
+        "libbinder",
+        "libbinder_ndk",
+        "liblog",
+        "libutils",
+        "libtinyxml2",
+        "libbase",
+    ],
+    header_libs: ["libaudio_system_headers"],
+}
+

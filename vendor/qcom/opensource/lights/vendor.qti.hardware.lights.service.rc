@@ -1,0 +1,22 @@
+# Copyright (C) 2021, The Linux Foundation. All rights reserved.
+# Not a contribution.
+#
+# This file is copied from https://source.codeaurora.org/quic/la/platform/hardware/interfaces/tree/light/aidl/default/lights-default.rc?h=LA.AU.0.0.1_rb1.22&id=84dd3b74967cf08520b022d6ae324b99bba373f1
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+service vendor.qti.light /vendor/bin/hw/vendor.qti.hardware.lights.service
+    class hal
+    user system
+    group system
+    shutdown critical

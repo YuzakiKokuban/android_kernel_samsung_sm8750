@@ -1,0 +1,1 @@
+../kernel/android/prepare_vendor.sh

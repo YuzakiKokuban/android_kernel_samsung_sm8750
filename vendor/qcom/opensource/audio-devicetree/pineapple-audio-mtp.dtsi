@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+#include "pineapple-audio-overlay.dtsi"
+
+&fm_i2s1_gpios {
+	status = "ok";
+};
+
+&pineapple_snd {
+	qcom,sec-mi2s-gpios = <&fm_i2s1_gpios>;
+};

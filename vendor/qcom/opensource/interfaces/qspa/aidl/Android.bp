@@ -1,0 +1,26 @@
+aidl_interface {
+    name: "vendor.qti.hardware.qspa",
+    srcs: ["vendor/qti/hardware/qspa/*.aidl"],
+    product_available: true,
+    vendor_available: true,
+    stability: "vintf",
+    owner: "qti",
+    backend: {
+        java: {
+            sdk_version: "module_current",
+        },
+        cpp: {
+            enabled: true,
+        },
+        ndk: {
+            enabled: true,
+        },
+    },
+    versions_with_info: [
+        {
+            version: "1",
+            imports: [],
+        },
+    ],
+
+}

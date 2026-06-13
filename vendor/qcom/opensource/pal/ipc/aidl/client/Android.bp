@@ -1,0 +1,40 @@
+cc_library_shared {
+    name: "libpalclient",
+    owner: "qti",
+    vendor: true,
+
+    cflags: [
+        "-v",
+        "-Wall",
+        "-Wthread-safety",
+    ],
+    tidy: true,
+
+    include_dirs: [
+        "vendor/qcom/opensource/pal/inc",
+        "system/media/audio/include" // SEC_AUDIO_COMMON
+    ],
+
+    srcs: [
+        "PalClientWrapper.cpp",
+        "PalCallback.cpp",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libutils",
+        "vendor.qti.hardware.pal-V1-ndk",
+        "libfmq",
+        "libbinder_ndk",
+    ],
+
+    static_libs: [
+        "libaidlcommonsupport",
+        "libpalaidltypeconverter",
+    ],
+
+    export_header_lib_headers: ["libarpal_headers"],
+    header_libs: ["libarpal_headers"],
+
+}

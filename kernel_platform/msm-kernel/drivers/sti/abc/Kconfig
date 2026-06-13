@@ -1,0 +1,132 @@
+comment "Samsung ABC Options"
+config SEC_ABC
+	tristate "Samsung ABC Feature"
+	depends on SEC_STI
+	default n
+	help
+	  Samsung ABC(Abnormal Behavior Catcher) Driver Feature
+	  This driver is to catch abnormal behavior in each device drivers
+	  It depends on SEC_STI Feature
+
+comment "Samsung ABC Common Options"
+config SEC_ABC_COMMON
+	tristate "Samsung ABC COMMON Feature"
+	depends on SEC_ABC
+	default n
+	help
+	  Samsung ABC(Abnormal Behavior Catcher) Driver Common Feature
+	  This config is for ABC Driver Core Code
+	  It depends on SEC_ABC Feature
+
+comment "Samsung ABC Spec manager type1 options"
+config SEC_ABC_SPEC_TYPE1
+	tristate "Samsung ABC_SPEC_TYPE1 Feature"
+	depends on SEC_ABC
+	default n
+	help
+	  Samsung ABC(Abnormal Behavior Catcher)Driver's Spec manager type1 Feature
+	  It has logic and spec of judgment of error type1.
+	  It depends on SEC_ABC Feature
+
+comment "Samsung ABC MOTTO Options"
+config SEC_ABC_MOTTO
+	tristate "Samsung ABC MOTTO Feature"
+	depends on SEC_ABC
+	default n
+	help
+	  Samsung ABC(Abnormal Behavior Catcher) MOTTO Function Feature
+	  This config is to support MOTTO Function
+	  It depends on SEC_ABC Feature
+
+comment "Samsung ABC_COMMON KUNIT Options"
+config SEC_ABC_COMMON_KUNIT
+	tristate "Samsung ABC_COMMON KUNIT Feature"
+	depends on SEC_ABC && SEC_KUNIT
+	default n
+	help
+	  Samsung ABC(Abnormal Behavior Catcher) KUNIT Function Feature
+	  This config is to support ABC_COMMON KUNIT Function
+	  It depends on SEC_ABC && SEC_KUNIT Feature
+
+comment "Samsung ABC Hub Options"
+config SEC_ABC_HUB
+	tristate "Samsung ABC Hub Feature"
+	depends on SEC_ABC
+	default n
+	help
+	  Samsung ABC(Abnormal Behavior Catcher) Hub Driver Feature
+	  This config controls ABC Hub driver which supports ABC Driver
+	  And it consists of abc_hub_core & abc_hub_cond & abc_hub_bootc.
+	  It depends on SEC_ABC Feature
+
+comment "Samsung ABC Hub Core Options"
+config SEC_ABC_HUB_CORE
+	tristate "Samsung ABC Hub Core Feature"
+	depends on SEC_ABC_HUB
+	default n
+	help
+	  Samsung ABC(Abnormal Behavior Catcher) Hub Driver's Core Feature
+	  This function controls sub modules for supporting ABC Driver
+	  It depends on SEC_ABC_HUB Feature
+
+comment "Samsung ABC Hub Booting Time Check Options"
+config SEC_ABC_HUB_BOOTC
+	tristate "Samsung ABC Hub Booting Time Check Feature"
+	depends on SEC_ABC_HUB
+	default n
+	help
+	  Samsung BOOTC(Booting Time Check) Feature
+	  This function is to check booting time
+	  It is sub module of ABC Hub Driver
+	  It depends on SEC_ABC_HUB Feature
+
+comment "Samsung ABC Hub Booting Time Check eng mode Options"
+config SEC_ABC_HUB_BOOTC_ENG
+	tristate "Samsung ABC Hub Booting Time Check eng mode Feature"
+	depends on SEC_ABC_HUB_BOOTC
+	default n
+	help
+	  Samsung BOOTC(Booting Time Check) eng mode Feature
+	  This function is to apply eng binary booting time spec
+	  It depends on SEC_ABC_HUB_BOOTC Feature
+
+comment "Samsung ABC_HUB KUNIT Options"
+config SEC_ABC_HUB_KUNIT
+	tristate "Samsung ABC_HUB KUNIT Feature"
+	depends on SEC_ABC_HUB && SEC_KUNIT
+	default n
+	help
+	  Samsung ABC(Abnormal Behavior Catcher) Hub KUNIT Function Feature
+	  This config is to support ABC Hub KUNIT Function
+	  It depends on SEC_ABC_HUB && SEC_KUNIT Feature
+
+comment "Samsung ABC Hub Connect Detect for ABC HUB"
+config SEC_ABC_HUB_COND
+	tristate "Samsung ABC Hub Connect Detect Feature"
+	depends on SEC_ABC_HUB
+	help
+	  Samsung COND(Connect Detect) Feature
+	  This function is to detect connect h/w problem
+	  It is sub module of ABC Hub Driver
+	  It depends on SEC_ABC_HUB Feature
+
+comment "Samsung ABC Hub Connect Detect Kunit Test FEATURE"
+config SEC_ABC_DETECT_KUNIT
+	tristate "Samsung Connector Detector Kunit TEST"
+	help
+		Feature for checking connector detection code .
+		This feature should be enabled only for testing while development.
+
+comment "Samsung ABC Hub Connect Detect FEATURE"
+config SEC_ABC_DETECT_CONN
+	tristate "Samsung Connector Detector feature"
+	help
+		Feature for checking connector status.
+		This feature should be enabled in factory mode.
+
+comment "Samsung ABC Hub Connect Detect for QCOM, MTK"
+config QCOM_SEC_ABC_DETECT
+	tristate "Samsung Connector Detector Qcom feature"
+	help
+		Feature for checking QCOM Chipset.
+		This feature should be enabled for QCOM chipset in factory mode.

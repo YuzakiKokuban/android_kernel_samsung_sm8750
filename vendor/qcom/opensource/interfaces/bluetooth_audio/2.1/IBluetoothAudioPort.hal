@@ -1,0 +1,39 @@
+/*
+ * Copyright (c) 2019 The Linux Foundation. All rights reserved.
+ * Not a contribution.
+ */
+
+/*
+ * Copyright 2018 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package vendor.qti.hardware.bluetooth_audio@2.1;
+
+import @2.0::IBluetoothAudioPort;
+/**
+ * HAL interface from the Audio HAL to the Bluetooth stack
+ *
+ * The Audio HAL calls methods in this interface to start, suspend, and stop
+ * an audio stream. These calls return immediately and the results, if any,
+ * are sent over the IBluetoothAudioProvider interface.
+ *
+ * Moreover, the Audio HAL can also get the presentation position of the stream
+ * and provide stream metadata.
+ *
+ * Note: For HIDL APIs with a "generates" statement, the callback parameter used
+ * for return value must be invoked synchronously before the API call returns.
+ */
+interface IBluetoothAudioPort extends @2.0::IBluetoothAudioPort {
+};

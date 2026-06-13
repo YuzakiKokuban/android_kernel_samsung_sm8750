@@ -1,0 +1,32 @@
+{
+    "homepage": "https://docs.aspect.build/rules/aspect_rules_swc",
+    "maintainers": [
+        {
+            "email": "hello@aspect.dev",
+            "github": "aspect-build",
+            "name": "Aspect team"
+        }
+    ],
+    "repository": [
+        "github:aspect-build/rules_swc"
+    ],
+    "versions": [
+        "0.3.0",
+        "0.21.1",
+        "0.21.2",
+        "0.21.3",
+        "1.0.0-rc0",
+        "1.0.0-rc1",
+        "1.0.0-rc2",
+        "1.0.0-rc3",
+        "1.0.0",
+        "1.0.1",
+        "1.0.2",
+        "1.1.0",
+        "1.2.2",
+        "1.2.3",
+        "2.0.0-alpha.0",
+        "2.0.0-rc0"
+    ],
+    "yanked_versions": {}
+}

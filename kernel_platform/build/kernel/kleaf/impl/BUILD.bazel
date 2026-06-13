@@ -1,0 +1,498 @@
+# Copyright (C) 2022 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Implementation details. These aren't part of the public API.
+
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@bazel_skylib//lib:selects.bzl", "selects")
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag", "bool_setting")
+load(":kernel_platform_toolchain.bzl", "kernel_platform_toolchain")
+load(":kernel_toolchains.bzl", "kernel_toolchains")
+load(
+    ":python.bzl",
+    "python_interpreter_file",
+    "python_runtime_files",
+)
+
+bzl_library(
+    name = "impl",
+    srcs = [
+        "abi/abi_dump.bzl",
+        "abi/abi_stgdiff.bzl",
+        "abi/abi_transitions.bzl",
+        "abi/abi_update.bzl",
+        "abi/base_kernel_utils.bzl",
+        "abi/dependency_graph.bzl",
+        "abi/extracted_symbols.bzl",
+        "abi/force_add_vmlinux_utils.bzl",
+        "abi/get_src_kmi_symbol_list.bzl",
+        "abi/get_src_protected_exports_files.bzl",
+        "abi/kernel_abi.bzl",
+        "abi/kernel_abi_dist.bzl",
+        "abi/protected_exports.bzl",
+        "abi/trim_nonlisted_kmi_utils.bzl",
+        "android_filegroup.bzl",
+        "bison_wrapper.bzl",
+        "btf.bzl",
+        "cache_dir.bzl",
+        "checkpatch.bzl",
+        "common_providers.bzl",
+        "compile_commands_utils.bzl",
+        "config_utils.bzl",
+        "constants.bzl",
+        "ddk/ddk_conditional_filegroup.bzl",
+        "ddk/ddk_config.bzl",
+        "ddk/ddk_config_subrule.bzl",
+        "ddk/ddk_headers.bzl",
+        "ddk/ddk_headers_archive.bzl",
+        "ddk/ddk_module.bzl",
+        "ddk/ddk_submodule.bzl",
+        "ddk/ddk_uapi_headers.bzl",
+        "ddk/makefiles.bzl",
+        "debug.bzl",
+        "declare_host_tools.bzl",
+        "declare_kernel_prebuilts.bzl",
+        "declare_toolchain_constants.bzl",
+        "file.bzl",
+        "file_selector.bzl",
+        "gcov_utils.bzl",
+        "gki_artifacts.bzl",
+        "image/boot_images.bzl",
+        "image/dtbo.bzl",
+        "image/image_utils.bzl",
+        "image/initramfs.bzl",
+        "image/kernel_images.bzl",
+        "image/super_image.bzl",
+        "image/system_dlkm_image.bzl",
+        "image/vendor_dlkm_image.bzl",
+        "kernel_build.bzl",
+        "kernel_build_config.bzl",
+        "kernel_compile_commands.bzl",
+        "kernel_config.bzl",
+        "kernel_config_settings.bzl",
+        "kernel_dtstree.bzl",
+        "kernel_env.bzl",
+        "kernel_filegroup.bzl",
+        "kernel_filegroup_declaration.bzl",
+        "kernel_headers.bzl",
+        "kernel_kythe.bzl",
+        "kernel_module.bzl",
+        "kernel_module_group.bzl",
+        "kernel_modules_install.bzl",
+        "kernel_platform_toolchain.bzl",
+        "kernel_prebuilt_repo.bzl",
+        "kernel_prebuilt_utils.bzl",
+        "kernel_sbom.bzl",
+        "kernel_toolchains.bzl",
+        "kernel_toolchains_utils.bzl",
+        "kernel_uapi_headers.bzl",
+        "kernel_uapi_headers_cc_library.bzl",
+        "kernel_unstripped_modules_archive.bzl",
+        "kgdb.bzl",
+        "kmi_symbol_list.bzl",
+        "local_repository.bzl",
+        "merge_kzip.bzl",
+        "merged_kernel_uapi_headers.bzl",
+        "modules_prepare.bzl",
+        "out_headers_allowlist_archive.bzl",
+        "python.bzl",
+        "raw_kmi_symbol_list.bzl",
+        "scripts_config_arg_builder.bzl",
+        "srcs_aspect.bzl",
+        "stamp.bzl",
+        "status.bzl",
+        "utils.bzl",
+    ],
+    visibility = ["//build/kernel/kleaf:__subpackages__"],
+    deps = [
+        ":hermetic_tools_deps",
+        "//build/kernel/kleaf:directory_with_structure_def",
+        "//build/kernel/kleaf:update_source_file_def",
+        "@bazel_skylib//lib:collections",
+        "@bazel_skylib//lib:paths",
+        "@bazel_skylib//lib:sets",
+        "@bazel_skylib//lib:shell",
+        "@bazel_skylib//rules:common_settings",
+    ],
+)
+
+bzl_library(
+    name = "hermetic_tools_deps",
+    srcs = [
+        "hermetic_exec.bzl",
+        "hermetic_genrule.bzl",
+        "hermetic_toolchain.bzl",
+    ],
+    visibility = ["//build/kernel/kleaf:__subpackages__"],
+    deps = [
+        "//build/bazel_common_rules/exec",
+    ],
+)
+
+# Helper filegroup with no sources.
+filegroup(
+    name = "empty_filegroup",
+    srcs = [],
+    visibility = ["//visibility:public"],
+)
+
+# If true, also pack .cmd files as output.
+bool_setting(
+    name = "preserve_cmd",
+    build_setting_default = True,
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# If true, also build compile_commands.json and collect necessary files in $OUT_DIR that
+# may be used in compile_commands.json (namely generated source files).
+bool_setting(
+    name = "build_compile_commands",
+    build_setting_default = False,
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# If set, disables trimming.
+bool_flag(
+    name = "force_disable_trim",
+    build_setting_default = False,
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# If true, GKI runtime module protection is disabled.
+config_setting(
+    name = "force_disable_trim_is_true",
+    flag_values = {
+        ":force_disable_trim": "1",
+    },
+    # All kernel_* from different packages can see this.
+    visibility = ["//visibility:public"],
+)
+
+# Forcefully add vmlinux to outs (implicitly) and to MAKE_GOALS.
+bool_setting(
+    name = "force_add_vmlinux",
+    build_setting_default = False,
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# Forcefully ignore base_kernel.
+bool_setting(
+    name = "force_ignore_base_kernel",
+    build_setting_default = False,
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# The --lto flag is set to none.
+# Note: This does not imply that the final LTO setting is "none".
+config_setting(
+    name = "lto_is_set_to_none",
+    flag_values = {"//build/kernel/kleaf:lto": "none"},
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# The --lto flag is set to default.
+# Note: This does not imply that the final LTO setting is "default".
+config_setting(
+    name = "lto_is_set_to_default",
+    flag_values = {"//build/kernel/kleaf:lto": "default"},
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# The --lto flag is set to either default or none.
+selects.config_setting_group(
+    name = "lto_is_set_to_default_or_none",
+    match_any = [
+        ":lto_is_set_to_default",
+        ":lto_is_set_to_none",
+    ],
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# LTO should be none due to other flags. One of the following:
+# * --debug
+# * --kasan
+# * --kasan_sw_tags
+# * --kasan_generic
+# * --kcsan
+selects.config_setting_group(
+    name = "lto_should_be_none",
+    match_any = [
+        ":debug_is_set_to_true",
+        ":kasan_any_mode_is_set_to_true",
+        ":kasan_sw_tags_is_set_to_true",
+        ":kasan_generic_is_set_to_true",
+        ":kcsan_is_set_to_true",
+    ],
+)
+
+# --lto=default, but it should be none due to other flags. One of the following:
+# * --lto=default --debug
+# * --lto=default --kasan
+# * --lto=default --kasan_sw_tags
+# * --lto=default --kasan_generic
+# * --lto=default --kcsan
+selects.config_setting_group(
+    name = "lto_is_set_to_default_but_lto_should_be_none",
+    match_all = [
+        ":lto_is_set_to_default",
+        ":lto_should_be_none",
+    ],
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# --kasan
+config_setting(
+    name = "kasan_any_mode_is_set_to_true",
+    flag_values = {"//build/kernel/kleaf:kasan": "1"},
+    visibility = ["//visibility:public"],
+)
+
+# --kasan_sw_tags
+config_setting(
+    name = "kasan_sw_tags_is_set_to_true",
+    flag_values = {"//build/kernel/kleaf:kasan_sw_tags": "1"},
+    visibility = ["//visibility:public"],
+)
+
+# --kasan_generic
+config_setting(
+    name = "kasan_generic_is_set_to_true",
+    flag_values = {"//build/kernel/kleaf:kasan_generic": "1"},
+    visibility = ["//visibility:public"],
+)
+
+# --kcsan
+config_setting(
+    name = "kcsan_is_set_to_true",
+    flag_values = {"//build/kernel/kleaf:kcsan": "1"},
+    visibility = ["//visibility:public"],
+)
+
+# --debug
+config_setting(
+    name = "debug_is_set_to_true",
+    flag_values = {"//build/kernel/kleaf:debug": "1"},
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# If true, fail_action() does not fail to build, but write failure
+# message to its default output file.
+bool_setting(
+    name = "fail_action_write_to_file",
+    build_setting_default = False,
+    visibility = ["//build/kernel/kleaf:__pkg__"],
+)
+
+py_binary(
+    name = "ddk/gen_makefiles",
+    srcs = ["ddk/gen_makefiles.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@io_abseil_py//absl/flags:argparse_flags",
+    ],
+)
+
+py_binary(
+    name = "ddk/gen_ddk_headers_archive_build_file",
+    srcs = ["ddk/gen_ddk_headers_archive_build_file.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@io_abseil_py//absl/flags:argparse_flags",
+    ],
+)
+
+py_binary(
+    name = "get_kmi_string",
+    srcs = ["get_kmi_string.py"],
+    # All kernel_* / ddk_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "kernel_kythe_reconstruct_out_dir",
+    srcs = ["kernel_kythe_reconstruct_out_dir.py"],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "print_gcno_mapping",
+    srcs = ["print_gcno_mapping.py"],
+    visibility = ["//visibility:public"],
+)
+
+sh_binary(
+    name = "write_depset",
+    srcs = ["write_depset.sh"],
+    # All kernel_* / ddk_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "cache_dir_config_tags",
+    srcs = ["cache_dir_config_tags.py"],
+    # All kernel_* / ddk_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "ddk/analyze_inputs",
+    srcs = ["ddk/analyze_inputs.py"],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "ddk/gen_ddk_headers",
+    srcs = ["ddk/gen_ddk_headers.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//build/kernel/kleaf:buildozer_command_builder",
+    ],
+)
+
+py_test(
+    name = "get_kmi_string_test",
+    timeout = "short",
+    srcs = ["get_kmi_string_test.py"],
+    imports = ["."],
+    main = "get_kmi_string_test.py",
+    deps = [
+        ":get_kmi_string",
+        "@io_abseil_py//absl/testing:absltest",
+    ],
+)
+
+# Test that visibility() is set.
+py_test(
+    name = "visibility_test",
+    timeout = "short",
+    srcs = ["visibility_test.py"],
+    data = glob(["**/*.bzl"]),
+    deps = [
+        "@io_abseil_py//absl/testing:absltest",
+    ],
+)
+
+sh_binary(
+    name = "checkpatch",
+    srcs = [
+        "checkpatch.sh",
+    ],
+    data = [
+        "//build/kernel/static_analysis:checkpatch_ignorelist",
+    ],
+    # All checkpatch rules from any package can see this
+    visibility = ["//visibility:public"],
+)
+
+kernel_platform_toolchain(
+    name = "kernel_toolchain_target",
+)
+
+kernel_platform_toolchain(
+    name = "kernel_toolchain_exec",
+    visibility = ["//build/kernel/kleaf/tests:__subpackages__"],
+    deps = [
+        "//prebuilts/kernel-build-tools:linux_x86_imported_libs",
+    ],
+)
+
+kernel_toolchains(
+    name = "kernel_toolchains",
+    exec_toolchain = ":kernel_toolchain_exec",
+    target_toolchain = "kernel_toolchain_target",
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# Local build platforms
+platform(
+    name = "linux_x86_64",
+    constraint_values = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+    visibility = [
+        "//build/kernel/kleaf/tests:__subpackages__",
+    ],
+)
+
+# 32-bit
+platform(
+    name = "android_arm",
+    constraint_values = [
+        "@platforms//os:android",
+        "@platforms//cpu:arm",
+    ],
+)
+
+platform(
+    name = "android_arm64",
+    constraint_values = [
+        "@platforms//os:android",
+        "@platforms//cpu:arm64",
+    ],
+    visibility = [
+        "//build/kernel/kleaf/tests:__subpackages__",
+    ],
+)
+
+platform(
+    name = "android_i386",
+    constraint_values = [
+        "@platforms//os:android",
+        "@platforms//cpu:i386",
+    ],
+)
+
+platform(
+    name = "android_riscv64",
+    constraint_values = [
+        "@platforms//os:android",
+        "@platforms//cpu:riscv64",
+    ],
+)
+
+platform(
+    name = "android_x86_64",
+    constraint_values = [
+        "@platforms//os:android",
+        "@platforms//cpu:x86_64",
+    ],
+)
+
+python_interpreter_file(
+    name = "python_interpreter_file",
+    visibility = ["//build/kernel:__pkg__"],
+)
+
+python_runtime_files(
+    name = "python_runtime_files",
+    visibility = ["//build/kernel:__pkg__"],
+)
+
+cc_binary(
+    name = "arg_wrapper",
+    srcs = ["arg_wrapper.cpp"],
+    visibility = ["//build/kernel:__pkg__"],
+)

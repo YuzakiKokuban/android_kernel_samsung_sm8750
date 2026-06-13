@@ -1,0 +1,54 @@
+cc_library_shared {
+    name: "libqti_vndfwk_detect_vendor",
+    srcs: ["vndfwk-detect.c"],
+    shared_libs: ["libcutils"],
+    vendor: true,
+    export_include_dirs: ["."],
+
+    compile_multilib: "both",
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}
+
+cc_test {
+    name: "vndfwk-test-vendor",
+    srcs: ["vndfwk-test.c"],
+    shared_libs: ["libqti_vndfwk_detect_vendor"],
+    vendor: true,
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}
+
+cc_library_shared {
+    name: "libvndfwk_detect_jni.qti_vendor",
+    srcs: ["jni/com_qualcomm_qti_VndFwkDetect.cpp"],
+    shared_libs: [
+        "libqti_vndfwk_detect_vendor",
+        "libcutils",
+        "libutils",
+        "liblog",
+    ],
+    include_dirs: [
+        ".",
+    ],
+    header_libs: [
+        "jni_headers",
+    ],
+    vendor: true,
+    compile_multilib: "both",
+
+    cflags: [
+        "-Wno-unused-parameter",
+    ],
+}
+
+java_library_static {
+    name: "vndfwk.detect_vendor",
+    srcs: ["src/**/*.java"],
+    sdk_version: "current",
+}

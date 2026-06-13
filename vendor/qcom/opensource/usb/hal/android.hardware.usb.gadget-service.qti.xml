@@ -1,0 +1,13 @@
+<!-- Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+     SPDX-License-Identifier: BSD-3-Clause-Clear
+-->
+<manifest version="1.0" type="device">
+    <hal format="aidl">
+        <name>android.hardware.usb.gadget</name>
+        <version>1</version>
+        <interface>
+            <name>IUsbGadget</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+</manifest>

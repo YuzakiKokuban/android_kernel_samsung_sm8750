@@ -1,0 +1,50 @@
+subdirs = [
+    "*"
+]
+hidl_package_root {
+    name: "vendor.qti.hardware.camera",
+    path: "vendor/qcom/opensource/interfaces/camera",
+}
+
+hidl_package_root {
+    name: "vendor.qti.hardware.display",
+    path: "vendor/qcom/opensource/interfaces/display",
+}
+
+hidl_package_root {
+    name: "vendor.qti.hardware.wifi",
+    path: "vendor/qcom/opensource/interfaces/wifi",
+}
+
+hidl_package_root {
+    name: "vendor.display",
+    path: "vendor/qcom/opensource/interfaces/display",
+}
+
+hidl_package_root {
+    name: "vendor.qti.hardware.servicetracker",
+    path: "vendor/qcom/opensource/interfaces/servicetracker",
+}
+
+hidl_package_root {
+    name: "vendor.qti.hardware.bluetooth_audio",
+    path: "vendor/qcom/opensource/interfaces/bluetooth_audio",
+}
+hidl_package_root {
+    name: "vendor.qti.hardware.systemhelper",
+    path: "vendor/qcom/opensource/interfaces/systemhelper",
+}
+
+hidl_package_root {
+    name: "vendor.qti.hardware.bluetooth_dun",
+    path: "vendor/qcom/opensource/interfaces/bluetooth_dun",
+}
+
+hidl_package_root {
+    name: "vendor.qti.hardware.fstman",
+    path: "vendor/qcom/opensource/interfaces/fstman",
+}
+hidl_package_root {
+    name:"vendor.qti.hardware.debugutils",
+    path:"vendor/qcom/opensource/interfaces/debugutils"
+}

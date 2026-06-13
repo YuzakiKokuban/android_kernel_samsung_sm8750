@@ -1,0 +1,32 @@
+#include <dt-bindings/soc/qcom,ipcc.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
+&soc {
+	fastrpc_gen_pool_region: fastrpc_gen_pool_region {
+		iommu-addresses = <&fastrpc_compute_cb1 0x8000 0x11000>;
+	};
+
+	fastrpc_compute_cb1: compute-cb@13 {
+		compatible = "qcom,fastrpc-compute-cb";
+		reg = <11>;
+		iommus = <&apps_smmu 0xC0B 0x0>;
+		memory-region = <&fastrpc_gen_pool_region>;
+		qcom,iommu-faults = "stall-disable", "HUPCF";
+		dma-coherent;
+		qcom,iova-best-fit;
+		qcom,iova-max-align-shift = <9>; /* Set MAX alignment to 2 MB*/
+		qrtr-gen-pool = <&fastrpc_compute_cb1>;
+		frpc-gen-addr-pool = <0x8000 0x9000>;
+		pd-type = <4>;	/* SECURE_STATICPD */
+	};
+
+	qrtr-genpool {
+		compatible = "qcom,qrtr-genpool";
+		gen-pool = <&fastrpc_compute_cb1>;
+		interrupt-parent = <&ipcc_mproc_ns1>;
+		interrupts = <IPCC_CLIENT_CDSP 0 IRQ_TYPE_EDGE_RISING>,
+				<IPCC_CLIENT_CDSP 1 IRQ_TYPE_EDGE_RISING>;
+		mboxes = <&ipcc_mproc_ns1 IPCC_CLIENT_CDSP 0>,
+				<&ipcc_mproc_ns1 IPCC_CLIENT_CDSP 1>;
+	};
+};

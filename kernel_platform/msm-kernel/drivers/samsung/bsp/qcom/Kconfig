@@ -1,0 +1,1 @@
+source "drivers/samsung/bsp/qcom/param/Kconfig"

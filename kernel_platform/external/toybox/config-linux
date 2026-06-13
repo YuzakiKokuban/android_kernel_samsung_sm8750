@@ -1,0 +1,354 @@
+#
+# Hand-maintained .config file.
+#
+
+#
+# General settings.
+#
+
+CONFIG_TOYBOX=y
+# CONFIG_TOYBOX_DEBUG is not set
+CONFIG_TOYBOX_FLOAT=y
+CONFIG_TOYBOX_FORK=y
+# CONFIG_TOYBOX_FREE is not set
+CONFIG_TOYBOX_HELP_DASHDASH=y
+CONFIG_TOYBOX_HELP=y
+CONFIG_TOYBOX_LIBCRYPTO=y
+CONFIG_TOYBOX_LIBZ=y
+CONFIG_TOYBOX_LSM_NONE=y
+CONFIG_TOYBOX_NORECURSE=y
+# CONFIG_TOYBOX_ON_ANDROID is not set
+# CONFIG_TOYBOX_SELINUX is not set
+# CONFIG_TOYBOX_SMACK is not set
+# CONFIG_TOYBOX_SUID is not set
+CONFIG_TOYBOX_UID_SYS=100
+CONFIG_TOYBOX_UID_USR=500
+# CONFIG_TOYBOX_ZHELP is not set
+
+#
+# Selected toys.
+#
+
+# CONFIG_ACPI is not set
+# CONFIG_ARCH is not set
+# CONFIG_ARPING is not set
+# CONFIG_ARP is not set
+# CONFIG_ASCII is not set
+# CONFIG_BASE32 is not set
+# CONFIG_BASE64 is not set
+CONFIG_BASENAME=y
+# CONFIG_BC is not set
+# CONFIG_BLKDISCARD is not set
+# CONFIG_BLKID is not set
+# CONFIG_BLOCKDEV is not set
+# CONFIG_BOOTCHARTD is not set
+# CONFIG_BRCTL is not set
+# CONFIG_BUNZIP2 is not set
+# CONFIG_BZCAT is not set
+# CONFIG_CAL is not set
+CONFIG_CAT=y
+# CONFIG_CD is not set
+# CONFIG_CHATTR is not set
+# CONFIG_CHCON is not set
+# CONFIG_CHGRP is not set
+CONFIG_CHMOD=y
+# CONFIG_CHOWN is not set
+# CONFIG_CHROOT is not set
+# CONFIG_CHRT is not set
+# CONFIG_CHSH is not set
+# CONFIG_CHVT is not set
+# CONFIG_CKSUM is not set
+# CONFIG_CLEAR is not set
+CONFIG_CMP=y
+CONFIG_COMM=y
+# CONFIG_COUNT is not set
+CONFIG_CPIO=y
+CONFIG_CP=y
+# CONFIG_CRC32 is not set
+# CONFIG_CROND is not set
+# CONFIG_CRONTAB is not set
+# CONFIG_CSPLIT is not set
+CONFIG_CUT=y
+CONFIG_DATE=y
+CONFIG_DD=y
+# CONFIG_DEALLOCVT is not set
+# CONFIG_DEBUG_DHCP is not set
+# CONFIG_DEMO_MANY_OPTIONS is not set
+# CONFIG_DEMO_NUMBER is not set
+# CONFIG_DEMO_SCANKEY is not set
+# CONFIG_DEMO_UTF8TOWC is not set
+# CONFIG_DEVMEM is not set
+# CONFIG_DF is not set
+# CONFIG_DHCP6 is not set
+# CONFIG_DHCPD is not set
+# CONFIG_DHCP is not set
+CONFIG_DIFF=y
+CONFIG_DIRNAME=y
+# CONFIG_DMESG is not set
+# CONFIG_DNSDOMAINNAME is not set
+CONFIG_DOS2UNIX=y
+# CONFIG_DUMPLEASES is not set
+CONFIG_DU=y
+CONFIG_ECHO=y
+CONFIG_EGREP=y
+# CONFIG_EJECT is not set
+CONFIG_ENV=y
+# CONFIG_EXIT is not set
+# CONFIG_EXPAND is not set
+CONFIG_EXPR=y
+# CONFIG_FACTOR is not set
+# CONFIG_FALLOCATE is not set
+# CONFIG_FALSE is not set
+# CONFIG_FDISK is not set
+CONFIG_FGREP=y
+CONFIG_FILE=y
+CONFIG_FIND=y
+CONFIG_FLOCK=y
+# CONFIG_FMT is not set
+# CONFIG_FOLD is not set
+# CONFIG_FREE is not set
+# CONFIG_FREERAMDISK is not set
+# CONFIG_FSCK is not set
+# CONFIG_FSFREEZE is not set
+# CONFIG_FSTYPE is not set
+# CONFIG_FSYNC is not set
+# CONFIG_FTPGET is not set
+# CONFIG_FTPPUT is not set
+CONFIG_GETCONF=y
+# CONFIG_GETENFORCE is not set
+# CONFIG_GETFATTR is not set
+CONFIG_GETOPT=y
+# CONFIG_GETTY is not set
+# CONFIG_GITCHECKOUT is not set
+# CONFIG_GITCLONE is not set
+# CONFIG_GITCOMPAT is not set
+# CONFIG_GITFETCH is not set
+# CONFIG_GITINIT is not set
+# CONFIG_GITREMOTE is not set
+# CONFIG_GPIODETECT is not set
+# CONFIG_GPIOFIND is not set
+# CONFIG_GPIOGET is not set
+# CONFIG_GPIOINFO is not set
+# CONFIG_GPIOSET is not set
+CONFIG_GREP=y
+# CONFIG_GROUPADD is not set
+# CONFIG_GROUPDEL is not set
+# CONFIG_GROUPS is not set
+# CONFIG_GUNZIP is not set
+CONFIG_GZIP=y
+CONFIG_HEAD=y
+# CONFIG_HELLO is not set
+# CONFIG_HELP is not set
+# CONFIG_HEXDUMP is not set
+# CONFIG_HEXEDIT is not set
+# CONFIG_HD is not set
+# CONFIG_HOSTID is not set
+# CONFIG_HOST is not set
+CONFIG_HOSTNAME=y
+# CONFIG_HTTPD is not set
+# CONFIG_HWCLOCK is not set
+# CONFIG_I2CDETECT is not set
+# CONFIG_I2CDUMP is not set
+# CONFIG_I2CGET is not set
+# CONFIG_I2CSET is not set
+# CONFIG_I2CTRANSFER is not set
+# CONFIG_ICONV is not set
+CONFIG_ID=y
+# CONFIG_ID_Z is not set
+# CONFIG_IFCONFIG is not set
+# CONFIG_INIT is not set
+# CONFIG_INOTIFYD is not set
+# CONFIG_INSMOD is not set
+CONFIG_INSTALL=y
+# CONFIG_IONICE is not set
+# CONFIG_IORENICE is not set
+# CONFIG_IOTOP is not set
+# CONFIG_IPCRM is not set
+# CONFIG_IPCS is not set
+# CONFIG_IP is not set
+# CONFIG_KILLALL5 is not set
+# CONFIG_KILLALL is not set
+# CONFIG_KILL is not set
+# CONFIG_KLOGD is not set
+# CONFIG_KLOGD_SOURCE_RING_BUFFER is not set
+# CONFIG_LAST is not set
+# CONFIG_LINK is not set
+# CONFIG_LINUX32 is not set
+CONFIG_LN=y
+# CONFIG_LOAD_POLICY is not set
+# CONFIG_LOGGER is not set
+# CONFIG_LOGIN is not set
+# CONFIG_LOG is not set
+# CONFIG_LOGNAME is not set
+# CONFIG_LOGPATH is not set
+# CONFIG_LOSETUP is not set
+# CONFIG_LSATTR is not set
+# CONFIG_LSMOD is not set
+# CONFIG_LSOF is not set
+# CONFIG_LSPCI is not set
+# CONFIG_LSUSB is not set
+CONFIG_LS=y
+# CONFIG_MAKEDEVS is not set
+# CONFIG_MAN is not set
+# CONFIG_MCOOKIE is not set
+CONFIG_MD5SUM=y
+# CONFIG_MDEV_CONF is not set
+# CONFIG_MDEV is not set
+# CONFIG_MEMEATER is not set
+CONFIG_MICROCOM=y
+# CONFIG_MIX is not set
+CONFIG_MKDIR=y
+# CONFIG_MKDIR_Z is not set
+# CONFIG_MKE2FS_EXTENDED is not set
+# CONFIG_MKE2FS_GEN is not set
+# CONFIG_MKE2FS is not set
+# CONFIG_MKE2FS_JOURNAL is not set
+# CONFIG_MKE2FS_LABEL is not set
+# CONFIG_MKFIFO is not set
+# CONFIG_MKFIFO_Z is not set
+# CONFIG_MKNOD is not set
+# CONFIG_MKNOD_Z is not set
+# CONFIG_MKPASSWD is not set
+# CONFIG_MKSWAP is not set
+CONFIG_MKTEMP=y
+# CONFIG_MODINFO is not set
+# CONFIG_MODPROBE is not set
+# CONFIG_MORE is not set
+CONFIG_MOUNT=y
+# CONFIG_MOUNTPOINT is not set
+CONFIG_MV=y
+# CONFIG_NBD_CLIENT is not set
+# CONFIG_NBD_SERVER is not set
+# CONFIG_NETCAT is not set
+# CONFIG_NETSTAT is not set
+# CONFIG_NICE is not set
+CONFIG_NL=y
+# CONFIG_NOHUP is not set
+CONFIG_NPROC=y
+# CONFIG_NSENTER is not set
+CONFIG_OD=y
+# CONFIG_ONEIT is not set
+# CONFIG_OPENVT is not set
+# CONFIG_PARTPROBE is not set
+# CONFIG_PASSWD is not set
+# CONFIG_PASSWD_SAD is not set
+CONFIG_PASTE=y
+CONFIG_PATCH=y
+CONFIG_PGREP=y
+# CONFIG_PIDOF is not set
+# CONFIG_PING is not set
+# CONFIG_PIVOT_ROOT is not set
+CONFIG_PKILL=y
+# CONFIG_PMAP is not set
+# CONFIG_PRINTENV is not set
+CONFIG_PRINTF=y
+CONFIG_PS=y
+# CONFIG_PWDX is not set
+CONFIG_PWD=y
+# CONFIG_PWGEN is not set
+# CONFIG_READAHEAD is not set
+# CONFIG_READELF is not set
+CONFIG_READLINK=y
+CONFIG_REALPATH=y
+# CONFIG_REBOOT is not set
+# CONFIG_RENICE is not set
+# CONFIG_RESET is not set
+# CONFIG_RESTORECON is not set
+# CONFIG_REV is not set
+# CONFIG_RFKILL is not set
+CONFIG_RMDIR=y
+# CONFIG_RMMOD is not set
+CONFIG_RM=y
+# CONFIG_ROUTE is not set
+# CONFIG_RTCWAKE is not set
+# CONFIG_RUNCON is not set
+CONFIG_SED=y
+# CONFIG_SENDEVENT is not set
+CONFIG_SEQ=y
+# CONFIG_SETENFORCE is not set
+# CONFIG_SETFATTR is not set
+CONFIG_SETSID=y
+CONFIG_SHA1SUM=y
+# CONFIG_SHA224SUM is not set
+CONFIG_SHA256SUM=y
+# CONFIG_SHA3SUM is not set
+# CONFIG_SHA384SUM is not set
+CONFIG_SHA512SUM=y
+# CONFIG_SH is not set
+# CONFIG_SHRED is not set
+# CONFIG_SHUF is not set
+# CONFIG_SKELETON_ALIAS is not set
+# CONFIG_SKELETON is not set
+CONFIG_SLEEP=y
+# CONFIG_SNTP is not set
+CONFIG_SORT_FLOAT=y
+CONFIG_SORT=y
+# CONFIG_SPLIT is not set
+CONFIG_STAT=y
+# CONFIG_STRACE is not set
+# CONFIG_STRINGS is not set
+# CONFIG_STTY is not set
+# CONFIG_SU is not set
+# CONFIG_SULOGIN is not set
+# CONFIG_SWAPOFF is not set
+# CONFIG_SWAPON is not set
+# CONFIG_SWITCH_ROOT is not set
+# CONFIG_SYNC is not set
+# CONFIG_SYSCTL is not set
+# CONFIG_SYSLOGD is not set
+# CONFIG_TAC is not set
+CONFIG_TAIL=y
+CONFIG_TAR=y
+# CONFIG_TASKSET is not set
+# CONFIG_TCPSVD is not set
+CONFIG_TEE=y
+# CONFIG_TELNETD is not set
+# CONFIG_TELNET is not set
+CONFIG_TEST=y
+CONFIG_TEST_GLUE=y
+# CONFIG_TFTPD is not set
+# CONFIG_TFTP is not set
+# CONFIG_TIME is not set
+CONFIG_TIMEOUT=y
+# CONFIG_TOP is not set
+CONFIG_TOUCH=y
+# CONFIG_TRACEROUTE is not set
+CONFIG_TRUE=y
+CONFIG_TRUNCATE=y
+CONFIG_TR=y
+# CONFIG_TS is not set
+# CONFIG_TSORT is not set
+# CONFIG_TTY is not set
+# CONFIG_TUNCTL is not set
+# CONFIG_UCLAMPSET is not set
+# CONFIG_ULIMIT is not set
+CONFIG_UMOUNT=y
+CONFIG_UNAME=y
+# CONFIG_UNICODE is not set
+CONFIG_UNIQ=y
+CONFIG_UNIX2DOS=y
+# CONFIG_UNLINK is not set
+CONFIG_UNSHARE=y
+# CONFIG_UPTIME is not set
+# CONFIG_USERADD is not set
+# CONFIG_USERDEL is not set
+# CONFIG_USLEEP is not set
+# CONFIG_UUDECODE is not set
+# CONFIG_UUENCODE is not set
+# CONFIG_UUIDGEN is not set
+# CONFIG_VCONFIG is not set
+# CONFIG_VI is not set
+# CONFIG_VMSTAT is not set
+# CONFIG_WATCH is not set
+# CONFIG_WATCHDOG is not set
+CONFIG_WC=y
+# CONFIG_WGET is not set
+CONFIG_WHICH=y
+CONFIG_WHOAMI=y
+# CONFIG_WHO is not set
+# CONFIG_W is not set
+CONFIG_XARGS=y
+CONFIG_XXD=y
+# CONFIG_XZCAT is not set
+# CONFIG_YES is not set
+CONFIG_ZCAT=y

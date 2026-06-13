@@ -1,0 +1,901 @@
+# Copyright (C) 2021 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@bazel_skylib//lib:selects.bzl", "selects")
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag", "string_flag")
+load("//build/kernel/kleaf/impl:ddk/gen_ddk_headers.bzl", "gen_ddk_headers")
+load("//build/kernel/kleaf/tests:empty_test.bzl", "empty_test")
+load(":constants.bzl", "LTO_VALUES")
+load(":print_flags.bzl", "print_flags")
+
+# Build flags
+
+# LTO setting. Values can be one of default, none, thin, full
+string_flag(
+    name = "lto",
+    build_setting_default = "default",
+    values = LTO_VALUES,
+    visibility = ["//visibility:public"],
+)
+
+# The final LTO setting is "default" (use defconfig value).
+# If --lto=default, and none of --kasan/--kcsan/--kasan_sw_tags/--kasan_generic/--debug, LTO is default
+selects.config_setting_group(
+    name = "lto_is_default",
+    match_all = [
+        "//build/kernel/kleaf/impl:lto_is_set_to_default",
+        ":kasan_is_false",
+        ":kcsan_is_false",
+        ":debug_is_false",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# The final LTO setting is "none".
+# If --lto=none, or if --lto=default AND --kasan/--kcsan/--kasan_sw_tags/--kasan_generic/--debug, LTO should be set to none.
+selects.config_setting_group(
+    name = "lto_is_none",
+    match_any = [
+        "//build/kernel/kleaf/impl:lto_is_set_to_none",
+        "//build/kernel/kleaf/impl:lto_is_set_to_default_but_lto_should_be_none",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# The final LTO setting is "thin".
+config_setting(
+    name = "lto_is_thin",
+    flag_values = {":lto": "thin"},
+    visibility = ["//visibility:public"],
+)
+
+# The final LTO setting is "full".
+config_setting(
+    name = "lto_is_full",
+    flag_values = {":lto": "full"},
+    visibility = ["//visibility:public"],
+)
+
+# The final LTO setting is "fast".
+config_setting(
+    name = "lto_is_fast",
+    flag_values = {":lto": "fast"},
+    visibility = ["//visibility:public"],
+)
+
+# If true, kernel_images sets EXT_MODULES before creating the staging directory.
+# Note: This is a temporary flag to mitigate issues on migrating away from
+# setting EXT_MODULES in build.config. If you need to disable this flag, please
+# file a bug.
+bool_flag(
+    name = "set_ext_modules",
+    build_setting_default = True,
+    visibility = ["//visibility:public"],
+)
+
+string_flag(
+    name = "cache_dir",
+    build_setting_default = "",
+    visibility = ["//visibility:public"],
+)
+
+# If true, set `KBUILD_SYMTYPES=1` for kernel_build() with
+# kbuild_symtypes="auto".
+bool_flag(
+    name = "kbuild_symtypes",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+# If true, enable kasan (any mode).
+# This assumes --lto=none, but :print_flags only shows
+# values from the command line.
+bool_flag(
+    name = "kasan",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+# KASAN (any mode) is enabled in the final build.
+# One of the following:
+# --kasan --lto=default
+# --kasan --lto=none
+selects.config_setting_group(
+    name = "kasan_any_mode_is_true",
+    match_all = [
+        "//build/kernel/kleaf/impl:lto_is_set_to_default_or_none",
+        "//build/kernel/kleaf/impl:kasan_any_mode_is_set_to_true",
+    ],
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# --kasan=false
+config_setting(
+    name = "kasan_any_mode_is_false",
+    flag_values = {":kasan": "0"},
+    visibility = ["//visibility:public"],
+)
+
+# If true, enable kasan sw tags.
+# This assumes --lto=none, but :print_flags only shows
+# values from the command line.
+bool_flag(
+    name = "kasan_sw_tags",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+# KASAN (Software Tag-based) is enabled in the final build.
+# One of the following:
+# --kasan_sw_tags --lto=default
+# --kasan_sw_tags --lto=none
+selects.config_setting_group(
+    name = "kasan_sw_tags_is_true",
+    match_all = [
+        "//build/kernel/kleaf/impl:lto_is_set_to_default_or_none",
+        "//build/kernel/kleaf/impl:kasan_sw_tags_is_set_to_true",
+    ],
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# --kasan_sw_tags=false
+config_setting(
+    name = "kasan_sw_tags_is_false",
+    flag_values = {":kasan_sw_tags": "0"},
+    visibility = ["//visibility:public"],
+)
+
+# If true, enable kasan generic.
+# This assumes --lto=none, but :print_flags only shows
+# values from the command line.
+bool_flag(
+    name = "kasan_generic",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+# KASAN (Generic) is enabled in the final build.
+# One of the following:
+# --kasan_generic --lto=default
+# --kasan_generic --lto=none
+selects.config_setting_group(
+    name = "kasan_generic_is_true",
+    match_all = [
+        "//build/kernel/kleaf/impl:lto_is_set_to_default_or_none",
+        "//build/kernel/kleaf/impl:kasan_generic_is_set_to_true",
+    ],
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# --kasan_generic=false
+config_setting(
+    name = "kasan_generic_is_false",
+    flag_values = {":kasan_generic": "0"},
+    visibility = ["//visibility:public"],
+)
+
+# Either kasan or kasan_sw_tags or kasan_generic is enabled in the final build.
+selects.config_setting_group(
+    name = "kasan_is_true",
+    match_any = [
+        ":kasan_any_mode_is_true",
+        ":kasan_sw_tags_is_true",
+        ":kasan_generic_is_true",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# Neither kasan nor kasan_sw_tags nor kasan_generic is enabled in the final build
+selects.config_setting_group(
+    name = "kasan_is_false",
+    match_all = [
+        ":kasan_any_mode_is_false",
+        ":kasan_sw_tags_is_false",
+        ":kasan_generic_is_false",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# If true, enable kcsan.
+# This assumes --lto=none, but :print_flags only shows
+# values from the command line.
+bool_flag(
+    name = "kcsan",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+# KCSAN is enabled in the final build.
+# One of the following:
+# --kcsan --lto=default
+# --kcsan --lto=none
+selects.config_setting_group(
+    name = "kcsan_is_true",
+    match_all = [
+        "//build/kernel/kleaf/impl:lto_is_set_to_default_or_none",
+        "//build/kernel/kleaf/impl:kcsan_is_set_to_true",
+    ],
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# --kcsan=false
+config_setting(
+    name = "kcsan_is_false",
+    flag_values = {":kcsan": "0"},
+    visibility = ["//visibility:public"],
+)
+
+# If true, //{common}:all_headers also includes //{common}:all_headers_unsafe.
+bool_flag(
+    name = "allow_ddk_unsafe_headers",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+# If true, *.gcno files are collected.
+bool_flag(
+    name = "gcov",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "gcov_is_true",
+    flag_values = {":gcov": "1"},
+    visibility = ["//visibility:public"],
+)
+
+# If set, Kconfig treats warnings as errors.
+bool_flag(
+    name = "kconfig_werror",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+# If true, allow modules to be undeclared in kernel_build.
+bool_flag(
+    name = "allow_undeclared_modules",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+# If true, warnings / errors about undeclared modules in kernel_build are printed.
+bool_flag(
+    name = "warn_undeclared_modules",
+    build_setting_default = True,
+    visibility = ["//visibility:public"],
+)
+
+# If true, everything inside OUT_DIR is collected unconditionally
+bool_flag(
+    name = "preserve_kbuild_output",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "allow_ddk_unsafe_headers_set",
+    flag_values = {
+        ":allow_ddk_unsafe_headers": "1",
+    },
+    visibility = ["//visibility:public"],
+)
+
+# If true, kmi_symbol_list_strict_mode attribute in kernel_build is respected.
+bool_flag(
+    name = "kmi_symbol_list_strict_mode",
+    build_setting_default = True,
+    visibility = ["//visibility:public"],
+)
+
+# If true, kmi_symbol_list_violations_check is enabled.
+# If false, kmi_symbol_list_violations_check is disabled.
+bool_flag(
+    name = "kmi_symbol_list_violations_check",
+    build_setting_default = True,
+    visibility = ["//visibility:public"],
+)
+
+# Additional symbol lists to add to GKI kernel build
+label_flag(
+    name = "user_kmi_symbol_lists",
+    build_setting_default = "//build/kernel/kleaf/impl:empty_filegroup",
+    visibility = ["//visibility:public"],
+)
+
+# Flag to enable/disable BTF debug information.
+# Value is one of the following: default, enable, disable
+string_flag(
+    name = "btf_debug_info",
+    build_setting_default = "default",
+    values = [
+        "default",  # don't change generation of BTF debug information
+        "enable",
+        "disable",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "btf_debug_info_is_enabled",
+    flag_values = {":btf_debug_info": "enable"},
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "btf_debug_info_is_disabled",
+    flag_values = {":btf_debug_info": "disable"},
+    visibility = ["//visibility:public"],
+)
+
+# Flag to control page size.
+# Value is one of default, 4k, 16k, 64k.
+string_flag(
+    name = "page_size",
+    build_setting_default = "default",
+    values = [
+        "default",  # Respect value in defconfig
+        "4k",
+        "16k",
+        "64k",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "page_size_4k",
+    flag_values = {":page_size": "4k"},
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "page_size_16k",
+    flag_values = {":page_size": "16k"},
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "page_size_64k",
+    flag_values = {":page_size": "64k"},
+    visibility = ["//visibility:public"],
+)
+
+# Default is true.
+# Use the resolved toolchains for building kernel_* rules.
+# See https://bazel.build/extending/toolchains for how toolchains are resolved.
+bool_flag(
+    name = "incompatible_kernel_use_resolved_toolchains",
+    build_setting_default = True,
+    visibility = ["//visibility:public"],
+)
+
+# Default is true.
+# If true, keys of hermetic_tools.symlinks are excluded from sandboxes.
+# If false, keys of hermetic_tools.symlinks are added to the sandboxes.
+bool_flag(
+    name = "incompatible_disable_hermetic_tools_symlink_source",
+    # TODO(b/291816237): Set this to true once build.config.common no longer
+    #   hardcodes DTC.
+    build_setting_default = True,
+    visibility = ["//build/kernel:__pkg__"],
+)
+
+# Default is false.
+# If true, workaround known issues when building on btrfs, sacrificing
+# hermeticity.
+# For details: b/292212788, or
+#   https://bugzilla.kernel.org/show_bug.cgi?id=217681
+bool_flag(
+    name = "workaround_btrfs_b292212788",
+    build_setting_default = False,
+    visibility = ["//visibility:private"],
+)
+
+config_setting(
+    name = "workaround_btrfs_b292212788_is_true",
+    flag_values = {":workaround_btrfs_b292212788": "1"},
+    visibility = ["//build/kernel:__pkg__"],
+)
+
+# Default is false.
+# If true, build some parts of the toolchain from sources.
+bool_flag(
+    name = "toolchain_from_sources",
+    build_setting_default = False,
+    visibility = ["//visibility:private"],
+)
+
+config_setting(
+    name = "toolchain_from_sources_is_true",
+    flag_values = {":toolchain_from_sources": "1"},
+    visibility = ["//build/kernel:__pkg__"],
+)
+
+# Default is true.
+# If true, use pigz as drop-in replacement for gzip.
+bool_flag(
+    name = "gzip_is_pigz",
+    build_setting_default = True,
+    visibility = ["//visibility:private"],
+)
+
+config_setting(
+    name = "gzip_is_pigz_is_true",
+    flag_values = {":gzip_is_pigz": "1"},
+    visibility = ["//build/kernel:__pkg__"],
+)
+
+# Debug options
+
+# Flag to control whether enable debug features in the kernel
+# If true, enable debug.
+# If enabled, //build/kernel/kleaf/impl/defconfig will be applied as additional defconfig fragment
+bool_flag(
+    name = "debug",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+# One of the following:
+# --debug --lto=default
+# --debug --lto=none
+selects.config_setting_group(
+    name = "debug_is_true",
+    match_all = [
+        "//build/kernel/kleaf/impl:lto_is_set_to_default_or_none",
+        "//build/kernel/kleaf/impl:debug_is_set_to_true",
+    ],
+    # All kernel_* from different packages can see this
+    visibility = ["//visibility:public"],
+)
+
+# --debug=false
+config_setting(
+    name = "debug_is_false",
+    flag_values = {":debug": "0"},
+    visibility = ["//visibility:public"],
+)
+
+# Runs all script invocations with `set -x`
+# and a trap that executes `date` after every command.
+bool_flag(
+    name = "debug_annotate_scripts",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+# Prints the content of the (generated) command scripts during rule execution.
+bool_flag(
+    name = "debug_print_scripts",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+# If true, set KBUILD_MODPOST_WARN=1.
+# https://www.kernel.org/doc/html/latest/kbuild/kbuild.html#kbuild-modpost-warn
+bool_flag(
+    name = "debug_modpost_warn",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+# If set, debug --cache_dir conflict issues
+string_flag(
+    name = "debug_cache_dir_conflict",
+    build_setting_default = "none",
+    values = [
+        # Attempt to resolve any conflicts.
+        # Wait if there are any conflicts. Build may be slower but the conflicts
+        # should be resolved serially.
+        "resolve",
+        # Detect any conflicts.
+        # Emit a build error if there are any conflicts. This detects any
+        # possible conflicts.
+        "detect",
+        # Do not detect conflicts. If there are any conflicts, this may lead
+        # to obscure errors.
+        "none",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "debug_cache_dir_conflict_is_resolve",
+    flag_values = {":debug_cache_dir_conflict": "resolve"},
+    visibility = ["//build/kernel:__pkg__"],
+)
+
+config_setting(
+    name = "debug_cache_dir_conflict_is_detect",
+    flag_values = {":debug_cache_dir_conflict": "detect"},
+    visibility = ["//build/kernel:__pkg__"],
+)
+
+# If --lto=none, or if --kasan/--kcsan, LTO should be set to none.
+selects.config_setting_group(
+    name = "debug_cache_dir_conflict_needs_flock",
+    match_any = [
+        ":debug_cache_dir_conflict_is_resolve",
+        ":debug_cache_dir_conflict_is_detect",
+    ],
+    visibility = ["//build/kernel:__pkg__"],
+)
+
+# Debug flag to control make verbosity
+# E (default): Only print errors (make -s)
+# I: print brief description of make targets being built (make)
+# D: print full commands (make V=1)
+# V: print the reason for the rebuild of each make target (make V=2)
+string_flag(
+    name = "debug_make_verbosity",
+    build_setting_default = "E",
+    values = [
+        "V",
+        "D",
+        "E",
+        "I",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+# Debug option to modify GKI build config via build config fragments.
+# By default it points to an empty filegroup.
+label_flag(
+    name = "gki_build_config_fragment",
+    build_setting_default = "//build/kernel/kleaf/impl:empty_filegroup",
+    visibility = ["//visibility:public"],
+)
+
+# Command-line option that adds to kernel_build.defconfig_fragments.
+# See kernel_build.defconfig_fragments for description, restrictions, and
+# conventions.
+# See kleaf/docs/kernel_config.md#defconfig-fragments.
+label_flag(
+    name = "defconfig_fragment",
+    build_setting_default = "//build/kernel/kleaf/impl:empty_filegroup",
+    visibility = ["//visibility:public"],
+)
+
+# If true, enable Rust support and drivers under development.
+bool_flag(
+    name = "rust",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "rust_is_enabled",
+    flag_values = {":rust": "1"},
+    visibility = ["//build/kernel/kleaf/impl/defconfig:__subpackages__"],
+)
+
+# If true, enable Zstd dwarf compression
+bool_flag(
+    name = "zstd_dwarf_compression",
+    build_setting_default = True,
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "zstd_dwarf_compression_is_disabled",
+    flag_values = {":zstd_dwarf_compression": "0"},
+    visibility = ["//build/kernel/kleaf/impl/defconfig:__subpackages__"],
+)
+
+# If true, enable CONFIG_GDB_SCRIPTS and collect gdb scripts.
+# If additional hacks are needed, put `select()` on the build_config.
+# See kleaf/docs/kgdb.md for details.
+bool_flag(
+    name = "kgdb",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "kgdb_is_true",
+    flag_values = {":kgdb": "1"},
+    visibility = ["//visibility:public"],
+)
+
+bool_flag(
+    name = "use_prebuilt_gki",
+    build_setting_default = False,
+    # Visible to any package that calls define_common_kernels()
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "use_prebuilt_gki_is_true",
+    flag_values = {":use_prebuilt_gki": "1"},
+    # Visible to any package that calls define_common_kernels()
+    visibility = ["//visibility:public"],
+)
+
+# If set, download signed prebuilts from ci.android.com.
+bool_flag(
+    name = "use_signed_prebuilts",
+    build_setting_default = False,
+    visibility = ["//visibility:private"],
+)
+
+config_setting(
+    name = "use_signed_prebuilts_is_true",
+    flag_values = {":use_signed_prebuilts": "1"},
+    # Visible to any package that calls define_common_kernels()
+    visibility = ["//visibility:public"],
+)
+
+# If true, drop llvm-strings from hermetic-tools.
+bool_flag(
+    name = "remove_strings_from_hermetic_tools",
+    build_setting_default = False,
+    visibility = ["//visibility:private"],
+)
+
+config_setting(
+    name = "remove_strings_from_hermetic_tools_is_true",
+    flag_values = {":remove_strings_from_hermetic_tools": "1"},
+    visibility = ["//build/kernel:__pkg__"],
+)
+
+# The values of --config, as passed by command line and bazelrc files.
+_config_values = (
+    "local",
+    "fast",
+    "hermetic_cc",
+    "stamp",
+    "release",
+    "remote",
+)
+
+[bool_flag(
+    name = "config_" + value,
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+) for value in _config_values]
+
+print_flags(
+    name = "print_flags",
+    flags = [
+        ":kasan",
+        ":kasan_sw_tags",
+        ":kasan_generic",
+        ":kcsan",
+        ":kbuild_symtypes",
+        ":lto",
+    ] + [":config_" + value for value in _config_values],
+)
+
+# Tools visible to all packages that uses kernel_build.
+# Implementation detail of kernel_build; do not use directly.
+sh_binary(
+    name = "preserve_env",
+    srcs = ["preserve_env.sh"],
+    visibility = ["//visibility:public"],
+)
+
+# Tools visible to all packages that uses kernel_build etc.
+# Implementation detail of kernel_build; do not use directly.
+py_binary(
+    name = "check_declared_output_list",
+    srcs = ["check_declared_output_list.py"],
+    visibility = ["//visibility:public"],
+)
+
+# Tools visible to all packages that uses kernel_modules_install.
+# Implementation detail of kernel_build; do not use directly.
+py_binary(
+    name = "check_duplicated_files_in_archives",
+    srcs = ["check_duplicated_files_in_archives.py"],
+    visibility = ["//visibility:public"],
+)
+
+# Tools visible to all packages that uses various Kleaf build rules.
+# Implementation detail of kernel_build; do not use directly.
+py_binary(
+    name = "search_and_cp_output",
+    srcs = ["search_and_cp_output.py"],
+    visibility = ["//visibility:public"],
+)
+
+# Utility to create a Kernel SBOM
+py_binary(
+    name = "kernel_sbom",
+    srcs = ["kernel_sbom.py"],
+    visibility = ["//visibility:public"],
+)
+
+# Analyze DDK targets
+
+# Usage:
+#  # Analyze headers used by all external modules of a device:
+#  bazel run //build/kernel/kleaf:gen_ddk_headers \
+#    --gen_ddk_headers_target=//label/of:tuna_modules_install \
+#    --gen_ddk_headers_gen_files_archives=//common:kernel_aarch64_ddk_allowlist_headers \
+#    -- [flags]
+#
+#  # Analyze headers used by a specific module of a device:
+#  bazel run //build/kernel/kleaf:gen_ddk_headers \
+#    --gen_ddk_headers_target=//label/of:tuna_ext_module \
+#    --gen_ddk_headers_gen_files_archives=//common:kernel_aarch64_ddk_allowlist_headers \
+#    -- [flags]
+#
+#  # Analyze headers used by in-tree modules of a device:
+#  bazel run //build/kernel/kleaf:gen_ddk_headers \
+#    --gen_ddk_headers_target=//label/of:tuna \
+#    --gen_ddk_headers_gen_files_archives=//common:kernel_aarch64_ddk_allowlist_headers \
+#    -- [flags]
+gen_ddk_headers(
+    name = "gen_ddk_headers",
+    gen_files_archives = [":gen_ddk_headers_gen_files_archives"],
+    target = ":gen_ddk_headers_target",
+)
+
+# Target to analyze and generate DDK headers from.
+label_flag(
+    name = "gen_ddk_headers_target",
+    build_setting_default = ":gen_ddk_headers_target_unspecified",
+)
+
+# Label of allowlist of DDK header archives.
+# This is usually //{common}:kernel_aarch64_ddk_allowlist_headers
+label_flag(
+    name = "gen_ddk_headers_gen_files_archives",
+    build_setting_default = ":gen_ddk_headers_target_unspecified",
+)
+
+filegroup(
+    name = "gen_ddk_headers_target_unspecified",
+    srcs = [],
+    visibility = ["//visibility:private"],
+)
+
+py_library(
+    name = "buildozer_command_builder",
+    srcs = ["buildozer_command_builder.py"],
+    imports = ["."],
+    srcs_version = "PY3",
+    visibility = ["//build/kernel/kleaf:__subpackages__"],
+)
+
+bzl_library(
+    name = "directory_with_structure_def",
+    srcs = ["directory_with_structure.bzl"],
+    visibility = ["//build/kernel/kleaf:__subpackages__"],
+    deps = ["@bazel_skylib//lib:paths"],
+)
+
+bzl_library(
+    name = "hermetic_tools_def",
+    srcs = ["hermetic_tools.bzl"],
+    visibility = ["//build/kernel/kleaf:__subpackages__"],
+    deps = [
+        "//build/kernel/kleaf/impl:hermetic_tools_deps",
+        "@bazel_skylib//lib:paths",
+    ],
+)
+
+bzl_library(
+    name = "update_source_file_def",
+    srcs = ["update_source_file.bzl"],
+    visibility = ["//build/kernel/kleaf:__subpackages__"],
+    deps = [":hermetic_tools_def"],
+)
+
+# Export bzl files to docs/ package
+exports_files(
+    [
+        "common_kernels.bzl",
+        "constants.bzl",
+        "directory_with_structure.bzl",
+        "fail.bzl",
+        "hermetic_tools.bzl",
+        "kernel.bzl",
+        "kernel_prebuilt_ext.bzl",
+        "key_value_repo.bzl",
+        "print_debug.bzl",
+        "update_source_file.bzl",
+        "workspace.bzl",
+        "workspace_epilog.bzl",
+    ],
+    visibility = ["//build/kernel/kleaf/docs:__pkg__"],
+)
+
+alias(
+    name = "docs",
+    actual = "//build/kernel/kleaf/docs",
+    deprecation = "Use //build/kernel/kleaf/docs instead.",
+)
+
+alias(
+    name = "docs_server",
+    actual = "//build/kernel/kleaf/docs:docs_dist",
+    deprecation = "Use //build/kernel/kleaf/docs:docs_dist instead.",
+)
+
+alias(
+    name = "docs_dist",
+    actual = "//build/kernel/kleaf/docs:docs_dist",
+    deprecation = "Use //build/kernel/kleaf/docs:docs_dist instead.",
+)
+
+#
+# Remote Build Execution (RBE) Definitions
+#
+_CONTAINER = "gcr.io/androidbuild-re-dockerimage/android-build-remoteexec-image"
+
+_CONTAINER_VERSION = "sha256:1eb7f64b9e17102b970bd7a1af7daaebdb01c3fb777715899ef462d6c6d01a45"
+
+platform(
+    name = "rbe_platform",
+    constraint_values = [
+        "@bazel_tools//platforms:linux",
+        "@bazel_tools//platforms:x86_64",
+    ],
+    exec_properties = {
+        "container-image": "docker://%s@%s" % (_CONTAINER, _CONTAINER_VERSION),
+        "OSFamily": "Linux",
+    },
+    parents = ["@local_config_platform//:host"],
+    visibility = ["//visibility:public"],
+)
+
+# tests
+
+empty_test(
+    name = "empty_test",
+    visibility = ["//visibility:public"],
+)
+
+py_test(
+    name = "check_declared_output_list_test",
+    srcs = ["check_declared_output_list_test.py"],
+    imports = ["."],
+    python_version = "PY3",
+    deps = [
+        ":check_declared_output_list",
+        "@io_abseil_py//absl/testing:absltest",
+    ],
+)
+
+# Quick test on Kleaf static definitions and scripts, but not built artifacts
+test_suite(
+    name = "quick_tests",
+    tests = [
+        ":check_declared_output_list_test",
+        ":empty_test",
+        "//build/bazel_common_rules/exec/tests",
+        "//build/kernel/kleaf/impl:get_kmi_string_test",
+        "//build/kernel/kleaf/impl:visibility_test",
+        "//build/kernel/kleaf/tests",
+        "//prebuilts/build-tools/tests",
+    ],
+)
+
+# Declare py_library for Bazel wrapper for testing purposes.
+
+py_library(
+    name = "wrapper",
+    srcs = [
+        "bazel.py",
+        "kleaf_help.py",
+    ],
+    imports = ["."],
+    visibility = ["//build/kernel:__subpackages__"],
+)

@@ -1,0 +1,4 @@
+config SEC_RDX_BOOTDEV
+	tristate "SEC RDX Boot-Dev driver for Samsung Android devices"
+	help
+	  TODO: help is not ready.

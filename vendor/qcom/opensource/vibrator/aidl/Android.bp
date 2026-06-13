@@ -1,0 +1,85 @@
+Common_CFlags = ["-Wall"]
+Common_CFlags += ["-Werror"]
+
+cc_library_shared {
+    name: "vendor.qti.hardware.vibrator.impl",
+    vendor: true,
+    cflags: Common_CFlags,
+    srcs: [
+        "Vibrator.cpp",
+    ],
+    shared_libs: [
+        "libcutils",
+        "libutils",
+        "liblog",
+        "libqtivibratoreffect",
+        "libsoc_helper",
+        "libbinder_ndk",
+        "android.hardware.vibrator-V2-ndk",
+        "vendor.qti.hardware.vibratorOL.impl",
+        "vendor.qti.hardware.vibratorCL.impl",
+        "vendor.qti.hardware.vibratorSel.impl",
+    ],
+    export_include_dirs: ["include"],
+    include_dirs: [
+        "external/expat/lib",
+    ]
+}
+
+cc_binary {
+    name: "vendor.qti.hardware.vibrator.service",
+    vendor: true,
+    relative_install_path: "hw",
+    init_rc: ["vendor.qti.hardware.vibrator.service.rc"],
+    vintf_fragments: [
+        "vendor.qti.hardware.vibrator.service.xml",
+    ],
+    cflags: Common_CFlags,
+    srcs: [
+        "service.cpp",
+    ],
+    shared_libs: [
+        "libcutils",
+        "libutils",
+        "libbase",
+        "libbinder_ndk",
+        "android.hardware.vibrator-V2-ndk",
+        "vendor.qti.hardware.vibrator.impl",
+    ],
+}
+
+prebuilt_etc {
+    name: "HapticsPolicy.xml",
+    vendor: true,
+    src: "HapticsPolicy.xml",
+}
+
+cc_fuzz {
+    name: "vendor.qti.hardware.vibrator-service.aidl_fuzzer",
+    vendor: true,
+
+    shared_libs: [
+        "liblog",
+        "libbase",
+        "libutils",
+        "libcutils",
+        "libbinder",
+        "libbinder_ndk",
+        "android.hardware.vibrator-V2-ndk",
+        "vendor.qti.hardware.vibrator.impl",
+    ],
+
+    static_libs: [
+        "libbinder_random_parcel",
+    ],
+
+    srcs: [
+        "fuzzer.cpp",
+    ],
+
+    cflags: [
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-fexceptions",
+    ],
+}

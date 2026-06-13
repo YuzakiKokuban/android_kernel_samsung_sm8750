@@ -1,0 +1,420 @@
+/*
+ * Copyright (c) 2009-2013, 2015, The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above copyright
+ *      notice, this list of conditions and the following disclaimer in the
+ *      documentation and/or other materials provided with the distribution.
+ *    * Neither the name of The Linux Foundation nor
+ *      the names of its contributors may be used to endorse or promote
+ *      products derived from this software without specific prior written
+ *      permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+
+package qcom.fmradio;
+import android.util.Log;
+import java.io.File;
+
+/** <code>FmTransceiver</code> is the superclass of classes
+ * <code>FmReceiver</code> and <code>FmTransmitter</code>
+ * @hide
+ */
+public class FmTransceiver
+{
+   /* Primary FM States :
+    * FM will be in one of the 4 states at any point of time
+    *    '0'  - FMState_Turned_Off
+    *    '1'  - FMState_Rx_Turned_On
+    *    '2'  - FMState_Tx_Turned_On
+    *    '3'  - FMState_Srch_InProg
+   */
+   public static final int FMState_Turned_Off   = 0;
+   public static final int FMState_Rx_Turned_On = 1;
+   public static final int FMState_Tx_Turned_On = 2;
+   public static final int FMState_Srch_InProg  = 3;
+
+   /* Intermediate FM power levels */
+   public static final int subPwrLevel_FMRx_Starting = 4;
+   public static final int subPwrLevel_FMTx_Starting = 5;
+   public static final int subPwrLevel_FMTurning_Off = 6;
+
+   /* Intermediate FM search levels :
+    * These are the sub-levels of FM Search operations : seek/scan/auto-preset.
+    * Used internally for distinguishing between the various search operations.
+   */
+   public static final int subSrchLevel_NoSearch       = -1;
+   public static final int subSrchLevel_SeekInPrg      = 0;
+   public static final int subSrchLevel_ScanInProg     = 1;
+   public static final int subSrchLevel_SrchListInProg = 2;
+   public static final int subSrchLevel_SrchComplete   = 3;
+   public static final int subSrchLevel_SrchAbort      = 4;
+
+   /* Holds the current state of the FM device */
+   public static int FMState = FMState_Turned_Off;
+
+   /**
+    * FMConfigure FM Radio band setting for US/Europe
+    */
+   public static final int FM_US_BAND              = 0;
+   /**
+    * FMConfigure FM Radio band setting for US/Europe
+    */
+   public static final int FM_EU_BAND              = 1;
+   /**
+    * FMConfigure FM Radio band setting for Japan
+    */
+   public static final int FM_JAPAN_STANDARD_BAND  = 2;
+   /**
+    * FMConfigure FM Radio band setting for Japan-Wideband
+    */
+   public static final int FM_JAPAN_WIDE_BAND      = 3;
+   /**
+    * FMConfigure FM Radio band setting for "User defined" band
+    */
+   public static final int FM_USER_DEFINED_BAND    = 4;
+
+   /**
+    * FM channel spacing settings = 200KHz
+    */
+   public static final int FM_CHSPACE_200_KHZ  =0;
+   /**
+    * FM channel spacing settings = 100KHz
+    */
+   public static final int FM_CHSPACE_100_KHZ  =1;
+   /**
+    * FM channel spacing settings = 50KHz
+    */
+   public static final int FM_CHSPACE_50_KHZ   =2;
+
+   /**
+    * FM de-emphasis/pre-emphasis settings = 75KHz
+    */
+   public static final int FM_DE_EMP75 = 0;
+   /**
+    * FM de-emphasis/pre-emphasis settings = 50KHz
+    */
+   public static final int FM_DE_EMP50 = 1;
+
+   /**
+    * RDS standard type: RBDS (North America)
+    */
+   public static final int FM_RDS_STD_RBDS    =0;
+   /**
+    * RDS standard type: RDS (Rest of the world)
+    */
+   public static final int FM_RDS_STD_RDS     =1;
+   /**
+    * RDS standard type: No RDS
+    */
+   public static final int FM_RDS_STD_NONE    =2;
+
+   protected static final int FM_RX    =1;
+   protected static final int FM_TX    =2;
+
+   private final int READY_EVENT = 0x01;
+   private final int TUNE_EVENT = 0x02;
+   private final int RDS_EVENT = 0x08;
+   private final int MUTE_EVENT = 0x04;
+   private final int SEEK_COMPLETE_EVENT = 0x03;
+
+   private static final int V4L2_CID_PRIVATE_BASE = 0x8000000;
+   private static final int V4L2_CID_PRIVATE_TAVARUA_ANTENNA   = V4L2_CID_PRIVATE_BASE + 18;
+   private static final int V4L2_CID_PRIVATE_TAVARUA_RDSGROUP_MASK = V4L2_CID_PRIVATE_BASE + 6;
+   private static final int V4L2_CID_PRIVATE_TAVARUA_SET_NOTCH_FILTER = V4L2_CID_PRIVATE_BASE + 40;
+
+   private final String TAG = "FmTransceiver";
+
+   protected static int sFd;
+   protected FmRxControls mControl;
+   protected int mPowerMode;
+   protected FmRxRdsData mRdsData;
+   public static final int ERROR = -1;
+
+   /*==============================================================
+   FUNCTION:  enable
+   ==============================================================*/
+   /**
+   *    Initializes the FM device.
+   *    <p>
+   *    This is a synchronous call is used to initialize the FM
+   *    tranceiver. If already initialized this function will
+   *    intialize the tranceiver with default settings. Only after
+   *    successfully calling this function can many of the FM device
+   *    interfaces be used.
+   *    <p>
+   *    When enabling the receiver, the client must also provide
+   *    the regional settings in which the receiver will operate.
+   *    These settings (included in configSettings) are typically
+   *    used for setting up the FM receiver for operating in a
+   *    particular geographical region. These settings can be
+   *    changed after the FM driver is enabled through the use of
+   *    the function #configure.
+   *    <p>
+   *    This call can only be issued by the owner of an FM
+   *    receiver.  To issue this call, the client must first
+   *    successfully call #acquire.
+   *    <p>
+   *    @param configSettings  the settings to be applied when
+   *                             turning on the radio
+   *    @return true if Initialization succeeded, false if
+   *            Initialization failed.
+   *    @see   #registerClient
+   *    @see   #disable
+   *
+   */
+   public boolean enable (FmConfig configSettings, int device){
+
+      boolean status;
+      int ret;
+
+      if (new File("/etc/fm/SpurTableFile.txt").isFile()) {
+          Log.d(TAG, "Send Spur roation table");
+          FmConfig.fmSpurConfig(sFd);
+      } else {
+          Log.d(TAG, "No existing file to do spur configuration");
+      }
+      Log.d(TAG, "turning on " + device);
+      ret = mControl.fmOn(sFd, device);
+      if (ret < 0) {
+          Log.d(TAG, "turning on failed");
+          sFd = 0;
+          return false;
+      }
+
+      Log.d(TAG, "Calling fmConfigure");
+      status = FmConfig.fmConfigure (sFd, configSettings);
+      if (!status) {
+          Log.d(TAG, "fmConfigure failed");
+          sFd = 0;
+      }
+      return status;
+   }
+
+   /*==============================================================
+   FUNCTION:  disable
+   ==============================================================*/
+   /**
+   *    Disables the FM Device.
+   *    <p>
+   *    This is a synchronous call used to disable the FM
+   *    device. This function is expected to be used when the
+   *    client no longer requires use of the FM device. Once
+   *    called, most functionality offered by the FM device will be
+   *    disabled until the client re-enables the device again via
+   *    #enable.
+   *    <p>
+   *    @return true if disabling succeeded, false if disabling
+   *            failed.
+   *    <p>
+   *    @see   #enable
+   *    @see   #registerClient
+   */
+   public boolean disable(){
+      mControl.fmOff(sFd);
+      return true;
+   }
+
+   /*==============================================================
+   FUNCTION:  configure
+   ==============================================================*/
+   /**
+   *     Reconfigures the device's regional settings
+   *    (FM Band, De-Emphasis, Channel Spacing, RDS/RBDS mode).
+   *    <p>
+   *    This is a synchronous call used to reconfigure settings on
+   *    the FM device. Included in the passed structure are
+   *    settings which typically differ from one geographical
+   *    region to another.
+   *    <p>
+   *    @param configSettings    Contains settings for the FM radio
+   *                             (FM band, De-emphasis, channel
+   *                             spacing, RDS/RBDS mode)
+   *    <p>
+   *    @return      true if configure succeeded, false if
+   *                 configure failed.
+   */
+   public boolean configure(FmConfig configSettings){
+      boolean status=true;
+      int lowerFreq = configSettings.getLowerLimit();
+      Log.d(TAG, "fmConfigure");
+      status = FmConfig.fmConfigure (sFd, configSettings);
+      status = setStation (lowerFreq);
+      return status;
+   }
+
+   /*==============================================================
+   FUNCTION:  setStation
+   ==============================================================*/
+   /**
+    *    Tunes the FM device to the specified FM frequency.
+    *    <p>
+    *    This method tunes the FM device to a station specified by the
+    *    provided frequency. Only valid frequencies within the band
+    *    set by enable or configure can be tuned by this function.
+    *    Attempting to tune to frequencies outside of the set band
+    *    will result in an error.
+    *    <p>
+    *    Once tuning to the specified frequency is completed, the
+    *    event callback FmRxEvRadioTuneStatus will be called.
+    *
+    *    @param frequencyKHz  Frequency (in kHz) to be tuned
+    *                         (Example: 96500 = 96.5Mhz)
+    *   @return true if setStation call was placed successfully,
+    *           false if setStation failed.
+    */
+   public boolean setStation (int frequencyKHz) {
+      int ret;
+
+      mControl.setFreq(frequencyKHz);
+      ret = mControl.setStation(sFd);
+      if(ret < 0 )
+      {
+         return false;
+      }
+      else
+      {
+         return true;
+      }
+   }
+
+   /*==============================================================
+   FUNCTION:  SetNotchFilter
+   ==============================================================*/
+   /**
+    *    Sets the desired notch filter for WAN avoidance.
+    *    <p>
+    *    This method sets the required Notch filter based on the current
+    *    WAN band frequency to achieve the FM-WAN concurrency.
+    *    Application should listen to Data call events and call the function
+    *    on every data call connection set-u, to achieve the FM-WAN concurrency.
+    *
+    */
+   public void setNotchFilter(boolean value) {
+        int intvalue ;
+        if (value)
+           intvalue = 1;
+        else
+           intvalue = 0;
+        FmReceiverJNI.setControlNative (sFd, V4L2_CID_PRIVATE_TAVARUA_SET_NOTCH_FILTER, intvalue);
+   }
+
+   /*==============================================================
+   FUNCTION:  getInternalAntenna
+   ==============================================================*/
+   /**
+   *    Returns true if internal FM antenna is available
+   *
+   *    <p>
+   *    This method returns true is internal FM antenna is
+   *    available, false otherwise
+   *
+   *    <p>
+   *    @return    true/false
+   */
+   public boolean getInternalAntenna()
+   {
+
+       int re = FmReceiverJNI.getControlNative (sFd, V4L2_CID_PRIVATE_TAVARUA_ANTENNA);
+
+       if (re == 1)
+         return true;
+
+       return false;
+   }
+
+   /*==============================================================
+   FUNCTION:  setInternalAntenna
+   ==============================================================*/
+   /**
+   *    Returns true if successful, false otherwise
+   *
+   *    <p>
+   *    This method sets internal antenna type to true/false
+   *
+   *    @param intAntenna true is Internal antenna is present
+   *
+   *    <p>
+   *    @return    true/false
+   */
+   public boolean setInternalAntenna(boolean intAnt)
+   {
+
+       int iAntenna ;
+
+       if (intAnt)
+          iAntenna = 1;
+       else
+          iAntenna = 0;
+
+
+       int re = FmReceiverJNI.setControlNative (sFd, V4L2_CID_PRIVATE_TAVARUA_ANTENNA, iAntenna);
+
+       if (re == 0)
+         return true;
+
+       return false;
+   }
+/*==============================================================
+   FUNCTION:  setFMPowerState
+   ==============================================================*/
+   /**
+   *    Sets the FM power state
+   *
+   *    <p>
+   *    This method sets the FM power state.
+   *
+   *    <p>
+   */
+   static void setFMPowerState(int state)
+   {
+      FMState = state;
+   }
+/*==============================================================
+   FUNCTION:  getFMPowerState
+   ==============================================================*/
+   /**
+   *    Returns :
+   *
+   *        FMOff        - If the FM Radio is turned off
+   *        FMRxOn       - If the FM Receiver is currently turned on
+   *        FMTxOn       - If the FM Transmitter is currently turned on
+   *        FMReset      - If the FM Radio is reset
+   *
+   *    Gets the FM power state
+   *
+   *    <p>
+   *    This method gets the FM power state.
+   *
+   *    <p>
+   */
+   public static int getFMPowerState()
+   {
+      return FMState;
+   }
+   public static boolean setRDSGrpMask(int mask)
+   {
+      int re;
+      re = FmReceiverJNI.setControlNative(sFd,
+                   V4L2_CID_PRIVATE_TAVARUA_RDSGROUP_MASK, mask);
+      if (re == 0)
+          return true;
+      else
+          return false;
+   }
+}

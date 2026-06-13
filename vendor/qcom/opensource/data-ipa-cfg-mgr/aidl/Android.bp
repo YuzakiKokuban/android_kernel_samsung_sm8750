@@ -1,0 +1,22 @@
+cc_library_shared {
+    name: "liboffloadhal",
+    srcs: [
+        "src/CtUpdateAmbassador.cpp",
+        "src/AIDL.cpp",
+        "src/IpaEventRelay.cpp",
+        "src/LocalLogBuffer.cpp",
+        "src/OffloadStatistics.cpp",
+        "src/PrefixParser.cpp",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libdl",
+        "libbinder_ndk",
+        "libutils",
+        "android.hardware.tetheroffload-V1-ndk",
+    ],
+    export_include_dirs: ["inc"],
+    vendor: true,
+}

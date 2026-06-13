@@ -1,0 +1,35 @@
+# Copyright (C) 2022 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Set up remote caching
+# https://developers.google.com/remote-build-execution/docs/set-up/set-up-caching
+test:ants --remote_cache=grpcs://remotebuildexecution.googleapis.com
+test:ants --google_default_credentials=true
+test:ants --remote_instance_name=projects/android-build-farm/instances/default_instance
+test:ants --noremote_upload_local_results
+
+# Upload results to BES backend.
+# Refer to go/bazel-ants-docs
+test:ants --bes_backend=buildeventservice-pa.googleapis.com
+test:ants --bes_keywords=android-test-storage
+test:ants --bes_instance_name=android-build-farm
+test:ants --build_metadata=run_type=critical
+
+# Show URI to test results
+test:ants --build_metadata=generate_test_uri=fusion
+
+# These need to be set in the command line
+# test:ants --build_metadata="ab_build_id=${BUILD_ID}"
+# test:ants --build_metadata="ab_target=???",
+# test:ants --build_metadata="test_definition_name=kernel/kleaf/???"

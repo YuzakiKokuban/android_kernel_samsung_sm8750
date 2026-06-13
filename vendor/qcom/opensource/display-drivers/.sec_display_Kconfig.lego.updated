@@ -1,0 +1,41 @@
+config SECDP
+        bool "Enable secdp feature"
+        depends on SEC_DISPLAYPORT 
+        default n
+        help
+          Enable secdp feature
+
+config SECDP_LOGGER
+        bool "Enable secdp logger feature"
+        depends on SEC_DISPLAYPORT
+        default n
+        help
+          Enable secdp logger feature
+
+config SECDP_BIGDATA
+        bool "Enable secdp bigdata feature"
+        depends on SEC_DISPLAYPORT
+        default n
+        help
+          Enable secdp bigdata feature
+
+config SECDP_SWITCH
+        bool "Enable secdp bigdata feature"
+        depends on SEC_DISPLAYPORT && (SWITCH || ANDROID_SWITCH)
+        default n
+        help
+          Enable secdp bigdata feature
+
+config SECDP_DBG
+        bool "Enable secdp bigdata feature"
+        depends on SEC_DISPLAYPORT && SEC_FORCE_ERR
+        default n
+        help
+          Enable secdp bigdata feature
+
+config SECDP_FACTORY_DPSWITCH_TEST
+        bool "Enable secdp bigdata feature"
+        depends on SEC_DISPLAYPORT && SEC_FACTORY
+        default n
+        help
+          Enable secdp bigdata feature

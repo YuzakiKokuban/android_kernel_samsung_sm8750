@@ -1,0 +1,148 @@
+#
+# MUIC devices
+#
+
+comment "MUIC configs"
+
+config USE_MUIC
+	bool "Using MUIC device driver"
+	depends on I2C
+	default n
+	help
+	  If you say yes here you will get support for
+	  the MUIC device driver.
+
+config MUIC_NOTIFIER
+	tristate "MUIC notifier support"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for
+	  the MUIC attached device status change notification.
+
+config MUIC_HV
+	bool "MUIC_HV"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for the AFC.
+
+config MUIC_SUPPORT_PDIC
+	tristate "MUIC supports CCIC chip interface"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for the CCIC chip.
+
+config HICCUP_CHARGER
+	bool "Using HICCUP charger"
+	depends on USE_MUIC
+	default n
+	help
+		If you say yes here you will get support for
+		for the hiccup charger feature.
+
+config USE_SECOND_MUIC
+	bool "Using second MUIC"
+	depends on USE_MUIC
+	default n
+	help
+		If you say yes here you will get support for
+		for the second MUIC chip feature.
+
+config MUIC_UART_SWITCH
+	bool "UART SWITCH"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for the SEC UART SWITCH chip.
+	  It needs additional uart select H/W and applied only to lsi.
+
+config MUIC_SUPPORT_UART_SEL
+	bool "MUIC supports uart selection"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for the uart selection.
+	  It applied only to qc.
+
+config USE_DEDICATED_MUIC
+	bool "Using dedicated MUIC device driver"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for
+	  Dedicated MUIC device driver.
+	  This is only for charge
+
+config MUIC_AFC_RETRY
+	bool "Using MUIC AFC retry"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for MUIC AFC retry feature.
+
+config MUIC_COMMON_SYSFS
+	bool "Using muic sysfs Features"
+	depends on MUIC_NOTIFIER
+	default n
+	help
+	  If you say yes here you will get support for the muic sysfs.
+	  some ic drivers may have sysfs in own driver.
+	  But we recommend driver to use this common sysfs.
+	  new ic driver must use this feature.
+  
+config MUIC_USE_MODULE_PARAM
+	bool "Using module param"
+	depends on MUIC_NOTIFIER
+	default n
+	help
+	  If this feature is enabled, muic_core will use module_param directly.
+	  Should not use extern variable and __setup for param.
+	  need to add cmdline in bootloader.
+	  (ex: common_muic.xxx)
+
+config HICCUP_CC_DISABLE
+	bool "Using HICCUP CC disable"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for
+	  for the hiccup cc disable feature.
+
+config MUIC_POGO
+	bool "Using muic pogo"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for muic pogo
+
+config MUIC_LO_TA_LOW_CURRENT
+	bool "Using LO_TA_LOW_CURRENT"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for
+		for the hiccup cc disable feature.
+
+config MUIC_CORE_TEST_FOR_ON_DEVICE
+	tristate "KUnit test for muic_core_test"
+	depends on KUNIT
+	depends on MUIC_NOTIFIER
+	help
+	  This is feature for muic-core.c
+	  If you run this test driver on device,
+	  SHOULD set this config as 'm' to build test driver modularly.
+	  refer to muic_common.py file.
+
+config MUIC_CORE_TEST_FOR_ONLY_UML
+	tristate "KUnit test for muic_core_test"
+	depends on KUNIT
+	depends on UML
+	depends on MUIC_NOTIFIER
+	help
+	  This is feature for muic-core.c
+	  This CONFIG is recommended to set to y.
+	  If you run UML test, this feature must be enabled.
+	  refer to muic_common.py file.
+

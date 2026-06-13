@@ -1,0 +1,434 @@
+# Copyright (C) 2021 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@bazel_skylib//lib:paths.bzl", "paths")
+load("@kernel_toolchain_info//:dict.bzl", "VARS")
+load("//build/kernel/kleaf:hermetic_tools.bzl", "hermetic_genrule", "hermetic_tools")
+load("//build/kernel/kleaf/impl:bison_wrapper.bzl", "bison_wrapper")
+
+filegroup(
+    name = "sysroot",
+    srcs = glob(
+        ["build-tools/sysroot/**"],
+        allow_empty = False,
+    ),
+    visibility = [
+        ":__subpackages__",
+        "@kleaf_clang_toolchain//:__subpackages__",
+    ],
+)
+
+alias(
+    name = "toybox",
+    actual = select({
+        "//build/kernel/kleaf:toolchain_from_sources_is_true": "@toybox",
+        "//conditions:default": "//prebuilts/build-tools:linux-x86/bin/toybox",
+    }),
+    visibility = ["//visibility:private"],
+)
+
+# Some aliases for :toybox to workaround dict keys needing to be unique
+# hermetic_tools.symlinks.
+[alias(
+    name = "toybox_%s" % tool,
+    actual = ":toybox",
+    visibility = ["//visibility:private"],
+) for tool in ("find", "flock", "gzip")]
+
+bison_wrapper(
+    name = "bison",
+    actual = "//prebuilts/build-tools:linux-x86/bin/bison",
+    pkgdata_dir = "//prebuilts/build-tools:bison.runfiles_dir",
+    pkgdata_files = "//prebuilts/build-tools:bison.runfiles",
+    visibility = ["//visibility:private"],
+)
+
+# TODO(b/274975942): Delete these symlinks once build.sh goes away.
+_HERMETIC_TOOLS = [
+    # keep sorted
+    ":bison",
+    "//prebuilts/build-tools:linux-x86/bin/flex",
+    "//prebuilts/build-tools:linux-x86/bin/m4",
+    "//prebuilts/build-tools:linux-x86/bin/make",
+    "//prebuilts/build-tools:linux-x86/bin/openssl",
+    "//prebuilts/build-tools:linux-x86/bin/runextractor",
+    "//prebuilts/build-tools:path/linux-x86/awk",
+    "//prebuilts/build-tools:path/linux-x86/bc",
+    "//prebuilts/build-tools:path/linux-x86/bzcat",
+    "//prebuilts/build-tools:path/linux-x86/bzip2",
+    "//prebuilts/build-tools:path/linux-x86/od",
+    "//prebuilts/build-tools:path/linux-x86/paste",
+    "//prebuilts/build-tools:path/linux-x86/pgrep",
+    "//prebuilts/build-tools:path/linux-x86/pkill",
+    "//prebuilts/build-tools:path/linux-x86/ps",
+    "//prebuilts/build-tools:path/linux-x86/pwd",
+    "//prebuilts/build-tools:path/linux-x86/xz",
+    "//prebuilts/build-tools:path/linux-x86/xzcat",
+    "//prebuilts/build-tools:path/linux-x86/zipinfo",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/avbtool",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/blk_alloc_to_base_fs",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/build_image",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/build_super_image",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/certify_bootimg",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/dtc",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/e2fsck",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/e2fsdroid",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/fec",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/img2simg",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/interceptor",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/interceptor_analysis",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/lpmake",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/mkbootfs",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/mkdtimg",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/mke2fs",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/mkfs.erofs",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/mkuserimg_mke2fs",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/pahole",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/simg2img",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/soong_zip",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/stgdiff",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/swig",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/tune2fs",
+    "//prebuilts/kernel-build-tools:linux-x86/bin/ufdt_apply_overlay",
+] + glob([
+    # Intentionally glob here to test for existance of alias destination
+    # buildifier: disable=constant-glob
+    "build-tools/path/linux-x86/cxx_extractor",
+])
+
+# Hermetic tools symlinks (other than _HERMETIC_TOOLS)
+_TOYS = [
+    # keep sorted
+    "basename",
+    "cat",
+    "chmod",
+    "cmp",
+    "comm",
+    "cp",
+    "cpio",
+    "cut",
+    "date",
+    "dd",
+    "diff",
+    "dirname",
+    "du",
+    "echo",
+    "egrep",
+    "env",
+    "expr",
+    "getconf",
+    "grep",
+    "head",
+    "hostname",
+    "id",
+    "install",
+    "ln",
+    "ls",
+    "md5sum",
+    "mkdir",
+    "mktemp",
+    "mount",
+    "mv",
+    "nproc",
+    "readlink",
+    "realpath",
+    "rm",
+    "rmdir",
+    "sed",
+    "seq",
+    "setsid",
+    "sha1sum",
+    "sha256sum",
+    "sha512sum",
+    "sleep",
+    "sort",
+    "stat",
+    "tail",
+    "tar",
+    "tee",
+    "test",
+    "timeout",
+    "touch",
+    "tr",
+    "true",
+    "truncate",
+    "umount",
+    "uname",
+    "uniq",
+    "unix2dos",
+    "unshare",
+    "wc",
+    "which",
+    "whoami",
+    "xargs",
+    "xxd",
+]
+
+hermetic_tools(
+    name = "hermetic-tools",
+    extra_args = {
+        "rsync": ["--no-group"],
+        "tar": [
+            "--mtime=@0",
+            "--owner=0",
+            "--group=0",
+            "--numeric-owner",
+            "--sort=name",
+        ],
+    },
+    symlinks = select({
+        "//build/kernel/kleaf:debug_cache_dir_conflict_needs_flock": {
+            ":toybox_flock": "flock",
+        },
+        "//conditions:default": {},
+    }) | select({
+        "//build/kernel/kleaf:workaround_btrfs_b292212788_is_true": {
+            "@kleaf_host_tools//:find": "find",
+        },
+        "//conditions:default": {
+            ":toybox_find": "find",
+        },
+    }) | select({
+        "//build/kernel/kleaf:toolchain_from_sources_is_true": {
+            "@lz4": "lz4",
+        },
+        "//conditions:default": {
+            "//prebuilts/kernel-build-tools:linux-x86/bin/lz4": "lz4",
+        },
+    }) | select({
+        "//build/kernel/kleaf:gzip_is_pigz_is_true": {
+            "@pigz": "gzip",
+        },
+        "//conditions:default": {
+            ":toybox_gzip": "gzip",
+        },
+    }) | select({
+        "//build/kernel/kleaf:remove_strings_from_hermetic_tools_is_true": {},
+        "//conditions:default": {
+            "//prebuilts/clang/host/linux-x86/clang-{}:bin/llvm-strings".format(VARS["CLANG_VERSION"]): "llvm-strings",
+        },
+    }) | {
+        ":toybox": ":".join(_TOYS),
+
+        # Host tools
+        "@kleaf_host_tools//:bash": "bash",
+        "@kleaf_host_tools//:sh": "sh",
+        "@kleaf_host_tools//:perl": "perl",
+        "@kleaf_host_tools//:rsync": "rsync",
+
+        # Additional symlinks other than in //prebuilts/build-tools
+        "//prebuilts/kernel-build-tools:linux-x86/bin/depmod": ":".join([
+            # keep sorted
+            "depmod",
+            "modinfo",
+        ]),
+        "//prebuilts/build-tools:linux-x86/bin/ziptool": "unzip",
+
+        # Python
+        "//build/kernel/kleaf/impl:python_interpreter_file": ":".join([
+            # keep sorted
+            "python",
+            "python3",
+        ]),
+    } | {
+        tool: paths.basename(package_relative_label(tool).name)
+        for tool in _HERMETIC_TOOLS
+    },
+    visibility = ["//visibility:public"],
+    deps = [
+        ":sysroot",
+        "//build/kernel/kleaf/impl:python_runtime_files",
+        "//prebuilts/build-tools:linux-x86",
+        "//prebuilts/kernel-build-tools:linux-x86",
+        "@prebuilt_ndk//:sysroot",
+    ],
+)
+
+toolchain_type(
+    name = "hermetic_tools_toolchain_type",
+    visibility = ["//visibility:private"],
+)
+
+toolchain(
+    name = "hermetic_tools_toolchain",
+    exec_compatible_with = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+    toolchain = ":hermetic-tools",
+    toolchain_type = ":hermetic_tools_toolchain_type",
+    visibility = ["//visibility:private"],
+)
+
+# Tools visible to all packages that uses kernel_build.
+# Implementation detail of kernel_build; do not use directly.
+sh_library(
+    name = "_setup_env",
+    srcs = ["_setup_env.sh"],
+    visibility = ["//visibility:public"],
+)
+
+# Tools visible to all packages that uses kernel_build.
+# Implementation detail of kernel_build; do not use directly.
+sh_library(
+    name = "build_utils",
+    srcs = ["build_utils.sh"],
+    visibility = ["//visibility:public"],
+)
+
+# Tools visible to all packages that uses kernel_build.
+# Implementation detail of kernel_build; do not use directly.
+py_binary(
+    name = "abi_verify_ksymtab",
+    srcs = ["abi/verify_ksymtab.py"],
+    main = "abi/verify_ksymtab.py",
+    visibility = ["//visibility:public"],
+    deps = [":symbol_extraction"],
+)
+
+# Tools visible to all packages that uses kernel_build.
+# Implementation detail of kernel_build; do not use directly.
+py_binary(
+    name = "abi_flatten_symbol_list",
+    srcs = ["abi/flatten_symbol_list.py"],
+    main = "abi/flatten_symbol_list.py",
+    visibility = ["//visibility:public"],
+)
+
+# Tools visible to all packages that uses kernel_build.
+# Implementation detail of kernel_build; do not use directly.
+py_binary(
+    name = "abi_process_symbols",
+    srcs = ["abi/process_symbols.py"],
+    data = [
+        "abi/symbols.deny",
+    ],
+    main = "abi/process_symbols.py",
+    visibility = ["//visibility:public"],
+)
+
+py_library(
+    name = "symbol_extraction",
+    srcs = ["abi/symbol_extraction.py"],
+    imports = ["abi"],
+    visibility = ["//visibility:private"],
+)
+
+# Tools visible to all packages that uses kernel_abi
+# Implementation detail of kernel_abi; do not use directly.
+py_binary(
+    name = "check_buildtime_symbol_protection",
+    srcs = ["abi/check_buildtime_symbol_protection.py"],
+    main = "abi/check_buildtime_symbol_protection.py",
+    visibility = ["//visibility:public"],
+    deps = [":symbol_extraction"],
+)
+
+# Tools visible to all packages that uses kernel_abi.
+# Implementation detail of kernel_abi; do not use directly.
+py_binary(
+    name = "extract_symbols",
+    srcs = ["abi/extract_symbols.py"],
+    main = "abi/extract_symbols.py",
+    visibility = ["//visibility:public"],
+    deps = [":symbol_extraction"],
+)
+
+# Tools visible to all packages.
+py_binary(
+    name = "dependency_graph_extractor",
+    srcs = ["abi/dependency_graph_extractor.py"],
+    main = "abi/dependency_graph_extractor.py",
+    visibility = ["//visibility:public"],
+    deps = [":symbol_extraction"],
+)
+
+py_binary(
+    name = "dependency_graph_drawer",
+    srcs = ["abi/dependency_graph_drawer.py"],
+    main = "abi/dependency_graph_drawer.py",
+    visibility = ["//visibility:public"],
+)
+
+# Tools visible to all packages that uses kernel_abi.
+# Implementation detail of kernel_abi; do not use directly.
+py_binary(
+    name = "extract_protected_exports",
+    srcs = ["abi/extract_gki_protected_exports.py"],
+    main = "abi/extract_gki_protected_exports.py",
+    visibility = ["//visibility:public"],
+    deps = [":symbol_extraction"],
+)
+
+# Boostrap tool for DDK development.
+py_binary(
+    name = "init_ddk",
+    srcs = [
+        "init/__init__.py",
+        "init/init_ddk.py",
+        "init/init_errors.py",
+        "init/repo_manifest_parser.py",
+        "init/repo_wrapper.py",
+    ],
+    data = ["init/init_download.py"],
+    imports = ["."],
+    main = "init/init_ddk.py",
+    visibility = ["//visibility:private"],
+)
+
+py_test(
+    name = "init_ddk_test",
+    srcs = ["init/init_ddk_test.py"],
+    data = [
+        "init/test_data/sample_manifest.xml",
+    ],
+    imports = ["init"],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":init_ddk",
+        "@io_abseil_py//absl/testing:absltest",
+        "@io_abseil_py//absl/testing:parameterized",
+    ],
+)
+
+# Target for distribution.
+filegroup(
+    name = "init_ddk_zip",
+    srcs = [":init_ddk"],
+    output_group = "python_zip_file",
+    visibility = ["//visibility:public"],
+)
+
+_GKI_CERTIFICATION_BINARIES_PREFIX = "//prebuilts/kernel-build-tools:linux-x86/bin/"
+
+_GKI_CERTIFICATION_BINARIES = [
+    "avbtool",
+    "certify_bootimg",
+]
+
+hermetic_genrule(
+    name = "gki_certification_tools",
+    srcs = [_GKI_CERTIFICATION_BINARIES_PREFIX + tool for tool in _GKI_CERTIFICATION_BINARIES],
+    outs = ["gki_certification_tools.tar.gz"],
+    cmd = """
+        tar --mode=u=rwx,go=rx -czhf $@ \\
+            -C $$(dirname $$(dirname $(location {prefix}{first}))) \\
+            {files}
+    """.format(
+        files = " ".join(["bin/" + tool for tool in _GKI_CERTIFICATION_BINARIES]),
+        first = _GKI_CERTIFICATION_BINARIES[0],
+        prefix = _GKI_CERTIFICATION_BINARIES_PREFIX,
+    ),
+    visibility = ["//visibility:public"],
+)

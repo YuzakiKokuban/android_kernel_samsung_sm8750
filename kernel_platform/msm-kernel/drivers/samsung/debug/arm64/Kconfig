@@ -1,0 +1,3 @@
+source "drivers/samsung/debug/arm64/ap_context/Kconfig"
+source "drivers/samsung/debug/arm64/fsimd_debug/Kconfig"
+source "drivers/samsung/debug/arm64/debug/Kconfig"

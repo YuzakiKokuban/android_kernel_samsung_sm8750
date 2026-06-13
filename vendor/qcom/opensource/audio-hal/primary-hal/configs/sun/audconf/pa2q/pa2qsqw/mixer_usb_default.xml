@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.    -->
+<!--                                                                        -->
+<!-- Redistribution and use in source and binary forms, with or without     -->
+<!-- modification, are permitted provided that the following conditions are -->
+<!-- met:                                                                   -->
+<!--     * Redistributions of source code must retain the above copyright   -->
+<!--       notice, this list of conditions and the following disclaimer.    -->
+<!--     * Redistributions in binary form must reproduce the above          -->
+<!--       copyright notice, this list of conditions and the following      -->
+<!--       disclaimer in the documentation and/or other materials provided  -->
+<!--       with the distribution.                                           -->
+<!--     * Neither the name of The Linux Foundation nor the names of its    -->
+<!--       contributors may be used to endorse or promote products derived  -->
+<!--       from this software without specific prior written permission.    -->
+<!--                                                                        -->
+<!-- THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED           -->
+<!-- WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF   -->
+<!-- MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT -->
+<!-- ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS -->
+<!-- BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR -->
+<!-- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF   -->
+<!-- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR        -->
+<!-- BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,  -->
+<!-- OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN -->
+<!-- IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                          -->
+<mixer>
+    <!-- These are the initial mixer settings -->
+    <ctl name="Headset Playback Volume" value="112 112" />
+    <ctl name="Headset Capture Volume" value="110" />
+
+    <!-- Play Scenario  -->
+    <path name="usb-headphones-gain">
+        <ctl name="Headset Playback Volume" value="118 118" />
+    </path>
+
+    <path name="speaker-and-usb-headphones-gain">
+        <ctl name="Headset Playback Volume" value="66 66" />
+    </path>
+
+    <path name="fm-usb-headphones-gain">
+        <ctl name="Headset Playback Volume" value="118 118" />
+    </path>
+
+    <path name="aas-usb-headset-gain">
+        <ctl name="Headset Playback Volume" value="112 112" />
+    </path>
+
+    <path name="listenback-usb-headphones-gain">
+        <ctl name="Headset Playback Volume" value="120 120" />
+    </path>
+    <!-- end of Play Scenario -->
+
+    <!-- Recording Scenario  -->
+    <path name="rec-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="88" />
+    </path>
+
+    <path name="listenback-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="98" />
+    </path>
+    <!-- end of Recording Scenario -->
+
+    <!-- recognition Scenario -->
+    <path name="vr-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="120" />
+    </path>
+
+    <path name="bargein-tts-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="120" />
+    </path>
+
+    <path name="bargein-aec-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="120" />
+    </path>
+
+    <path name="interpreter-listen-usb-headset-mic-gain">
+    </path>
+
+    <path name="interpreter-conv-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="120" />
+    </path>
+    <!-- end of recognition Scenario -->
+
+    <!-- call Scenario -->
+    <path name="call-usb-headset-gain">
+        <ctl name="Headset Playback Volume" value="115 115" />
+    </path>
+
+    <path name="call-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="120" />
+    </path>
+
+    <path name="call-usb-headphone-mic-gain">
+    </path>
+
+    <path name="wifi-call-usb-headset-gain">
+        <ctl name="Headset Playback Volume" value="115 115" />
+    </path>
+
+    <path name="wifi-call-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="120" />
+    </path>
+
+    <path name="wifi-call-headphone-mic-gain">
+    </path>
+    <!-- end of call Scenario -->
+
+    <!-- TTY Scenario  -->
+    <path name="call-tty-handset-gain">
+    </path>
+
+    <path name="call-tty-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="120" />
+    </path>
+
+    <path name="call-tty-usb-headset-gain">
+        <ctl name="Headset Playback Volume" value="115 115" />
+    </path>
+
+    <path name="call-tty-full-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="120" />
+    </path>
+    <!-- end of TTY Scenario -->
+
+    <!-- VoWIFI TTY Scenario  -->
+    <path name="wifi-call-tty-handset-gain">
+    </path>
+
+    <path name="wifi-call-tty-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="120" />
+    </path>
+
+    <path name="wifi-call-tty-usb-headset-gain">
+        <ctl name="Headset Playback Volume" value="115 115" />
+    </path>
+
+    <path name="wifi-call-tty-full-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="120" />
+    </path>
+    <!-- end of TTY Scenario -->
+
+    <!-- VoIP Scenario -->
+    <path name="voip-comm-usb-headset-gain">
+        <ctl name="Headset Playback Volume" value="115 115" />
+    </path>
+
+    <path name="voip-comm-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="120" />
+    </path>
+
+    <path name="voip-comm-usb-headphone-mic-gain">
+    </path>
+
+    <path name="voip-fmc-usb-headset-gain">
+        <ctl name="Headset Playback Volume" value="115 115" />
+    </path>
+
+    <path name="voip-fmc-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="120" />
+    </path>
+
+    <path name="voip-fmc-usb-headphone-mic-gain">
+    </path>
+    <!-- end of VoIP Scenario -->
+
+    <!-- Factory Scenario -->
+    <path name="loopback-usb-headset-gain">
+        <ctl name="Headset Playback Volume" value="116 116" />
+    </path>
+
+    <path name="loopback-main-mic-gain">
+    </path>
+
+    <path name="loopback-sub-mic-gain">
+    </path>
+
+    <path name="loopback-dual-mic-gain">
+    </path>
+
+    <path name="loopback-usb-headset-mic-gain">
+        <ctl name="Headset Capture Volume" value="120" />
+    </path>
+    <!-- end of Factory Scenario -->
+
+    <path name="dummy">
+    </path>
+</mixer>

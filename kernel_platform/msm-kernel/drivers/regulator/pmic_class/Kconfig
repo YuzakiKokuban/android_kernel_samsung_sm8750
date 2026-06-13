@@ -1,0 +1,8 @@
+if REGULATOR
+
+config DRV_SAMSUNG_PMIC
+	tristate "Samsung PMIC sysfs system"
+	help
+	 This driver supports a Samsung PMIC sysfs.
+
+endif

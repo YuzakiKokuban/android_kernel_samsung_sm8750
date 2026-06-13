@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2019, The Linux Foundation. All rights reserved.            -->
+<!--                                                                           -->
+<!-- Redistribution and use in source and binary forms, with or without        -->
+<!-- modification, are permitted provided that the following conditions are    -->
+<!-- met:                                                                      -->
+<!--     * Redistributions of source code must retain the above copyright      -->
+<!--       notice, this list of conditions and the following disclaimer.       -->
+<!--     * Redistributions in binary form must reproduce the above             -->
+<!--       copyright notice, this list of conditions and the following         -->
+<!--       disclaimer in the documentation and/or other materials provided     -->
+<!--       with the distribution.                                              -->
+<!--     * Neither the name of The Linux Foundation nor the names of its       -->
+<!--       contributors may be used to endorse or promote products derived     -->
+<!--       from this software without specific prior written permission.       -->
+<!--                                                                           -->
+<!-- THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED              -->
+<!-- WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF      -->
+<!-- MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT    -->
+<!-- ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS    -->
+<!-- BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR    -->
+<!-- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF      -->
+<!-- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR           -->
+<!-- BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,     -->
+<!-- WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE      -->
+<!-- OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN    -->
+<!-- IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                             -->
+<KEY_DEF versionMajor="0x0" versionMinor="0x0" versionBranch="0x0" versionSubBranch="0x0">
+  <PLATFORMS>
+    <PLATFORM name="LA" id="0x1"/>
+    <PLATFORM name="LE" id="0x2"/>
+  </PLATFORMS>
+  <KEY_LIST>
+    <KEY name="Stream" id="0xa1000000" description="Type of Stream">
+      <VALUE val="0xa1000001" name="PCM_LL_Playback"/>
+      <VALUE val="0xa1000002" name="PCM_Record"/>
+      <VALUE val="0xa1000003" name="PCM_Loopback"/>
+      <VALUE val="0xa1000004" name="Voice_UI"/>
+      <VALUE val="0xa1000005" name="Voip_Rx"/>
+      <VALUE val="0xa1000006" name="Voip_Tx"/>
+      <VALUE val="0xa1000007" name="Voice_UI_EC_Ref_Path"/>
+      <VALUE val="0xa1000008" name="Voip_Tx_EC_Ref_Path"/>
+      <VALUE val="0xa1000009" name="PCM_Record_EC_Ref_Path"/>
+    </KEY>
+    <KEY name="Instance" id="0xab000000" description="Stream Instance Id">
+      <VALUE val="0x1" name="Instance_1"/>
+      <VALUE val="0x2" name="Instance_2"/>
+      <VALUE val="0x3" name="Instance_3"/>
+    </KEY>
+    <KEY name="DeviceRX" id="0xa2000000" description="Rx Device">
+      <VALUE val="0xa2000001" name="Speaker"/>
+    </KEY>
+    <KEY name="DeviceTX" id="0xa3000000" description="Tx Device">
+      <VALUE val="0xa3000001" name="HandsetMic"/>
+    </KEY>
+    <KEY name="DevicePP_Rx" id="0xac000000" description="Rx Device Post/Pre Processing Chain">
+      <VALUE val="0xac000001" name="Audio_LL_Default_PP"/>
+    </KEY>
+    <KEY name="DevicePP_Tx" id="0xad000000" description="Tx Device Post/Pre Processing Chain">
+      <VALUE val="0xad000001" name="Voice_Fluence_FFECNS"/>
+      <VALUE val="0xad000002" name="Audio_Fluence_SMECNS"/>
+      <VALUE val="0xad000003" name="Audio_Fluence_Endfire"/>
+      <VALUE val="0xad000004" name="Audio_Fluence_Pro"/>
+    </KEY>
+    <KEY name="Volume" id="0xa4000000" description="Volume">
+      <VALUE val="0x0" name="Level_0"/>
+      <VALUE val="0x1" name="Level_1"/>
+      <VALUE val="0x2" name="Level_2"/>
+      <VALUE val="0x3" name="Level_3"/>
+      <VALUE val="0x4" name="Level_4"/>
+      <VALUE val="0x5" name="Level_5"/>
+      <VALUE val="0x6" name="Level_6"/>
+      <VALUE val="0x7" name="Level_7"/>
+      <VALUE val="0x8" name="Level_8"/>
+      <VALUE val="0x9" name="Level_9"/>
+      <VALUE val="0xa" name="Level_10"/>
+      <VALUE val="0xb" name="Level_11"/>
+      <VALUE val="0xc" name="Level_12"/>
+      <VALUE val="0xd" name="Level_13"/>
+      <VALUE val="0xe" name="Level_14"/>
+      <VALUE val="0xf" name="Level_15"/>
+    </KEY>
+    <KEY name="SamplingRate" id="0xa5000000" sampleRate="true" description="Sampling Rate">
+      <VALUE val="0x1f40" name="SR_8K" sampleRate="0x1f40"/>
+      <VALUE val="0x3e80" name="SR_16K" sampleRate="0x3e80"/>
+      <VALUE val="0x7d00" name="SR_32K" sampleRate="0x7d00"/>
+      <VALUE val="0xac44" name="SR_44.1K" sampleRate="0xac44"/>
+      <VALUE val="0xbb80" name="SR_48K" sampleRate="0xbb80"/>
+      <VALUE val="0x17700" name="SR_96K" sampleRate="0x17700"/>
+      <VALUE val="0x2ee00" name="SR_192K" sampleRate="0x2ee00"/>
+      <VALUE val="0x5dc00" name="SR_384K" sampleRate="0x5dc00"/>
+    </KEY>
+    <KEY name="BitWidth" id="0xa6000000" description="Bit Width">
+      <VALUE val="0x10" name="BW_16"/>
+      <VALUE val="0x18" name="BW_24"/>
+      <VALUE val="0x20" name="BW_32"/>
+    </KEY>
+    <KEY name="Pause" id="0xa7000000" description="Pause">
+      <VALUE val="0x0" name="Off"/>
+      <VALUE val="0x1" name="On"/>
+    </KEY>
+    <KEY name="Mute" id="0xa8000000" description="Mute">
+      <VALUE val="0x0" name="Off"/>
+      <VALUE val="0x1" name="On"/>
+    </KEY>
+    <KEY name="Channels" id="0xa9000000" description="Channels">
+      <VALUE val="0x1" name="CHS_1"/>
+      <VALUE val="0x2" name="CHS_2"/>
+      <VALUE val="0x3" name="CHS_3"/>
+      <VALUE val="0x4" name="CHS_4"/>
+      <VALUE val="0x5" name="CHS_5"/>
+      <VALUE val="0x6" name="CHS_6"/>
+      <VALUE val="0x7" name="CHS_7"/>
+      <VALUE val="0x8" name="CHS_8"/>
+    </KEY>
+    <KEY name="Fluence" id="0xaa000000" description="Fluence">
+      <VALUE val="0x0" name="Off"/>
+      <VALUE val="0x1" name="On"/>
+    </KEY>
+  </KEY_LIST>
+  <GRAPH_KEY description="Graph Keys">
+    <KEY id="0xa1000000" name="Stream"/>
+    <KEY id="0xa2000000" name="DeviceRX"/>
+    <KEY id="0xa3000000" name="DeviceTX"/>
+    <KEY id="0xac000000" name="DevicePP_Rx"/>
+    <KEY id="0xad000000" name="DevicePP_Tx"/>
+    <KEY id="0xab000000" name="Instance"/>
+  </GRAPH_KEY>
+  <CAL_KEY description="Calibration Keys">
+    <KEY id="0xa4000000" name="Volume"/>
+  </CAL_KEY>
+  <MODULE_TAGS>
+    <TAG id="0xc0000004" name="device_hw_ep_rx" description="Hw EP Rx">
+      <KEY id="0xa2000000" name="DeviceRX"/>
+      <KEY id="0xa5000000" name="SamplingRate"/>
+      <KEY id="0xa6000000" name="BitWidth"/>
+      <KEY id="0xa9000000" name="Channels"/>
+    </TAG>
+    <TAG id="0xc0000005" name="device_hw_ep_tx" description="Hw EP Tx">
+      <KEY id="0xa3000000" name="DeviceTX"/>
+      <KEY id="0xa5000000" name="SamplingRate"/>
+      <KEY id="0xa6000000" name="BitWidth"/>
+      <KEY id="0xa9000000" name="Channels"/>
+    </TAG>
+    <TAG id="0xc0000006" name="stream_pause" description="Stream Pause">
+      <KEY id="0xa7000000" name="Pause"/>
+    </TAG>
+    <TAG id="0xc0000007" name="stream_mute" description="Stream Mute">
+      <KEY id="0xa8000000" name="Mute"/>
+    </TAG>
+    <TAG id="0xc000000a" name="device_fluence" description="Fluence On/Off">
+      <KEY id="0xaa000000" name="Fluence"/>
+    </TAG>
+    <TAG id="0xc000000d" name="stream_volume" description="Stream Volume">
+      <KEY id="0xa4000000" name="Volume"/>
+    </TAG>
+    <TAG id="0xc0000011" name="device_pp_mfc" description="Device PP MFC">
+      <KEY id="0xa5000000" name="SamplingRate"/>
+    </TAG>
+    <TAG id="0xc0000001" name="sh_ep"/>
+    <TAG id="0xc0000002" name="stream_input_media_format"/>
+    <TAG id="0xc0000003" name="stream_output_media_format"/>
+    <TAG id="0xc0000008" name="device_sva"/>
+    <TAG id="0xc0000009" name="device_adam"/>
+    <TAG id="0xc000000b" name="stream_mfc"/>
+    <TAG id="0xc000000c" name="device_mfc"/>
+    <TAG id="0xc000000e" name="stream_pcm_decoder"/>
+    <TAG id="0xc000000f" name="stream_pcm_encoder"/>
+    <TAG id="0xc0000010" name="stream_pcm_converter"/>
+  </MODULE_TAGS>
+</KEY_DEF>

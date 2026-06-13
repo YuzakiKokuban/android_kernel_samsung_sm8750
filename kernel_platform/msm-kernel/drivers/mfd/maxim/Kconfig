@@ -1,0 +1,18 @@
+config MFD_MAX77775
+	tristate "Maxim Semiconductor MAX77775 PMIC Support"
+	depends on I2C=y
+	select MFD_CORE
+	help
+	  Say yes here to support for Maxim Semiconductor MAX77775.
+	  This is a Power Management IC with Charger, safe LDOs,
+	  and Haptic controls on chip.
+	  This driver provides common support for accessing the device;
+	  additional drivers
+
+config MAX77775_ABC_IFPMIC_EVENT
+	bool "Using EVENT SENDING TO ABC MODULE"
+	depends on I2C=y
+	default n
+	help
+	  If you say yes here you will not get support for the sending event to abc module.
+

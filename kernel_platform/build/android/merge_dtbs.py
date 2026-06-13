@@ -1,0 +1,1 @@
+../kernel/android/merge_dtbs.py

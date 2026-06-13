@@ -1,0 +1,213 @@
+/* Copyright (c) 2019, The Linux Foundation. All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are
+* met:
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above
+*       copyright notice, this list of conditions and the following
+*       disclaimer in the documentation and/or other materials provided
+*       with the distribution.
+*     * Neither the name of The Linux Foundation nor the names of its
+*       contributors may be used to endorse or promote products derived
+*       from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+*/
+
+
+package vendor.qti.hardware.fstman@1.0;
+
+import IFstGroupCallback;
+
+/**
+ * Interface exposed by the supplicant for each FST group (e.g bond0)
+ * it controls.
+ */
+interface IFstGroup {
+
+  /**
+   * Retrieves the name of the FST group.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|
+   * @return name Name of the FST group, e.g., bond0
+   */
+  getName() generates (FstManagerStatus status, string name);
+
+  /**
+   * Register for callbacks from this group.
+   *
+   * These callbacks are invoked for events that are specific to this group.
+   * Registration of multiple callback objects is supported. These objects must
+   * be automatically deleted when the corresponding client process is dead or
+   * if this group is removed.
+   *
+   * @param callback An instance of the |IFstGroupCallback| HIDL
+   *        interface object.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|,
+   */
+  registerCallback(IFstGroupCallback callback)
+      generates (FstManagerStatus status);
+
+  /**
+   * Retrieve a list of all interfaces belonging to this group.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|
+   * @return ifaceNames List of names for interfaces belonging to this group.
+   */
+  listInterfaces() generates (FstManagerStatus status, vec<string> ifaceNames);
+
+  /**
+   * check if FST mode is supported for this group.
+   * When FST mode is supported, framework should detect FST-capable AP by
+   * checking for presence of MB IE in probe response.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|,
+   * @return supported true if FST mode is supported, false if not.
+   */
+  isFstModeSupported() generates (FstManagerStatus status, bool supported);
+
+  /**
+   * check if WIFI SON mode is supported for this group.
+   * When SON mode is supported, framework should detect SON-capable AP by
+   * checking for presence of SON IE in probe response.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|,
+   * @return supported true if WIFI SON mode supported, false if not.
+   */
+  isWifiSonModeSupported() generates (FstManagerStatus status, bool supported);
+
+  /**
+   * get the name of the MUX interface used by this group.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|,
+   * @return name name of the MUX interface (such as bond0)
+   */
+  getMuxInterfaceName() generates (FstManagerStatus status, string name);
+
+  /**
+   * set the name of the MUX interface used by this group.
+   * The group must not have any enslaved interfaces or active connection.
+   *
+   * @param name new name for the MUX interface.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|,
+   */
+  setMuxInterfaceName(string name) generates (FstManagerStatus status);
+
+  /**
+   * Enslave or release a group interface.
+   * When enslaving, interface will be added to master
+   * interface as a slave.
+   * When releasing, interface will be detached from
+   * master interface and no longer be a slave.
+   * When releasing, fst-manager will also disconnect
+   * any active connection on the interface (via supplicant)
+   *
+   * @param ifname interface name, must be one of the group interfaces.
+   * @param enslave true to enslave, false to release
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_ARGS_INVALID|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|,
+   */
+   enslave(string ifname, bool enslave)
+       generates (FstManagerStatus status);
+
+  /**
+   * check if the interface is currently enslaved under the
+   * MUX interface.
+   *
+   * @param ifname interface name, must be one of the group interfaces.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_ARGS_INVALID|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|,
+   * @return enslaved true if interface is enslaved, false if not.
+   */
+   isEnslaved(string ifname)
+       generates (FstManagerStatus status, bool enslaved);
+
+   /**
+    * Changes the MAC address of the group master interface
+    * and its underlying interfaces.
+    *
+    * @param mac MAC address to change into.
+    * @return status WifiStatus of the operation.
+    *         Possible status codes:
+    *         |FstManagerStatusCode.SUCCESS|,
+    *         |FstManagerStatusCode.FAILURE_UNKNOWN|,
+    */
+   setMacAddress(MacAddress mac) generates (FstManagerStatus status);
+
+  /**
+   * check if the specified interface is the rate upgrade master for
+   * this group. The rate upgrade master is typically the "always on"
+   * connection which is used as a fallback when the faster (but less
+   * reliable) interface is not available.
+   *
+   * @param ifname interface name, must be one of the group interfaces.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_ARGS_INVALID|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|,
+   * @return isMaster true if interface is rate upgrade master, false if not.
+   */
+   isRateUpgradeMaster(string ifname)
+       generates (FstManagerStatus status, bool isMaster);
+
+  /**
+   * rename one of the group interfaces.
+   * The interface must not be enslaved, and the group must
+   * not have an active connection.
+   *
+   * @param ifname interface name, must be one of the group interfaces.
+   * @param newifname new interface name for this interface.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |FstManagerStatusCode.SUCCESS|,
+   *         |FstManagerStatusCode.FAILURE_ARGS_INVALID|,
+   *         |FstManagerStatusCode.FAILURE_UNKNOWN|,
+   */
+   renameInterface(string ifname, string newifname)
+       generates (FstManagerStatus status);
+};

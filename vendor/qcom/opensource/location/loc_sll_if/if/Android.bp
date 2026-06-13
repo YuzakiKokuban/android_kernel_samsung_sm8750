@@ -1,0 +1,9 @@
+
+cc_library_headers {
+
+    name: "loc_sll_if_headers",
+    owner: "qti",
+    vendor: true,
+
+    export_include_dirs: ["."],
+}

@@ -1,0 +1,15 @@
+name: "bazelbuild-rules_python"
+description: "A repository of Starlark implementation of Python rules in Bazel"
+third_party {
+  license_type: NOTICE
+  last_upgrade_date {
+    year: 2024
+    month: 1
+    day: 17
+  }
+  identifier {
+    type: "Git"
+    value: "https://github.com/bazelbuild/rules_python"
+    version: "0.25.0"
+  }
+}

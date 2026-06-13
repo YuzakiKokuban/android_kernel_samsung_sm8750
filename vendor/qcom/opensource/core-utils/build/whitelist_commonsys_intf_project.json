@@ -1,0 +1,9 @@
+[
+"vendor/qcom/opensource/core-utils",
+"vendor/qcom/proprietary/commonsys-intf/data-noship",
+"vendor/qcom/proprietary/commonsys-intf/qcc",
+"vendor/qcom/opensource/commonsys/audio",
+"vendor/qcom/proprietary/common",
+"vendor/qcom/proprietary/commonsys-intf/data",
+"vendor/qcom/proprietary/commonsys/noship-cne/common"
+]

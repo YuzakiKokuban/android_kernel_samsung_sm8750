@@ -1,0 +1,5 @@
+config SEC_QC_LOGGER
+	tristate "SEC Logger for Qualcomm based devices"
+	depends on SEC_DEBUG_REGION
+	help
+	  TODO: help is not ready.

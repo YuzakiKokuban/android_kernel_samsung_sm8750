@@ -1,0 +1,78 @@
+#
+# PROCA feature configuration
+#
+
+config PROCA
+	bool "Process Authenticator"
+	depends on FIVE
+	default n
+	help
+	   Enable Process Authenticator
+
+config PROCA_GKI_10
+	bool "GKI 1.0 compatible version of PROCA"
+	depends on PROCA
+	default y if FIVE_GKI_10
+	default n
+	help
+	   Build GKI 1.0 compatible version of PROCA
+
+config PROCA_S_OS
+	bool "S OS compatible version of PROCA"
+	depends on PROCA
+	default n
+	help
+	   Build S OS compatible version of PROCA
+
+choice
+	prompt "Choose PROCA certificate storage type"
+	default PROCA_CERTIFICATES_XATTR
+	depends on PROCA_S_OS
+	help
+	  This option allows to choose type of storage for certificates.
+	  There are two options: storage in xattr or in the database.
+
+config PROCA_CERTIFICATES_XATTR
+	bool "Xattr for certificates"
+	help
+	   Use xattr for PROCA certificates
+
+config PROCA_CERTIFICATES_DB
+	bool "PROCA database for certificates"
+	help
+	   Use database for PROCA certificates
+endchoice
+
+config PROCA_CERT_ENG
+    string "PROCA certificate to verify signatures for eng binary"
+    depends on PROCA
+    default "x509_proca_eng.der"
+    help
+      Path to CERT which will be built-in to eng binary
+
+config PROCA_CERT_USER
+    string "PROCA certificate to verify signatures for user binary"
+    depends on PROCA
+    default "x509_proca_user.der"
+    help
+      Path to CERT which will be built-in to user binary
+
+config PROCA_CERT_DEVICE
+	bool "PROCA certificate device"
+	depends on PROCA_CERTIFICATES_DB && !SAMSUNG_PRODUCT_SHIP
+	default y if PROCA_CERTIFICATES_DB && !SAMSUNG_PRODUCT_SHIP
+	default n
+	help
+	   Enable the certificate device /dev/proca_cert for reading and
+	   updating test database in /data/proca.db
+
+config PROCA_DEBUG
+	bool "PROCA Debug mode"
+	depends on PROCA && !SAMSUNG_PRODUCT_SHIP
+	default y
+	help
+	   Enable the debug mode in the PROCA. When this option is enabled
+	   PROCA driver creates file /proc/<pid>/integrity/proca_certificate
+	   which contains hex representation of binary proca certificate. It
+	   might be used to check existence of task descriptor for some task
+	   in proca table.

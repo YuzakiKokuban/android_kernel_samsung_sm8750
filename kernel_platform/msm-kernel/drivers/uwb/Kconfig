@@ -1,0 +1,40 @@
+#
+# UWB device configuration
+#
+config SAMSUNG_UWB
+	tristate "Samsung UWB driver"
+	default n
+	help
+	  Say Y here if you want to build support for UWB devices.
+	  To compile this support as a module, choose M here: the module will
+	  be called uwb.
+
+config UWB_SR200
+	bool "Nxp SPI driver for SR200 devices"
+	default n
+	help
+	  NXP SR200 UWB controller support.
+
+config SEC_UWB_LOGGER
+	bool "UWB logger"
+	default n
+	help
+	  Enable UWB logger.
+
+config ACPM_INIT
+	bool "ACPM INIT"
+	default n
+	help
+	  ACPM INIT must be called to use CLK4 in S5910.
+
+config UWB_QM35
+	bool "Qorvo SPI driver for QM35 devices"
+	default n
+	help
+	  Qorvo QM35 UWB controller support.
+
+config UWB_USE_CLK_REQ
+	bool "USE CLK REQ for using PMIC clock"
+	default n
+	help
+	  Use CLK REQ pin for using PMIC clock.

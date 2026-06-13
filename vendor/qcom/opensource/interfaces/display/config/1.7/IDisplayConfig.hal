@@ -1,0 +1,100 @@
+/*
+* Copyright (c) 2018 The Linux Foundation. All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are
+* met:
+*    * Redistributions of source code must retain the above copyright
+*      notice, this list of conditions and the following disclaimer.
+*    * Redistributions in binary form must reproduce the above
+*      copyright notice, this list of conditions and the following
+*      disclaimer in the documentation and/or other materials provided
+*      with the distribution.
+*    * Neither the name of The Linux Foundation. nor the names of its
+*      contributors may be used to endorse or promote products derived
+*      from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+package vendor.display.config@1.7;
+
+import @1.6::IDisplayConfig;
+
+interface IDisplayConfig extends @1.6::IDisplayConfig {
+    enum PowerMode : int32_t {
+        Off = 0,
+        Doze = 1,
+        On = 2,
+        DozeSuspend = 3,
+    };
+
+    /*
+     * Sets new power mode on the specificied display.
+     *
+     * @param disp_id display identifier used between client & service
+     * @param power_mode new power mode
+     * @return error is NONE upon success
+     */
+    @callflow(next="*")
+    setPowerMode(uint32_t disp_id, PowerMode power_mode) generates (int32_t error);
+
+    /*
+     * Query if power mode override is supported by underlying implementation
+     * for the specified display.
+     *
+     * @param disp_id display identifier used between client & service
+     * @return supported true if supported
+     */
+    @callflow(next="*")
+    isPowerModeOverrideSupported(uint32_t disp_id) generates (bool supported);
+
+    /*
+     * Query if hdr is supported by the underlying implementation for the specified display.
+     *
+     * @param disp_id display identifier used between client & service
+     * @return supported true if supported
+     */
+    @callflow(next="*")
+    isHDRSupported(uint32_t disp_id) generates (bool supported);
+
+    /*
+     * Query if wide color gamut is supported by the underlying implementation
+     * for the specified display.
+     *
+     * @param disp_id display identifier used between client & service
+     * @return supported true if supported
+     */
+    @callflow(next="*")
+    isWCGSupported(uint32_t disp_id) generates (bool supported);
+
+    /*
+     * Sets layer as a mask type (e.g. round corner) identified by the layer id.
+     *
+     * @param disp_id display identifier used between client & service
+     * @param layer_id layer id used for communication with hwc
+     * @return error is NONE upon success
+     */
+    @callflow(next="*")
+    setLayerAsMask(uint32_t disp_id, uint64_t layer_id) generates (int32_t error);
+
+    /*
+     * Gets value corresponding to the specified property string from hwc.
+     *
+     * @param prop_name name of the property
+     * @param value value corresponding to the property
+     * @return error is NONE upon success
+     */
+    @callflow(next="*")
+    getDebugProperty(string prop_name) generates (string value, int32_t error);
+};

@@ -1,0 +1,18 @@
+config SENSORS_FLICKER_SELF_TEST
+	tristate "Flicker EOL test use flash"
+	help
+		make Test environment using led flash.
+
+config SENSORS_STK6D2X
+	tristate "STK STK68210 ALS, Flicker sensor"
+	depends on I2C
+	help
+	  If you say yes here, you get support for the STK STK68210.
+	  This driver can also be built as a module.
+	  If so, the module will be called flicker_sensor.
+
+config FLICKER_PWM_CALIBRATION
+	bool "Support Flicker OSC Calibration"
+	help
+	  Using PWM pulse, Enhance resolution accuracy
+	  This config just enable sensor side functions.

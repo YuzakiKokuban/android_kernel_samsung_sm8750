@@ -1,0 +1,33 @@
+
+cc_library_shared {
+
+    name: "libgnsspps",
+    vendor: true,
+
+    shared_libs: [
+        "libutils",
+        "libcutils",
+        "libgps.utils",
+        "liblog",
+    ],
+
+    srcs: ["gnsspps.c"],
+
+    cflags: [
+        "-fno-short-enums",
+        "-D_ANDROID_",
+    ] + GNSS_CFLAGS, //# Includes
+
+    header_libs: [
+        "libgps.utils_headers",
+        "libloc_pla_headers",
+    ],
+
+}
+
+cc_library_headers {
+
+    name: "libgnsspps_headers",
+    export_include_dirs: ["."],
+    vendor: true,
+}

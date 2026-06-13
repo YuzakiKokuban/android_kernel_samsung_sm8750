@@ -1,0 +1,5 @@
+config SEC_RISCV64_AP_CONTEXT
+	tristate "SEC AP CORE/CSR context snaphot (RISC-V)"
+	depends on SEC_DEBUG_REGION && RISCV && 64BIT && ANDROID_VENDOR_HOOKS
+	help
+	  TODO: help is not ready.

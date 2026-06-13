@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear
+-->
+<modules>
+<module name="default">
+    <mixPorts>
+        <!-- based on role, mixport flags are identified as either input flags or
+        output flags-->
+        <!-- start of source mixports-->
+        <mixPort name="primary_out" role="source" flags="PRIMARY">
+            <profile samplingRates="48000" channelLayouts="LAYOUT_STEREO" formatType="PCM" pcmType="INT_16_BIT" />
+        </mixPort>
+        <mixPort name="haptic" role="source">
+            <profile samplingRates="48000" channelLayouts="LAYOUT_STEREO_HAPTIC_A" formatType="PCM" pcmType="INT_16_BIT" />
+        </mixPort>
+        <mixPort name="voice_tx" role="source">
+            <profile samplingRates="8000 16000 32000 48000" channelLayouts="LAYOUT_MONO LAYOUT_STEREO" formatType="PCM" pcmType="INT_16_BIT" />
+        </mixPort>
+        <!-- end of source mixports-->
+
+        <!-- start of sink mixports-->
+        <mixPort name="primary input" role="sink">
+            <profile samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000" channelLayouts="LAYOUT_MONO LAYOUT_STEREO LAYOUT_FRONT_BACK LAYOUT_2POINT0POINT2" formatType="PCM" pcmType="INT_16_BIT" />
+        </mixPort>
+        <mixPort name="voice_rx" role="sink">
+            <profile samplingRates="8000 16000 48000" channelLayouts="LAYOUT_MONO LAYOUT_STEREO" formatType="PCM" pcmType="INT_16_BIT" />
+        </mixPort>
+        <!-- end of sink mixports-->
+    </mixPorts>
+    <devicePorts>
+        <!-- start of sink DEVICE PORT -->
+        <devicePort tagName="Earpiece" role="sink" attached="true" deviceType="OUT_SPEAKER_EARPIECE">
+            <profile samplingRates="48000" channelLayouts="LAYOUT_MONO" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <devicePort tagName="Speaker" role="sink" attached="true" defaultDevice="true" deviceType="OUT_SPEAKER">
+            <profile samplingRates="48000" channelLayouts="LAYOUT_STEREO" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <devicePort tagName="BT SCO" deviceType="OUT_DEVICE" connection="bt-sco" role="sink">
+            <profile samplingRates="8000 48000" channelLayouts="LAYOUT_MONO" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <devicePort tagName="BT SCO Headset" deviceType="OUT_HEADSET" connection="bt-sco" role="sink">
+            <profile samplingRates="8000 16000" channelLayouts="LAYOUT_MONO" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <devicePort tagName="BT SCO Car Kit" deviceType="OUT_CARKIT" connection="bt-sco" role="sink">
+            <profile samplingRates="8000 16000" channelLayouts="LAYOUT_MONO" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <devicePort tagName="Telephony Tx" deviceType="OUT_TELEPHONY_TX" role="sink" attached="true">
+            <profile samplingRates="8000 16000" channelLayouts="LAYOUT_MONO LAYOUT_STEREO" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <!-- Todo check the sanity of below later w.r.t channel layouts -->
+        <devicePort tagName="HDMI" deviceType="OUT_DEVICE" connection="hdmi" role="sink">
+            <profile samplingRates="44100 48000 64000 88200 96000 128000 176400 192000" channelLayouts="LAYOUT_MONO LAYOUT_STEREO" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <devicePort tagName="BT A2DP Out" deviceType="OUT_DEVICE" connection="bt-a2dp" role="sink">
+            <profile samplingRates="48000" channelLayouts="LAYOUT_STEREO" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <devicePort tagName="BT A2DP Headphones" deviceType="OUT_HEADPHONE" connection="bt-a2dp" role="sink">
+            <profile samplingRates="48000" channelLayouts="LAYOUT_STEREO" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <devicePort tagName="BT A2DP Speaker" deviceType="OUT_SPEAKER" connection="bt-a2dp" role="sink">
+            <profile samplingRates="48000" channelLayouts="LAYOUT_STEREO" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <devicePort tagName="USB Device Out" deviceType="OUT_DEVICE" connection="usb" role="sink"/>
+        <devicePort tagName="USB Headset Out" deviceType="OUT_HEADSET" connection="usb" role="sink"/>
+        <!-- end of sink DEVICE PORT -->
+
+        <!-- start of source DEVICE PORT -->
+        <devicePort tagName="Built-In Mic" deviceType="IN_MICROPHONE" role="source" attached="true" defaultDevice="true" address="bottom">
+            <profile samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000" channelLayouts="LAYOUT_MONO LAYOUT_STEREO LAYOUT_FRONT_BACK" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <devicePort tagName="FM Tuner" deviceType="IN_FM_TUNER" connection="fm" role="source">
+            <profile samplingRates="8000,11025,12000,16000,22050,24000,32000,44100,48000" channelLayouts="LAYOUT_MONO LAYOUT_STEREO" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <devicePort tagName="BT SCO Headset Mic" deviceType="IN_HEADSET" connection="bt-sco" role="source">
+            <profile samplingRates="8000 16000" channelLayouts="LAYOUT_MONO" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <devicePort tagName="Telephony Rx" deviceType="IN_TELEPHONY_RX" role="source" attached="true">
+            <profile samplingRates="8000,11025,12000,16000,22050,24000,32000,44100,48000" channelLayouts="LAYOUT_MONO" formatType="PCM" pcmType="INT_16_BIT" />
+        </devicePort>
+        <devicePort tagName="USB Device In" deviceType="IN_DEVICE" connection="usb" role="source" >
+        </devicePort>
+        <devicePort tagName="USB Headset In" deviceType="IN_HEADSET" connection="usb" role="source" >
+        </devicePort>
+        <!-- end of source DEVICE PORT -->
+    </devicePorts>
+    <routes>
+        <route type="mix" sink="Earpiece" sources="primary_out,Telephony Rx" />
+        <route type="mix" sink="Speaker" sources="primary_out,haptic,Telephony Rx" />
+        <route type="mix" sink="HDMI" sources="primary_out" />
+
+        <route type="mix" sink="BT SCO" sources="primary_out,haptic,Telephony Rx"/>
+        <route type="mix" sink="BT SCO Headset" sources="primary_out,haptic,Telephony Rx"/>
+        <route type="mix" sink="BT SCO Car Kit" sources="primary_out,haptic,Telephony Rx"/>
+
+        <route type="mix" sink="USB Device Out" sources="primary_out,haptic,Telephony Rx"/>
+        <route type="mix" sink="USB Headset Out" sources="primary_out,haptic,Telephony Rx"/>
+
+        <route type="mix" sink="BT A2DP Out" sources="primary_out,haptic"/>
+        <route type="mix" sink="BT A2DP Headphones" sources="primary_out,haptic"/>
+        <route type="mix" sink="BT A2DP Speaker" sources="primary_out,haptic"/>
+
+
+        <route type="mix" sink="Telephony Tx" sources="voice_tx,Built-In Mic,BT SCO Headset Mic,USB Device In,USB Headset In"/>
+
+        <route type="mix" sink="primary input" sources="Built-In Mic,BT SCO Headset Mic,FM Tuner,USB Device In,USB Headset In,Telephony Rx"/>
+        <route type="mix" sink="voice_rx" sources="Telephony Rx"/>
+    </routes>
+</module>
+</modules>

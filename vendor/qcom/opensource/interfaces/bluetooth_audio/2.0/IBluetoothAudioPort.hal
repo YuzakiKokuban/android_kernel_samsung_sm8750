@@ -1,0 +1,87 @@
+/*
+ * Copyright (c) 2019 The Linux Foundation. All rights reserved.
+ * Not a contribution.
+ */
+
+/*
+ * Copyright 2018 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package vendor.qti.hardware.bluetooth_audio@2.0;
+
+/**
+ * HAL interface from the Audio HAL to the Bluetooth stack
+ *
+ * The Audio HAL calls methods in this interface to start, suspend, and stop
+ * an audio stream. These calls return immediately and the results, if any,
+ * are sent over the IBluetoothAudioProvider interface.
+ *
+ * Moreover, the Audio HAL can also get the presentation position of the stream
+ * and provide stream metadata.
+ *
+ * Note: For HIDL APIs with a "generates" statement, the callback parameter used
+ * for return value must be invoked synchronously before the API call returns.
+ */
+interface IBluetoothAudioPort {
+    /**
+     * This indicates that the caller of this method has opened the data path
+     * and wants to start an audio stream. The caller must wait for a
+     * IBluetoothAudioProvider.streamStarted(Status) call.
+     */
+    startStream();
+
+    /**
+     * This indicates that the caller of this method wants to suspend the audio
+     * stream. The caller must wait for the Bluetooth process to call
+     * IBluetoothAudioProvider.streamSuspended(Status). The caller still keeps
+     * the data path open.
+     */
+    suspendStream();
+
+    /**
+     * This indicates that the caller of this method wants to stop the audio
+     * stream. The data path will be closed after this call. There is no
+     * callback from the IBluetoothAudioProvider interface even though the
+     * teardown is asynchronous.
+     */
+    stopStream();
+
+    /**
+     * Get the audio presentation position.
+     *
+     * @return status the command status
+     * @return remoteDeviceAudioDelayNanos the audio delay from when the remote
+     *    device (e.g. headset) receives audio data to when the device plays the
+     *    sound. If the delay is unknown, the value is set to zero.
+     * @return transmittedOctets the number of audio data octets that were sent
+     *    to a remote device. This excludes octets that have been written to the
+     *    data path but have not been sent to the remote device. The count is
+     *    not reset until stopStream() is called. If the software data path is
+     *    unused (e.g. A2DP Hardware Offload), the value is set to 0.
+     * @return transmittedOctetsTimeStamp the value of CLOCK_MONOTONIC
+     *    corresponding to transmittedOctets. If the software data path is
+     *    unused (e.g., for A2DP Hardware Offload), the value is set to zero.
+     */
+    getPresentationPosition() generates (Status status,
+        uint64_t remoteDeviceAudioDelayNanos, uint64_t transmittedOctets,
+        TimeSpec transmittedOctetsTimeStamp);
+
+    /**
+     * Called when Audio remorts Aptx Adaptive operating mode has changes
+     *
+     * @param aptxMode: Value of the current Aptx Adaptive Mode
+     */
+    updateAptxMode(uint16_t aptxMode);
+};

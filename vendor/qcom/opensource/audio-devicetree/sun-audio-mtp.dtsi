@@ -1,0 +1,178 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+#include "sun-audio-overlay.dtsi"
+
+&lpi_tlmm {
+	spkr_02_sd_n {
+		lpi_spkr_02_sd_n_sleep: spkr_02_sd_n_sleep {
+			mux {
+				pins = "gpio17";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio17";
+				drive-strength = <2>;   /* 2 mA */
+				bias-pull-down;
+				input-enable;
+			};
+		};
+
+		lpi_spkr_02_sd_n_active: spkr_02_sd_n_active {
+			mux {
+				pins = "gpio17";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio17";
+				drive-strength = <16>;   /* 16 mA */
+				bias-disable;
+				output-high;
+			};
+		};
+	};
+
+	spkr_13_sd_n {
+		lpi_spkr_13_sd_n_sleep: spkr_13_sd_n_sleep {
+			mux {
+				pins = "gpio18";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio18";
+				drive-strength = <2>;   /* 2 mA */
+				bias-pull-down;
+				input-enable;
+			};
+		};
+
+		lpi_spkr_13_sd_n_active: spkr_13_sd_n_active {
+			mux {
+				pins = "gpio18";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio18";
+				drive-strength = <16>;   /* 16 mA */
+				bias-disable;
+				output-high;
+			};
+		};
+	};
+};
+
+&wsa_spkr_en02 {
+	pinctrl-0 = <&lpi_spkr_02_sd_n_active>;
+	pinctrl-1 = <&lpi_spkr_02_sd_n_sleep>;
+};
+
+&wsa_spkr_en13 {
+	pinctrl-0 = <&lpi_spkr_13_sd_n_active>;
+	pinctrl-1 = <&lpi_spkr_13_sd_n_sleep>;
+};
+
+&fm_i2s1_gpios {
+	status = "ok";
+};
+
+&sun_snd {
+	qcom,model = "sun-mtp-wsa883x-snd-card";
+	qcom,sec-mi2s-gpios = <&fm_i2s1_gpios>;
+	asoc-codec  = <&stub_codec>, <&lpass_cdc>,
+			<&wcd939x_codec>, <&swr_haptics>,
+			<&wsa883x_0221>, <&wsa883x_0222>;
+
+	qcom,msm-mbhc-usbc-audio-supported = <1>;
+	qcom,msm-mbhc-hphl-swh = <0>;
+	qcom,msm-mbhc-gnd-swh = <0>;
+	qcom,wcd-disable-legacy-surge;
+	wcd939x-i2c-handle = <&wcd_usbss>;
+};
+
+&wsa884x_0220 {
+	status = "disabled";
+};
+
+&wsa884x_0221 {
+	status = "disabled";
+};
+
+&wsa884x_2_0220 {
+	status = "disabled";
+};
+
+&wsa884x_2_0221 {
+	status = "disabled";
+};
+
+&swr0 {
+	wsa883x_0221: wsa883x@02170221 {
+		compatible = "qcom,wsa883x";
+		reg = <0x2 0x2170221>;
+		qcom,spkr-sd-n-node = <&wsa_spkr_en02>;
+		qcom,lpass-cdc-handle = <&lpass_cdc>;
+		cdc-vdd-1p8-supply = <&L15B>;
+		qcom,cdc-vdd-1p8-voltage = <1800000 1800000>;
+		qcom,cdc-vdd-1p8-current = <20000>;
+		qcom,cdc-vdd-1p8-lpm-supported = <1>;
+		qcom,cdc-static-supplies = "cdc-vdd-1p8";
+		sound-name-prefix = "SpkrLeft";
+	};
+
+	wsa883x_0222: wsa883x@02170222 {
+		compatible = "qcom,wsa883x";
+		reg = <0x2 0x2170222>;
+		qcom,spkr-sd-n-node = <&wsa_spkr_en13>;
+		qcom,lpass-cdc-handle = <&lpass_cdc>;
+		cdc-vdd-1p8-supply = <&L15B>;
+		qcom,cdc-vdd-1p8-voltage = <1800000 1800000>;
+		qcom,cdc-vdd-1p8-current = <20000>;
+		qcom,cdc-vdd-1p8-lpm-supported = <1>;
+		qcom,cdc-static-supplies = "cdc-vdd-1p8";
+		sound-name-prefix = "SpkrRight";
+	};
+};
+
+&swr3 {
+	wsa883x_2_0221: wsa883x@02170221 {
+		compatible = "qcom,wsa883x_2";
+		reg = <0x2 0x2170221>;
+		qcom,spkr-sd-n-node = <&wsa_spkr_en02>;
+		qcom,lpass-cdc-handle = <&lpass_cdc>;
+		cdc-vdd-1p8-supply = <&L15B>;
+		qcom,cdc-vdd-1p8-voltage = <1800000 1800000>;
+		qcom,cdc-vdd-1p8-current = <20000>;
+		qcom,cdc-vdd-1p8-lpm-supported = <1>;
+		qcom,cdc-static-supplies = "cdc-vdd-1p8";
+		sound-name-prefix = "Spkr2Left";
+		status = "disabled";
+	};
+
+	wsa883x_2_0222: wsa883x@02170222 {
+		compatible = "qcom,wsa883x";
+		reg = <0x2 0x2170222>;
+		qcom,spkr-sd-n-node = <&wsa_spkr_en13>;
+		qcom,lpass-cdc-handle = <&lpass_cdc>;
+		cdc-vdd-1p8-supply = <&L15B>;
+		qcom,cdc-vdd-1p8-voltage = <1800000 1800000>;
+		qcom,cdc-vdd-1p8-current = <20000>;
+		qcom,cdc-vdd-1p8-lpm-supported = <1>;
+		qcom,cdc-static-supplies = "cdc-vdd-1p8";
+		sound-name-prefix = "Spkr2Right";
+		status = "disabled";
+	};
+};
+
+&wsa_macro {
+	qcom,wsa-bat-cfgs= <0>, <0>;
+};
+
+&wsa2_macro {
+	qcom,wsa-bat-cfgs= <0>, <0>;
+};

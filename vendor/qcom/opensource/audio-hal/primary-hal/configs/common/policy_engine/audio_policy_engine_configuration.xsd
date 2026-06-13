@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear
+-->
+
+ <xs:schema version="2.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!-- List the config versions supported by audio policy engine. -->
+    <xs:simpleType name="version">
+        <xs:restriction base="xs:decimal">
+            <xs:enumeration value="1.0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="configuration">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ProductStrategies" type="ProductStrategies"  minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="criterion_types" type="criterionTypesType"  minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="criteria" type="criteriaType"  minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="volumeGroups" type="volumeGroupsType"  minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="volumes" type="volumesType" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="attributesRef" type="attributesRef"  minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="version" type="version" use="required"/>
+        </xs:complexType>
+
+        <xs:key name="volumeCurveNameKey">
+            <xs:selector xpath="volumes/reference"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="volumeCurveRef" refer="volumeCurveNameKey">
+            <xs:selector xpath="volumeGroups/volumeGroup"/>
+            <xs:field xpath="@ref"/>
+        </xs:keyref>
+
+        <xs:key name="attributesRefNameKey">
+            <xs:selector xpath="attributesRef/reference"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="volumeGroupAttributesRef" refer="attributesRefNameKey">
+            <xs:selector xpath="volumeGroups/volumeGroup/volume"/>
+            <xs:field xpath="@attributesRef"/>
+        </xs:keyref>
+        <xs:keyref name="ProductStrategyAttributesRef" refer="attributesRefNameKey">
+            <xs:selector xpath="ProductStrategies/ProductStrategy/Attributes"/>
+            <xs:field xpath="@attributesRef"/>
+        </xs:keyref>
+
+        <xs:unique name="productStrategyNameUniqueness">
+            <xs:selector xpath="ProductStrategies/ProductStrategy"/>
+            <xs:field xpath="@name"/>
+        </xs:unique>
+
+        <!-- ensure validity of volume group referred in product strategy-->
+        <xs:key name="volumeGroupKey">
+            <xs:selector xpath="volumeGroups/volumeGroup/name"/>
+            <xs:field xpath="."/>
+        </xs:key>
+        <xs:keyref name="volumeGroupRef" refer="volumeGroupKey">
+            <xs:selector xpath="ProductStrategies/ProductStrategy/AttributesGroup"/>
+            <xs:field xpath="@volumeGroup"/>
+        </xs:keyref>
+
+        <xs:unique name="volumeTargetUniqueness">
+            <xs:selector xpath="volumeGroups/volumeGroup"/>
+            <xs:field xpath="@name"/>
+            <xs:field xpath="@deviceCategory"/>
+        </xs:unique>
+
+        <!-- ensure validity of criterion type referred in criterion-->
+        <xs:key name="criterionTypeKey">
+            <xs:selector xpath="criterion_types/criterion_type"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="criterionTypeKeyRef" refer="criterionTypeKey">
+            <xs:selector xpath="criteria/criterion"/>
+            <xs:field xpath="@type"/>
+        </xs:keyref>
+
+    </xs:element>
+
+    <xs:complexType name="ProductStrategies">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="ProductStrategy" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="AttributesGroup" type="AttributesGroup" minOccurs="1" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AttributesGroup">
+        <xs:sequence>
+            <xs:choice minOccurs="0">
+                <xs:element name="Attributes" type="AttributesType" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:sequence>
+                    <xs:element name="ContentType" type="ContentTypeType" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Usage" type="UsageType" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Source" type="SourceType" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Flags" type="FlagsType" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Bundle" type="BundleType" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="streamType" type="stream" use="optional"/>
+        <xs:attribute name="volumeGroup" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="volumeGroupsType">
+        <xs:sequence>
+             <xs:element name="volumeGroup" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                         <xs:element name="name" type="xs:token"/>
+                         <xs:element name="indexMin" type="xs:int" minOccurs="0" maxOccurs="1"/>
+                         <xs:element name="indexMax" type="xs:int" minOccurs="0" maxOccurs="1"/>
+                         <xs:element name="volume" type="volume" minOccurs="1" maxOccurs="unbounded"/>
+                     </xs:sequence>
+                </xs:complexType>
+                <xs:unique name="volumeAttributesUniqueness">
+                    <xs:selector xpath="volume"/>
+                    <xs:field xpath="deviceCategory"/>
+                </xs:unique>
+             </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="volumesType">
+        <xs:sequence>
+            <xs:element name="reference" type="volumeRef" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="attributesRef">
+        <xs:sequence>
+            <xs:element name="reference" type="attributesRefType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="criteriaType">
+        <xs:sequence>
+            <xs:element name="criterion" type="criterionType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="criterionType">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="type" type="xs:string" use="required"/>
+        <xs:attribute name="default" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="criterionTypesType">
+        <xs:sequence>
+            <xs:element name="criterion_type" type="criterionTypeType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="criterionTypeType">
+        <xs:sequence>
+            <xs:element name="values" type="valuesType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:token" use="required"/>
+        <xs:attribute name="type" type="pfwCriterionTypeEnum" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="valuesType">
+        <xs:sequence>
+            <xs:element name="value" type="valueType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="valueType">
+        <xs:attribute name="literal" type="xs:string" use="required"/>
+        <xs:attribute name="numerical" type="xs:long" use="required"/>
+        <xs:attribute name="android_type" type="longDecimalOrHexType" use="optional"/>
+    </xs:complexType>
+
+    <xs:simpleType name="longDecimalOrHexType">
+      <xs:union memberTypes="xs:long longHexType" />
+    </xs:simpleType>
+
+    <xs:simpleType name="longHexType">
+      <xs:restriction base="xs:string">
+        <xs:pattern value="0x[0-9A-Fa-f]{1,16}"/>
+      </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="attributesRefType">
+        <xs:sequence>
+            <xs:element name="Attributes" type="AttributesType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:token" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="AttributesType">
+        <xs:sequence>
+            <xs:element name="ContentType" type="ContentTypeType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="Usage" type="UsageType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="Source" type="SourceType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="Flags" type="FlagsType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="Bundle" type="BundleType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="attributesRef" type="xs:token" use="optional"/>
+        <!-- with xsd 1.1, it is impossible to make choice on either attributes or element...-->
+    </xs:complexType>
+
+    <xs:complexType name="ContentTypeType">
+        <xs:attribute name="value" type="contentType" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="UsageType">
+        <xs:attribute name="value" type="usageEnumType" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="SourceType">
+        <xs:attribute name="value" type="sourceEnumType" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="FlagsType">
+        <xs:attribute name="value" type="flagsEnumType" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="BundleType">
+        <xs:attribute name="key" type="xs:string" use="required"/>
+        <xs:attribute name="value" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="volume">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Volume section defines a volume curve for a given use case and device category.
+                It contains a list of points of this curve expressing the attenuation in Millibels
+                for a given volume index from 0 to 100.
+                <volume deviceCategory="DEVICE_CATEGORY_SPEAKER">
+                    <point>0,-9600</point>
+                    <point>100,0</point>
+                </volume>
+
+                It may also reference a reference/@name to avoid duplicating curves.
+                <volume deviceCategory="DEVICE_CATEGORY_SPEAKER" ref="DEFAULT_MEDIA_VOLUME_CURVE"/>
+                <reference name="DEFAULT_MEDIA_VOLUME_CURVE">
+                    <point>0,-9600</point>
+                    <point>100,0</point>
+                </reference>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="point" type="volumePoint" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="deviceCategory" type="deviceCategory"/>
+        <xs:attribute name="ref" type="xs:token" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="volumeRef">
+        <xs:sequence>
+            <xs:element name="point" type="volumePoint" minOccurs="2" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:token" use="required"/>
+    </xs:complexType>
+
+    <xs:simpleType name="volumePoint">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Comma separated pair of number.
+                The fist one is the framework level (between 0 and 100).
+                The second one is the volume to send to the HAL.
+                The framework will interpolate volumes not specified.
+                Their MUST be at least 2 points specified.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([0-9]{1,2}|100),-?[0-9]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:simpleType name="streamsCsv">
+        <xs:list>
+            <xs:simpleType>
+                <xs:restriction base="stream">
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:list>
+    </xs:simpleType>
+
+    <!-- Enum values of audio_stream_type_t in audio-base.h
+         TODO: avoid manual sync. -->
+    <xs:simpleType name="stream">
+        <xs:restriction base="xs:NMTOKEN">
+            <!--xs:pattern value="\c+(,\c+)*"/-->
+            <xs:enumeration value="AUDIO_STREAM_DEFAULT"/>
+            <xs:enumeration value="AUDIO_STREAM_VOICE_CALL"/>
+            <xs:enumeration value="AUDIO_STREAM_SYSTEM"/>
+            <xs:enumeration value="AUDIO_STREAM_RING"/>
+            <xs:enumeration value="AUDIO_STREAM_MUSIC"/>
+            <xs:enumeration value="AUDIO_STREAM_ALARM"/>
+            <xs:enumeration value="AUDIO_STREAM_NOTIFICATION"/>
+            <xs:enumeration value="AUDIO_STREAM_BLUETOOTH_SCO"/>
+            <xs:enumeration value="AUDIO_STREAM_ENFORCED_AUDIBLE"/>
+            <xs:enumeration value="AUDIO_STREAM_DTMF"/>
+            <xs:enumeration value="AUDIO_STREAM_TTS"/>
+            <xs:enumeration value="AUDIO_STREAM_ACCESSIBILITY"/>
+            <xs:enumeration value="AUDIO_STREAM_ASSISTANT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="deviceCategory">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DEVICE_CATEGORY_HEADSET"/>
+            <xs:enumeration value="DEVICE_CATEGORY_SPEAKER"/>
+            <xs:enumeration value="DEVICE_CATEGORY_EARPIECE"/>
+            <xs:enumeration value="DEVICE_CATEGORY_EXT_MEDIA"/>
+            <xs:enumeration value="DEVICE_CATEGORY_HEARING_AID"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="contentType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AUDIO_CONTENT_TYPE_UNKNOWN"/>
+            <xs:enumeration value="AUDIO_CONTENT_TYPE_SPEECH"/>
+            <xs:enumeration value="AUDIO_CONTENT_TYPE_MUSIC"/>
+            <xs:enumeration value="AUDIO_CONTENT_TYPE_MOVIE"/>
+            <xs:enumeration value="AUDIO_CONTENT_TYPE_SONIFICATION"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="usageEnumType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AUDIO_USAGE_UNKNOWN"/>
+            <xs:enumeration value="AUDIO_USAGE_MEDIA"/>
+            <xs:enumeration value="AUDIO_USAGE_VOICE_COMMUNICATION"/>
+            <xs:enumeration value="AUDIO_USAGE_VOICE_COMMUNICATION_SIGNALLING"/>
+            <xs:enumeration value="AUDIO_USAGE_ALARM"/>
+            <xs:enumeration value="AUDIO_USAGE_NOTIFICATION"/>
+            <xs:enumeration value="AUDIO_USAGE_NOTIFICATION_TELEPHONY_RINGTONE"/>
+            <!-- Note: the following 3 values were deprecated in Android T (13) SDK -->
+            <xs:enumeration value="AUDIO_USAGE_NOTIFICATION_COMMUNICATION_REQUEST"/>
+            <xs:enumeration value="AUDIO_USAGE_NOTIFICATION_COMMUNICATION_INSTANT"/>
+            <xs:enumeration value="AUDIO_USAGE_NOTIFICATION_COMMUNICATION_DELAYED"/>
+            <xs:enumeration value="AUDIO_USAGE_NOTIFICATION_EVENT"/>
+            <xs:enumeration value="AUDIO_USAGE_ASSISTANCE_ACCESSIBILITY"/>
+            <xs:enumeration value="AUDIO_USAGE_ASSISTANCE_NAVIGATION_GUIDANCE"/>
+            <xs:enumeration value="AUDIO_USAGE_ASSISTANCE_SONIFICATION"/>
+            <xs:enumeration value="AUDIO_USAGE_GAME"/>
+            <xs:enumeration value="AUDIO_USAGE_VIRTUAL_SOURCE"/>
+            <xs:enumeration value="AUDIO_USAGE_ASSISTANT"/>
+            <xs:enumeration value="AUDIO_USAGE_CALL_ASSISTANT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="flagsEnumType">
+        <xs:list>
+            <xs:simpleType>
+                <xs:restriction base="flagType">
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:list>
+    </xs:simpleType>
+
+    <xs:simpleType name="flagType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="AUDIO_FLAG_NONE"/>
+            <xs:enumeration value="AUDIO_FLAG_AUDIBILITY_ENFORCED"/>
+            <xs:enumeration value="AUDIO_FLAG_SECURE"/>
+            <xs:enumeration value="AUDIO_FLAG_SCO"/>
+            <xs:enumeration value="AUDIO_FLAG_BEACON"/>
+            <xs:enumeration value="AUDIO_FLAG_HW_AV_SYNC"/>
+            <xs:enumeration value="AUDIO_FLAG_HW_HOTWORD"/>
+            <xs:enumeration value="AUDIO_FLAG_BYPASS_INTERRUPTION_POLICY"/>
+            <xs:enumeration value="AUDIO_FLAG_BYPASS_MUTE"/>
+            <xs:enumeration value="AUDIO_FLAG_LOW_LATENCY"/>
+            <xs:enumeration value="AUDIO_FLAG_DEEP_BUFFER"/>
+            <xs:enumeration value="AUDIO_FLAG_NO_MEDIA_PROJECTION"/>
+            <xs:enumeration value="AUDIO_FLAG_MUTE_HAPTIC"/>
+            <xs:enumeration value="AUDIO_FLAG_NO_SYSTEM_CAPTURE"/>
+            <xs:enumeration value="AUDIO_FLAG_CAPTURE_PRIVATE"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="sourceEnumType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AUDIO_SOURCE_DEFAULT"/>
+            <xs:enumeration value="AUDIO_SOURCE_MIC"/>
+            <xs:enumeration value="AUDIO_SOURCE_VOICE_UPLINK"/>
+            <xs:enumeration value="AUDIO_SOURCE_VOICE_DOWNLINK"/>
+            <xs:enumeration value="AUDIO_SOURCE_VOICE_CALL"/>
+            <xs:enumeration value="AUDIO_SOURCE_CAMCORDER"/>
+            <xs:enumeration value="AUDIO_SOURCE_VOICE_RECOGNITION"/>
+            <xs:enumeration value="AUDIO_SOURCE_VOICE_COMMUNICATION"/>
+            <xs:enumeration value="AUDIO_SOURCE_REMOTE_SUBMIX"/>
+            <xs:enumeration value="AUDIO_SOURCE_UNPROCESSED"/>
+            <xs:enumeration value="AUDIO_SOURCE_VOICE_PERFORMANCE"/>
+            <xs:enumeration value="AUDIO_SOURCE_ECHO_REFERENCE"/>
+            <xs:enumeration value="AUDIO_SOURCE_FM_TUNER"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="pfwCriterionTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="inclusive"/>
+            <xs:enumeration value="exclusive"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

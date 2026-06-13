@@ -1,0 +1,23 @@
+&smd {
+	max77775_charger: max77775-charger {
+			charger,fac_vsys = <3800>;
+	};
+
+	battery {
+		battery,fgsrc_switch_name = "max77775-charger";
+		battery,otg_name = "max77775-otg";
+	};
+};
+
+
+/* /home/dpi/qb5_8814/workspace/P4_1716/android/kernel_platform/kmodule/battery/stable/paradigm/charger/max77775/max77775_charger.pa3q.dtsi */
+&max77775_charger {
+	charger,enable_sysovlo_irq;
+	charger,fac_vsys = <4400>;
+
+	charger,fsw = <2>; /* 1.5MHz */
+	charger,enable_noise_wa;
+	charger,disable_wcin_ovlo;
+	charger,ocpwarn;
+	charger,ship_entry_db_time= <16>;
+};

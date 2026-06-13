@@ -1,0 +1,8 @@
+config INPUT_DIGITAL_HALL_AKM
+	tristate "Enable AKM DIGITAL HALL IC"
+	depends on I2C
+	help
+	  Say Y to enable support of akm digital hall ic.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called akm.

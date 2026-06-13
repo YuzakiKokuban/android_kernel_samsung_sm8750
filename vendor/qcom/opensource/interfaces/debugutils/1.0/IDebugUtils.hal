@@ -1,0 +1,140 @@
+/*
+* Copyright (c) 2020 The Linux Foundation. All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are
+* met:
+*    * Redistributions of source code must retain the above copyright
+*      notice, this list of conditions and the following disclaimer.
+*    * Redistributions in binary form must reproduce the above
+*      copyright notice, this list of conditions and the following
+*      disclaimer in the documentation and/or other materials provided
+*      with the distribution.
+*    * Neither the name of The Linux Foundation. nor the names of its
+*      contributors may be used to endorse or promote products derived
+*      from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+package vendor.qti.hardware.debugutils@1.0;
+
+interface IDebugUtils {
+  /**
+  * set breakpoint in a process hosted by @param pid
+  */
+  setBreakPoint(uint64_t pid, bool isProcess, string debugTag) generates (Status status);
+
+  /**
+  * set watchpoint in a thread hosted by @param pid on address stored in @param add
+  */
+  setWatchPoint(uint64_t pid, uint64_t add, string debugTag) generates (Status status);
+
+  /**
+  * Read binder debugfs and move it to another place
+  */
+  collectFullBinderDebugInfo(bool isBlocking, string debugTag) generates (Status status);
+
+  /**
+  * Read binder_debugfs specific to a process hosted with @param pid
+  */
+  collectBinderDebugInfoByPid(uint64_t pid, bool isBlocking, string debugTag)  generates (Status status);
+
+  /**
+  * Read binder_debugfs specific to a process hosted with @param ProcessName
+  */
+  collectBinderDebugInfoByProcessname(string processName, bool isBlocking,string debugTag)  generates (Status status);
+
+  /**
+  * Collect logcat buffer speicified by @param bufferName for duration specified by @param duration
+  */
+  collectUserspaceLogs(string logCmd, string debugTag,uint64_t duration)  generates (Status status);
+
+  /**
+  * collect stacktrace of a process specified by @param ProcessName
+  */
+  collectStackTraceByProcessName(string processName, bool isJava, bool isBlocking, string debugTag)  generates (Status status);
+
+  /**
+  * collect stacktrace of a process specified by @param pid
+  */
+  collectStackTraceByPid(uint64_t pid, bool isJava, bool isBlocking, string debugTag)  generates (Status status);
+
+  /**
+  * start Perfetto tracing
+  */
+  startPerfettoTracing(uint64_t duration, string debugTag)  generates (Status status);
+
+  /**
+  * stop Perfetto tracing
+  */
+  stopPerfettoTracing(string debugTag)  generates (Status status);
+
+  /**
+  * start SimplePerf tracing hosted by @param pid
+  */
+  startSimplePerfTracing(uint64_t pid, uint64_t duration, string debugTag)  generates (Status status);
+
+  /**
+  * stop SimplePerf tracing for process
+  */
+  stopSimplePerfTracing(string debugTag)  generates (Status status);
+
+  /**
+  * execute am command specified by @param Command
+  */
+  executeDumpsysCommands(string command, bool isBlocking, string debugTag)  generates (Status status);
+
+  /**
+  * Collect the stack trace of processes which in IPC with process
+  * hosted by @param pid
+  */
+  collectDependentProcessStackTrace(uint64_t pid, bool isBlocking, string debugTag)  generates (Status status);
+
+  /**
+  * crash the device to collect the ramdump
+  */
+  collectRamdump(string debugTag)  generates (Status status);
+
+  /**
+  * collect memory specific info
+  */
+  collectMemoryInfo(bool isBlocking, string debugTag)  generates (Status status);
+
+  /**
+  * collect CPU specific info
+  */
+  collectCPUInfo(bool isBlocking, string debugTag)  generates (Status status);
+
+  /**
+  *collect process specific Memory info
+  */
+  collectProcessMemoryInfo(bool isBlocking, uint64_t pid, string debugTag)  generates (Status status);
+
+  /**
+  *collect process specific CPU info
+  */
+  collectProcessCPUInfo(bool isBlocking, uint64_t pid, string debugTag)  generates (Status status);
+
+  /**
+  *collect periodic ANR traces
+  */
+  collectPeriodicTraces(uint64_t pid ,uint64_t duration, string debugTag) generates (Status status);
+
+  /**
+  *collect hprof
+  */
+  collectHprof(bool isBlocking, uint64_t pid, string debugTag) generates (Status status);
+
+};
+

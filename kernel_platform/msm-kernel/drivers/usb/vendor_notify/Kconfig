@@ -1,0 +1,19 @@
+config USB_VENDOR_NOTIFY
+	tristate "USB vendor notify"
+	default n
+	help
+	 Say Y here to include support for USB vendor notify.
+
+	 To compile this driver as a module, choose M here: the module
+	 will be called usb-vendor-notify.
+
+
+config USB_VENDOR_RECEIVER
+	tristate "USB vendor receiver"
+	default n
+	depends on USB_NOTIFY_LAYER
+	help
+	 Say Y here to include support for USB vendor receiver.
+
+	 To compile this driver as a module, choose M here: the module
+	 will be called usb-vendor-receiver.

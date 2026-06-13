@@ -1,0 +1,79 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/msm-eva-heap.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Qualcomm Technologies, Inc. MSM CVP HEAP
+
+description: |
+   Second level nodes - Memory Heaps
+
+properties:
+  compatible:
+    oneOf:
+      - items:
+          - enum:
+              - qcom,msm-vidc,mem-cdsp
+  memory-region:
+    description:
+      phandle to the memory heap/region.
+
+required:
+  - compatible
+  - memory-region
+
+examples:
+  - |
+    msm_cvp: qcom,cvp@ab00000 {
+        compatible = "qcom,msm-cvp", "qcom,Lahaina-cvp";
+        status = "ok";
+        reg = <0xab00000 0x100000>;
+        interrupts = <GIC_SPI 234 IRQ_TYPE_LEVEL_HIGH>;
+
+        /* FIXME: LLCC Info */
+        /* cache-slice-names = "vidsc0", "vidsc1"; */
+        /* cache-slices = <&llcc 2>, <&llcc 3>; */
+
+        /* Supply */
+        cvp-supply = <&mvs1_gdsc>;
+
+        /* Clocks */
+        clock-names =  "gcc_video_axi0",
+            "gcc_video_axi1", "cvp_clk";
+        clocks = <&clock_gcc GCC_VIDEO_AXI0_CLK>,
+            <&clock_gcc GCC_VIDEO_AXI1_CLK>,
+            <&clock_videocc VIDEO_CC_MVS1_CLK>;
+        qcom,proxy-clock-names = "gcc_video_axi0", "gcc_video_axi1",
+            "cvp_clk";
+
+        qcom,clock-configs = <0x0 0x0 0x1>;
+        qcom,allowed-clock-rates = <403000000 520000000
+            549000000 666000000 800000000>;
+
+        /* Buses */
+        bus_cnoc {
+            compatible = "qcom,msm-cvp,bus";
+            label = "cnoc";
+            qcom,bus-master = <MSM_BUS_MASTER_AMPSS_M0>;
+            qcom,bus-slave = <MSM_BUS_SLAVE_VENUS_CFG>;
+            qcom,bus-governor = "performance";
+            qcom,bus-range-kbps = <1000 1000>;
+        };
+
+        /* MMUs */
+        non_secure_cb {
+            compatible = "qcom,msm-cvp,context-bank";
+            label = "cvp_hlos";
+            iommus = <&apps_smmu 0x2120 0x400>;
+            qcom,iommu-dma = "disabled";
+            buffer-types = <0xfff>;
+            virtual-addr-pool = <0x4b000000 0xe0000000>;
+        };
+
+        /* Memory Heaps */
+        qcom,msm-cvp,mem_cdsp {
+            compatible = "qcom,msm-cvp,mem-cdsp";
+            memory-region = <&cdsp_mem>;
+        };
+    };

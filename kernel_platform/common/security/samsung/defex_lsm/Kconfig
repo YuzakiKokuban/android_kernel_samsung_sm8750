@@ -1,0 +1,71 @@
+config SECURITY_DEFEX
+	bool "Defex Support"
+	depends on SECURITY
+	select CRYPTO
+	select CRYPTO_RSA
+	select CRYPTO_SHA1
+	select CRYPTO_SHA256
+	select CRYPTO_HASH_INFO
+	select INTEGRITY_SIGNATURE
+	select INTEGRITY_ASYMMETRIC_KEYS
+	default n
+	help
+	  This selects the Defex support.
+	  If you are unsure how to answer this question, answer N.
+
+config SECURITY_DEFEX_GKI
+	bool "Defex GKI build"
+	depends on SECURITY_DEFEX
+	default n
+	help
+	  This lets defex know whether to prepare the separate build, compatible with GKI.
+	  Default value will be set to "y" if the build is GKI compatible.
+	  And it will be changed to "n" by build.py at platform-build.
+
+config DEFEX_KERNEL_ONLY
+	bool "Defex Kernel Only"
+	depends on SECURITY_DEFEX
+	default n
+	help
+	  This lets defex know whether kernel-only build or not.
+	  The value should be set to "y" if the build is kernel-only.
+
+config SECURITY_DEFEX_USER
+	bool "Defex USER build"
+	depends on SECURITY_DEFEX
+	default n
+	help
+	  This lets defex to know whether USER build performed or not
+	  in case of TARGET_BUILD_VARIANT variable is empty.
+
+config SECURITY_DEFEX_SINGLE_FILE
+	bool "Defex single rule file"
+	depends on SECURITY_DEFEX
+	default n
+	help
+	  This lets defex to know whether device supports a single rule file or not.
+	  If you are unsure how to answer this question, answer N.
+
+config SECURITY_DEFEX_DTM
+	bool "Defex Trusted Map"
+	depends on SECURITY_DEFEX
+	default n
+	help
+	  This lets defex to know whether device supports DTM or not.
+	  If you are unsure how to answer this question, answer N.
+
+config SECURITY_DEFEX_IMR
+	bool "Immutable root"
+	depends on SECURITY_DEFEX
+	default n
+	help
+	  This lets defex to know whether device supports Immutble root or not.
+	  If you are unsure how to answer this question, answer N.
+
+config SECURITY_DEFEX_SEC_FACTORY
+	bool "Factory build"
+	depends on SECURITY_DEFEX
+	default n
+	help
+	  This lets defex to know whether device supports factory binary or not.
+	  If you are unsure how to answer this question, answer N.

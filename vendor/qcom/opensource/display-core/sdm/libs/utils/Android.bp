@@ -1,0 +1,24 @@
+
+cc_library_shared {
+
+    name: "libsdmutils",
+    defaults: ["qtidisplay_defaults"],
+    sanitize: {
+        integer_overflow: true,
+    },
+    vendor: true,
+
+    header_libs: ["display_headers"],
+    cflags: ["-DLOG_TAG=\"SDM\""],
+    srcs: [
+        "debug.cpp",
+        "rect.cpp",
+        "sys.cpp",
+        "fence.cpp",
+        "formats.cpp",
+        "utils.cpp",
+        "cpu_instructions.cpp",
+    ],
+
+    shared_libs: ["libdisplaydebug"],
+}

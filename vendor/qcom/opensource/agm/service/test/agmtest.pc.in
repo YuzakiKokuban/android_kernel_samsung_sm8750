@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: agmtest
+Description: agmtest binaries
+Version: @VERSION@
+Libs: -L${libdir} -lagmclient -lagm
+Cflags: -I${includedir}/agm_test/

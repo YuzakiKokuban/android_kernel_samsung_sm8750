@@ -1,0 +1,23 @@
+config SEC_PM
+	bool "Samsung PowerManagement Feature"
+	default y
+	help
+	  Samsung PowerManagement Feature.
+
+config SEC_EXT_THERMAL_MONITOR
+	tristate "Samsung external thermal monitor"
+	help
+	  This enables external thermal monitor to get hint whether if there's
+	  external cause or not.
+
+config SEC_PM_LOG
+	tristate "Samsung Power/Thermal Log driver"
+	help
+	  TODO: help is not ready.
+
+config SEC_PM_REGULATOR
+	tristate "Enable Samsung Mobile Regulator control driver"
+	default n
+	depends on SEC_PM && REGULATOR
+	help
+	  This option enables Samsung Mobile Power regulator control and debugging support.

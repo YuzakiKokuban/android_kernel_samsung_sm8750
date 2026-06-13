@@ -1,0 +1,17 @@
+[
+"vendor/qcom/proprietary/commonsys-intf/adsprpc",
+"vendor/qcom/opensource/commonsys/dpm",
+"vendor/qcom/opensource/commonsys-intf/bluetooth",
+"vendor/codeaurora/commonsys/telephony",
+"vendor/qcom/proprietary/commonsys/securemsm",
+"vendor/qcom/proprietary/commonsys-intf/display",
+"vendor/qcom/proprietary/commonsys/noship-cne/common",
+"vendor/google_shared/build/release",
+"vendor/google_shared/build/release",
+"vendor/partner_gms",
+"vendor/google_keystone",
+"vendor/google_keystone_androidmk",
+"vendor/widevine",
+"vendor/google_shared/ndk_translation_prebuilt",
+"vendor/google_shared/satellite/common"
+]

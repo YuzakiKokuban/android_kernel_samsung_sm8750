@@ -1,0 +1,188 @@
+// Signature format: 2.0
+package qti.audio.microphone_info {
+
+  public enum AudioDeviceType {
+    method @NonNull public String getRawName();
+    enum_constant public static final qti.audio.microphone_info.AudioDeviceType IN_AFE_PROXY;
+    enum_constant public static final qti.audio.microphone_info.AudioDeviceType IN_DEVICE;
+    enum_constant public static final qti.audio.microphone_info.AudioDeviceType IN_DOCK;
+    enum_constant public static final qti.audio.microphone_info.AudioDeviceType IN_ECHO_REFERENCE;
+    enum_constant public static final qti.audio.microphone_info.AudioDeviceType IN_FM_TUNER;
+    enum_constant public static final qti.audio.microphone_info.AudioDeviceType IN_HEADSET;
+    enum_constant public static final qti.audio.microphone_info.AudioDeviceType IN_LOOPBACK;
+    enum_constant public static final qti.audio.microphone_info.AudioDeviceType IN_MICROPHONE;
+    enum_constant public static final qti.audio.microphone_info.AudioDeviceType IN_MICROPHONE_BACK;
+    enum_constant public static final qti.audio.microphone_info.AudioDeviceType IN_SUBMIX;
+    enum_constant public static final qti.audio.microphone_info.AudioDeviceType IN_TELEPHONY_RX;
+    enum_constant public static final qti.audio.microphone_info.AudioDeviceType IN_TV_TUNER;
+  }
+
+  public enum ChannelMappingType {
+    method @NonNull public String getRawName();
+    enum_constant public static final qti.audio.microphone_info.ChannelMappingType DIRECT;
+    enum_constant public static final qti.audio.microphone_info.ChannelMappingType PROCESSED;
+    enum_constant public static final qti.audio.microphone_info.ChannelMappingType UNUSED;
+  }
+
+  public class CoordinatesType {
+    ctor public CoordinatesType();
+    method @Nullable public float getX();
+    method @Nullable public float getY();
+    method @Nullable public float getZ();
+    method public void setX(@Nullable float);
+    method public void setY(@Nullable float);
+    method public void setZ(@Nullable float);
+  }
+
+  public enum DirectionalityType {
+    method @NonNull public String getRawName();
+    enum_constant public static final qti.audio.microphone_info.DirectionalityType BI_DIRECTIONAL;
+    enum_constant public static final qti.audio.microphone_info.DirectionalityType CARDIOID;
+    enum_constant public static final qti.audio.microphone_info.DirectionalityType HYPER_CARDIOID;
+    enum_constant public static final qti.audio.microphone_info.DirectionalityType OMNI;
+    enum_constant public static final qti.audio.microphone_info.DirectionalityType SUPER_CARDIOID;
+  }
+
+  public class FrequencyResponseType {
+    ctor public FrequencyResponseType();
+    method @Nullable public java.util.List<java.lang.Float> getFrequencyHz();
+    method @Nullable public java.util.List<java.lang.Float> getLeveldB();
+    method public void setFrequencyHz(@Nullable java.util.List<java.lang.Float>);
+    method public void setLeveldB(@Nullable java.util.List<java.lang.Float>);
+  }
+
+  public enum LocationType {
+    method @NonNull public String getRawName();
+    enum_constant public static final qti.audio.microphone_info.LocationType MAINBODY;
+    enum_constant public static final qti.audio.microphone_info.LocationType MAINBODY_MOVABLE;
+    enum_constant public static final qti.audio.microphone_info.LocationType PERIPHERAL;
+  }
+
+  public class MicInfoType {
+    ctor public MicInfoType();
+    method @Nullable public java.util.List<qti.audio.microphone_info.ChannelMappingType> getChannelMapping();
+    method @Nullable public String getId();
+    method public void setChannelMapping(@Nullable java.util.List<qti.audio.microphone_info.ChannelMappingType>);
+    method public void setId(@Nullable String);
+  }
+
+  public class MicrophoneDynamicInfoListType {
+    ctor public MicrophoneDynamicInfoListType();
+    method @Nullable public java.util.List<qti.audio.microphone_info.MicrophoneDynamicInfoType> getMicrophoneDynamicInfo();
+  }
+
+  public class MicrophoneDynamicInfoType {
+    ctor public MicrophoneDynamicInfoType();
+    method @Nullable public qti.audio.microphone_info.PalInDevicesType getDevice();
+    method @Nullable public qti.audio.microphone_info.MicInfoType getMicInfo();
+    method public void setDevice(@Nullable qti.audio.microphone_info.PalInDevicesType);
+    method public void setMicInfo(@Nullable qti.audio.microphone_info.MicInfoType);
+  }
+
+  public class MicrophoneInfoAndDynamicInfo {
+    ctor public MicrophoneInfoAndDynamicInfo();
+    method @Nullable public qti.audio.microphone_info.MicrophoneDynamicInfoListType getMicrophoneDynamicInfoList();
+    method @Nullable public qti.audio.microphone_info.MicrophoneInfoListType getMicrophoneInfoList();
+    method public void setMicrophoneDynamicInfoList(@Nullable qti.audio.microphone_info.MicrophoneDynamicInfoListType);
+    method public void setMicrophoneInfoList(@Nullable qti.audio.microphone_info.MicrophoneInfoListType);
+  }
+
+  public class MicrophoneInfoListType {
+    ctor public MicrophoneInfoListType();
+    method @Nullable public java.util.List<qti.audio.microphone_info.MicrophoneInfoType> getMicrophoneInfo();
+  }
+
+  public class MicrophoneInfoType {
+    ctor public MicrophoneInfoType();
+    method @Nullable public qti.audio.microphone_info.MicrophoneInfoType.Device getDevice();
+    method @Nullable public qti.audio.microphone_info.DirectionalityType getDirectionality();
+    method @Nullable public qti.audio.microphone_info.FrequencyResponseType getFrequencyResponse();
+    method @Nullable public int getGroup();
+    method @Nullable public String getId();
+    method @Nullable public int getIndexInTheGroup();
+    method @Nullable public qti.audio.microphone_info.LocationType getLocation();
+    method @Nullable public qti.audio.microphone_info.CoordinatesType getOrientation();
+    method @Nullable public qti.audio.microphone_info.CoordinatesType getPosition();
+    method @Nullable public qti.audio.microphone_info.MicrophoneInfoType.Sensitivity getSensitivity();
+    method public void setDevice(@Nullable qti.audio.microphone_info.MicrophoneInfoType.Device);
+    method public void setDirectionality(@Nullable qti.audio.microphone_info.DirectionalityType);
+    method public void setFrequencyResponse(@Nullable qti.audio.microphone_info.FrequencyResponseType);
+    method public void setGroup(@Nullable int);
+    method public void setId(@Nullable String);
+    method public void setIndexInTheGroup(@Nullable int);
+    method public void setLocation(@Nullable qti.audio.microphone_info.LocationType);
+    method public void setOrientation(@Nullable qti.audio.microphone_info.CoordinatesType);
+    method public void setPosition(@Nullable qti.audio.microphone_info.CoordinatesType);
+    method public void setSensitivity(@Nullable qti.audio.microphone_info.MicrophoneInfoType.Sensitivity);
+  }
+
+  public static class MicrophoneInfoType.Device {
+    ctor public MicrophoneInfoType.Device();
+    method @Nullable public String getAddress();
+    method @Nullable public String getConnection();
+    method @Nullable public qti.audio.microphone_info.AudioDeviceType getName();
+    method public void setAddress(@Nullable String);
+    method public void setConnection(@Nullable String);
+    method public void setName(@Nullable qti.audio.microphone_info.AudioDeviceType);
+  }
+
+  public static class MicrophoneInfoType.Sensitivity {
+    ctor public MicrophoneInfoType.Sensitivity();
+    method @Nullable public float getLeveldBFS();
+    method @Nullable public float getMaxSpldB();
+    method @Nullable public float getMinSpldB();
+    method public void setLeveldBFS(@Nullable float);
+    method public void setMaxSpldB(@Nullable float);
+    method public void setMinSpldB(@Nullable float);
+  }
+
+  public enum PalInDevicesType {
+    method @NonNull public String getRawName();
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_AUX_DIGITAL;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_BLUETOOTH_A2DP;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_BLUETOOTH_BLE;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_BLUETOOTH_SCO_HEADSET;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_CPS2_FEEDBACK;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_CPS_FEEDBACK;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_DUMMY;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_ECHO_REF;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_EXT_EC_REF;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_FM_TUNER;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_HANDSET_MIC;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_HANDSET_VA_MIC;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_HAPTICS_VI_FEEDBACK;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_HDMI;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_HEADSET_VA_MIC;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_LINE;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_PROXY;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_RECORD_PROXY;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_SPDIF;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_SPEAKER_MIC;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_TELEPHONY_RX;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_ULTRASOUND_MIC;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_USB_ACCESSORY;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_USB_DEVICE;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_USB_HEADSET;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_VI_FEEDBACK;
+    enum_constant public static final qti.audio.microphone_info.PalInDevicesType PAL_DEVICE_IN_WIRED_HEADSET;
+  }
+
+  public class SensitivityType {
+    ctor public SensitivityType();
+    method @Nullable public float getLeveldBFS();
+    method @Nullable public float getMaxSpldB();
+    method @Nullable public float getMinSpldB();
+    method public void setLeveldBFS(@Nullable float);
+    method public void setMaxSpldB(@Nullable float);
+    method public void setMinSpldB(@Nullable float);
+  }
+
+  public class XmlParser {
+    ctor public XmlParser();
+    method @Nullable public static qti.audio.microphone_info.MicrophoneInfoAndDynamicInfo read(@NonNull java.io.InputStream) throws javax.xml.datatype.DatatypeConfigurationException, java.io.IOException, org.xmlpull.v1.XmlPullParserException;
+    method @Nullable public static String readText(@NonNull org.xmlpull.v1.XmlPullParser) throws java.io.IOException, org.xmlpull.v1.XmlPullParserException;
+    method public static void skip(@NonNull org.xmlpull.v1.XmlPullParser) throws java.io.IOException, org.xmlpull.v1.XmlPullParserException;
+  }
+
+}
+

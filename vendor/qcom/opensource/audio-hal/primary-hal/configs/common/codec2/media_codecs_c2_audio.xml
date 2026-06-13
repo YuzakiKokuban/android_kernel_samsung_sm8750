@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+     Copyright (C) 2021 The Linux Foundation. All rights reserved
+	 Not a Contribution
+
+     Copyright (C) 2014 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+    Changes from Qualcomm Innovation Center are provided under the following license:
+
+    Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted (subject to the limitations in the
+    disclaimer below) provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above
+        copyright notice, this list of conditions and the following
+        disclaimer in the documentation and/or other materials provided
+        with the distribution.
+
+    * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its
+        contributors may be used to endorse or promote products derived
+        from this software without specific prior written permission.
+
+    NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+    GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+    HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+    WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+    MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+    IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+    ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+    GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+    IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+    OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+    IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<Included>
+    <Decoders>
+        <!-- C2 audio decoders -->
+        <MediaCodec name="c2.qti.alac.sw.decoder" type="audio/alac" rank="0">
+            <Limit name="channel-count" max="8" />
+            <Limit name="sample-rate" ranges="8000-192000" />
+            <Limit name="bitrate" range="1-100000000" />
+            <Limit name="concurrent-instances" max="2" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.ape.sw.decoder" type="audio/x-ape" rank="0">
+            <Limit name="channel-count" max="2" />
+            <Limit name="sample-rate" ranges="8000-192000" />
+            <Limit name="bitrate" range="1-100000000" />
+            <Limit name="concurrent-instances" max="2" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.flac.sw.decoder" type="audio/flac">
+            <Limit name="channel-count" max="8" />
+            <Limit name="sample-rate" ranges="8000-192000" />
+            <Limit name="bitrate" range="1-9216000" />
+            <Limit name="concurrent-instances" max="2" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.dsd.sw.decoder" type="audio/dsd" rank="0">
+            <Limit name="channel-count" max="6" />
+            <Limit name="sample-rate" ranges="8000-22579200" />
+            <Limit name="concurrent-instances" max="2" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.aac.hw.decoder" type="audio/mp4a-latm">
+            <Limit name="channel-count" max="6" />
+            <Limit name="sample-rate" ranges="8000-96000" />
+            <Limit name="bitrate" range="8000-1536000" />
+            <Limit name="concurrent-instances" max="2" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.alac.hw.decoder" type="audio/alac" rank="1">
+            <Limit name="channel-count" max="8" />
+            <Limit name="sample-rate" ranges="8000-192000" />
+            <Limit name="bitrate" range="1-100000000" />
+            <Limit name="concurrent-instances" max="2" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.wma.hw.decoder" type="audio/x-ms-wma" rank="0">
+            <Limit name="channel-count" max="8" />
+            <Limit name="sample-rate" ranges="8000-96000" />
+            <Limit name="bitrate" range="8000-1536000" />
+            <Limit name="concurrent-instances" max="2" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.ape.hw.decoder" type="audio/x-ape" rank="1">
+            <Limit name="channel-count" max="2" />
+            <Limit name="sample-rate" ranges="8000-192000" />
+            <Limit name="bitrate" range="1-100000000" />
+            <Limit name="concurrent-instances" max="2" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.amrwbplus.hw.decoder" type="audio/amr-wb-plus" rank="0">
+            <Limit name="channel-count" max="2" />
+            <Limit name="sample-rate" ranges="8000-48000" />
+            <Limit name="bitrate" range="5200-48000" />
+            <Limit name="concurrent-instances" max="2" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.amrwb+.hw.decoder" type="audio/amr-wb+" rank="0">
+            <Limit name="channel-count" max="2" />
+            <Limit name="sample-rate" ranges="8000-48000" />
+            <Limit name="bitrate" range="5200-48000" />
+            <Limit name="concurrent-instances" max="2" />
+        </MediaCodec>
+    </Decoders>
+    <Encoders>
+        <!-- C2 audio encoders -->
+        <MediaCodec name="c2.qti.amrnb.hw.encoder" type="audio/3gpp">
+            <Limit name="channel-count" max="1" />
+            <Limit name="sample-rate" ranges="8000" />
+            <Limit name="bitrate" range="4750-12200" />
+            <Limit name="concurrent-instances" max="2" />
+            <Feature name="special-codec" required="true" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.amrwb.hw.encoder" type="audio/amr-wb">
+            <Limit name="channel-count" max="1" />
+            <Limit name="sample-rate" ranges="16000" />
+            <Limit name="bitrate" range="6600-23850" />
+            <Limit name="concurrent-instances" max="2" />
+            <Feature name="special-codec" required="true" />
+        </MediaCodec>
+        <MediaCodec name="c2.qti.aac.hw.encoder" type="audio/mp4a-latm">
+            <Limit name="channel-count" max="2" />
+            <Limit name="sample-rate" ranges="8000-48000" />
+            <Limit name="bitrate" range="4000-192000" />
+            <Limit name="concurrent-instances" max="2" />
+            <Feature name="special-codec" required="true" />
+        </MediaCodec>
+    </Encoders>
+</Included>

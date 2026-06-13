@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-2.0
+# COPYRIGHT(C) 2023 Samsung Electronics Co., Ltd. All Right Reserved.
+
+function build_defconfig_lego_fragments() {
+	apply_defconfig_fragment ${KERNEL_DIR}/arch/${ARCH}/configs/lego.config vendor/${MSM_ARCH}-gki_defconfig
+}
+build_defconfig_lego_fragments

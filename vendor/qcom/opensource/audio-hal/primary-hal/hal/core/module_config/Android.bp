@@ -1,0 +1,36 @@
+cc_library_static {
+    name: "libaudio_module_config.qti",
+    vendor: true,
+    export_include_dirs: ["include"],
+    srcs: [
+        "ModuleConfig.cpp",
+    ],
+    shared_libs: [
+        "libaudioaidlcommon",
+        "libbase",
+        "libcutils",
+        "liblog",
+        "libstagefright_foundation",
+        "libutils",
+        "libxml2",
+        "android.media.audio.common.types-V3-ndk",
+        "android.hardware.audio.core-V2-ndk",
+    ],
+    header_libs: [
+        "libxsdc-utils",
+        "libaudio_system_headers",
+    ],
+    generated_headers: [
+                        "audio_module_config_qti",
+                        ],
+    generated_sources: [
+                        "audio_module_config_qti",
+                        ],
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wthread-safety",
+    ],
+}
+

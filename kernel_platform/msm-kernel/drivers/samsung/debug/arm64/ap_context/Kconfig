@@ -1,0 +1,5 @@
+config SEC_ARM64_AP_CONTEXT
+	tristate "SEC AP CORE/MMU context snaphot"
+	depends on SEC_DEBUG_REGION && ARM64 && ANDROID_VENDOR_HOOKS
+	help
+	  TODO: help is not ready.

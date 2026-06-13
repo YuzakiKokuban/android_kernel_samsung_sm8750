@@ -1,0 +1,48 @@
+
+cc_library_shared {
+
+    name: "liblocation_client_api",
+    vendor: true,
+
+    //# Libs
+    shared_libs: [
+        "libgps.utils",
+        "liblocation_api_msg",
+        "libprotobuf-cpp-lite",
+        "liblog",
+    ],
+
+    srcs: [
+        "src/LocationClientApi.cpp",
+        "src/LocationClientApiImpl.cpp",
+        "src/LCAReportLoggerUtil.cpp",
+    ],
+
+    cflags: [
+        "-fno-short-enums",
+        "-D_ANDROID_",
+        "-Wno-error=non-virtual-dtor",
+    ] + GNSS_CFLAGS,
+
+    local_include_dirs: [
+        "inc", "src",
+    ],
+
+    //# Includes
+    ldflags: ["-Wl,--export-dynamic"],
+
+    header_libs: [
+        "libutils_headers",
+        "libgps.utils_headers",
+        "libloc_pla_headers",
+        "liblocation_api_headers",
+        "liblocation_api_msg.headers",
+    ],
+}
+
+cc_library_headers {
+
+    name: "liblocation_client_api.impl_headers",
+    export_include_dirs: ["src"] + ["inc"],
+    vendor: true,
+}

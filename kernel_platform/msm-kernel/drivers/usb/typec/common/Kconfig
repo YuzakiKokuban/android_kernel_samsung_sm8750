@@ -1,0 +1,58 @@
+#
+# USB PDIC common driver
+#
+
+comment "USB PDIC common configs"
+
+config PDIC_NOTIFIER
+	tristate "PDIC notifier support"
+	depends on I2C
+	default n
+	help
+	  If you say yes here you will get support for
+	  the PDIC attached device status change notification.
+
+config PDIC_POLICY
+	bool "PDIC policy common"
+	default n
+	help
+	  If you want to use common policy api,
+	  enable this feature.
+	  It should not be enabled in previos ic driver.
+	  Use to bringup new ic driver.
+
+config USB_ARCH_EXYNOS
+	bool "Using exynos"
+	default n
+	help
+	  If you say yes here you will get support for
+	  using exynos.
+	  For distinguish with Qcom
+
+config PDIC_USE_MODULE_PARAM
+	bool "Using module param"
+	depends on PDIC_NOTIFIER
+	default n
+	help
+	  If this feature is enabled, pdic_param will use module_param directly.
+	  Should not use extern variable and __setup for param.
+	  need to add cmdline in bootloader.
+	  (ex: pdic_notifier_module.xxx)
+
+config PDIC_MISC_TEST
+        bool "KUnit test for pdic_misc_test"
+        depends on SEC_KUNIT
+        help
+          This driver is for pdic_misc test driver
+		  pdic_misc kunit test
+		  If you want to add some functions,
+		  Please make the test case.
+
+config PDIC_SYSFS_TEST
+        bool "KUnit test for pdic_sysfs_test"
+        depends on SEC_KUNIT
+        help
+          This driver is for pdic_sysfs test driver
+		  pdic_sysfs kunit test
+		  If you want to add some functions,
+		  Please make the test case.

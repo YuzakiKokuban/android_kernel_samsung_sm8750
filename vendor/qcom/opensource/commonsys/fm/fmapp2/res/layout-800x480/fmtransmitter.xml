@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (c) 2009, 2012, The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above copyright
+ *      notice, this list of conditions and the following disclaimer in the
+ *      documentation and/or other materials provided with the distribution.
+ *    * Neither the name of The Linux Foundation nor
+ *      the names of its contributors may be used to endorse or promote
+ *      products derived from this software without specific prior written
+ *      permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fmtransmitter"
+    android:background="@drawable/bg"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout android:id="@+id/on_off_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+
+        <ImageView android:id="@+id/btn_onoff"
+            android:src="@drawable/btn_onoff"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView android:id="@+id/transmit_msg_tv"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textColor="@android:color/white"
+            android:layout_centerInParent="true"
+            android:layout_alignWithParentIfMissing="true"
+            android:text="@string/transmit_msg_string"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout android:id="@+id/stationinfo_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="150dp" >
+
+        <RelativeLayout android:id="@+id/frequency_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView android:id="@+id/btn_back"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="15dp"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/btn_arrow_left"/>
+
+            <TextView android:id="@+id/prog_frequency_tv"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="25dp"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/frequency_string"
+                android:textColor="@android:color/white"/>
+
+            <ImageView android:id="@+id/btn_forward"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingRight="15dp"
+                android:layout_alignParentRight="true"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/btn_arrow_right"/>
+
+        </RelativeLayout>
+
+        <!-- Station Radio Text information display -->
+        <RelativeLayout android:id="@+id/radio_text_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/frequency_layout">
+
+            <TextView android:id="@+id/radio_text_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="20dp"
+                android:textColor="@android:color/white"
+                android:singleLine="true"
+                android:textStyle="bold"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:paddingBottom="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerInParent="true"
+                android:text="@string/radio_text_string"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <com.caf.fmradio.HorizontalNumberPicker
+        android:id="@+id/fm_picker"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="50dp"
+        android:layout_below="@id/stationinfo_layout"/>
+
+    <HorizontalScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:scrollbars="none">
+
+        <LinearLayout  android:id="@+id/favorite_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal">
+
+            <Button android:id="@+id/presets_button_1"
+                style="@style/ButtonStripLeft"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="15sp"
+                android:singleLine="true"
+                android:layout_width="80dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/presets_button_2"
+                style="@style/ButtonStripMiddle"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="15sp"
+                android:singleLine="true"
+                android:layout_width="80dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/presets_button_3"
+                style="@style/ButtonStripMiddle"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="15sp"
+                android:singleLine="true"
+                android:layout_width="80dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/presets_button_4"
+                style="@style/ButtonStripMiddle"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="15sp"
+                android:singleLine="true"
+                android:layout_width="80dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/presets_button_5"
+                style="@style/ButtonStripMiddle"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="15sp"
+                android:singleLine="true"
+                android:layout_width="80dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/presets_button_6"
+                style="@style/ButtonStripMiddle"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="15sp"
+                android:singleLine="true"
+                android:layout_width="80dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/presets_button_7"
+                style="@style/ButtonStripRight"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="15sp"
+                android:singleLine="true"
+                android:layout_width="80dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+</RelativeLayout>

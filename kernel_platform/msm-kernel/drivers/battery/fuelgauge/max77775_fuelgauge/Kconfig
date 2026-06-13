@@ -1,0 +1,49 @@
+menu "Fuelgauge drivers"
+
+config FUELGAUGE_DUMMY
+	bool "dummy fuel gauge driver"
+	default n
+	depends on BATTERY_SAMSUNG
+	help
+	  Say Y here, to enable
+	  support for dummy fuel gauge driver.
+	  This driver source code implemented
+	  skeleton source code for fuel gauge functions.
+
+config FUELGAUGE_MAX77775
+	tristate "MAX77775 fuel gauge driver"
+	default n
+	depends on BATTERY_SAMSUNG
+	help
+	  Say Y or M here, to enable
+	  support for MAXIM MAX77775 fuel gauge driver.
+	  This is fuel-gauge systems for monitoring batteries.
+	  This fuel-gauge can be used in coulomb-counting mode.
+
+config EN_OOPS
+	bool "enable oops filter"
+	default n
+	help
+	  Say Y here to enable
+	  support for FUELGAUGE_MAX77775 enable oops filter.
+	  MAXIM fuel-gauge only support this option.
+	  some battery data values should be defined.
+
+config ID_USING_BAT_SUBBAT
+	bool "battery id using sub bat"
+	default n
+	depends on DUAL_BATTERY
+	help
+	  Say Y here to enable
+	  This is to calculate bat_id using main_bat_id & sub_bat_id.
+
+config UI_SOC_PROLONGING
+	bool "Ui Soc 100% Prolonging"
+	default n
+	help
+	  Say Y here to enable
+	  Support for UI Soc prolonging.
+	  This is to enable UI Soc prolonging concept.
+
+endmenu
+

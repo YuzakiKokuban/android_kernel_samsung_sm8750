@@ -1,0 +1,222 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+&aliases {
+	i2c18 ="/soc/qcom,qupv3_i2c_geni_se@9c0000/i2c@980000";
+};
+
+&lpass_cdc {
+	qcom,num-macros = <3>;
+};
+
+&sun_snd {
+	qcom,model = "sun-mtp-snd-card";
+	qcom,wcn-bt = <1>;
+	qcom,tdm-audio-intf = <1>;
+	qcom,tdm-max-slots = <4>;
+	qcom,audio-core-list = <0>, <1>, <2>, <3>;
+	qcom,audio-routing =
+		"TX DMIC0", "Digital Mic0",
+		"TX DMIC1", "Digital Mic1",
+		"TX DMIC2", "Digital Mic2",
+		"TX DMIC3", "Digital Mic3",
+		"TX DMIC4", "Digital Mic4",
+		"TX DMIC5", "Digital Mic5",
+		"VA DMIC0", "Digital Mic0",
+		"VA DMIC1", "Digital Mic1",
+		"VA DMIC2", "Digital Mic2",
+		"VA DMIC3", "Digital Mic3",
+		"VA DMIC4", "Digital Mic4",
+		"VA DMIC5", "Digital Mic5",
+		"Digital Mic0", "VA MIC BIAS",
+		"Digital Mic1", "VA MIC BIAS",
+		"Digital Mic2", "VA MIC BIAS",
+		"Digital Mic3", "VA MIC BIAS",
+		"Digital Mic4", "VA MIC BIAS",
+		"Digital Mic5", "VA MIC BIAS";
+		
+	qcom,msm-mbhc-hphl-swh = <0>;
+	qcom,msm-mbhc-gnd-swh = <0>;
+	asoc-codec  = <&stub_codec>, <&lpass_cdc>;
+	asoc-codec-names = "msm-stub-codec.1", "lpass-cdc";
+	qcom,wsa-max-devs = <0>;
+	qcom,wcd-disabled = <1>;
+	qcom,pri-mi2s-gpios = <&cdc_pri_mi2s_gpios>; /* For Audio AMP */
+	qcom,sec-mi2s-gpios = <&cdc_sec_mi2s_gpios>; /* For A2H */
+	qcom,upd_backends_used = "";
+	qcom,upd_lpass_reg_addr = <>;
+	qcom,upd_ear_pa_reg_addr = <>;
+	wcd939x-i2c-handle = <>;
+	swr-haptics-unsupported;
+	qcom,max_defer_count = <12>;
+	upper-c2c-det-gpio = <&tlmm 170 0>;
+};
+
+&cdc_pri_mi2s_gpios {
+	status = "okay";
+	pinctrl-names = "aud_active", "aud_sleep";
+	pinctrl-0 = <&tdm0_clk_active &tdm0_ws_active
+			&tdm0_sd0_active &tdm0_sd1_active>;
+	pinctrl-1 = <&tdm0_clk_sleep &tdm0_ws_sleep
+			&tdm0_sd0_sleep &tdm0_sd1_sleep>;
+};
+
+&spf_core_platform {
+	cdc_sec_mi2s_gpios: sec_mi2s_pinctrl {
+		compatible = "qcom,msm-cdc-pinctrl";
+		pinctrl-names = "aud_active", "aud_sleep";
+		pinctrl-0 = <&i2s1_sck_active &i2s1_ws_active
+				&i2s1_sd1_active>;
+		pinctrl-1 = <&i2s1_sck_sleep &i2s1_ws_sleep
+				&i2s1_sd1_sleep>;
+		#gpio-cells = <0>;
+	};
+};
+
+&soc {
+	sec-audio-sysfs {
+		compatible = "samsung,audio-sysfs";
+		status = "okay";
+		audio,no-earjack;
+		audio,num-amp = <2>;
+	};
+
+	snd-debug-proc {
+		compatible = "samsung,snd-debug-proc";
+		status = "okay";
+	};
+};
+
+&qupv3_hub_i2c0 {
+	qcom,clk-freq-out = <1000000>;
+	status = "ok";
+
+	tas25xx: tas25xx@48 {
+		#sound-dai-cells = <0>;
+		compatible = "ti,tas25xx";
+		reg = <0x48>;
+		ti,max-channels = <2>;
+		ti,channel-0 = <0x49>; //e.g top spk
+		ti,channel-1 = <0x48>; //e,g bottom spk
+		ti,reset-gpio = <&gpio_expander 9 0>;
+		ti,irq-gpio = <&gpio_expander 5 0>;
+		ti,nested-irq = <1>;
+		status = "ok";
+	};
+};
+
+&va_macro {
+	/* external micbias */
+	va-vdd-micb-supply = <&L10B>;
+	va-vdd-micb = <&L10B>;
+	qcom,va-vdd-micb-voltage = <1800000 1800000>;
+	qcom,va-vdd-micb-current = <1500>;
+	qcom,va-swr-gpios = <>;
+	qcom,is-used-swr-gpio = <0>;
+	qcom,va-swr-gpios = <>;
+};
+
+&rx_macro {
+	qcom,is-used-swr-gpio = <0>;
+	qcom,rx-swr-gpios = <>;
+};
+
+&tx_macro {
+	qcom,tx-dmic-clk-div-factor = <3 3 3 3>;
+};
+
+&wsa_macro{
+	status = "disabled";
+};
+
+&wsa2_macro{
+	status = "disabled";
+};
+
+&wcd939x_codec {
+	status = "disabled";
+};
+
+&swr0 {
+	status = "disabled";
+};
+
+&swr1 {
+	status = "disabled";
+};
+
+&swr2 {
+	status = "disabled";
+};
+
+&swr3 {
+	status = "disabled";
+};
+
+/* SWR for BT */
+&swr4 {
+	status = "disabled";
+}; 
+
+&wsa884x_0220 {
+	status = "disabled";
+};
+
+&wsa884x_0221 {
+	status = "disabled";
+};
+
+&wsa884x_2_0220 {
+	status = "disabled";
+};
+
+&wsa884x_2_0221 {
+	status = "disabled";
+};
+
+&lpass_bt_swr {
+	status = "disabled";
+};
+
+
+&fm_i2s1_gpios {
+	status = "disabled";
+};
+
+&wsa_swr_gpios {
+	status = "disabled";
+};
+
+&wsa2_swr_gpios {
+	status = "disabled";
+};
+
+&rx_swr_gpios {
+	status = "disabled";
+};
+
+&va_swr_gpios {
+	status = "disabled";
+};
+
+&cdc_dmic67_gpios {
+	status = "disabled";
+};
+
+&bt_swr_gpios {
+	status = "disabled";
+};
+
+&wsa_spkr_en02 {
+	status = "disabled";
+};
+
+&wsa_spkr_en13 {
+	status = "disabled";
+};
+
+&wcd939x_rst_gpio {
+	status = "disabled";
+};

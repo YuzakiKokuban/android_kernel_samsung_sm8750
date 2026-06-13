@@ -1,0 +1,12 @@
+config SEC_RISCV64_DEBUG
+	tristate "SEC Common debugging feature for RISCV64 based devices"
+	depends on RISCV && 64BIT
+	help
+	  TODO: help is not ready.
+
+config SEC_RISCV64_T32_CONSTANT
+	bool "SEC debugging constants for Lauterbach T32"
+	depends on SEC_RISCV64_DEBUG
+	default n
+	help
+	  TODO: help is not ready.

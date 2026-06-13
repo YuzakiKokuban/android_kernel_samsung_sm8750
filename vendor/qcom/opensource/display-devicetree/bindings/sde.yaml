@@ -1,0 +1,2076 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/sde.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: SDE KMS
+
+maintainers:
+  - Veera Sundaram Sankaran <quic_veeras@quicinc.com>
+  - Kalyan Thota <quic_kalyant@quicinc.com>
+  - Ravi Teja Tamatam <quic_travitej@quicinc.com>
+  - Jatin Srivastava <quic_jsrivast@quicinc.com>
+
+description: |
+  Snapdragon Display Engine implements Linux DRM/KMS APIs to drive user
+  interface to different panel interfaces. SDE driver is the core of
+  display subsystem which manage all data paths to different panel interfaces
+  Please refer to ../../interrupt-controller/interrupts.txt for a general
+  description of interrupt bindings.
+
+properties:
+  compatible:
+    const: qcom,sde-kms
+
+  qcom,msm-hdmi-audio-rx:
+  type: object
+  compatible:
+    const: qcom,msm-hdmi-audio-codec-rx
+
+  reg:
+    description: |
+      Offset and length of the register set for the device.Base address and length of DP hardware's
+      memory mapped regions.
+
+  reg-names:
+    description: Names to refer to register sets related to this device
+    $ref: /schemas/types.yaml#/definitions/string-array
+
+  clocks:
+    description: List of Phandles for clock device nodes needed by the device.
+
+  clock-names:
+    description: List of clock names needed by the device.
+    $ref: /schemas/types.yaml#/definitions/string-array
+
+  mmagic-supply:
+    description: Phandle for mmagic mdss supply regulator device node.
+    $ref: /schemas/types.yaml#/definitions/phandle
+
+  vdd-supply:
+    description: Phandle for vdd regulator device node.
+    $ref: /schemas/types.yaml#/definitions/phandle
+
+  interrupt-parent:
+    description: Must be core interrupt controller.
+
+  interrupts:
+    description: Interrupt associated with MDSS.
+
+  interrupt-controller:
+    description: Mark the device node as an interrupt controller.
+
+  '#interrupt-cells':
+    description: Should be one. The first cell is interrupt number.
+
+  iommus:
+    description: Specifies the SID's used by this context bank.
+
+  qcom,sde-sspp-type:
+    description: |
+      Array of strings for SDE source surface pipes type information.
+      A source pipe can be "vig", "rgb", "dma" or "cursor" type.
+      Number of xin ids defined should match the number of offsets
+      defined in property: qcom,sde-sspp-off.
+    $ref: /schemas/types.yaml#/definitions/string-array
+    enum: [vig, rgb, dma, cursor]
+
+  qcom,sde-sspp-off:
+    description: |
+      Array of offset for SDE source surface pipes. The offsets
+      are calculated from register "mdp_phys" defined in
+      reg property + "sde-off". The number of offsets defined here should
+      reflect the amount of pipes that can be active in SDE for
+      this configuration.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-sspp-xin-id:
+    description: |
+      Array of VBIF clients ids (xins) corresponding
+      to the respective source pipes. Number of xin ids
+      defined should match the number of offsets
+      defined in property: qcom,sde-sspp-off.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-ctl-off:
+    description: |
+      Array of offset addresses for the available ctl
+      hw blocks within SDE, these offsets are
+      calculated from register "mdp_phys" defined in
+      reg property.  The number of ctl offsets defined
+      here should reflect the number of control paths
+      that can be configured concurrently on SDE for
+      this configuration.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-wb-off:
+    description: |
+      Array of offset addresses for the programmable
+      writeback blocks within SDE.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-wb-xin-id:
+    description: |
+      Array of VBIF clients ids (xins) corresponding
+      to the respective writeback. Number of xin ids
+      defined should match the number of offsets
+      defined in property: qcom,sde-wb-off..
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-mixer-off:
+    description: |
+      Array of offset addresses for the available
+      mixer blocks that can drive data to panel
+      interfaces. These offsets are be calculated from
+      register "mdp_phys" defined in reg property.
+      The number of offsets defined should reflect the
+      amount of mixers that can drive data to a panel
+      interface.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dspp-top-off:
+    description: |
+      Offset address for the dspp top block.
+      The offset is calculated from register "mdp_phys"
+      defined in reg property.
+
+  qcom,sde-dspp-off:
+    description: |
+      Array of offset addresses for the available dspp
+      blocks. These offsets are calculated from
+      register "mdp_phys" defined in reg property.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-pp-off:
+    description: |
+      Array of offset addresses for the available
+      pingpong blocks. These offsets are calculated
+      from register "mdp_phys" defined in reg property.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-pp-slave:
+    description: |
+      Array of flags indicating whether each ping pong
+      block may be configured as a pp slave.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-pp-merge-3d-id:
+    description: |
+      Array of index ID values for the merge 3d block
+      connected to each pingpong, starting at 0.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-merge-3d-off:
+    description: |
+      Array of offset addresses for the available
+      merge 3d blocks. These offsets are calculated
+      from register "mdp_phys" defined in reg property.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-intf-off:
+    description: |
+      Array of offset addresses for the available SDE
+      interface blocks that can drive data to a
+      panel controller. The offsets are calculated
+      from "mdp_phys" defined in reg property. The number
+      of offsets defined should reflect the number of
+      programmable interface blocks available in hardware.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-mixer-blend-op-off:
+    description: |
+      Array of offset addresses for the available
+      blending stages. The offsets are relative to
+      qcom,sde-mixer-off.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-mixer-pair-mask:
+    description: |
+      Array of mixer numbers that can be paired with
+      mixer number corresponding to the array index.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  clock-rate:
+    description: List of clock rates in Hz.
+
+  clock-max-rate:
+    description: List of maximum clock rate in Hz that this device supports.
+
+  clock-mmrm:
+    description: |
+      List of clocks that enable setting the clk rate through MMRM driver.
+      The order of the list must match the 'clocks' and 'clock-names' properties.
+      The 'DISP_CC' ID of the clock must be used to enable the property for the
+      respective clock, whereas a value of zero disables the property.
+
+  qcom,platform-supply-entries:
+    description: |
+      A node that lists the elements of the supply. There
+      can be more than one instance of this binding,
+      in which case the entry would be appended with
+      the supply entry index.
+      e.g. qcom,platform-supply-entry@0
+    type: object
+    patternProperties:
+      "qcom,platform\-supply\-entry\@+\w":
+        properties:
+          reg:
+            description: offset and length of the register set for the device.
+          qcom,supply-name:
+            description: name of the supply (vdd/vdda/vddio)
+            $ref: /schemas/types.yaml#/definitions/string-array
+          qcom,supply-min-voltage:
+            description: minimum voltage level (uV)
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-max-voltage:
+            description: maximum voltage level (uV)
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-enable-load:
+            description: load drawn (uA) from enabled supply
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-disable-load:
+            description: load drawn (uA) from disabled supply
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-pre-on-sleep:
+            description: time to sleep (ms) before turning on
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-post-on-sleep:
+            description: time to sleep (ms) after turning on
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-pre-off-sleep:
+            description: time to sleep (ms) before turning off
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-post-off-sleep:
+            description: time to sleep (ms) after turning off
+            $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-hw-version:
+    description: A u32 value indicates the MDSS hw version
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,hw-fence-sw-version:
+    description: |
+      A u32 value to indicate the hw fencing version. If set to a value
+      greather than zero, driver will attempt to enable the feature (if
+      supported by the HW). Otherwise, if this value is not set or set
+      to zero, feature will remain disabled.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-sspp-src-size:
+    description: A u32 value indicates the address range for each sspp.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-mixer-size:
+    description: A u32 value indicates the address range for each mixer.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-ctl-size:
+    description: A u32 value indicates the address range for each ctl.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-size:
+    description: A u32 value indicates the address range for each dspp.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-intf-size:
+    description: A u32 value indicates the address range for each intf.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dsc-size:
+    description: A u32 value indicates the address range for each dsc.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-vdc-size:
+    description: A u32 value indicates the address range for each vdc.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-cdm-size:
+    description: A u32 value indicates the address range for each cdm.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-pp-size:
+    description: A u32 value indicates the address range for each pingpong.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-merge-3d-size:
+    description: A u32 value indicates the address range for each merge 3d.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-pp-cwb:
+    description: |
+      Array of u32 flags indicating whether each ping pong
+      block may be configured as a cwb pp block.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-wb-size:
+    description: A u32 value indicates the address range for each writeback.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-len:
+    description: A u32 entry for SDE address range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-intf-max-prefetch-lines:
+    description: Array of u32 values for max prefetch lines on each interface.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-sspp-linewidth:
+    description: A u32 value indicates the max sspp line width.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-vig-sspp-linewidth:
+    description: A u32 value indicates the max vig sspp line width.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-scaling-linewidth:
+    description: A u32 value indicates the max vig source pipe line width for scaling purposes.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-mixer-linewidth:
+    description: A u32 value indicates the max mixer line width.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-wb-linewidth:
+    description: A u32 value indicates the max writeback line width.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-wb-linewidth-linear:
+    description: A u32 value indicates the max line width supported by WB for linear color formats.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-sspp-scale-size:
+    description: A u32 value indicates the scaling block size on sspp.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-mixer-blendstages:
+    description: A u32 value indicates the max mixer blend stages for alpha blending.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-qseed-sw-lib-rev:
+    description: |
+      A string entry indicates qseed sw library revision
+      supporting the qseed HW block. It supports
+      "qseedv3", "qseedv3lite" and "qseedv2" entries for qseed
+      revision. By default "qseedv2" is used if this
+      optional property is not defined.
+    $ref: /schemas/types.yaml#/definitions/string-array
+    default: qseedv2
+
+  qcom,sde-qseed-scalar-version:
+    description: A u32 value indicating the HW version of the QSEED hardware block.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-csc-type:
+    description: |
+      A string entry indicates csc support on sspp and wb.
+      It supports "csc" and "csc-10bit" entries for csc
+      type.
+    $ref: /schemas/types.yaml#/definitions/string-array
+    enum: [csc, csc-10bit]
+
+  qcom,sde-highest-bank-bit:
+    description: |
+      Property to specify GPU/Camera/Video highest memory
+      bank bit used for tile format buffers. First value
+      in the array represents the ddr type and the second
+      value is the hbb value corresponding to the ddr type.
+
+  qcom,sde-ubwc-version:
+    description: |
+      Property to specify the UBWC feature version. A u32 UBWC version is based on
+      MDSS support.
+
+  qcom,sde-ubwc-static:
+    description: Property to specify the default UBWC static configuration value.
+
+  qcom,sde-ubwc-bw-calc-version:
+    description: A u32 property to specify version of UBWC bandwidth calculation algorithm
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-ubwc-swizzle:
+    description: Property to specify the default UBWC swizzle configuration value.
+
+  qcom,sde-smart-panel-align-mode:
+    description: |
+      A u32 property to specify the align mode for
+      split display on smart panel. Possible values:
+      0x0 -  no alignment
+      0xc -  align at start of frame
+      0xd -  align at start of line
+    $ref: /schemas/types.yaml#/definitions/uint32
+    enum: [0x0, 0xc, 0xd]
+
+  qcom,sde-panic-per-pipe:
+    description: |
+      Boolean property to indicate if panic signal control feature is available on each
+      source pipe.
+
+  qcom,sde-has-src-split:
+    description: |
+      Boolean property to indicate if source split
+      feature is available or not.
+
+  qcom,sde-has-dim-layer:
+    description: |
+      Boolean property to indicate if mixer has dim layer
+      feature is available or not.
+
+  qcom,sde-has-idle-pc:
+    description: |
+      Boolean property to indicate if target has idle
+      power collapse feature available or not.
+
+  qcom,sde-wakeup-with-touch:
+    description: |
+      Boolean property to indicate if command mode display
+      will exit from power collapse based on display input
+      touch event or not.
+
+  qcom,sde-has-mixer-gc:
+    description: |
+      Boolean property to indicate if mixer has gamma correction
+      feature available or not.
+
+  qcom,sde-has-dest-scaler:
+    description: |
+      Boolean property to indicate if destination scaler
+      feature is available or not.
+
+  qcom,sde-max-dest-scaler-input-linewidth:
+    description: |
+      A u32 value indicates the
+      maximum input line width to destination scaler.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-max-dest-scaler-output-linewidth:
+    description: |
+      A u32 value indicates the
+      maximum output line width of destination scaler.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dest-scaler-top-off:
+    description: |
+      A u32 value provides the
+      offset from mdp base to destination scaler block.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dest-scaler-top-size:
+    description: A u32 value indicates the address range for ds top
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dest-scaler-off:
+    description: |
+      Array of u32 offsets indicate the qseed3 scaler blocks
+      offset from destination scaler top offset.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dest-scaler-size:
+    description: A u32 value indicates the address range for each scaler block
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-sspp-clk-ctrl:
+    description: |
+      Array of offsets describing clk control
+      offsets for dynamic clock gating. 1st value
+      in the array represents offset of the control
+      register. 2nd value represents bit offset within
+      control register. Number of offsets defined should
+      match the number of offsets defined in
+      property: qcom,sde-sspp-off
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-sspp-clk-status:
+    description: |
+      Array of offsets describing clk status
+      offsets for clock active state. 1st value
+      in the array represents offset of the status
+      register. 2nd value represents bit offset within
+      status register. Number of offsets defined should
+      match the number of offsets defined in
+      property: qcom,sde-sspp-off.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-sspp-excl-rect:
+    description: |
+      Array of u32 values indicating exclusion rectangle
+      support on each sspp.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-sspp-smart-dma-priority:
+    description: |
+      Array of u32 values indicating hw pipe
+      priority of secondary rectangles when smart dma
+      is supported. Number of priority values should
+      match the number of offsets defined in
+      qcom,sde-sspp-off node. Zero indicates no support
+      for smart dma for the sspp.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-smart-dma-rev:
+    description: |
+      A string entry indicating the smart dma version
+      supported on the device. Supported entries are
+      "smart_dma_v1" and "smart_dma_v2".
+    $ref: /schemas/types.yaml#/definitions/string-array
+    enum: [smart_dma_v1, smart_dma_v2]
+
+  qcom,sde-vdc-hw-rev:
+    description: A string indicating the hw version of vdc.
+    $ref: /schemas/types.yaml#/definitions/string-array
+
+  qcom,sde-intf-type:
+    description: |
+      Array of string provides the interface type information.
+      Possible string values
+      "dsi" - dsi display interface
+      "dp" - Display Port interface
+      "hdmi" - HDMI display interface
+      An interface is considered as "none" if interface type
+      is not defined.
+    $ref: /schemas/types.yaml#/definitions/string-array
+    default: none
+    enum: [dsi, dp, hdmi]
+
+  qcom,sde-intf-tear-irq-off:
+    description: |
+      Array of offset addresses for the available
+      tear effect (TE) IRQ blocks from "mdp_phys".
+      There should be one entry per INTF instance with
+      a zero value for INTFs without TE IRQ block.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-emulated-env:
+    description: |
+      Boolean property to indicate if the MDSS is running in an
+      emulated environment.
+
+  qcom,sde-off:
+    description: SDE offset from "mdp_phys" defined in reg property.
+
+  qcom,sde-cdm-off:
+    description: |
+      Array of offset addresses for the available
+      cdm blocks. These offsets will be calculated from
+      register "mdp_phys" defined in reg property.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-vbif-off:
+    description: |
+      Array of offset addresses for the available
+      vbif blocks. These offsets will be calculated from
+      register "vbif_phys" defined in reg property.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-vbif-size:
+    description: A u32 value indicates the vbif block address range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-uidle-off:
+    description: |
+      A u32 value with the offset for the uidle block, from the "mdp_phys".
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-uidle-size:
+    description: A u32 value indicates the uidle block address range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-te-off:
+    description: |
+      A u32 offset indicates the te block offset on pingpong.
+      This offset is 0x0 by default.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-te2-off:
+    description: A u32 offset indicates the te2 block offset on pingpong.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-te-size:
+    description: A u32 value indicates the te block address range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-te2-size:
+    description: A u32 value indicates the te2 block address range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dsc-off:
+    description: |
+      Array of offset addresses for the available dsc
+      blocks. These offsets are calculated from
+      register "mdp_phys" defined in reg property.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dsc-hw-rev:
+    description: A string value indicates the dsc hw block version.
+    $ref: /schemas/types.yaml#/definitions/string-array
+
+  qcom,sde-dsc-enc:
+    description: |
+      Array of offset addresses for the available dsc
+      encoder blocks. These offsets are calculated from
+      the corresponding DSC base.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dsc-enc-size:
+    description: A u32 value indicates the enc block offset range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dsc-ctl:
+    description: |
+      Array of offset addresses for the available dsc
+      ctl blocks. These offsets are calculated from
+      the corresponding DSC base.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dsc-ctl-size:
+    description: A u32 value indicates the ctl block offset range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dsc-native422-supp:
+    description: |
+      Array of flags indicating whether corresponding dsc
+      block can support native 422 and native 420
+      encoding.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dsc-linewidth:
+    description: A u32 value indicates the max dsc line width.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-vdc-off:
+    description: |
+      A u32 offset address for the available vdc blocks.
+      This offset is calculated from register "mdp_phys"
+      defined in reg property.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-vdc-enc-size:
+    description: A u32 value indicates the enc block offset range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-vdc-enc:
+    description: |
+      A u32 offset address for the vdc encoder block. This offset is
+      calculated from qcom,sde-vdc-off.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-vdc-ctl:
+    description: |
+      A u32 offset address for the vdc ctl block. This offset is
+      calculated from qcom,sde-vdc-off.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-vdc-ctl-size:
+    description: A u32 value indicates the ctl block offset range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-qdss-off:
+    description: A u32 offset indicates the qdss block offset.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dither-off:
+    description: A u32 offset indicates the dither block offset on pingpong.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dither-version:
+    description: A u32 value indicates the dither block version.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dither-size:
+    description: A u32 value indicates the dither block address range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-cwb-dither:
+    description: |
+      Array of u32 flags indicating whether each dither block
+      may be configured as a cwb dither block.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-sspp-vig-blocks:
+    description: |
+      A node that lists the blocks inside the VIG hardware. There can
+      be more than one instance of this binding, in which case the
+      entry would be appended with the vcm entry index. Each entry will
+      contain the offset and version (if needed) of each feature block.
+      The presence of a block entry indicates that the SSPP VIG contains
+      that feature hardware. Eg: vcm@0
+    type: object
+    patternProperties:
+      "vcm@+\w":
+        properties:
+          cell-index:
+            description: A u32 index for the sub-block.
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-vig-top-off:
+            description: A u32 offset of the sub-block top.
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-vig-csc-off:
+            description: offset of CSC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-vig-qseed-off:
+            description: offset of QSEED hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-vig-qseed-size:
+            description: A u32 address range for qseed scaler.
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-vig-pcc:
+            description: offset and version of PCC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-vig-hsic:
+            description: offset and version of global PA adjustment
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-vig-memcolor:
+            description: offset and version of PA memcolor hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-vig-gamut:
+            description: offset and version of 3D LUT Gamut hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-vig-igc:
+            description: offset and version of 1D LUT IGC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-vig-inverse-pma:
+            description: |
+              Boolean property to indicate if inverse PMA feature is
+              available on VIG pipe
+          qcom,sde-fp16-igc:
+            description: u32 offset and version of the FP16 IGC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-fp16-unmult:
+            description: u32 offset and version of the FP16 Unmult hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-fp16-gc:
+            description: u32 offset and version of the FP16 GC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-fp16-csc:
+            description: u32 offset and version of the FP16 CSC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-ucsc-igc:
+            description: u32 offset and version of the UCSC IGC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-ucsc-unmult:
+            description: u32 offset and version of the UCSC Unmult hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-ucsc-gc:
+            description: u32 offset and version of the UCSC GC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-ucsc-csc:
+            description: u32 offset and version of the UCSC CSC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-ucsc-alpha-dither:
+            description: u32 offset and version of the UCSC Alpha Dither hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-sspp-dma-blocks:
+    description: |
+      A node that lists the blocks inside the DMA hardware. There
+      can be more than one instance of this binding, in which case the
+      entry would be appended with dgm entry index. Each entry will
+      contain the offset and version (if needed) of each feature block.
+      The presence of a block entry indicates that the SSPP DMA contains
+      that feature hardware.
+      e.g. qcom,sde-sspp-dma-blocks
+      -- dgm@0
+    type: object
+    patternProperties:
+      "dgm@+\w":
+        properties:
+          cell-index:
+            description: A u32 index for the sub-block.
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-dma-top-off:
+            description: A u32 offset of the sub-block top.
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-dma-igc:
+            description: offset and version of DMA IGC
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-dma-gc:
+            description: offset and version of DMA GC
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-dma-inverse-pma:
+            description: |
+              Boolean property to indicate if inverse PMA feature is
+              available on DMA pipe.
+          qcom,sde-dma-csc-off:
+            description: offset of CSC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-fp16-igc:
+            description: u32 offset and version of the FP16 IGC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-fp16-unmult:
+            description: u32 offset and version of the FP16 Unmult hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-fp16-gc:
+            description: u32 offset and version of the FP16 GC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-fp16-csc:
+            description: u32 offset and version of the FP16 CSC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-ucsc-igc:
+            description: u32 offset and version of the UCSC IGC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-ucsc-unmult:
+            description: u32 offset and version of the UCSC Unmult hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-ucsc-gc:
+            description: u32 offset and version of the UCSC GC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-ucsc-csc:
+            description: u32 offset and version of the UCSC CSC hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,sde-ucsc-alpha-dither:
+            description: u32 offset and version of the UCSC Alpha Dither hardware
+            $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-sspp-rgb-blocks:
+    description: |
+      A node that lists the blocks inside the RGB hardware. The
+      block entries will contain the offset and version (if needed)
+      of each feature block. The presence of a block entry
+      indicates that the SSPP RGB contains that feature hardware.
+      e.g. qcom,sde-sspp-rgb-blocks
+    type: object
+    properties:
+      qcom,sde-rgb-scaler-off:
+        description: offset of RGB scaler hardware
+        $ref: /schemas/types.yaml#/definitions/uint32
+      qcom,sde-rgb-scaler-size:
+        description: A u32 address range for scaler.
+        $ref: /schemas/types.yaml#/definitions/uint32
+      qcom,sde-rgb-pcc:
+        description: offset and version of PCC hardware.
+        $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-blocks:
+    description: |
+      A node that lists the blocks inside the DSPP hardware. The
+      block entries will contain the offset and version of each
+      feature block. The presence of a block entry indicates that
+      the DSPP contains that feature hardware.
+      e.g. qcom,sde-dspp-blocks
+    type: object
+    properties:
+      qcom,sde-dspp-pcc:
+        description: offset and version of PCC hardware
+        $ref: /schemas/types.yaml#/definitions/uint32
+      qcom,sde-dspp-gc:
+        description: offset and version of GC hardware
+        $ref: /schemas/types.yaml#/definitions/uint32
+      qcom,sde-dspp-igc:
+        description: offset and version of IGC hardware
+        $ref: /schemas/types.yaml#/definitions/uint32
+      qcom,sde-dspp-hsic:
+        description: offset and version of global PA adjustment
+        $ref: /schemas/types.yaml#/definitions/uint32
+      qcom,sde-dspp-memcolor:
+        description: offset and version of PA memcolor hardware
+        $ref: /schemas/types.yaml#/definitions/uint32
+      qcom,sde-dspp-sixzone:
+        description: offset and version of PA sixzone hardware
+        $ref: /schemas/types.yaml#/definitions/uint32
+      qcom,sde-dspp-gamut:
+        description: offset and version of Gamut mapping hardware
+        $ref: /schemas/types.yaml#/definitions/uint32
+      qcom,sde-dspp-dither:
+        description: offset and version of dither hardware
+        $ref: /schemas/types.yaml#/definitions/uint32
+      qcom,sde-dspp-hist:
+        description: offset and version of histogram hardware
+        $ref: /schemas/types.yaml#/definitions/uint32
+      qcom,sde-dspp-vlut:
+        description: offset and version of PA vLUT hardware
+        $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-mixer-blocks:
+    description: |
+      A node that lists the blocks inside the layer mixer hardware. The
+      block entries will contain the offset and version (if needed)
+      of each feature block. The presence of a block entry
+      indicates that the layer mixer contains that feature hardware.
+      e.g. qcom,sde-mixer-blocks
+      -  qcom,sde-mixer-gc: offset and version of mixer GC hardware
+
+  qcom,sde-dspp-ad-off:
+    description: |
+      Array of u32 offsets indicate the ad block offset from the
+      DSPP offset. Since AD hardware is represented as part of
+      DSPP block, the AD offsets must be offset from the
+      corresponding DSPP base.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dspp-ad-version:
+    description: A u32 value indicating the version of the AD hardware
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-ltm-version:
+    description: |
+      A u32 value indicating the major(upper 16 bits) and minor(lower 16 bits)
+      version of the LTM hardware
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-ltm-off:
+    description: |
+      Array of u32 offsets indicate the LTM block offsets from the
+      DSPP offsets. Since LTM hardware is represented as part of
+      DSPP block, the LTM offsets are calculated based on the
+      corresponding DSPP base.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dspp-rc-version:
+    description: A u32 value indicating the version of the RC hardware.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-rc-off:
+    description: |
+      Array of u32 offsets indicate the RC block offsets from the
+      DSPP offsets. Since RC hardware is represented as part of
+      DSPP block, the RC offsets are calculated based on the
+      corresponding DSPP base.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-rc-size:
+    description: A u32 value indicating the RC block address range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-rc-mem-size:
+    description: A u32 value indicating the RC block shared memory size.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-rc-min-region-width:
+    description: A u32 value indicating the RC block minimum region width.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-spr-off:
+    description: |
+      Array of u32 offsets indicate the SPR block offsets from the
+      corresponding DSPP block offset as base.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dspp-spr-size:
+    description: A u32 value indicating the SPR block register address range
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-spr-version:
+    description: A u32 value indicating the version of SPR hardware.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-demura-off:
+    description: |
+      Array of u32 offsets indicate the demura block offsets from the
+      corresponding DSPP block offset as base.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dspp-demura-size:
+    description: A u32 value indicating the demura block register address range
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-demura-version:
+    description: A u32 value indicating the version of demura hardware.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-aiqe-off:
+    description: |
+      Array of u32 values indicating the offset of each AIQE block
+      relative to its parent DSPP block.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dspp-aiqe-version:
+    description: A u32 value indicating the version of the AIQE hardware.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-aiqe-size:
+    description: |
+      A u32 value indicating the shared memory size of each AIQE
+      hardware block instance.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-aiqe-dither-off:
+    description: |
+      Array of u32 values indicating the offset of each AIQE
+      dither block relative to its parent DSPP block.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dspp-aiqe-dither-version:
+    description: A u32 value indicating the version of the AIQE dither hardware.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-aiqe-dither-size:
+    description: |
+      A u32 value indicating the shared memory size of each AIQE
+      dither hardware block instance.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-aiqe-wrapper-off:
+    description: |
+      Array of u32 values indicating the offset of each AIQE
+      wrapper block relative to its parent DSPP block.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dspp-aiqe-wrapper-version:
+    description: A u32 value indicating the version of the AIQE wrapper hardware.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-aiqe-wrapper-size:
+    description: |
+      A u32 value indicating the shared memory size of each AIQE
+      wrapper hardware block instance.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-aiqe-aiscaler-off:
+    description: |
+      Array of u32 values indicating the offset of each AIQE
+      AI Scaler block relative to its parent DSPP block.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dspp-aiqe-aiscaler-version:
+    description: A u32 value indicating the version of the AIQE AI Scaler hardware.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dspp-aiqe-aiscaler-size:
+    description: |
+      A u32 value indicating the shared memory size of each AIQE
+      AI Scaler hardware block instance.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-aiqe-has-feature-mdnie:
+    description: Boolean property indicating the presence of AIQE feature mDNIe hardware.
+
+  qcom,sde-aiqe-has-feature-abc:
+    description: Boolean property indicating the presence of AIQE feature ABC hardware.
+
+  qcom,sde-aiqe-has-feature-ssrc:
+    description: Boolean property indicating the presence of AIQE feature SSRC hardware.
+
+  qcom,sde-aiqe-has-feature-copr:
+    description: Boolean property indicating the presence of AIQE feature COPR hardware.
+
+  qcom,sde-aiqe-has-feature-aiscaler:
+    description: Boolean property indicating the presence of AIQE feature AI Scaler hardware.
+
+  qcom,sde-lm-noise-off:
+    description: A u32 value indicating noise layer offset from mixer base.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-lm-noise-version:
+    description: A u32 value indicating the noise layer version.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-vbif-id:
+    description: |
+      Array of vbif ids corresponding to the
+      offsets defined in property: qcom,sde-vbif-off.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-vbif-default-ot-rd-limit:
+    description: A u32 value indicates the default read OT limit
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-vbif-default-ot-wr-limit:
+    description: A u32 value indicates the default write OT limit
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-vbif-dynamic-ot-rd-limit:
+    description: |
+      A series of 2 cell property, with a format
+      of (pps, OT limit), where pps is pixel per second and
+      OT limit is the read limit to apply if the given
+      pps is not exceeded.
+
+  qcom,sde-vbif-dynamic-ot-wr-limit:
+    description: |
+      A series of 2 cell property, with a format
+      of (pps, OT limit), where pps is pixel per second and
+      OT limit is the write limit to apply if the given
+      pps is not exceeded.
+
+  qcom,sde-vbif-memtype-0:
+    description: Array of u32 vbif memory type settings, group 0
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-vbif-memtype-1:
+    description: Array of u32 vbif memory type settings, group 1
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-wb-id:
+    description: |
+      Array of writeback ids corresponding to the
+      offsets defined in property: qcom,sde-wb-off.
+
+  qcom,sde-wb-clk-ctrl:
+    description: |
+      Array of 2 cell property describing clk control
+      offsets for dynamic clock gating. 1st value
+      in the array represents offset of the control
+      register. 2nd value represents bit offset within
+      control register. Number of offsets defined should
+      match the number of offsets defined in
+      property: qcom,sde-wb-off
+
+  qcom,sde-wb-clk-status:
+    description: |
+      Array of 2 cell property describing clk status
+      offsets for clock active state. 1st value
+      in the array represents offset of the status
+      register. 2nd value represents bit offset within
+      status register. Number of offsets defined should
+      match the number of offsets defined in
+      property: qcom,sde-wb-off
+
+  qcom,sde-reg-dma-off:
+    description: |
+      Array of u32 offset addresses of the dma hardware blocks,
+      relative to "regdma_phys" defined in reg property.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-reg-dma-id:
+    description: |
+      Array of u32 DMA block type ids corresponding to the
+      offsets declared in property: qcom,sde-reg-dma-off
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-reg-dma-version:
+    description: Version of the reg dma hardware blocks.
+
+  qcom,sde-reg-dma-trigger-off:
+    description: |
+      Offset of the lut dma trigger reg from "mdp_phys"
+      defined in reg property.
+
+  qcom,sde-reg-dma-broadcast-disabled:
+    description: |
+      Boolean property to indicate if broadcast
+      functionality in the register dma hardware block should be used.
+
+  qcom,sde-reg-dma-xin-id:
+    description: VBIF clients id (xin) corresponding to the LUTDMA block.
+
+  qcom,sde-reg-dma-clk-ctrl:
+    description: |
+      Array of 2 cell property describing clk control
+      offsets for dynamic clock gating. 1st value
+      in the array represents offset of the control
+      register. 2nd value represents bit offset within
+      control register.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+    items:
+      - description: offset of the control register
+      - description: bit offset within the control register
+
+  qcom,sde-dram-channels:
+    description: This represents the number of channels in the Bus memory controller.
+
+  qcom,sde-num-nrt-paths:
+    description: |
+      Integer property represents the number of non-realtime
+      paths in each Bus Scaling Usecase. This value depends on
+      number of AXI ports that are dedicated to non-realtime VBIF
+      for particular chipset.
+      These paths must be defined after rt-paths in
+      "qcom,msm-bus,vectors-KBps" vector request.
+
+  qcom,sde-max-bw-low-kbps:
+    description: |
+      This value indicates the max bandwidth in Kbps
+      that can be supported without underflow.
+      This is a low bandwidth threshold which should
+      be applied in most scenarios to be safe from
+      underflows when unable to satisfy bandwidth
+      requirements.
+
+  qcom,sde-max-bw-high-kbps:
+    description:  |
+      This value indicates the max bandwidth in Kbps
+      that can be supported without underflow in the
+      event where there is no VFE.
+      This is a high bandwidth threshold which can be
+      applied in scenarios where panel interface can
+      be more tolerant to memory latency such as
+      command mode panels.
+
+  qcom,sde-core-ib-ff:
+    description: A string entry indicating the fudge factor for core ib calculation.
+    $ref: /schemas/types.yaml#/definitions/string-array
+
+  qcom,sde-core-clk-ff:
+    description: |
+      A string entry indicating the fudge factor for
+      core clock calculation.
+    $ref: /schemas/types.yaml#/definitions/string-array
+
+  qcom,sde-min-core-ib-kbps:
+    description: |
+      This u32 value indicates the minimum mnoc ib
+      vote in Kbps that can be reduced without hitting underflow.
+      BW calculation logic will choose the IB bandwidth requirement
+      based on usecase if this floor value is not defined.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-min-llcc-ib-kbps:
+    description: |
+      This u32 value indicates the minimum llcc ib
+      vote in Kbps that can be reduced without hitting underflow.
+      BW calculation logic will choose the IB bandwidth requirement
+      based on usecase if this floor value is not defined.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-min-dram-ib-kbps:
+    description: |
+      This u32 value indicates the minimum dram ib
+      vote in Kbps that can be reduced without hitting underflow.
+      BW calculation logic will choose the IB bandwidth requirement
+      based on usecase if this floor value is not defined.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-comp-ratio-rt:
+    description: |
+      A string entry indicating the compression ratio
+      for each supported compressed format on realtime interface.
+      The string is composed of one or more of
+      <fourcc code>/<vendor code>/<modifier>/<compression ratio>
+      separated with spaces.
+
+  qcom,sde-comp-ratio-nrt:
+    description: |
+      A string entry indicating the compression ratio
+      for each supported compressed format on non-realtime interface.
+      The string is composed of one or more of
+      <fourcc code>/<vendor code>/<modifier>/<compression ratio>
+      separated with spaces.
+
+  qcom,sde-undersized-prefill-lines:
+    description: A u32 value indicates the size of undersized prefill in lines.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-xtra-prefill-lines:
+    description: A u32 value indicates the extra prefill in lines.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dest-scale-prefill-lines:
+    description: A u32 value indicates the latency of destination scaler in lines.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-macrotile-prefill-lines:
+    description: A u32 value indicates the latency of macrotile in lines.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-yuv-nv12-prefill-lines:
+    description: A u32 value indicates the latency of yuv/nv12 in lines.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-linear-prefill-lines:
+    description: A u32 value indicates the latency of linear in lines.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-downscaling-prefill-lines:
+    description: A u32 value indicates the latency of downscaling in lines.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-max-per-pipe-bw-kbps:
+    description: Array of u32 value indicates the max per pipe bandwidth in Kbps.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-amortizable-threshold:
+    description: This value indicates the min for traffic shaping in lines.
+
+  qcom,sde-vbif-qos-rt-remap:
+    description: |
+      This u32 array is used to program vbif qos remapper register
+      priority for realtime clients. First 8 entries are for rp_remap and
+      the next 8 entries are for lvl_remap.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-vbif-qos-nrt-remap:
+    description: |
+      This u32 array is used to program vbif qos remapper register
+      priority for non-realtime clients. First 8 entries are for rp_remap and
+      the next 8 entries are for lvl_remap.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-vbif-qos-cwb-remap:
+    description: |
+      This u32 array is used to program vbif qos remapper register
+      priority for concurrent writeback clients. First 8 entries are
+      for rp_remap and the next 8 entries are for lvl_remap.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-vbif-qos-lutdma-remap:
+    description: |
+      This u32 array is used to program vbif qos remapper register
+      priority for lutdma client. First 8 entries are for rp_remap and
+      the next 8 entries are for lvl_remap.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-vbif-qos-cnoc-remap:
+    description: |
+      This u32 array is used to program vbif qos remapper register
+      priority for cnoc clients. First 8 entries are for rp_remap and
+      the next 8 entries are for lvl_remap.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-vbif-qos-offline-wb-remap:
+    description: |
+      This u32 array is used to program vbif qos remapper register
+      priority for offline-wb clients. First 8 entries are for rp_remap
+      and the next 8 entries are for lvl_remap.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-vbif-qos-wb-rot-remap:
+    description: |
+      This u32 array is used to program vbif qos remapper register
+      priority for wb-rotation clients. First 8 entries are for rp_remap
+      and the next 8 entries are for lvl_remap.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-qos-refresh-rates:
+    description: |
+      This u32 array indicates danger, safe and creq luts
+      qos configuration for different refresh rates.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-danger-lut:
+    description: |
+      This u32 array of 18 cell property, with a format of
+      <portrait-panel, landscape-panel> for each entry,
+      <linear, tile, nrt, cwb-linear, cwb-tile, inline, inline-restricted,
+      offline-wb, wb_rotate>, indicating the danger luts on sspp and wb.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-safe-lut:
+    description: |
+      This u32 array of 18 cell property, with a format of
+      <portrait-panel, landscape-panel> for each entry,
+      <linear, tile, nrt, cwb-linear, cwb-tile, inline, inline-restricted,
+      offline-wb, wb_rotate>, indicating the safe luts on sspp and wb.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-creq-lut:
+    description: |
+      This u64 array of 18 cell property, with a format of
+      <lut hi, lut lo, lut hi with-qseed, lut lo with-qseed> for each
+      entry, for qos cases from <linear, tile, nrt, cwb-linear, cwb-tile,
+      inline, inline-restricted, offline-wb, wb_rotate>, with of-node count based
+      on the qos refresh rates count.
+    $ref: /schemas/types.yaml#/definitions/uint64-array
+
+  qcom,sde-cdp-setting:
+    description: |
+      Array of 2 cell property, with a format of
+      <read enable, write enable> for cdp use cases in
+      order of <real_time>, and <non_real_time>.
+
+  qcom,sde-qos-cpu-mask:
+    description: A u32 value indicating desired PM QoS CPU affine mask.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-qos-cpu-mask-performance:
+    description: |
+      Each bit represents a CPU mask. For example
+      	0xf represents 4 cpu cores. These cores can be
+      	silver or gold or gold+.
+
+  qcom,sde-qos-cpu-dma-latency:
+    description: A u32 value indicating desired PM QoS CPU DMA latency in usec.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-qos-cpu-irq-latency:
+    description: A u32 value indicating desired PM QoS CPU irq latency in usec.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-ipcc-protocol-id:
+    description: A u32 value indicating ipcc protocol id used for hw fencing feature.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-ipcc-client-dpu-phys-id:
+    description: |
+      A u32 value indicating ipcc physical client id of dpu used
+      	for ipcc registers access.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-inline-rot-xin:
+    description: An integer array of xin-ids related to inline rotation.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-inline-rot-xin-type:
+    description: |
+      A string array indicating the type of xin,
+      namely sspp or wb. Number of entries should match
+      the number of xin-ids defined in
+      property: qcom,sde-inline-rot-xin
+    $ref: /schemas/types.yaml#/definitions/string-array
+    enum: [sspp, wb]
+
+  qcom,sde-inline-rot-clk-ctrl:
+    description: |
+      Array of offsets describing clk control
+      offsets for dynamic clock gating. 1st value
+      in the array represents offset of the control
+      register. 2nd value represents bit offset within
+      control register. Number of offsets defined should
+      match the number of xin-ids defined in
+      property: qcom,sde-inline-rot-xin
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-secure-sid-mask:
+    description: Array of secure SID masks used during secure-camera/secure-display usecases.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  '#power-domain-cells':
+    description: Number of cells in a power-domain specifier and should contain 0.
+
+  '#list-cells':
+    description: Number of mdp cells, must be 1.
+
+  qcom,sde-mixer-display-pref:
+    description: |
+      A string array indicating the preferred display type
+      for the mixer block. Possible values:
+      "primary" - preferred for primary display
+      "none" - no preference on display
+    $ref: /schemas/types.yaml#/definitions/string-array
+    enum: [primary, none]
+
+  qcom,sde-mixer-cwb-pref:
+    description: |
+      A string array indicating the preferred mixer block.
+      for CWB. Possible values:
+      "cwb"  -  preferred for cwb
+      "none" - no preference on display
+    $ref: /schemas/types.yaml#/definitions/string-array
+    enum: [cwb, none]
+
+  qcom,sde-mixer-dcwb-pref:
+    description: |
+      A string array indicating the preferred mixer block.
+      for Dedicated-CWB. Possible values:
+      "dcwb" - preferred for dedicated-cwb
+      "none" - no preference on display
+    $ref: /schemas/types.yaml#/definitions/string-array
+    enum: [dcwb, none]
+
+  qcom,sde-ctl-display-pref:
+    description: |
+      A string array indicating the preferred display type
+      for the ctl block. Possible values:
+      "primary" - preferred for primary display
+      "none" - no preference on display
+    $ref: /schemas/types.yaml#/definitions/string-array
+    enum: [primary, none]
+
+  qcom,sde-pipe-order-version:
+    description: |
+      A u32 property to indicate version of pipe
+      ordering block
+      0: lower priority pipe has to be on the left for a given pair of pipes.
+      1: priority have to be explicitly configured for a given pair of pipes.
+    $ref: /schemas/types.yaml#/definitions/uint32
+    enum: [0, 1]
+
+  qcom,sde-trusted-vm-env:
+    description: |
+      Boolean property to indicate if the device
+      driver is executing in a trusted VM
+
+  qcom,sde-max-trusted-vm-displays:
+    description: |
+      A u32 property to indicate the maximum
+      number of concurrent displays supported in the
+      trusted vm environment
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-vm-exclude-reg-names:
+    description: |
+      A string array indicating the reg-names which
+      should be excluded from IO memory validation list
+      in trusted vm environment
+    $ref: /schemas/types.yaml#/definitions/string-array
+
+  qcom,tvm-include-reg:
+    description: |
+      An array of u32 tuplets indicating the address
+      ranges of the display sub-device registers
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,vram-size:
+    description: A u32 value indicating the size of the VRAM in bytes
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,pmic-arb-address:
+    description: |
+      A u32 array of display related SPMI address
+      bit mask, which is a combination of SID and  pheripheral id's.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-ib-bw-vote:
+    description: |
+      A u32 array of IB bandwidth vote values in kbps for
+      MNOC, LLCC and DDR/EBI respectively.
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dnsc-blur-version:
+    description: A u32 value indicating the downscale blur version
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dnsc-blur-off:
+    description: |
+      An array of u32 values with the offset for the downscale blur
+      block, from the "mdp_phys".
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dnsc-blur-size:
+    description: A u32 value indicates the downscale blur block address range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dnsc-blur-gaus-lut-off:
+    description: |
+      An array of u32 values with the offset for gaussian LUT
+      block, from the dnsc-blur-off
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dnsc-blur-gaus-lut-size:
+    description: A u32 value indicates the gaussian LUT block address range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,sde-dnsc-blur-dither-off:
+    description: |
+      An array of u32 values with the offset for dither
+      block, from the dnsc-blur-off
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  qcom,sde-dnsc-blur-dither-size:
+    description: A u32 value indicates the dither block address range.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+Bus Scaling:
+  interconnects:
+    description: |
+      An array of 4 cell properties with the format of
+      (src-noc master-id dst-noc slave-id) as described in:
+      Documentation/devicetree/bindings/interconnect/interconnect.txt
+      One entry for each interconnect path available.
+      Master/Slave ID bindings can be found at:
+      include/dt-bindings/interconnect/
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+  interconnect-names:
+    description: |
+      An array of string properties associated with "interconnects"
+      each with a unique name used to lookup the respective path.
+      The following paths are currently supported: qcom,sde-reg-bus,
+      qcom,sde-data-bus0, qcom,sde-data-bus1, qcom,sde-llcc-bus,
+      qcom,sde-ebi-bus
+    $ref: /schemas/types.yaml#/definitions/string-array
+
+  qcom,sde-reg-bus,vectors-KBps:
+    description: |
+      A series of 2 cell properties with a format of
+      (ab, ib) specified in kilobytes-per-second.
+      Used when applying reg-bus votes and must be
+      given whenever "qcom,sde-reg-bus" is used.
+
+  qcom,sde-inline-rotator:
+    description: |
+      A 2 cell property, with format of (rotator phandle,
+      instance id), of inline rotator device.
+
+patternProperties:
+  "qcom,smmu_sde_+\w":
+    description: Child nodes representing sde smmu virtual devices
+    $ref: /schemas/types.yaml#/definitions/string-array
+    compatible:
+      enum:
+        - qcom,smmu_sde_unsec:
+            description: smmu context bank device for unsecure sde real time domain.
+        - qcom,smmu_sde_sec:
+            description: smmu context bank device for secure sde real time domain.
+        - qcom,smmu_sde_nrt_unsec:
+            description: smmu context bank device for unsecure sde non-real time domain.
+        - qcom,smmu_sde_nrt_sec:
+            description: smmu context bank device for secure sde non-real time domain.
+
+required:
+  - compatible
+  - reg
+  - reg-names
+  - clocks
+  - clock-names
+  - mmagic-supply
+  - vdd-supply
+  - interrupt-parent
+  - interrupts
+  - interrupt-controller
+  - '#interrupt-cells'
+  - iommus
+  - qcom,sde-sspp-type
+  - qcom,sde-sspp-off
+  - qcom,sde-sspp-xin-id
+  - qcom,sde-ctl-off
+  - qcom,sde-wb-off
+  - qcom,sde-wb-xin-id
+  - qcom,sde-mixer-off
+  - qcom,sde-dspp-top-off
+  - qcom,sde-dspp-off
+  - qcom,sde-pp-off
+  - qcom,sde-pp-slave
+  - qcom,sde-pp-merge-3d-id
+  - qcom,sde-merge-3d-off
+  - qcom,sde-intf-off
+  - qcom,sde-mixer-blend-op-off
+  - qcom,sde-mixer-pair-mask
+
+examples:
+  - |
+    mdss_mdp: qcom,mdss_mdp@900000 {
+      compatible = "qcom,sde-kms";
+      reg = <0x00900000 0x90000>,
+            <0x009b0000 0x1040>,
+            <0x009b8000 0x1040>,
+            <0x0aeac000 0x00f0>;
+      reg-names = "mdp_phys",
+        "vbif_phys",
+        "vbif_nrt_phys",
+        "regdma_phys";
+      qcom,tvm-include-reg = <0xaf20000 0x4d68>,
+                             <0xaf30000 0x3fd4>;
+      clocks = <&clock_mmss clk_mdss_ahb_clk>,
+        <&clock_mmss clk_mdss_axi_clk>,
+        <&clock_mmss clk_mdp_clk_src>,
+        <&clock_mmss clk_mdss_mdp_vote_clk>,
+        <&clock_mmss clk_smmu_mdp_axi_clk>,
+        <&clock_mmss clk_mmagic_mdss_axi_clk>,
+        <&clock_mmss clk_mdss_vsync_clk>;
+      clock-names = "iface_clk",
+        "bus_clk",
+        "core_clk_src",
+        "core_clk",
+        "iommu_clk",
+        "mmagic_clk",
+        "vsync_clk";
+      clock-rate = <0>, <0>, <0>;
+      clock-max-rate= <0 320000000 0>;
+      qcom,hw-fence-sw-version = <0x1>;
+      clock-mmrm = <0 0 DISP_CC_MDSS_MDP_CLK_SRC 0 0 0 0>;
+      mmagic-supply = <&gdsc_mmagic_mdss>;
+      vdd-supply = <&gdsc_mdss>;
+      interrupt-parent = <&intc>;
+      interrupts = <0 83 0>;
+      interrupt-controller;
+      #interrupt-cells = <1>;
+      iommus = <&mdp_smmu 0>;
+      #power-domain-cells = <0>;
+
+      qcom,sde-hw-version = <0x70000000>;
+      qcom,sde-emulated-env;
+      qcom,sde-off = <0x1000>;
+      qcom,sde-ctl-off = <0x00002000 0x00002200 0x00002400
+                          0x00002600 0x00002800>;
+      qcom,sde-ctl-display-pref = "primary", "none", "none",
+                                  "none", "none";
+      qcom,sde-mixer-off = <0x00045000 0x00046000
+                           0x00047000 0x0004a000>;
+      qcom,sde-mixer-display-pref = "primary", "none",
+                                    "none", "none";
+      qcom,sde-mixer-cwb-pref = "none", "none",
+                                "cwb", "none";
+      qcom,sde-dspp-top-off = <0x1300>;
+      qcom,sde-dspp-off = <0x00055000 0x00057000>;
+      qcom,sde-dspp-ad-off = <0x24000 0x22800>;
+      qcom,sde-dspp-ad-version = <0x00030000>;
+      qcom,sde-dspp-rc-version = <0x00010000>;
+      qcom,sde-dspp-rc-off = <0x15800 0x14c00>;
+      qcom,sde-dspp-rc-size = <0x100>;
+      qcom,sde-dspp-rc-min-region-width = <20>;
+      qcom,sde-dspp-spr-off = <0x15400 0x14400>;
+      qcom,sde-dspp-spr-size = <0x200>;
+      qcom,sde-dspp-spr-version = <0x00010000>;
+      qcom,sde-dspp-demura-off = <0x15600 0x14800>;
+      qcom,sde-dspp-demura-size = <0x200>;
+      qcom,sde-dspp-demura-version = <0x00010000>;
+      qcom,sde-lm-noise-off = <0x320>;
+      qcom,sde-lm-noise-version = <0x00010000>;
+
+      qcom,sde-dspp-aiqe-off = <0x39000 0xffffffff 0x3a000 0xffffffff>;
+      qcom,sde-dspp-aiqe-version = <0x00010000>;
+      qcom,sde-dspp-aiqe-size = <0x3fc>;
+
+      qcom,sde-dspp-aiqe-dither-off = <0x39700 0xffffffff 0x3a700 0xffffffff>;
+      qcom,sde-dspp-aiqe-dither-version = <0x00010000>;
+      qcom,sde-dspp-aiqe-dither-size = <0x20>;
+
+      qcom,sde-dspp-aiqe-wrapper-off = <0x39780 0xffffffff 0x3a780 0xffffffff>;
+      qcom,sde-dspp-aiqe-wrapper-version = <0x00010000>;
+      qcom,sde-dspp-aiqe-wrapper-size = <0x1c>;
+
+      qcom,sde-aiqe-has-feature-mdnie;
+      qcom,sde-aiqe-has-feature-abc;
+      qcom,sde-aiqe-has-feature-ssrc;
+      qcom,sde-aiqe-has-feature-copr;
+
+      qcom,sde-dspp-rc-mem-size = <2720>;
+      qcom,sde-dest-scaler-top-off = <0x00061000>;
+      qcom,sde-dest-scaler-off = <0x800 0x1000>;
+      qcom,sde-wb-off = <0x00066000>;
+      qcom,sde-wb-xin-id = <6>;
+      qcom,sde-intf-off = <0x0006b000 0x0006b800
+           0x0006c000 0x0006c800>;
+      qcom,sde-intf-type = "none", "dsi", "dsi", "hdmi";
+      qcom,sde-intf-tear-irq-off = <0 0x6e800 0x6e900 0>;
+      qcom,sde-pp-off = <0x00071000 0x00071800
+             0x00072000 0x00072800>;
+      qcom,sde-pp-slave = <0x0 0x0 0x0 0x0>;
+      qcom,sde-pp-cwb = <0x0 0x0 0x0 0x0 0x0 0x0 0x1 0x1>;
+      qcom,sde-cwb-dither = <0x0 0x0 0x0 0x0 0x0 0x0 0x1 0x1>;
+      qcom,sde-cdm-off = <0x0007a200>;
+      qcom,sde-dsc-off = <0x00081000 0x00081400>;
+      qcom,sde-vdc-off = <0x7C000>;
+      qcom,sde-vdc-size = <0xf10>;
+      qcom,sde-vdc-hw-rev = "vdc_1_2";
+      qcom,sde-vdc-enc = <0x200>;
+      qcom,sde-vdc-ctl = <0xf00>;
+      qcom,sde-intf-max-prefetch-lines = <0x15 0x15 0x15 0x15>;
+
+      qcom,sde-mixer-pair-mask = <2 1 6 0 0 3>;
+      qcom,sde-mixer-blend-op-off = <0x20 0x38 0x50 0x68 0x80 0x98
+            0xb0 0xc8 0xe0 0xf8 0x110>;
+
+      qcom,sde-qdss-off = <0x81a00>;
+
+      qcom,sde-sspp-type = "vig", "vig", "vig",
+           "vig", "rgb", "rgb",
+           "rgb", "rgb", "dma",
+           "dma", "cursor", "cursor";
+
+      qcom,sde-sspp-off = <0x00005000 0x00007000 0x00009000
+           0x0000b000 0x00015000 0x00017000
+           0x00019000 0x0001b000 0x00025000
+           0x00027000 0x00035000 0x00037000>;
+
+      qcom,sde-sspp-xin-id = <0 4 8
+           12 1 5
+           9 13 2
+           10 7 7>;
+
+      /* offsets are relative to "mdp_phys + qcom,sde-off */
+      qcom,sde-sspp-clk-ctrl = <0x2ac 0>, <0x2b4 0>, <0x2bc 0>,
+             <0x2c4 0>, <0x2ac 4>, <0x2b4 4>, <0x2bc 4>,
+             <0x2c4 4>, <0x2ac 8>, <0x2b4 8>, <0x3a8 16>,
+             <0x3b0 16>;
+      qcom,sde-sspp-clk-status = <0x2ac 0>, <0x2b4 0>, <0x2bc 0>,
+             <0x2c4 0>, <0x2ac 4>, <0x2b4 4>, <0x2bc 4>,
+             <0x2c4 4>, <0x2ac 8>, <0x2b4 8>, <0x3a8 16>,
+             <0x3b0 16>;
+      qcom,sde-scaling-linewidth = <2560>;
+      qcom,sde-mixer-linewidth = <2560>;
+      qcom,sde-sspp-linewidth = <2560>;
+      qcom,sde-mixer-blendstages = <0x7>;
+      qcom,sde-dsc-linewidth = <2048>;
+      qcom,sde-highest-bank-bit = <0x7 0x2>;
+      qcom,sde-ubwc-version = <0x10000000>;
+      qcom,sde-ubwc-static = <0x100>;
+      qcom,sde-ubwc-swizzle = <0>;
+      qcom,sde-ubwc-bw-calc-version = <0x1>;
+      qcom,sde-smart-panel-align-mode = <0xd>;
+      qcom,sde-panic-per-pipe;
+      qcom,sde-has-src-split;
+      qcom,sde-pipe-order-version = <0x1>;
+      qcom,sde-has-dim-layer;
+      qcom,sde-sspp-src-size = <0x100>;
+      qcom,sde-mixer-size = <0x100>;
+      qcom,sde-ctl-size = <0x100>;
+      qcom,sde-dspp-top-size = <0xc>;
+      qcom,sde-dspp-size = <0x100>;
+      qcom,sde-intf-size = <0x100>;
+      qcom,sde-dsc-size = <0x100>;
+      qcom,sde-cdm-size = <0x100>;
+      qcom,sde-pp-size = <0x100>;
+      qcom,sde-wb-size = <0x100>;
+      qcom,sde-dest-scaler-top-size = <0xc>;
+      qcom,sde-dest-scaler-size = <0x800>;
+      qcom,sde-len = <0x100>;
+      qcom,sde-wb-linewidth = <2560>;
+      qcom,sde-wb-linewidth-linear = <5120>;
+      qcom,sde-sspp-scale-size = <0x100>;
+      qcom,sde-mixer-blendstages = <0x8>;
+      qcom,sde-qseed-sw-lib-rev = "qseedv2";
+      qcom,sde-qseed-scalar-version = <0x3000>;
+      qcom,sde-csc-type = "csc-10bit";
+      qcom,sde-highest-bank-bit = <15>;
+      qcom,sde-has-mixer-gc;
+      qcom,sde-has-idle-pc;
+      qcom,sde-wakeup-with-touch;
+      qcom,fullsize-va-map;
+      qcom,sde-has-dest-scaler;
+      qcom,sde-max-trusted-vm-displays = <1>;
+      qcom,sde-max-dest-scaler-input-linewidth = <2048>;
+      qcom,sde-max-dest-scaler-output-linewidth = <2560>;
+      qcom,sde-sspp-max-rects = <1 1 1 1
+        1 1 1 1
+        1 1
+        1 1>;
+      qcom,sde-sspp-excl-rect = <1 1 1 1
+        1 1 1 1
+        1 1
+        1 1>;
+      qcom,sde-sspp-smart-dma-priority = <0 0 0 0
+           0 0 0 0
+           0 0
+           1 2>;
+      qcom,sde-smart-dma-rev = "smart_dma_v2";
+      qcom,sde-te-off = <0x100>;
+      qcom,sde-te2-off = <0x100>;
+      qcom,sde-te-size = <0xffff>;
+      qcom,sde-te2-size = <0xffff>;
+      qcom,sde-trusted-vm-env;
+
+      qcom,sde-wb-id = <2>;
+      qcom,sde-wb-clk-ctrl = <0x2bc 16>;
+      qcom,sde-wb-clk-status = <0x3bc 20>;
+
+      qcom,sde-qos-refresh-rates = <60 120>;
+      qcom,sde-danger-lut = <0x3ffff 0x3ffff 0x0 0x0 0x0 0x3fffff 0x3fffff>,
+                        <0x3ffffff 0x3ffffff 0x0 0x0 0x0 0x3ffffff 0x3fffff,
+                    0xffff0000 0xffff0000>;
+      qcom,sde-safe-lut = <0xFE00 0xFE00 0xFFFF 0x01 0x03FF 0xF800 0xF800>,
+                    <0xE000 0xE000 0xFFFF 0x01 0x03FF 0xE000 0xF800, 0xff,
+                    0xff>;
+      qcom,sde-creq-lut = <0x00112234 0x45566777 0x00112236 0x67777777
+                                0x00112234 0x45566777 0x00112236 0x67777777
+                                0x0        0x0         0x0        0x0
+                                0x77776666 0x66666540 0x77776666 0x66666540
+                                0x77776541 0x00000000 0x77776541 0x00000000
+                                0x00123445 0x56677777 0x00123667 0x77777777
+                                0x00123445 0x56677777 0x00123667 0x77777777
+                                0x55555544 0x33221100 0x55555544 0x33221100>,
+                            <0x02344455 0x56667777 0x02366677 0x77777777
+                                0x02344455 0x56667777 0x02366677 0x77777777
+                                0x0        0x0        0x0        0x0
+                                0x77776666 0x66666540 0x77776666 0x66666540
+                                0x77776541 0x00000000 0x77776541 0x00000000
+                                0x02344455 0x56667777 0x02366677 0x77777777
+                                0x00123445 0x56677777 0x00123667 0x77777777
+                                0x55555544 0x33221100 0x55555544 0x33221100>;
+
+      qcom,sde-cdp-setting = <1 1>, <1 0>;
+
+      qcom,sde-qos-cpu-mask = <0x3>;
+      qcom,sde-qos-cpu-mask-performance = <0xf>;
+      qcom,sde-qos-cpu-dma-latency = <300>;
+      qcom,sde-qos-cpu-irq-latency = <300>;
+
+      qcom,sde-ipcc-protocol-id = <0x2>;
+      qcom,sde-ipcc-client-dpu-phys-id = <0x19>;
+
+      qcom,sde-vbif-off = <0 0>;
+      qcom,sde-vbif-id = <0 1>;
+      qcom,sde-vbif-default-ot-rd-limit = <32>;
+      qcom,sde-vbif-default-ot-wr-limit = <16>;
+      qcom,sde-vbif-dynamic-ot-rd-limit = <62208000 2>,
+          <124416000 4>, <248832000 16>;
+      qcom,sde-vbif-dynamic-ot-wr-limit = <62208000 2>,
+        <124416000 4>, <248832000 16>;
+      qcom,sde-vbif-memtype-0 = <3 3 3 3 3 3 3 3>;
+      qcom,sde-vbif-memtype-1 = <3 3 3 3 3 3>;
+
+      qcom,sde-uidle-off = <0x80000>;
+      qcom,sde-uidle-size = <0x70>;
+
+      qcom,sde-dram-channels = <2>;
+      qcom,sde-num-nrt-paths = <1>;
+
+      qcom,sde-max-bw-high-kbps = <9000000>;
+      qcom,sde-max-bw-low-kbps = <9000000>;
+
+      qcom,sde-core-ib-ff = "1.1";
+      qcom,sde-core-clk-ff = "1.0";
+      qcom,sde-min-core-ib-kbps = <2400000>;
+      qcom,sde-min-llcc-ib-kbps = <800000>;
+      qcom,sde-min-dram-ib-kbps = <800000>;
+      qcom,sde-comp-ratio-rt = "NV12/5/1/1.1 AB24/5/1/1.2 XB24/5/1/1.3";
+      qcom,sde-comp-ratio-nrt = "NV12/5/1/1.1 AB24/5/1/1.2 XB24/5/1/1.3";
+      qcom,sde-undersized-prefill-lines = <4>;
+      qcom,sde-xtra-prefill-lines = <5>;
+      qcom,sde-dest-scale-prefill-lines = <6>;
+      qcom,sde-macrotile-prefill-lines = <7>;
+      qcom,sde-yuv-nv12-prefill-lines = <8>;
+      qcom,sde-linear-prefill-lines = <9>;
+      qcom,sde-downscaling-prefill-lines = <10>;
+      qcom,sde-max-per-pipe-bw-kbps = <2400000 2400000 2400000 2400000
+          2400000 2400000 2400000 2400000>;
+      qcom,sde-amortizable-threshold = <11>;
+      qcom,sde-secure-sid-mask = <0x200801 0x200c01>;
+
+      qcom,sde-dnsc-blur-version = <0x100>;
+      qcom,sde-dnsc-blur-off = <0x7D000>;
+      qcom,sde-dnsc-blur-size = <0x40>;
+      qcom,sde-dnsc-blur-gaus-lut-off = <0x100>;
+      qcom,sde-dnsc-blur-gaus-lut-size = <0x400>;
+      qcom,sde-dnsc-blur-dither-off = <0x5E0>;
+      qcom,sde-dnsc-blur-dither-size = <0x20>;
+
+      qcom,vram-size = <0x200000>;
+      qcom,pmic-arb-address = <0x3F800 0x3F900 0x3FA00>;
+
+      qcom,sde-ib-bw-vote = <2500000 0 800000>;
+
+      qcom,sde-vbif-qos-rt-remap = <3 3 4 4 5 5 6 6 3 3 4 4 5 5 6 6>;
+      qcom,sde-vbif-qos-nrt-remap = <3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3>;
+      qcom,sde-vbif-qos-cwb-remap = <3 3 4 4 5 5 6 3 3 3 4 4 5 5 6 3>;
+      qcom,sde-vbif-qos-lutdma-remap = <3 3 3 3 4 4 4 4 3 3 3 3 4 4 4 4>;
+      qcom,sde-vbif-qos-offline-wb-remap = <3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3>;
+      qcom,sde-vbif-qos-cnoc-remap = <3 3 4 4 5 5 5 5 3 3 3 3 3 3 3 3>;
+      qcom,sde-vbif-qos-wb-rot-remap = <4 4 5 5 5 5 5 6 4 4 5 5 5 5 5 6>;
+
+      qcom,sde-reg-dma-off = <0 0x400>;
+      qcom,sde-reg-dma-id = <0 1>;
+      qcom,sde-reg-dma-version = <0x00020000>;
+      qcom,sde-reg-dma-trigger-off = <0x119c>;
+      qcom,sde-reg-dma-broadcast-disabled = <0>;
+      qcom,sde-reg-dma-xin-id = <7>;
+      qcom,sde-reg-dma-clk-ctrl = <0x2bc 20>;
+
+      qcom,sde-sspp-vig-blocks {
+        vcm@0 {
+            cell-index = <0>;
+            qcom,sde-vig-top-off = <0xa00>;
+            qcom,sde-vig-csc-off = <0x1a00>;
+            qcom,sde-vig-qseed-off = <0xa00>;
+            qcom,sde-vig-qseed-size = <0xe0>;
+            qcom,sde-vig-gamut = <0x1d00 0x00060001>;
+            qcom,sde-vig-igc = <0x1d00 0x00060000>;
+             /* Offset from vig top, version of HSIC */
+            qcom,sde-vig-hsic = <0x200 0x00010000>;
+            qcom,sde-vig-memcolor = <0x200 0x00010000>;
+            qcom,sde-vig-pcc = <0x1780 0x00010000>;
+            qcom,sde-vig-inverse-pma;
+            qcom,sde-fp16-igc = <0x200 0x00010000>;
+            qcom,sde-fp16-unmult = <0x200 0x00010000>;
+            qcom,sde-fp16-gc = <0x200 0x00010000>;
+            qcom,sde-fp16-csc = <0x200 0x00010000>;
+            qcom,sde-ucsc-igc = <0x700 0x00010000>;
+            qcom,sde-ucsc-unmult = <0x700 0x00010000>;
+            qcom,sde-ucsc-gc = <0x700 0x00010000>;
+            qcom,sde-ucsc-csc = <0x700 0x00010000>;
+            qcom,sde-ucsc-alpha-dither = <0x700 0x00010000>;
+        };
+
+        vcm@1 {
+            cell-index = <1>;
+            qcom,sde-fp16-igc = <0x280 0x00010000>;
+            qcom,sde-fp16-unmult = <0x280 0x00010000>;
+            qcom,sde-fp16-gc = <0x280 0x00010000>;
+            qcom,sde-fp16-csc = <0x280 0x00010000>;
+            qcom,sde-ucsc-igc = <0x1700 0x00010000>;
+            qcom,sde-ucsc-unmult = <0x1700 0x00010000>;
+            qcom,sde-ucsc-gc = <0x1700 0x00010000>;
+            qcom,sde-ucsc-csc = <0x1700 0x00010000>;
+            qcom,sde-ucsc-alpha-dither = <0x1700 0x00010000>;
+        };
+      };
+
+      qcom,sde-sspp-dma-blocks {
+        dgm@0 {
+            cell-index = <0>;
+            qcom,sde-dma-top-off = <0x800>;
+            qcom,sde-dma-igc = <0x400 0x00050000>;
+            qcom,sde-dma-gc = <0x600 0x00050000>;
+            qcom,sde-dma-inverse-pma;
+            qcom,sde-dma-csc-off = <0x200>;
+            qcom,sde-fp16-igc = <0x200 0x00010000>;
+            qcom,sde-fp16-unmult = <0x200 0x00010000>;
+            qcom,sde-fp16-gc = <0x200 0x00010000>;
+            qcom,sde-fp16-csc = <0x200 0x00010000>;
+            qcom,sde-ucsc-igc = <0x700 0x00010000>;
+            qcom,sde-ucsc-unmult = <0x700 0x00010000>;
+            qcom,sde-ucsc-gc = <0x700 0x00010000>;
+            qcom,sde-ucsc-csc = <0x700 0x00010000>;
+            qcom,sde-ucsc-alpha-dither = <0x700 0x00010000>;
+        };
+
+        dgm@1 {
+            cell-index = <1>;
+            qcom,sde-dma-igc = <0x1400 0x00050000>;
+            qcom,sde-dma-gc = <0x600 0x00050000>;
+            qcom,sde-dma-inverse-pma;
+            qcom,sde-dma-csc-off = <0x1200>;
+            qcom,sde-fp16-igc = <0x200 0x00010000>;
+            qcom,sde-fp16-unmult = <0x200 0x00010000>;
+            qcom,sde-fp16-gc = <0x200 0x00010000>;
+            qcom,sde-fp16-csc = <0x200 0x00010000>;
+            qcom,sde-ucsc-igc = <0x1700 0x00010000>;
+            qcom,sde-ucsc-unmult = <0x1700 0x00010000>;
+            qcom,sde-ucsc-gc = <0x1700 0x00010000>;
+            qcom,sde-ucsc-csc = <0x1700 0x00010000>;
+            qcom,sde-ucsc-alpha-dither = <0x1700 0x00010000>;
+         };
+       };
+
+      qcom,sde-sspp-rgb-blocks {
+        qcom,sde-rgb-scaler-off = <0x200>;
+        qcom,sde-rgb-scaler-size = <0x74>;
+        qcom,sde-rgb-pcc = <0x380 0x00010000>;
+      };
+
+      qcom,sde-dspp-blocks {
+        qcom,sde-dspp-igc = <0x0 0x00010000>;
+        qcom,sde-dspp-pcc = <0x1700 0x00010000>;
+        qcom,sde-dspp-gc = <0x17c0 0x00010000>;
+        qcom,sde-dspp-hsic = <0x0 0x00010000>;
+        qcom,sde-dspp-memcolor = <0x0 0x00010000>;
+        qcom,sde-dspp-sixzone = <0x0 0x00010000>;
+        qcom,sde-dspp-gamut = <0x1600 0x00010000>;
+        qcom,sde-dspp-dither = <0x0 0x00010000>;
+        qcom,sde-dspp-hist = <0x0 0x00010000>;
+        qcom,sde-dspp-vlut = <0x0 0x00010000>;
+      };
+
+      qcom,sde-mixer-blocks {
+        qcom,sde-mixer-gc = <0x3c0 0x00010000>;
+      };
+
+      qcom,msm-hdmi-audio-rx {
+        compatible = "qcom,msm-hdmi-audio-codec-rx";
+      };
+
+      qcom,sde-inline-rotator = <&mdss_rotator 0>;
+      qcom,sde-inline-rot-xin = <10 11>;
+      qcom,sde-inline-rot-xin-type = "sspp", "wb";
+      qcom,sde-inline-rot-clk-ctrl = <0x2bc 0x8>, <0x2bc 0xc>;
+
+      qcom,platform-supply-entries {
+        #address-cells = <1>;
+        #size-cells = <0>;
+        qcom,platform-supply-entry@0 {
+           reg = <0>;
+           qcom,supply-name = "vdd";
+           qcom,supply-min-voltage = <0>;
+           qcom,supply-max-voltage = <0>;
+           qcom,supply-enable-load = <0>;
+           qcom,supply-disable-load = <0>;
+           qcom,supply-pre-on-sleep = <0>;
+           qcom,supply-post-on-sleep = <0>;
+           qcom,supply-pre-off-sleep = <0>;
+           qcom,supply-post-off-sleep = <0>;
+        };
+      };
+
+      interconnects = <&mmss_noc MASTER_MDP0 &mmss_noc SLAVE_MNOC_HF_MEM_NOC>
+        <&mmss_noc MASTER_MDP1 &mmss_noc SLAVE_MNOC_HF_MEM_NOC>,
+        <&gem_noc MASTER_MNOC_HF_MEM_NOC &gem_noc SLAVE_LLCC>,
+        <&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1>,
+        <&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_DISPLAY_CFG>;
+      interconnect-names = "qcom,sde-data-bus0", "qcom,sde-data-bus1",
+        "qcom,sde-llcc-bus", "qcom,sde-ebi-bus", "qcom,sde-reg-bus";
+      qcom,sde-reg-bus,vectors-KBps = <0 0>,
+        <0 76800>,
+        <0 150000>,
+        <0 300000>;
+
+      smmu_kms_unsec: qcom,smmu_kms_unsec_cb {
+        compatible = "qcom,smmu_sde_unsec";
+        iommus = <&mmss_smmu 0>;
+      };
+
+      smmu_kms_sec: qcom,smmu_kms_sec_cb {
+        compatible = "qcom,smmu_sde_sec";
+        iommus = <&mmss_smmu 1>;
+      };
+    };
+...

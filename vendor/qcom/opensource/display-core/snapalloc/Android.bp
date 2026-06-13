@@ -1,0 +1,30 @@
+cc_library_shared {
+    name: "vendor.qti.hardware.display.snapalloc-impl",
+    sanitize: {
+        integer_overflow: true,
+    },
+    vendor: true,
+    owner: "qti",
+    shared_libs: [
+        "libbase",
+        "libjsoncpp",
+        "libdmabufheap",
+        "libvmmem",
+        "libsync",
+    ],
+    header_libs: [
+        "libvmmem_headers",
+        "qti_display_kernel_headers",
+        "display_intf_headers",
+        "snapalloc_interface_headers",
+        "common_interface_headers",
+    ],
+    defaults: ["qtidisplay_defaults","qtidisplay_smmu_header_defaults"],
+    cflags: [
+        "-DLOG_TAG=\"SnapAlloc\"",
+        "-Wno-unused-parameter",
+        "-Wall",
+        "-Werror",
+    ],
+    srcs: ["*.cpp"],
+}

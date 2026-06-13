@@ -1,0 +1,42 @@
+#
+# List of ABI symbols that we do not want to support in GKI
+#
+# This is a list of various kernel symbols that are exported but should
+# not be added to any symbol list for GKI.  The reason for why the
+# symbol is not allowed is given here, so that vendors who try to add
+# the symbol to their abi file see this rational here, and we do not
+# have to say it in gerrit after the symbol is submitted for inclusion.
+#
+# These symbols are grouped according to functionality / subsystem when
+# ever possible.
+#
+# The format of this file is:
+# symbol <TAB>	Reason for not allowing it
+
+
+# File access symbols that are forbidden because drivers should never
+# try to access files directly.  Instead proper user/kernel apis should
+# always be used.
+filp_open					Drivers should not open files directly
+kernel_read					Drivers should never read from a file
+kernel_read_file_from_path	Drivers should never read from a file
+kernel_write				Drivers should never write to a file
+
+# Kprobe needs to be left alone
+disable_kprobe		kprobe should not be touched by any driver
+enable_kprobe		kprobe should not be touched by any driver
+
+# drivers should not care about memory pages
+PageMovable	Drivers should not care about memory pages
+
+# symbol lookup will circumvent all ABI checking and easily break over time
+__symbol_get	No kernel symbols can be looked up
+__symbol_put	No kernel symbols can be looked up
+
+# Building ext4 or f2fs as a module is not supported; they are already built-in.
+# This implies that the fscrypt and fsverity symbols should never be exported.
+# As this file does not support wildcard patterns, just list a few key symbols.
+fscrypt_ioctl_add_key	ext4 or f2fs cannot be a module
+fscrypt_ioctl_set_policy	ext4 or f2fs cannot be a module
+fsverity_ioctl_enable	ext4 or f2fs cannot be a module
+fsverity_ioctl_measure	ext4 or f2fs cannot be a module

@@ -1,0 +1,206 @@
+&pm8550ve_g_gpios {
+
+	telecam_ldo_en_active: telecam_ldo_en_active {
+		/* GPIO_CONFIG_PUD_DRV(PM,pm8550ve_g_gpios,5, FUNC_OUTPUT_LOW, PULL_NONE, DRV_LV1); */
+		pins = "gpio5";
+		function = "normal";
+		qcom,drive-strength = <0>;
+		output-low;
+		bias-disable;
+		power-source = <1>;
+	};
+
+	telecam_ldo_en_suspend: telecam_ldo_en_suspend {
+		/* GPIO_CONFIG_PUD_DRV(PM,pm8550ve_g_gpios,5, FUNC_OUTPUT_LOW, PULL_DOWN, DRV_LV1); */
+		pins = "gpio5";
+		function = "normal";
+		qcom,drive-strength = <0>;
+		output-low;
+		bias-pull-down;
+		power-source = <1>;
+	};
+
+	uwcam_ldo_en_active: uwcam_ldo_en_active {
+		/* GPIO_CONFIG_PUD_DRV(PM,pm8550ve_g_gpios,6, FUNC_OUTPUT_LOW, PULL_NONE, DRV_LV1); */
+		pins = "gpio6";
+		function = "normal";
+		qcom,drive-strength = <0>;
+		output-low;
+		bias-disable;
+		power-source = <1>;
+	};
+
+	uwcam_ldo_en_suspend: uwcam_ldo_en_suspend {
+		/* GPIO_CONFIG_PUD_DRV(PM,pm8550ve_g_gpios,6, FUNC_OUTPUT_LOW, PULL_DOWN, DRV_LV1); */
+		pins = "gpio6";
+		function = "normal";
+		qcom,drive-strength = <0>;
+		output-low;
+		bias-pull-down;
+		power-source = <1>;
+	};
+};
+
+&tlmm {
+
+	flash_led_active: flash_led_active {
+		mux {
+			pins = "gpio168";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio168";
+			bias-disable;
+			drive-strength = <2>;
+		};
+	};
+
+	flash_led_suspend: flash_led_suspend {
+		mux {
+			pins = "gpio168";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio168";
+			bias-disable;
+			drive-strength = <2>;
+			output-low;
+		};
+	};
+};
+&cam_sensor_active_rst0 {
+	mux {
+		pins = "gpio106";
+	};
+
+	config {
+		pins = "gpio106";
+	};
+};
+
+&cam_sensor_suspend_rst0 {
+	mux {
+		pins = "gpio106";
+	};
+
+	config {
+		pins = "gpio106";
+	};
+};
+
+&cam_sensor_active_rst1 {
+	mux {
+		pins = "gpio107";
+	};
+
+	config {
+		pins = "gpio107";
+	};
+};
+
+&cam_sensor_suspend_rst1 {
+	mux {
+		pins = "gpio107";
+	};
+
+	config {
+		pins = "gpio107";
+	};
+};
+
+&cam_sensor_active_rst2 {
+	mux {
+		pins = "gpio96";
+	};
+
+	config {
+		pins = "gpio96";
+	};
+};
+
+&cam_sensor_suspend_rst2 {
+	mux {
+		pins = "gpio96";
+	};
+
+	config {
+		pins = "gpio96";
+	};
+};
+
+&cam_sensor_mclk5_active {
+	config {
+		drive-strength = <2>;
+	};
+};
+
+&cam_sensor_mclk5_suspend {
+	config {
+		drive-strength = <2>;
+		output-low;
+	};
+};
+
+&qupv3_hub_i2c1_sda_active {
+	config {
+		drive-strength = <6>;
+		bias-disable;
+	};
+};
+
+&qupv3_hub_i2c1_scl_active {
+	config {
+		drive-strength = <6>;
+		bias-disable;
+	};
+};
+&qupv3_hub_i2c1_sleep {
+	config {
+		drive-strength = <6>;
+	};
+};
+
+
+
+&qupv3_hub_i2c2_sda_active {
+	config {
+		drive-strength = <6>;
+		bias-disable;
+	};
+};
+&qupv3_hub_i2c2_scl_active {
+	config {
+		drive-strength = <6>;
+		bias-disable;
+	};
+};
+&qupv3_hub_i2c2_sleep {
+	config {
+		drive-strength = <6>;
+	};
+};
+
+
+&qupv3_se8_i2c_sda_active {
+	config {
+		drive-strength = <6>;
+		bias-disable;
+		qcom,apps;
+	};
+};
+&qupv3_se8_i2c_scl_active {
+	config {
+		drive-strength = <6>;
+		bias-disable;
+		qcom,apps;
+	};
+};
+&qupv3_se8_i2c_sleep {
+	config {
+		drive-strength = <6>;
+		qcom,remote;
+	};
+};
+

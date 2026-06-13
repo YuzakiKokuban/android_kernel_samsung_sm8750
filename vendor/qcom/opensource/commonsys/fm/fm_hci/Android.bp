@@ -1,0 +1,30 @@
+
+
+cc_library_shared {
+    name: "libfm-hci",
+
+    srcs: ["fm_hci.cpp"],
+
+    shared_libs: [
+        "libdl",
+        "libcutils",
+        "libbase",
+        "libhidlbase",
+        "liblog",
+        "libutils",
+        "libbinder_ndk",
+        "libbinder",
+        "android.hardware.bluetooth.audio-V3-ndk",
+        //"vendor.qti.hardware.fm-V1-ndk",
+        //"vendor.qti.hardware.fm@1.0",
+    ],
+
+    cflags: ["-Wno-unused-parameter"],
+
+    include_dirs: [
+        "vendor/qcom/opensource/commonsys/fm/helium",
+    ],
+
+    system_ext_specific: true,
+
+}

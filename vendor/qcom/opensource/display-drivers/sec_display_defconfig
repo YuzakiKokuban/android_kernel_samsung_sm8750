@@ -1,0 +1,13 @@
+CONFIG_SECDP=y # nocheck: It is intended for displayport, ignore it.
+CONFIG_SECDP_LOGGER=y # nocheck: It is intended for displayport, ignore it.
+CONFIG_SECDP_BIGDATA=y # nocheck: It is intended for displayport, ignore it.
+CONFIG_SECDP_SWITCH=y # nocheck: It is intended for displayport, ignore it.
+CONFIG_SECDP_DBG=y # nocheck: It is intended for displayport, ignore it.
+CONFIG_SECDP_FACTORY_DPSWITCH_TEST=y # nocheck: It is intended for displayport, ignore it.
+
+CONFIG_PANEL_PA3_S6E3HAF_AMB686HX01_VHM_WQHD=y
+CONFIG_PANEL_PA2_S6E3HAF_AMB666FM01_WQHD=y
+CONFIG_PANEL_PA3_S6E3HAF_AMB686HX01_WQHD=y
+CONFIG_PANEL_PA3_S6E3HAF_AMB679FN01_WQHD=y
+CONFIG_DISPLAY_SAMSUNG=y
+CONFIG_LCD_CLASS_DEVICE=y

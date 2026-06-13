@@ -1,0 +1,13 @@
+cc_test{
+    name: "thermal-test-client",
+    srcs: [
+        "client-test-thermal.cpp"
+    ],
+    shared_libs: [
+        "libbase",
+        "libcutils",
+        "libbinder_ndk",
+        "android.hardware.thermal-V1-ndk",
+    ],
+    sanitize: {cfi: false},
+}

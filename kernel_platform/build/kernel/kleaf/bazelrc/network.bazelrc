@@ -1,0 +1,33 @@
+# Copyright (C) 2023 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Flags used to control Network access.
+
+# --config=no_internet: Block external downloads
+
+# NOTE: To ensure a strict no external access policy, the following three flags
+#   need to be set/unset, see https://github.com/bazelbuild/bazel/discussions/18281
+#   for more details about this.
+# An empty string as argument requests the cache to be disabled.
+common:no_internet --repository_cache=
+# Additional places to search for archives before accessing the network to download them.
+common:no_internet --distdir=
+# If set, downloading using ctx.download{,_and_extract} is not allowed during repository fetching.
+common:no_internet --experimental_repository_disable_download
+
+# --config=internet: Relax the block on network access.
+common:internet --noexperimental_repository_disable_download
+
+# Disable internet access by default.
+common --config=no_internet

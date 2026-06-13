@@ -1,0 +1,121 @@
+&smd {
+	max77775_fuelgauge: max77775-fuelgauge {
+			    /* for 4500mAh battery */
+			    status = "okay";
+			    fuelgauge,fuel_alert_soc = <1>;
+			    fuelgauge,jig_gpio = <SEC_GPIO_REF(AP,tlmm,78) 0>; /* IFC_SENSE_INT_AP */
+			    fuelgauge,jig_low_active;
+			    fuelgauge,capacity_max = <1000>;
+			    fuelgauge,capacity_max_margin = <300>;
+			    fuelgauge,capacity_min = <0>;
+			    fuelgauge,capacity_calculation_type = <28>;
+			    fuelgauge,repeated_fuelalert;
+			    fuelgauge,using_temp_compensation;
+			    fuelgauge,low_temp_limit = <100>;
+			    fuelgauge,vempty_recover_time = <180>; /* 3 mins */
+			    fuelgauge,using_hw_vempty;
+			    fuelgauge,sw_v_empty_voltage = <3200>;
+			    fuelgauge,sw_v_empty_voltage_cisd = <3100>;
+			    fuelgauge,sw_v_empty_recover_voltage = <3480>;
+			    fuelgauge,fg_resistor = <2>;
+#if 1
+			    fuelgauge,bat_id_gpio = <
+#if 0
+					SEC_GPIO_REF(${bat_id_gpio_2}) 0 /* BAT_ID_GPIO 1 */
+#endif
+					SEC_GPIO_REF(AP,tlmm,2) 0 /* BAT_ID_GPIO 0 */
+					>;
+#endif
+#if 0
+			    fuelgauge,sub_bat_id_gpio = <
+#if 0
+					SEC_GPIO_REF(${sub_bat_id_gpio_2}) 0 /* SUB_BAT_ID_GPIO 1 */
+#endif
+					SEC_GPIO_REF(${sub_bat_id_gpio}) 0 /* SUB_BAT_ID_GPIO 0 */
+					>;
+#endif
+		    };
+};
+
+/* /home/dpi/qb5_8814/workspace/P4_1716/android/kernel_platform/kmodule/battery/stable/paradigm/fuelgauge/max77775/pa3q/max77775_fuelgauge.dtsi */
+&max77775_fuelgauge {
+	fuelgauge,capacity_calculation_type = <0x5C>;
+	fuelgauge,lost_soc_trig_soc = <1000>; /* 100.0% */
+	fuelgauge,lost_soc_trig_d_soc = <20>; /* 2% */
+	fuelgauge,lost_soc_trig_scale = <2>; /* 2x */
+	fuelgauge,lost_soc_guarantee_soc = <30>; /* 3.0% */
+	fuelgauge,lost_soc_min_vol = <3200>; /* 3200mV */
+	fuelgauge,fg_resistor = <5>; /* 2 milliohm */
+
+
+	battery_params {
+		/*
+		 * BAT_ID_1/BAT_ID_2
+		 * 00: ATL, 01: SDI
+		 */
+
+		/* 00 : ATL battery data */
+		battery0,v_empty = <0xA561>; /* Empty: 3400mV, Recover: 4000mV */
+		battery0,v_empty_origin = <0x7D54>; /* Empty: 2500mV, Recover: 3360mV */
+		battery0,capacity = <0x03D4>;
+					/* fullcapnom dPacc dQacc RCOMP0 TempCo */
+		battery0,fg_reset_wa_data = <0x03D4 0x3200 0x00F5 0x0630 0x1C02>;
+		battery0,low_temp_filtercfg = <0xC616>;
+		battery0,normal_temp_filtercfg = <0xC613>;
+
+		battery0,data_ver = <0x6>;
+
+		battery0,selected_reg = <
+			0x02 0x7F80	/* default */
+			0x12 0x0F00	/* QResidual00 */
+			0x1E 0x026D	/* ICHGTerm */
+			0x21 0x6200	/* default */
+			0x22 0x0A80	/* QResidual10 */
+			0x2A 0x023E	/* RelaxCFG */
+			0x2C 0xE3E1	/* TGAIN */
+			0x2D 0x290E	/* TOFF */
+			0x2E 0x0400	/* CGAIN */
+			0x2F 0x0001	/* COFF */
+			0x32 0x0880	/* QResidual20 */
+			0x33 0xFFFF	/* default */
+			0x37 0x05E0	/* default */
+			0x42 0x0680	/* QResidual30 */
+			0xB4 0x7F80	/* default */
+			0xB8 0x0000	/* default */
+			0xB9 0x006B	/* default */
+			0xBA 0x090C	/* default */
+			>;
+
+		/* 01 : SDI battery data */
+		battery1,v_empty = <0xA561>; /* Empty: 3400mV, Recover: 4000mV */
+		battery1,v_empty_origin = <0x7D54>; /* Empty: 2500mV, Recover: 3360mV */
+		battery1,capacity = <0x03D9>;
+					/* fullcapnom dPacc dQacc RCOMP0 TempCo */
+		battery1,fg_reset_wa_data = <0x03D9 0x3200 0x00F6 0x0490 0x0C02>;
+		battery1,low_temp_filtercfg = <0xC616>;
+		battery1,normal_temp_filtercfg = <0xC613>;
+
+		battery1,data_ver = <0x5>;
+
+		battery1,selected_reg = <
+			0x02 0x7F80	/* default */
+			0x12 0x1200	/* QResidual00 */
+			0x1E 0x026D	/* ICHGTerm */
+			0x21 0x6200	/* default */
+			0x22 0x0900	/* QResidual10 */
+			0x2A 0x023E	/* RelaxCFG */
+			0x2C 0xE3E1	/* TGAIN */
+			0x2D 0x290E	/* TOFF */
+			0x2E 0x0400	/* CGAIN */
+			0x2F 0x0001	/* COFF */
+			0x32 0x0504	/* QResidual20 */
+			0x33 0xFFFF	/* default */
+			0x37 0x05E0	/* default */
+			0x42 0x0404	/* QResidual30 */
+			0xB4 0x7F80	/* default */
+			0xB8 0x0000	/* default */
+			0xB9 0x006B	/* default */
+			0xBA 0x090C	/* default */
+			>;
+	};
+};

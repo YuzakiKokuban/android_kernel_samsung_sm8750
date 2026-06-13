@@ -1,0 +1,14 @@
+hidl_interface {
+    name: "vendor.qti.hardware.camera.aon@1.0",
+    root: "vendor.qti.hardware.camera",
+    system_ext_specific: true,
+    srcs: [
+        "types.hal",
+        "IAONService.hal",
+        "IAONServiceCallBack.hal",
+    ],
+    interfaces: [
+        "android.hidl.base@1.0",
+    ],
+    gen_java: true,
+}

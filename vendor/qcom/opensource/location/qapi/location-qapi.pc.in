@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: location-qapi
+Description: location qapi library
+Version: @VERSION@
+Libs: -L${libdir} -llocation_qapi
+Cflags: -I${includedir} -I${includedir}/location-qapi

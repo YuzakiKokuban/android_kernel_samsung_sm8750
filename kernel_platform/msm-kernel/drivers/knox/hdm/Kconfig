@@ -1,0 +1,40 @@
+# @file Kconfig
+# @brief Kconfig for HDM driver
+# Copyright (c) 2019, Samsung Electronics Corporation. All rights reserved.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 and
+# only version 2 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+config HDM
+	tristate "HDM feature enable"
+	depends on !ARCH_QTI_VM
+	help
+	HDM TLC uses the HDM driver to trigger the hypervisor.
+	And it is responsible for receiving and processing bootconfig related to HDM.
+
+config HDM_QCOM
+	bool "HDM QCOM device"
+	default n
+	help
+	This enables the HDM for QCOM device
+
+config HDM_EXYNOS
+	bool "HDM EXYNOS device"
+	default n
+	help
+	This enables the HDM for EXYNOS device
+
+config HDM_MTK
+	bool "HDM MTK device"
+	default n
+	help
+	This enables the HDM for MTK device
+
+
+

@@ -1,0 +1,29 @@
+aidl_interface {
+    name: "vendor.qti.hardware.display.composer3",
+    vendor_available: true,
+    srcs: [
+        "vendor/qti/hardware/display/composer3/*.aidl",
+    ],
+    stability: "vintf",
+    imports: [
+        "android.hardware.graphics.composer3-V3",
+    ],
+    backend: {
+        java: {
+            enabled: false,
+        },
+        cpp: {
+            enabled: false,
+        },
+    },
+
+    owner: "qti",
+    versions_with_info: [
+        {
+            version: "1",
+            imports: ["android.hardware.graphics.composer3-V3"],
+        },
+    ],
+    frozen: true,
+
+}

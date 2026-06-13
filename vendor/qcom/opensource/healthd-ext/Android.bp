@@ -1,0 +1,54 @@
+cc_library_static {
+    name: "libhealthd.msm",
+    srcs: [
+        "healthd_board_msm.cpp",
+        "healthd_msm_alarm.cpp",
+    ],
+
+    cflags: ["-Werror"],
+    include_dirs: [
+        "bootable/recovery",
+        "bootable/recovery/minui/include",
+    ],
+
+    header_libs: [
+        "libbatteryservice_headers",
+        "libbase_headers",
+        "libhealthd_headers",
+    ],
+
+}
+
+cc_library_shared {
+    name: "android.hardware.health@2.1-impl-qti",
+    stem: "android.hardware.health@2.0-impl-2.1-qti",
+    vendor: true,
+    recovery_available: true,
+
+    relative_install_path: "hw",
+
+    srcs: [
+        "healthimpl.cpp",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+
+    static_libs: [
+        "android.hardware.health@1.0-convert",
+        "libbatterymonitor",
+        "libhealthloop",
+        "libhealth2impl",
+    ],
+
+    shared_libs: [
+        "libbase",
+        "libcutils",
+        "libhidlbase",
+        "libutils",
+        "android.hardware.health@2.0",
+        "android.hardware.health@2.1",
+    ],
+}

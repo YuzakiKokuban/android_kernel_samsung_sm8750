@@ -1,0 +1,5 @@
+config SEC_DEBUG_REGION
+	tristate "SEC Memory pool for debugging features"
+	select GENERIC_ALLOCATOR
+	help
+	  TODO: help is not ready.

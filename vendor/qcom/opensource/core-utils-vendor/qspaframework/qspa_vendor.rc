@@ -1,0 +1,19 @@
+# Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause-Clear
+
+import /vendor/etc/qspa/gpu_${ro.boot.vendor.qspa.gpu}.rc
+import /vendor/etc/qspa/video_${ro.boot.vendor.qspa.video}.rc
+import /vendor/etc/qspa/camera_${ro.boot.vendor.qspa.camera}.rc
+import /vendor/etc/qspa/display_${ro.boot.vendor.qspa.display}.rc
+import /vendor/etc/qspa/audio_${ro.boot.vendor.qspa.audio}.rc
+import /vendor/etc/qspa/modem_${ro.boot.vendor.qspa.modem}.rc
+import /vendor/etc/qspa/wlan_${ro.boot.vendor.qspa.wlan}.rc
+import /vendor/etc/qspa/comp_${ro.boot.vendor.qspa.comp}.rc
+import /vendor/etc/qspa/sensors_${ro.boot.vendor.qspa.sensors}.rc
+import /vendor/etc/qspa/npu_${ro.boot.vendor.qspa.npu}.rc
+import /vendor/etc/qspa/spss_${ro.boot.vendor.qspa.spss}.rc
+import /vendor/etc/qspa/nav_${ro.boot.vendor.qspa.nav}.rc
+import /vendor/etc/qspa/comp1_${ro.boot.vendor.qspa.comp1}.rc
+import /vendor/etc/qspa/display1_${ro.boot.vendor.qspa.display1}.rc
+import /vendor/etc/qspa/nsp_${ro.boot.vendor.qspa.nsp}.rc
+import /vendor/etc/qspa/eva_${ro.boot.vendor.qspa.eva}.rc

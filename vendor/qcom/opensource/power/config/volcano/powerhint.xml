@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+/*Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimer in the documentation and/or other materials provided
+ *       with the distribution.
+ *     * Neither the name of The Linux Foundation nor the names of its
+ *       contributors may be used to endorse or promote products derived
+ *       from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * Changes from Qualcomm Innovation Center are provided under the following license
+ * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause-Clear
+ */
+-->
+<HintConfigs>
+    <Powerhint>
+        <!-- video decode 30 fps non secure content tunings-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0X00001502" Enable="true" Timeout="0" Target="volcano"
+            Resources="0x40800000, 0XA"/>
+
+        <!-- video decode 30 fps secure content tunings-->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0XA -->
+        <Config
+            Id="0X00001504" Enable="true" Timeout="0" Target="volcano"
+            Resources="0x40800000, 0XA"/>
+
+        <!--camera ZSLPreview-->
+        <!--CPU-LLC-DDR BWMON - Set sample_ms 33 -->
+        <!--CPU-LLC-DDR BWMON - Set hyst_length hist memory 0 -->
+        <!--L CPU - Disable schedutil PL -->
+        <!--L CPU - Set hispeed load 99 -->
+        <!--L CPU - max freq 9020000 -->
+        <!--B CPU - Disable Core Control -->
+        <!--GROUP UPMIGRATE - 35 -->
+        <!--GROUP DOWNMIGRATE - 30 -->
+        <!--UPMIGRATE - 35 85-->
+        <!--DOWNMIGRATE - 30 80-->
+        <Config
+            Id="0x00001330" Enable="true" Timeout="0" Target="volcano"
+            Resources="0x43034000, 0x21, 0x43024000, 0, 0x41444100, 0, 0x41440100, 0x63, 0x40804100, 0x386, 0x41008000, 0, 0x40CF4000, 0x0023001E, 0x40CE0000, 0x0023001E, 0x40CE0200, 0x00550050"/>
+      
+        <!--camera 30fps-->
+        <!--CPU-LLC-DDR BWMON - Set sample_ms 33 -->
+        <!--CPU-LLC-DDR BWMON - Set hyst_length hist memory 0 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 547 -->
+        <!--L CPU max freq 9020000 -->
+        <!--L CPU - Disable schedutil PL -->
+        <!--B CPU - Disable schedutil PL -->
+        <!--B CPU - Set hispeed load 99 -->
+        <!--UPMIGRATE - 35 85 -->
+        <!--DOWNMIGRATE - 30 85 -->
+        <!--B CPU - Disable Core Control -->
+        <Config
+            Id="0x00001331" Enable="true" Timeout="0" Target="volcano"
+            Resources="0x43034000, 0x21, 0x43024000, 0, 0x4303C000, 0x858B8 ,0x40804100, 0x386, 0x41444100, 0, 0x41444000, 0, 0x41440000, 0x63, 0x40CE0000, 0x0023001E,
+            0x40CE0200, 0x00550055, 0x41008000, 0"/>
+
+        <!--camera 60fps-->
+        <!--CPU-LLC-DDR BWMON - Set sample_ms 16 -->
+        <!--CPU-LLC-DDR BWMON - Set io_percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set hyst_length hist memory 0 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 1555 -->
+        <!--L CPU max freq 1113600 -->
+        <!--L CPU - Disable schedutil PL -->
+        <!--B CPU - Disable schedutil PL -->
+        <!--B CPU - Set hispeed load 99 -->
+        <!--UPMIGRATE - 35 85-->
+        <!--DOWNMIGRATE - 30 85-->
+        <!--B CPU - Disable Core Control -->
+        <!--AB_SCALE - 50-->
+        <Config
+            Id="0x00001332" Enable="true" Timeout="0" Target="volcano"
+            Resources="0x43034000, 0x10, 0x43020000, 0x64, 0x43024000, 0, 0x4303C000, 0x17BA38,  0x40804100, 0x459, 0x41444100, 0, 0x41444000, 0, 0x41440000, 0x63,
+            0x40CE0000, 0x0023001E, 0x40CE0200, 0x00550055, 0x41008000, 0, 0x43048000, 0x32"/>
+
+        <!-- camera HFR -->
+        <!--CPU-LLC-DDR BWMON - Set sample_ms 16 -->
+        <!--CPU-LLC-DDR BWMON - Set io_percent 100 -->
+        <!--CPU-LLC-DDR BWMON - Set hyst_length hist memory 0 -->
+        <!--CPU-LLC-DDR BWMON - Set min_freq 1555 -->
+        <!--L CPU max freq 1113600 -->
+        <!--L CPU - Disable schedutil PL -->
+        <!--B CPU - Disable schedutil PL -->
+        <!--B CPU - Set hispeed load 99 -->
+        <!--UPMIGRATE - 35 85-->
+        <!--DOWNMIGRATE - 30 85-->
+        <!--B CPU - Disable Core Control -->
+        <Config
+            Id="0x00001333" Enable="true" Timeout="0" Target="volcano"
+            Resources="0x43034000, 0x10, 0x43020000, 0x64, 0x43024000, 0, 0x4303C000, 0x17BA38,  0x40804100, 0x459, 0x41444100, 0, 0x41444000, 0, 0x41440000, 0x63,
+            0x40CE0000, 0x0023001E, 0x40CE0200, 0x00550055, 0x41008000, 0"/>
+
+        <!--video encode HFR 480 fps-->
+        <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+        <!-- MPCTLV3_SCHED_BOOST, 0x1 -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0, 1286 -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, 0xFFF -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_LITTLE_CORE_0, 1113 -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, 0xFFF -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_PLUS_CORE_0, 0xFFF -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_PLUS_CORE_0, 0xFFF -->
+        <Config
+            Id="0x00001334" Enable="true" Timeout="0" Target="volcano"
+            Resources="0x40400000, 0x1, 0x40800100, 0x459, 0x40800000, 0x506, 0x40C20000, 0x14,
+            0x40C1C000, 0x1E, 0x41820000, 0x0A, 0x41808000, 0x50, 0x4180C000, 0"/>
+
+        <!-- same settings for all the qvr power levels intentionally -->
+        <!-- qvr level cpu1 gpu1 -->
+        <!-- Prime CPU - Cluster min freq ~.960 Ghz -->
+        <!-- Prime CPU - Cluster max freq ~.2.1 Ghz -->
+        <!-- B CPU - Cluster min freq ~.633 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.073 Ghz -->
+        <!-- L CPU - Cluster min freq ~.595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 4 (freq 285 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130A" Enable="true" Target="volcano" Timeout="0"
+            Resources="0x40800200, 0x3C0, 0x40804200, 0x866, 0x40800000, 0x279,
+            0x40804000, 0x819, 0x40800100, 0x253, 0x40804100, 0x459,
+            0x42804000, 0x4, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu1 gpu2 -->
+        <!-- Prime CPU - Cluster min freq ~.960 Ghz -->
+        <!-- Prime CPU - Cluster max freq ~.2.1Ghz -->
+        <!-- B CPU - Cluster min freq ~.633 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.073 Ghz -->
+        <!-- L CPU - Cluster min freq ~.595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 4 (freq 285 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130B" Enable="true" Target="volcano" Timeout="0"
+            Resources="0x40800200, 0x3C0, 0x40804200, 0x866,0x40800000, 0x279,
+            0x40804000, 0x819, 0x40800100, 0x253, 0x40804100, 0x459,
+            0x42804000, 0x4, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu1 gpu3 -->
+        <!-- Prime CPU - Cluster min freq ~.960 Ghz -->
+        <!-- Prime CPU - Cluster max freq ~.2.1 Ghz -->
+        <!-- B CPU - Cluster min freq ~.633 Ghz -->
+        <!-- B CPU - Cluster max freq ~2.073 Ghz -->
+        <!-- L CPU - Cluster min freq ~.595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 4 (freq 285 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130C" Enable="true" Target="volcano" Timeout="0"
+            Resources="0x40800200, 0x3C0, 0x40804200, 0x866, 0x40800000, 0x279,
+            0x40804000, 0x819, 0x40800100, 0x253, 0x40804100, 0x459,
+            0x42804000, 0x4, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu1 -->
+        <!-- Prime CPU - Cluster min freq ~.960 Ghz -->
+        <!-- Prime CPU - Cluster max freq ~.2.1 Ghz -->
+        <!-- B CPU - Cluster min freq ~.633 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.073 Ghz -->
+        <!-- L CPU - Cluster min freq ~.595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 4 (freq 285 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130D" Enable="true" Target="volcano" Timeout="0"
+            Resources="0x40800200, 0x3C0, 0x40804200, 0x866, 0x40800000, 0x279,
+            0x40804000, 0x819, 0x40800100, 0x253, 0x40804100, 0x459,
+            0x42804000, 0x4, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu2 -->
+        <!-- Prime CPU - Cluster min freq ~.960 Ghz -->
+        <!-- Prime CPU - Cluster max freq ~.2.1 Ghz -->
+        <!-- B CPU - Cluster min freq ~.633 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.073 Ghz -->
+        <!-- L CPU - Cluster min freq ~.595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 4 (freq 285 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130E" Enable="true" Target="volcano" Timeout="0"
+            Resources="0x40800200, 0x3C0, 0x40804200, 0x866, 0x40800000, 0x279,
+            0x40804000, 0x819, 0x40800100, 0x253, 0x40804100, 0x459,
+            0x42804000, 0x4, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu2 gpu3 -->
+        <!-- Prime CPU - Cluster min freq ~.960 Ghz -->
+        <!-- Prime CPU - Cluster max freq ~.2.1 Ghz -->
+        <!-- B CPU - Cluster min freq ~.633 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.073 Ghz -->
+        <!-- L CPU - Cluster min freq ~.595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 4 (freq 285 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x0000130F" Enable="true" Target="volcano" Timeout="0"
+            Resources="0x40800200, 0x3C0, 0x40804200, 0x866, 0x40800000, 0x279,
+            0x40804000, 0x819, 0x40800100, 0x253, 0x40804100, 0x459,
+            0x42804000, 0x4, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu1 -->
+        <!-- Prime CPU - Cluster min freq ~.960 Ghz -->
+        <!-- Prime CPU - Cluster max freq ~.2.1 Ghz -->
+        <!-- B CPU - Cluster min freq ~.633 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.073 Ghz -->
+        <!-- L CPU - Cluster min freq ~.595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 4 (freq 285 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001310" Enable="true" Target="volcano" Timeout="0"
+            Resources="0x40800200, 0x3C0, 0x40804200, 0x866, 0x40800000, 0x279,
+            0x40804000, 0x819, 0x40800100, 0x253, 0x40804100, 0x459,
+            0x42804000, 0x4, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu2 -->
+        <!-- Prime CPU - Cluster min freq ~.960 Ghz -->
+        <!-- Prime CPU - Cluster max freq ~.2.1 Ghz -->
+        <!-- B CPU - Cluster min freq ~.633 Ghz -->
+        <!-- B CPU - Cluster max freq ~.2.073 Ghz -->
+        <!-- L CPU - Cluster min freq ~.595 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 4 (freq 285 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001311" Enable="true" Target="volcano" Timeout="0"
+            Resources="0x40800200, 0x3C0, 0x40804200, 0x866, 0x40800000, 0x279,
+            0x40804000, 0x819, 0x40800100, 0x253, 0x40804100, 0x459,
+            0x42804000, 0x4, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- qvr level cpu3 gpu3 -->
+        <!-- Prime CPU - Cluster min freq ~.960 Ghz -->
+        <!-- Prime CPU - Cluster max freq ~.2.1 Ghz -->
+        <!-- B CPU - Cluster min freq ~.633GhZ-->
+        <!-- B CPU - Cluster max freq ~.2.073 Ghz -->
+        <!-- L CPU - Cluster min freq ~.595Ghz-->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min pwrlevel 4 (freq 285 Mhz) -->
+        <!-- GPU - max pwrlevel 0 (freq 540 Mhz) -->
+        <!-- Min Big CPUs 2 -->
+        <!-- Idefinite Duration -->
+        <Config
+            Id="0x00001312" Enable="true" Target="volcano" Timeout="0"
+            Resources="0x40800200, 0x3C0, 0x40804200, 0x866, 0x40800000, 0x279,
+            0x40804000, 0x819, 0x40800100, 0x253, 0x40804100, 0x459,
+            0x42804000, 0x4, 0x42808000, 0x0, 0x41000000, 0x2"/>
+
+        <!-- sustained performance -->
+        <!-- Prime CPU - Cluster min freq uncapped -->
+        <!-- B CPU - Cluster min freq uncapped -->
+        <!-- L CPU - Cluster min freq uncapped -->
+        <!-- Prime CPU - Cluster max freq ~960Mhz -->
+        <!-- B CPU - Cluster max freq ~1.401 GHz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min freq 285Mhz -->
+        <!-- GPU - max freq 443Mhz -->
+        <!-- GPUBW freq uncapped -->
+        <Config
+            Id="0x00001206" Enable="true" Timeout="0" Target="volcano"
+            Resources="0x40800200, 0x0, 0x40800000, 0x0, 0x40800100, 0x0, 0x40804200, 0x3C0,
+            0x40804000, 0x579, 0x40804100, 0x459, 0X4280C000, 0x11D, 0X42810000, 0x1BB,
+            0x42814000, 0x0"/>
+
+        <!-- vr mode -->
+        <!-- Prime CPU - Cluster min freq ~960 Mhz -->
+        <!-- B CPU - Cluster min freq ~1.286 Ghz -->
+        <!-- L CPU - Cluster min freq ~0.902 Ghz -->
+        <!-- Prime CPU - Cluster max freq ~2.150Ghz-->
+        <!-- B CPU - Cluster max freq ~1708.8 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.593 Ghz -->
+        <!-- GPU - min freq 285Mhz -->
+        <!-- GPU - max freq 540Mhz -->
+        <!-- GPUBW uncapped -->
+        <Config
+            Id="0x00001207" Enable="true" Timeout="0" Target="volcano"
+            Resources="0x40800200, 0x3C0, 0x40800000, 0x506, 0x40800100, 0x386, 0x40804200, 0x866,
+            0x40804000, 0x6AC, 0x40804100, 0x639, 0X4280C000, 0x11D, 0X4280C000, 0x21C,
+            0x42814000, 0x0"/>
+
+        <!-- vr mode sustained performance -->
+        <!-- Prime CPU - Cluster min freq ~960 Mhz -->
+        <!-- B CPU - Cluster min freq ~1.286 Ghz -->
+        <!-- L CPU - Cluster min freq ~1.113 Ghz -->
+        <!-- Prime CPU - Cluster max freq ~960 Mhz -->
+        <!-- B CPU - Cluster max freq ~1.286 Ghz -->
+        <!-- L CPU - Cluster max freq ~1.113 Ghz -->
+        <!-- GPU - min freq 443Mhz -->
+        <!-- GPU - max freq 443Mhz -->
+        <!-- GPUBW uncapped  -->
+        <Config
+            Id="0x00001301" Enable="true" Timeout="0" Target="volcano"
+            Resources="0x40800200, 0x3C0, 0x40800000, 0x506, 0x40800100, 0x459, 0x40804200, 0x3C0,
+            0x40804000, 0x506, 0x40804100, 0x459, 0X4280C000, 0x1BB, 0X42810000, 0x1BB,
+            0x42814000, 0x0"/>
+
+        <!-- camera open tunings-->
+        <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+        <!-- MPCTLV3_SCHED_BOOST, 0x1 -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0, ~1708.8 Ghz -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, ~1708.8 Ghz -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_LITTLE_CORE_0, ~1.593 Ghz -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, ~1.593 Ghz -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_PLUS_CORE_0, ~2.150 Ghz -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_PLUS_CORE_0, ~2.150 Ghz-->
+        <Config
+            Id="0x00001337" Enable="true" Timeout="0" Target="volcano"
+            Resources="0x40400000, 0x1, 0x40C00000, 0x1, 0x40804000, 0x6AC, 0x40800000, 0x6AC,
+            0x40804100, 0x639, 0x40800100, 0x639, 0x40800200, 0x866, 0x40804200, 0x866"/>
+
+        <!-- camera close tunings-->
+        <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_BIG_CORE_0,  ~1708.8 Ghz -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_BIG_CORE_0, ~1708.8 Ghz -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_LITTLE_CORE_0, ~1.593 Ghz -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_LITTLE_CORE_0, ~1.593 Ghz -->
+        <!-- MPCTLV3_MIN_FREQ_CLUSTER_PLUS_CORE_0, ~2.150 Ghz -->
+        <!-- MPCTLV3_MAX_FREQ_CLUSTER_PLUS_CORE_0, ~2.150 Ghz -->
+         <Config
+            Id="0x00001338" Enable="true" Timeout="0" Target="volcano"
+            Resources="0x40400000, 0x1, 0x40804000, 0x6AC, 0x40800000, 0x6AC,
+            0x40804100, 0x639, 0x40800100, 0x639, 0x40800200, 0x866, 0x40804200, 0x866"/>
+
+         <!-- camera snapshot tunings-->
+         <!-- MPCTLV3_ALL_CPUS_PWR_CLPS_DIS, 0x1 -->
+         <!-- Silver cluster min freq to ~1.113 GHz -->
+         <!-- Gold cluster min freq to 1.190GHz-->
+         <!-- MPCTLV3_SCHED_DOWNMIGRATE, 0x14 -->
+         <!-- MPCTLV3_SCHED_UPMIGRATE, 0x1E -->
+         <Config
+            Id="0x00001339" Enable="true" Timeout="0" Target="volcano"
+            Resources="0x40400000, 0x1, 0x40800100, 0x459, 0x40800000, 0x4A6, 0x40CE0000, 0x001E0014"/>
+    </Powerhint>
+</HintConfigs>

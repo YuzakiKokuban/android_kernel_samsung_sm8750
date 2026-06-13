@@ -1,0 +1,22 @@
+config QTI_HW_FENCE
+	bool "HW Fence"
+	help
+	  Enable the hw_fence module
+
+config QTI_HW_FENCE_USE_SYNX
+	bool "HW Fence uses synx"
+	help
+	  Enable the hw_fence module through synx api.
+	  This will enable hw-fence module to register
+	  hw-fence ops with synx module to support hw-
+	  fencing through synx api and inter-op
+	  functionality between synx and hw-fence.
+
+config QTI_ENABLE_HW_FENCE_DEFAULT
+	bool "HW Fence is enabled by default"
+	help
+	  Enable the hw_fence module by default.
+	  This config allow hw-fence client registrations
+	  by default without any fastboot commands.
+	  HW-fencing can still be disabled and reenabled
+	  at runtime through fastboot commands.

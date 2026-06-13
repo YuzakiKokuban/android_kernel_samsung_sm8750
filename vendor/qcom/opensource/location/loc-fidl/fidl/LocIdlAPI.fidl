@@ -1,0 +1,2219 @@
+/** Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+    SPDX-License-Identifier: BSD-3-Clause-Clear */
+
+package com.qualcomm.qti.location
+
+interface LocIdlAPI {
+    version { major 0 minor 2 }
+
+    /** @brief Provides the capabilities of the system. <br/>
+        @param gnssCapabilitiesMask: Bitwise OR of IDLLocationCapabilitiesMask
+    */
+    attribute UInt32 gnssCapabilitiesMask
+
+    /** @description :
+        GnssMeasurements is for receiving GnssMeasurements
+        information when Location Client is in a positioning
+        session. **/
+    broadcast GnssMeasurements {
+        out {
+            IDLGnssMeasurements gnssMeasurements
+        }
+    }
+
+    /** @brief
+        LocationReport is for receiving IDLLocationReport when Location Client is
+        in a positioning session. <br/>
+
+        When there are multiple engines running on the system, the
+        received IDLLocationReport is fused report from all engines.
+        <br/>
+
+        When there is only standard SPE engine running on the
+        system, the received IDLLocationReport is from modem GNSS engine.
+        <br/>
+
+        @param locationReport: IDLLocationReport. <br/>
+    */
+    broadcast LocationReport {
+        out {
+            IDLLocationReport locationReport
+        }
+    }
+
+    /** @brief
+        EngineLocations is for receiving IDLLocationReport from
+        selected position engines when Location Client is in a
+        positioning session. <br/>
+
+        @param engLocations: IDLLocationReport from requested
+                           position engines <br/>
+    */
+    broadcast EngineLocations {
+        out {
+            IDLLocationReport [] engLocations
+        }
+    }
+
+
+    /** @brief
+        GnssSv is for receiving IDLGnssSv when Location Client is
+        in a positioning session.  <br/>
+
+        @param gnssSvs: GNSS SV report. <br/>
+    */
+    broadcast GnssSv {
+        out {
+            IDLGnssSv [] gnssSvs
+        }
+    }
+
+    /** @brief
+        GnssNmea is for receiving NMEA sentences when
+        Location Client is in a positioning session. <br/>
+
+        @param timestamp: timestamp that NMEA sentence is
+                        generated. <br/>
+
+        @param nmea: nmea strings generated from position and SV
+               report. <br/>
+    */
+    broadcast GnssNmea {
+        out {
+            UInt64 timestamp
+            String nmea
+        }
+    }
+
+    /** @brief
+        EngineNmea is for receiving NMEA sentences when
+        Location Client is in a positioning session. <br/>
+        @param engType: engine type that NMEA is derived from
+        @param timestamp: timestamp that NMEA sentence is
+                        generated. <br/>
+        @param nmea: nmea strings generated from position and SV
+               report of specified position engine. <br/>
+    */
+    broadcast EngineNmea {
+        out {
+            IDLLocOutputEngineType engType
+            UInt64 timestamp
+            String nmea
+        }
+    }
+
+    /** @brief
+        GnssData is for receiving GnssData, e.g.:
+        jammer information when Location Client is in a
+        positioning session. <br/>
+
+        @param gnssData: GNSS jammer and agc info. <br/>
+    */
+    broadcast GnssData {
+        out {
+            IDLGnssData gnssData
+        }
+    }
+
+    /** @brief Start or update a session to receive location
+               information in format of IDLLocationReport and other reports,
+               e.g.: SV report and NMEA report.
+        If gnssReportCallbackMask is zero, this call is no operation. <br/>
+
+        Otherwise, if this API is called for first time or after
+        previous position session has been stopped,
+        a position session will be started with the specified
+        parameters <br/>
+
+        If called during on-going session, parameters will be updated,
+        and the session continues but with the new set of parameters
+        <br/>
+
+        @param intervalInMs <br/>
+        Time between fixes, or TBF, in milliseconds. <br/>
+        The actual interval of reports received will be determined
+        by the underlying system. <br/>
+        For example, if intervalInMs is specified as 10
+        milliseconds, the report interval will be 100 milliseconds
+        if the highest report rate supported by the positioning
+        engines is 10Hz.  <br/>
+        Also, if there is another application in the system having a
+        session with shorter interval, this client may benefit and
+        receive reports at that interval. <br/>
+        0 to indicate that client is interested in passive
+        listening of the registered reports for session initiated by
+        other clients. <br/>
+
+        @param gnssReportCallbackMask
+        Table of IDLGnssReportCbInfoMask to receive location report / GNSS SV/
+        NMEA report / SV measurement report.  <br/>
+
+        @return IDL_LOC_RESP_SUCCESS, if a session is successfully started.
+        On failure, returns of the response codes from LocationResponse
+        <br/>
+    */
+
+    method startPositionSession:LocationReport {
+        in {
+            UInt32 intervalInMs
+            UInt32 gnssReportCallbackMask
+        }
+        out {
+            IDLLocationResponse resp
+        }
+    }
+
+    /** @brief
+        Start or update a session which may provide default
+        combined position report and position reports from other
+        engines in format of IDLLocationReport together with NMEA, SV
+        report, SV measurement reports. <br/>
+
+        If engReportCallbackMask is populated with zero only, this call
+        is no operation. <br/>
+
+        Otherwise, if this API is called for first time or after
+        previous position session has been stopped,
+        a position session will be started with the specified
+        parameters <br/>
+
+        If called during on-going session, parameters
+        will be updated, and the session continues but with
+        the new set of parameters. <br/>
+
+        @param intervalInMs
+        Time between fixes, or TBF, in milliseconds. <br/>
+        The actual interval of reports received will be determined
+        by the underlying system. <br/>
+        For example, if intervalInMs is specified as 10
+        milliseconds, the report interval will be 100 milli-seconds
+        if the highest report rate supported by the positioning
+        engines is 10Hz.  <br/>
+        Also, if there is another application in the system having a
+        session with shorter interval, this client may benefit and
+        receive reports at that interval. <br/>
+        0 to indicate that client is interested in passive listening
+        of the registered reports for session initiated by other
+        clients. <br/>
+
+        @param IDLLocReqEngineTypeMask <br/>
+        The bit masks of the location engines that client is
+        interested to receive position report. <br/>
+        If IDL_LOC_REQ_ENG_FUSED is set, but SPE is the only positioning
+        engine running on the system, then the fused position will be the
+        unpropagated SPE report. <br/>
+        If IDL_LOC_REQ_ENG_FUSED is set, and there is at least one
+        additional engine running on the system other than SPE engine,
+        then the fused position will be the propagated report to
+        current time. <br/>
+        If IDL_LOC_REQ_ENG_PPE is set, but PPE is not enabled on
+        the system, then PPE position will not be returned. <br/>
+        The SPE and PPE report will be the original reports from the
+        position engine without any modification and they will be
+        send out to client as soon as available. <br/>
+
+        @param engReportCallbackMask
+        Table of IDLEngineReportCbMask to receive engine locations / SV Info / NMEA
+        report/ SV measurement report. <br/>
+
+        @return IDL_LOC_RESP_SUCCESS, if a session is successfully started.
+        On failure, returns LocationReponse with appropriate response code set.
+        <br/>
+    */
+
+    method startPositionSession:engineSpecificLocation {
+        in {
+            UInt32 intervalInMs
+            UInt32 locReqEngMask
+            UInt32 engReportCallbackMask
+        }
+        out {
+            IDLLocationResponse resp
+        }
+    }
+
+    /** @brief Stop the ongoing positioning session and
+     *  de-register the callbacks of previous startPositionSession.
+     *  <br/> */
+    method stopPositionSession {
+
+    }
+
+    /** Specify the set of callbacks to receive the reports when
+     *  invoking startPositionSession(uint32_t,
+     *  IDLGnssReportCbInfoMask) with
+     *  intervalInMs specified. <br/>   */
+    enumeration IDLGnssReportCbInfoMask {
+        /* Unknown Capabilities Mask */
+        IDL_LOC_CB_INFO_UNKNOWN    = 0x00000000
+        /** Callback to receive IDLLocationReport. <br/>
+            When there are multiple engines running on the system, the
+            received Location is fused report from all engines. <br/>
+            When there is only standard SPE engine running on the
+            system, the received Location is from modem GNSS engine. <br/>
+          */
+        IDL_LOC_CB_INFO_BIT      = 0x00000001
+        /** Callback to receive IDLGnssSv from modem GNSS engine. <br/> */
+        IDL_SV_CB_INFO_BIT      = 0x00000002
+        /** Callback to receive NMEA sentences. <br/>
+         *  NMEA will be generated from IDLGnssSv and position report.
+         *  <br/>
+         *  When there are multiple engines running on the system,
+         *  position related NMEA sentences will be generated from the
+         *  fused position report. <br/>
+         *  When there is only SPE engine running on the system,
+         *  position related NMEA sentences will be generated from the
+         *  position report from modem GNSS engine report. <br/> */
+        IDL_NMEA_CB_INFO_BIT      = 0x00000004
+        /** Callback to receive IDLGnssData from modem GNSS engine.
+         *  <br/> */
+        IDL_DATA_CB_INFO_BIT      = 0x00000008
+        /** Callback to receive 1Hz GnssMeasurements from modem GNSS
+         *  engine. <br/> */
+        IDL_1HZ_MEAS_CB_INFO_BIT      = 0x00000010
+    }
+
+    /** Specify the set of callbacks to receive the reports when
+     *  invoking startPositionSession(uint32_t,
+     *  IDLLocReqEngineTypeMask, const IDLEngineReportCbMask)
+     *  with intervalInMs specified. */
+    enumeration IDLEngineReportCbMask {
+        /* Unknown Capabilities Mask */
+        IDL_ENGINE_LOC_CB_INFO_UNKNOWN  = 0x00000000
+        /** Callback to receive IDLLocationReport from selected engines.
+         *  <br/> */
+        IDL_ENGINE_LOCATION_CB_INFO_BIT      = 0x00000001
+        /** Callback to receive IDLGnssSv from modem GNSS engine. <br/> */
+        IDL_ENGINE_SV_CB_INFO_BIT            = 0x00000002
+        /** Callback to receive NMEA sentences. <br/>
+         *  NMEA will be generated from IDLGnssSv and position report.
+         *  <br/>
+         *  When there are multiple engines running in the system,
+         *  position related NMEA sentences will be generated from the
+         *  fused position report. <br/>
+         *  When there is only SPE engine running on the system,
+         *  position related NMEA sentences will be generated from the
+         *  position report from modem GNSS engine report. <br/> */
+        IDL_GNSS_ENGINE_NMEA_CB_INFO_BIT          = 0x00000004
+        /** Callback to receive IDLGnssData from modem GNSS engine.
+         *  <br/> */
+        IDL_ENGINE_DATA_CB_INFO_BIT          = 0x00000008
+        /** Callback to receive 1Hz GnssMeasurements from modem GNSS
+         *  engine. <br/> */
+        IDL_ENGINE_1HZ_MEAS_CB_INFO_BIT      = 0x00000010
+        /**
+         * Receive NMEA related to position report from all registered engines.
+         * The SV report will come from GNSS engine.
+         * Don't register both GnssNmea and EngineNmea at same time
+         * If attempted, invalid error will be returned.
+         * Recommend to use EngineNmea. <br/> */
+        IDL_ENGINE_NMEA_CB_INFO_BIT         = 0x00000020
+    }
+
+    enumeration IDLLocationCapabilitiesMask {
+        /* Unknown Capabilities */
+        IDL_CAPS_UNKNOWN           = 0x00000000
+        /** LocationClientApi can support time-based tracking session
+         *  via LocationClientApi::startPositionSession(uint32_t, const
+         *  IDLGnssReportCbInfoMask) and
+         *  LocationClientApi::startPositionSession(uint32_t,
+         *  IDLLocReqEngineTypeMask, IDLEngineReportCbMask).
+         */
+        IDL_CAPS_TIME_BASED_TRACKING_BIT           = 0x00000001
+        /** LocationClientApi can support receiving GnssMeasurements
+         *  data in GnssMeasurementsCb when Location Client is in
+         *  a positioning session..    */
+        IDL_CAPS_GNSS_MEAS_BIT                     = 0x00000002
+    }
+
+    enumeration IDLGnssSvOptionsMask {
+        /** Ephemeris is Unknown for this SV.    */
+        IDL_GNSS_SV_OPTION_UNKNOWN      = 0x0000
+        /** Ephemeris is available for this SV.    */
+        IDL_HAS_EPHEMER_BIT             = 0x0001
+        /** Almanac is available for this SV.    */
+        IDL_HAS_ALMANAC_BIT             = 0x0002
+        /** This SV is used in the position fix that has output
+         *  engine type set to IDL_LOC_OUTPUT_ENGINE_SPE.  */
+        IDL_USED_IN_FIX_BIT             = 0x0004
+        /** This SV has valid IDLGnssSv::carrierFrequencyHz.  */
+        IDL_HAS_CARRIER_FREQ_BIT   = 0x0008
+        /** This SV has valid IDLGnssSv::gnssSignalTypeMask.    */
+        IDL_HAS_GNSS_SIGNAL_TYPE_BIT    = 0x0010
+        /** This SV has valid IDLGnssSv::basebandCarrierToNoiseDbHz.
+         *   */
+        IDL_HAS_BASEBAND_CARRIER_TO_NOISE_BIT = 0x0020
+        /** This SV has valid IDLGnssSv::elevation.  */
+        IDL_HAS_ELEVATION_BIT                 = 0x0040
+        /** This SV has valid IDLGnssSv::azimuth.  */
+        IDL_HAS_AZIMUTH_BIT                   = 0x0080
+    }
+
+    enumeration IDLLocationFlagsMask {
+        /* Unknown Flags */
+        IDL_LOC_FLAGS_UNKNOWN         = 0x00000000
+        /** Location has valid Location::latitude and
+         *  Location::longitude.    */
+        IDL_HAS_LAT_LONG_BIT          = 0x00000001
+        /** Location has valid Location::altitude.    */
+        IDL_HAS_ALTITUDE_BIT          = 0x00000002
+        /** Location has valid Location::speed.    */
+        IDL_HAS_SPEED_BIT             = 0x00000004
+        /** Location has valid Location::bearing.    */
+        IDL_HAS_BEARING_BIT           = 0x00000008
+        /** Location has valid Location::horizontalAccuracy.    */
+        IDL_HAS_ACCURACY_BIT          = 0x00000010
+        /** Location has valid Location::verticalAccuracy.    */
+        IDL_HAS_VERTICAL_ACCURACY_BIT = 0x00000020
+        /** Location has valid Location::speedAccuracy.    */
+        IDL_HAS_SPEED_ACCURACY_BIT    = 0x00000040
+        /** Location has valid Location::bearingAccuracy.    */
+        IDL_HAS_BEARING_ACCURACY_BIT  = 0x00000080
+        /** Location has valid Location::timestamp.    */
+        IDL_HAS_TIMESTAMP_BIT         = 0x00000100
+        /** Location has valid Location::elapsedRealTime.    */
+        IDL_HAS_ELAPSED_REAL_TIME_BIT = 0x00000200
+        /** Location has valid Location::elapsedRealTimeUnc.    */
+        IDL_ELAPSED_REAL_TIME_UNC_BIT = 0x00000400
+        /** Location has valid Location::timeUncMs.    */
+        IDL_HAS_TIME_UNC_BIT          = 0x00000800
+        /** Location has valid Location::elapsedPTPTime.    */
+        IDL_HAS_ELAPSED_PTP_TIME_BIT  = 0x00001000
+    }
+
+    /**
+     *  Specify the set of technologies that contribute to Location.
+     */
+    enumeration IDLLocationTechnologyMask {
+        /* Unknown Tech Mask */
+        IDL_TECH_MASK_UNKNOWN                    = 0x00000000
+        /** GNSS-based technology was used to calculate
+         *  Location.    */
+        IDL_LOC_TECH_GNSS_BIT                    = 0x00000001
+        /** Cell-based technology was used to calculate
+         *  Location.    */
+        IDL_LOC_TECH_CELL_BIT                     = 0x00000002
+        /** WiFi-based technology was used to calculate
+         *  Location.    */
+        IDL_LOC_TECH_WIFI_BIT                     = 0x00000004
+        /** Sensor-based technology was used to calculate
+         *  Location.    */
+        IDL_LOC_TECH_SENSORS_BIT                  = 0x00000008
+        /**  Reference location was used to calculate Location.
+         *    */
+        IDL_LOC_TECH_REF_LOC_BIT                  = 0x00000010
+        /** Coarse position injected into the location engine
+         *  was used to calculate Location.     */
+        IDL_LOC_INJECTED_COARSE_POS_BIT           = 0x00000020
+        /** AFLT was used to calculate Location.    */
+        IDL_LOC_TECH_AFLT_BIT                     = 0x00000040
+        /** GNSS and network-provided measurements were
+         *  used to calculate Location.    */
+        IDL_LOC_TECH_HYBRID_BIT                   = 0x00000080
+        /** Precise position engine was used to calculate
+         *  Location.    */
+        IDL_LOC_TECH_PPE_BIT                      = 0x00000100
+        /** Vehicular data was used to calculate
+         *  Location.    */
+        IDL_LOC_TECH_VEH_BIT                      = 0x00000200
+        /** Visual data was used to calculate
+         *  Location.    */
+        IDL_LOC_TECH_VIS_BIT                      = 0x00000400
+        /** Propagation logic was used to calculate
+         *  Location.    */
+        IDL_LOC_TECH_PROPAGATED_BIT               = 0x00000800
+    }
+
+    /** Specify the set of navigation solutions that contribute
+     *  to IDLLocationReport.  */
+    enumeration IDLLocationReportNavSolutionMask {
+        /* Unknown NavSolution Mask */
+        IDL_NAV_MASK_UNKNOWN = 0x0000
+        /** SBAS ionospheric correction was used to calculate
+         *  IDLLocationReport.    */
+        IDL_SBAS_CORR_IONO  = 0x0001
+        /** SBAS fast correction was used to calculate
+         *  IDLLocationReport.    */
+        IDL_SBAS_CORR_FAST  = 0x0002
+        /** SBAS long-term correction was used to calculate
+         *  IDLLocationReport.    */
+        IDL_SBAS_CORR_LONG  = 0x0004
+        /** SBAS integrity information was used to calculate
+         *  IDLLocationReport.    */
+        IDL_SBAS_INTEGRITY        = 0x0008
+        /** DGNSS correction was used to calculate
+         *  IDLLocationReport.    */
+        IDL_NAV_CORR_DGNSS  = 0x0010
+        /** RTK correction was used to calculate
+         *  IDLLocationReport.    */
+        IDL_NAV_CORR_RTK   = 0x0020
+        /** PPP correction was used to calculate
+         *  IDLLocationReport.    */
+        IDL_NAV_CORR_PPP    = 0x0040
+        /** RTK fixed correction was used to to calculate
+            IDLLocationReport.  */
+        IDL_NAV_CORR_RTK_FIX  = 0x0080
+        /** Only SBAS corrected SVs was used to calculate
+            IDLLocationReport.  */
+        IDL_NAV_CORR_ONLY_SBAS_CORR_SV_USED = 0x0100
+        /** MMF data aiding was used to to calculate
+            IDLLocationReport.  */
+        LRNSM_NAV_CORR_MMF_AIDED  = 0x0200
+    }
+
+    /** Specify the valid fields in
+     *  IDLLocationReportPositionDynamics.    */
+    enumeration IDLLocationReportPosDataMask {
+        /* Unknown Position Data Mask */
+        IDL_POS_DATA_MASK_UNKNOWN = 0x00000000
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::longAccel.    */
+        IDL_NAV_DATA_LONG_ACCEL      = 0x00000001
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::latAccel.    */
+        IDL_NAV_DATA_LAT_ACCEL       = 0x00000002
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::vertAccel.    */
+        IDL_NAV_DATA_VERT_ACCEL      = 0x00000004
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::yawRate.    */
+        IDL_NAV_DATA_YAW_RATE        = 0x00000008
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::pitch.    */
+        IDL_NAV_DATA_PITCH          = 0x00000010
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::longAccelUnc.    */
+        IDL_NAV_DATA_LONG_ACCEL_UNC  = 0x00000020
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::latAccelUnc.    */
+        IDL_NAV_DATA_LAT_ACCEL_UNC   = 0x00000040
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::vertAccelUnc.    */
+        IDL_NAV_DATA_VERT_ACCEL_UNC  = 0x00000080
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::yawRateUnc.    */
+        IDL_NAV_DATA_YAW_RATE_UNC    = 0x00000100
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::pitchUnc.    */
+        IDL_NAV_DATA_PITCH_UNC       = 0x00000200
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::pitchRate.    */
+        IDL_NAV_DATA_PITCH_RATE      = 0x00000400
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::pitchRateUnc.    */
+        IDL_NAV_DATA_PITCH_RATE_UNC  = 0x00000800
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::roll.    */
+        IDL_NAV_DATA_ROLL            = 0x00001000
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::rollUnc.    */
+        IDL_NAV_DATA_ROLL_UNC      = 0x00002000
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::rollRate.    */
+        IDL_NAV_DATA_ROLL_RATE       = 0x00004000
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::rollRateUnc.    */
+        IDL_NAV_DATA_ROLL_RATE_UNC   = 0x00008000
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::yaw.    */
+        IDL_NAV_DATA_YAW             = 0x00010000
+        /** IDLLocationReportPositionDynamics has valid
+         *  IDLLocationReportPositionDynamics::yawUnc.    */
+        IDL_NAV_DATA_YAW_UNC         = 0x00020000
+    }
+
+    /** Specify the mask for available GNSS signal type and RF band
+     *  used in IDLGnssSv::gnssSignalTypeMask and
+     *  IDLGnssMeasUsageInfo::gnssSignalType.    */
+    enumeration IDLGnssSignalTypeMask {
+        /* Unknown Signal Type */
+        IDL_GNSS_SIGNAL_UNKNOWN                 = 0x00000000
+        /** GNSS signal is of GPS L1CA RF band.    */
+        IDL_GNSS_SIGNAL_GPS_L1CA_BIT            = 0x00000001
+        /** GNSS signal is of GPS L1C RF band.    */
+        IDL_GNSS_SIGNAL_GPS_L1C_BIT             = 0x00000002
+        /** GNSS signal is of GPS L2 RF band.    */
+        IDL_GNSS_SIGNAL_GPS_L2_BIT              = 0x00000004
+        /** GNSS signal is of GPS L5 RF band.    */
+        IDL_GNSS_SIGNAL_GPS_L5_BIT              = 0x00000008
+        /** GNSS signal is of GLONASS G1 (L1OF) RF band.    */
+        IDL_GNSS_SIGNAL_GLONASS_G1_BIT          = 0x00000010
+        /** GNSS signal is of GLONASS G2 (L2OF) RF band.    */
+        IDL_GNSS_SIGNAL_GLONASS_G2_BIT          = 0x00000020
+        /** GNSS signal is of GALILEO E1 RF band.    */
+        IDL_GNSS_SIGNAL_GALILEO_E1_BIT          = 0x00000040
+        /** GNSS signal is of GALILEO E5A RF band.    */
+        IDL_GNSS_SIGNAL_GALILEO_E5A_BIT         = 0x00000080
+        /** GNSS signal is of GALILEO E5B RF band.    */
+        IDL_GNSS_SIGNAL_GALILEO_E5B_BIT         = 0x00000100
+        /** GNSS signal is of BEIDOU B1 RF band.    */
+        IDL_GNSS_SIGNAL_BEIDOU_B1_BIT           = 0x00000200
+        /** GNSS signal is of BEIDOU B2 RF band.    */
+        IDL_GNSS_SIGNAL_BEIDOU_B2_BIT           = 0x00000400
+        /** GNSS signal is of QZSS L1CA RF band.    */
+        IDL_GNSS_SIGNAL_QZSS_L1CA_BIT           = 0x00000800
+        /** GNSS signal is of QZSS L1S RF band.    */
+        IDL_GNSS_SIGNAL_QZSS_L1S_BIT            = 0x00001000
+        /** GNSS signal is of QZSS L2 RF band.    */
+        IDL_GNSS_SIGNAL_QZSS_L2_BIT             = 0x00002000
+        /** GNSS signal is of QZSS L5 RF band.    */
+        IDL_GNSS_SIGNAL_QZSS_L5_BIT             = 0x00004000
+        /** GNSS signal is of SBAS L1 RF band.    */
+        IDL_GNSS_SIGNAL_SBAS_L1_BIT             = 0x00008000
+        /** GNSS signal is of BEIDOU B1I RF band.    */
+        IDL_GNSS_SIGNAL_BEIDOU_B1I_BIT          = 0x00010000
+        /** GNSS signal is of BEIDOU B1C RF band.    */
+        IDL_GNSS_SIGNAL_BEIDOU_B1C_BIT          = 0x00020000
+        /** GNSS signal is of BEIDOU B2I RF band.    */
+        IDL_GNSS_SIGNAL_BEIDOU_B2I_BIT          = 0x00040000
+        /** GNSS signal is of BEIDOU B2AI RF band.    */
+        IDL_GNSS_SIGNAL_BEIDOU_B2AI_BIT         = 0x00080000
+        /** GNSS signal is of NAVIC L5 RF band.    */
+        IDL_GNSS_SIGNAL_NAVIC_L5_BIT            = 0x00100000
+        /** GNSS signal is of BEIDOU B2A_Q RF band.    */
+        IDL_GNSS_SIGNAL_BEIDOU_B2AQ_BIT         = 0x00200000
+        /** GNSS signal is of BEIDOU B2B_I RF band.    */
+        IDL_GNSS_SIGNAL_BEIDOU_B2BI_BIT         = 0x00400000
+        /** GNSS signal is of BEIDOU B2B_Q RF band.    */
+        IDL_GNSS_SIGNAL_BEIDOU_B2BQ_BIT         = 0x00800000
+        /** GNSS signal is of NAVIC L1 RF band. <br/>   */
+        GSTM_NAVIC_L1_BIT            = 0x01000000
+    }
+
+    /** Specify LocationClientApi function call processing status.
+     *  The status is returned via ResponseCb.    */
+    enumeration IDLLocationResponse {
+        /* Unknown Response*/
+        IDL_LOC_RESP_UNKNOWN  = 0
+        /** LocationClientApi call is successful.    */
+        IDL_LOC_RESP_SUCCESS = 1
+        /** LocationClientApi call has failed.    */
+        IDL_LOC_RESP_UNKOWN_FAILURE = 2
+        /** LocationClientApi call is not supported.    */
+        IDL_LOC_RESP_NOT_SUPPORTED = 3
+        /** LocationClientApi call has invalid parameter.    */
+        IDL_LOC_RESP_PARAM_INVALID = 4
+        /** LocationClientApi call timeout */
+        IDL_LOC_RESP_TIMEOUT = 5
+        /** LocationClientApi is busy. */
+        IDL_LOC_RESP_REQUEST_ALREADY_IN_PROGRESS = 6
+        /** System is not ready, e.g.: hal daemon is not yet ready. */
+        IDL_LOC_RESP_SYSTEM_NOT_READY = 7
+        /** LCA doesn't support simultaneous tracking and batching session. Other session is ongoing*/
+        IDL_LOC_RESP_EXCLUSIVE_SESSION_IN_PROGRESS = 8
+    }
+
+    /** Specify the SV constellation type in IDLGnssSv
+     *  and GnssMeasurementsData.    */
+    enumeration IDLGnssSvType {
+        /** SV is of unknown constellation.    */
+        IDL_GNSS_SV_TYPE_UNKNOWN = 0
+        /** SV is of GPS constellation.   */
+        IDL_GNSS_SV_TYPE_GPS     = 1
+        /**  SV is of SBAS constellation.   */
+        IDL_GNSS_SV_TYPE_SBAS    = 2
+        /**  SV is of GLONASS constellation.  */
+        IDL_GNSS_SV_TYPE_GLONASS = 3
+        /**  SV is of QZSS constellation.    */
+        IDL_GNSS_SV_TYPE_QZSS    = 4
+        /**  SV is of BEIDOU constellation.    */
+        IDL_GNSS_SV_TYPE_BEIDOU  = 5
+        /**  SV is of GALILEO constellation.    */
+        IDL_GNSS_SV_TYPE_GALILEO = 6
+        /**  SV is of NAVIC constellation.    */
+        IDL_GNSS_SV_TYPE_NAVIC   = 7
+    }
+
+    /** Specify the valid fields in IDLLocationReport.
+     *  User should determine whether a field in
+     *  IDLLocationReport is valid or not by checking
+     *  if the corresponding bit in
+     *  IDLLocationReport::locationInfoFlags is set or
+     *  not.  */
+    enumeration IDLLCALocationInfoFlagMask {
+        /** Location Info Flags unknown */
+        IDL_LOC_INFO_UNKNOWN                        = 0x0000000000000000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::altitudeMeanSeaLevel.    */
+        IDL_LOC_INFO_ALTITUDE_MEAN_SEA_LEVEL        = 0x0000000000000001
+        /** IDLLocationReport has valid DOP fields (pdop, hdop, vdop)  */
+        IDL_LOC_INFO_DOP                            = 0x0000000000000002
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::magneticDeviation.    */
+        IDL_LOC_INFO_MAGNETIC_DEVIATION             = 0x0000000000000004
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::horReliability.    */
+        IDL_LOC_INFO_HOR_RELIABILITY                = 0x0000000000000008
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::verReliability.     */
+        IDL_LOC_INFO_VER_RELIABILITY                = 0x0000000000000010
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::horUncEllipseSemiMajor.    */
+        IDL_LOC_INFO_HOR_ACCURACY_ELIP_SEMI_MAJOR   = 0x0000000000000020
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::horUncEllipseSemiMinor.    */
+        IDL_LOC_INFO_HOR_ACCURACY_ELIP_SEMI_MINOR   = 0x0000000000000040
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::horUncEllipseOrientAzimuth.    */
+        IDL_LOC_INFO_HOR_ACCURACY_ELIP_AZIMUTH      = 0x0000000000000080
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::svUsedInPosition and
+         *  IDLLocationReport::measUsageInfo.    */
+        IDL_LOC_INFO_GNSS_SV_USED_DATA              = 0x0000000000000100
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::navSolutionMask.    */
+        IDL_LOC_INFO_NAV_SOLUTION_MASK_BIT          = 0x0000000000000200
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::posTechMask.    */
+        IDL_LCA_GNSS_LOCATION_INFO_POS_TECH_MASK    = 0x0000000000000400
+        /** Reserved field
+         *  IDLLocationReport.    */
+        IDL_LOC_RESERVED1                      = 0x0000000000000800
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::altitudeMeanSeaLevel.  */
+        IDL_LOC_INFO_POS_DYNAMICS_DATA              = 0x0000000000001000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::gdop and
+         *  IDLLocationReport::tdop.    */
+        IDL_LOC_INFO_EXT_DOP                        = 0x0000000000002000
+        /** IDLLocationReport has valid IDLLocationReport::northStdDeviation.
+         *   */
+        IDL_LOC_INFO_NORTH_STD_DEV                 = 0x0000000000004000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::eastStdDeviation.    */
+        IDL_LOC_INFO_EAST_STD_DEV                   = 0x0000000000008000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::northVelocity.    */
+        IDL_LOC_INFO_NORTH_VEL                      = 0x0000000000010000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::eastVelocity.    */
+        IDL_LOC_INFO_EAST_VEL                       = 0x0000000000020000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::upVelocity.    */
+        IDL_LOC_INFO_UP_VEL                        = 0x0000000000040000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::northVelocityStdDeviation.    */
+        IDL_LOC_INFO_NORTH_VEL_UNC                  = 0x0000000000080000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::eastVelocityStdDeviation.    */
+        IDL_LOC_INFO_EAST_VEL_UNC                   = 0x0000000000100000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::upVelocityStdDeviation.    */
+        IDL_LOC_INFO_UP_VEL_UNC                     = 0x0000000000200000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::leapSeconds.    */
+        IDL_LOC_INFO_LEAP_SECONDS                   = 0x0000000000400000
+        /** Reserved bit */
+        IDL_LOC_RESERVED2                           = 0x0000000000800000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::numSvUsedInPosition.    */
+        IDL_LOC_INFO_NUM_SV_USED_IN_POS                 = 0x0000000001000000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::calibrationConfidencePercent.    */
+        IDL_LOC_INFO_CALIB_CONFIDENCE_PERCENT           = 0x0000000002000000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::calibrationStatus.     */
+        IDL_LOC_INFO_CALIB_STATUS                       = 0x0000000004000000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::locOutputEngType.     */
+        IDL_LOC_INFO_OUTPUT_ENG_TYPE                    = 0x0000000008000000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::locOutputEngMask.    */
+        IDL_LOC_INFO_OUTPUT_ENG_MASK                    = 0x0000000010000000
+        /** IDLLocationReport has valid IDLLocationReport::conformityIndex.
+         *   */
+        IDL_LOC_INFO_CONFORMITY_INDEX                   = 0x0000000020000000
+        /** IDLLocationReport has valid
+         *  IDLLocationReport::llaVRPBased.    */
+        IDL_LOC_INFO_LLA_VRP_BASED                      = 0x0000000040000000
+        /** IDLLocationReport has valid IDLLocationReport::enuVelocityVRPBased.
+         *   */
+        IDL_LOC_INFO_ENU_VEL_VRP_BASED                  = 0x0000000080000000
+        /** IDLLocationReport has valid IDLLocationReport::drSolutionStatusMask.
+         *     */
+        IDL_LOC_INFO_DR_SOL_STATUS_MASK                 = 0x0000000100000000
+        /** IDLLocationReport has valid IDLLocationReport::altitudeAssumed.
+         *   */
+        IDL_LOC_INFO_ALTITUDE_ASSUMED                   = 0x0000000200000000
+        /** IDLLocationReport has valid IDLLocationReport::sessionStatus.  */
+        IDL_LOC_INFO_SESSION_STATUS                     = 0x0000000400000000
+        /** IDLLocationReport has valid IDLLocationReport::integrityRiskUsed.
+         *   */
+        IDL_LOC_INFO_INTEGRITY_RISK_USED                = 0x0000000800000000
+        /** IDLLocationReport has valid IDLLocationReport::protectAlongTrack.
+         *   */
+        IDL_LOC_INFO_PROTECT_ALONG_TRACK                = 0x0000001000000000
+        /** IDLLocationReport has valid IDLLocationReport::protectCrossTrack.
+         *   */
+        IDL_LOC_INFO_PROTECT_CROSS_TRACK                = 0x0000002000000000
+        /** IDLLocationReport has valid IDLLocationReport::protectVertical.
+         *   */
+        IDL_LOC_INFO_PROTECT_VERTICAL                   = 0x0000004000000000
+        /** IDLLocationReport has valid IDLLocationReport::dgnssStationId.  */
+        IDL_LOC_INFO_DGNSS_STATION_ID                   = 0x0000008000000000
+        /** IDLLocationReport has valid IDLLocationReport::elapsedgPTPTime. */
+        IDL_LOC_INFO_GPTP_TIME_BIT                      = 0x0000010000000000
+        /** IDLLocationReport has valid IDLLocationReport::elapsedgPTPTimeUnc. */
+        IDL_LOC_INFO_GPTP_TIME_UNC_BIT                  = 0x0000020000000000
+        /** GnssLocation has valid IDLLocationReport::baseLineLength. */
+        IDL_LOC_INFO_BASE_LINE_LENGTH_BIT               = 0x0000040000000000
+        /** GnssLocation has valid IDLLocationReport::ageMsecOfCorrections. */
+        IDL_LOC_INFO_AGE_OF_CORRECTION_BIT              = 0x0000080000000000
+        /** IDLLocationReport has valid IDLLocationReport::currReportingRate. */
+        IDL_LOC_INFO_CURR_REPORT_RATE_BIT               = 0x0000100000000000
+        /** IDLLocationReport has valid IDLLocationReport::leapSecondsUnc. */
+        LREFM_LEAP_SECONDS_UNC_BIT                      = 0x0000200000000000
+    }
+
+    /** Specify the reliability level of
+     *  IDLLocationReport::horReliability and
+     *  IDLLocationReport::verReliability.    */
+    enumeration IDLLocationReliability {
+        /** IDLLocationReport reliability is not set.    */
+        IDL_LOC_RELIABILITY_NOT_SET = 0
+        /** IDLLocationReport reliability is very low.
+         *  Use it at your own risk.    */
+        IDL_LOC_RELIABILITY_VERY_LOW = 1
+        /** IDLLocationReport reliability is low.
+         *  Little or no cross-checking is possible    */
+        IDL_LOC_RELIABILITY_LOW = 2
+        /** IDLLocationReport reliability is medium.
+         *  Limited cross-check has passed    */
+        IDL_LOC_RELIABILITY_MEDIUM = 3
+        /** IDLLocationReport reliability is high.
+         *  Strong cross-check passed.    */
+        IDL_LOC_RELIABILITY_HIGH = 4
+    }
+
+    /** Specify the constellation that the SV belongs to in
+     *   IDLGnssMeasUsageInfo and IDLGnssSystemTime.  */
+    enumeration IDLGnssSvSystemEnumType {
+        /** SV is of Unknown constellation.    */
+        IDL_LOC_SV_SYSTEM_UNKNOWN = 0
+        /** SV is of GPS constellation.    */
+        IDL_LOC_SV_SYSTEM_GPS     = 1
+        /**  SV is of GALILEO constellation.    */
+        IDL_LOC_SV_SYSTEM_GAL     = 2
+        /**  SV is of SBAS constellation.    */
+        IDL_LOC_SV_SYSTEM_SBAS    = 3
+        /**  SV is of GLONASS constellation.    */
+        IDL_LOC_SV_SYSTEM_GLO     = 4
+        /**  SV is of BDS constellation.    */
+        IDL_LOC_SV_SYSTEM_BDS     = 5
+        /**  SV is of QZSS constellation.    */
+        IDL_LOC_SV_SYSTEM_QZSS    = 6
+        /** SV is of NAVIC constellation.    */
+        IDL_LOC_SV_SYSTEM_NAVIC   = 7
+    }
+
+    /** Specify the valid fields in IDLGnssSystemTimeStructType.
+     *  <br/>  */
+    enumeration IDLGnssSystemTimeStructTypeFlags {
+        /** IDLGnssSystemTimeStructType is invalid
+        IDL_SYS_TIME_INVALID                = 0x0000
+        /** IDLGnssSystemTimeStructType has valid
+         *  IDLGnssSystemTimeStructType::systemWeek.   */
+        IDL_SYS_TIME_WEEK_VALID             = 0x0001
+        /** IDLGnssSystemTimeStructType has valid
+         *  IDLGnssSystemTimeStructType::systemMsec.   */
+        IDL_SYS_TIME_WEEK_MS_VALID          = 0x0002
+        /** IDLGnssSystemTimeStructType has valid
+         *  IDLGnssSystemTimeStructType::systemClkTimeBias.   */
+        IDL_SYS_CLK_TIME_BIAS_VALID         = 0x0004
+        /** IDLGnssSystemTimeStructType has valid
+         *  IDLGnssSystemTimeStructType::systemClkTimeUncMs.   */
+        IDL_SYS_CLK_TIME_BIAS_UNC_VALID     = 0x0008
+        /** IDLGnssSystemTimeStructType has valid
+         *  IDLGnssSystemTimeStructType::refFCount.   */
+        IDL_SYS_REF_FCOUNT_VALID            = 0x0010
+        /** IDLGnssSystemTimeStructType has valid
+         *  IDLGnssSystemTimeStructType::numClockResets.   */
+        IDL_SYS_NUM_CLOCK_RESETS_VALID      = 0x0020
+    }
+
+    /** Specify the valid fields in IDLGnssGloTimeStructType.   */
+    enumeration IDLGnssGloTimeStructTypeFlags {
+        /** IDLGnssGloTimeStructType is invalid
+        IDL_GLO_TIME_INVALID                   = 0x0000
+        /** IDLGnssGloTimeStructType has valid
+         *  IDLGnssGloTimeStructType::gloDays.  */
+        IDL_GLO_DAYS_VALID                     = 0x0001
+        /** IDLGnssGloTimeStructType has valid
+         *  IDLGnssGloTimeStructType::gloMsec.   */
+        IDL_GLO_MSEC_VALID                     = 0x0002
+        /** IDLGnssGloTimeStructType has valid
+         *  IDLGnssGloTimeStructType::gloClkTimeBias.   */
+        IDL_GLO_CLK_TIME_BIAS_VALID            = 0x0004
+        /** IDLGnssGloTimeStructType has valid
+         *  IDLGnssGloTimeStructType::gloClkTimeUncMs.   */
+        IDL_GLO_CLK_TIME_BIAS_UNC_VALID        = 0x0008
+        /** IDLGnssGloTimeStructType has valid
+         *  IDLGnssGloTimeStructType::refFCount.   */
+        IDL_GLO_REF_FCOUNT_VALID               = 0x0010
+        /** IDLGnssGloTimeStructType has valid
+         *  IDLGnssGloTimeStructType::numClockResets.   */
+        IDL_GLO_NUM_CLK_RESETS_VALID         = 0x0020
+        /** IDLGnssGloTimeStructType has valid
+         *  IDLGnssGloTimeStructType::gloClkTimeBias.   */
+        IDL_GLO_FOUR_YEAR_VALID                = 0x0040
+    }
+
+    /** Specify the sensor calibrations status in
+     *  IDLLocationReport. <br/>  */
+    enumeration IDLDrCalibrationStatusMask {
+        /** Unknown calibration */
+        IDL_DR_CALIB_UNKNOWN      = 0x0000000000000000
+        /** Indicate that roll calibration is needed. <br/>
+         *  Need to take more turns on level ground. <br/>  */
+        IDL_DR_ROLL_CALIB_NEEDED  = 0x0000000000000001
+        /** Indicate that pitch calibration is needed. <br/>
+         *  Need to take more turns on level ground. <br/>  */
+        IDL_DR_PITCH_CALIB_NEEDED = 0x0000000000000002
+        /** Indicate that yaw calibration is needed. <br/>
+         *  Need to accelerate in a straight line. <br/>  */
+        IDL_DR_YAW_CALIB_NEEDED   = 0x0000000000000004
+        /** Indicate that odo calibration is needed. <br/>
+         *  Need to accelerate in a straight line. <br/>  */
+        IDL_DR_ODO_CALIB_NEEDED   = 0x0000000000000008
+        /** Indicate that gyro calibration is needed. <br/>
+         *  Need to take more turns on level ground. <br/>  */
+        IDL_DR_GYRO_CALIB_NEEDED  = 0x0000000000000010
+        /** Lot more turns on level ground needed */
+        IDL_DR_TURN_CALIB_LOW     = 0x0000000000000020
+        /** Some more turns on level ground needed */
+        IDL_DR_TURN_CALIB_MED  = 0x0000000000000040
+        /** Sufficient turns on level ground observed */
+        IDL_DR_TURN_CALIB_HIGH    = 0x0000000000000080
+        /** Lot more accelerations in straight line needed */
+        IDL_DR_LINEAR_ACCEL_CALIB_LOW      = 0x0000000000000100
+        /** Some more accelerations in straight line needed */
+        IDL_DR_LINEAR_ACCEL_CALIB_MED   = 0x0000000000000200
+        /** Sufficient acceleration events in straight line observed */
+        IDL_DR_LINEAR_ACCEL_CALIB_HIGH     = 0x0000000000000400
+        /** Lot more motion in straight line needed */
+        IDL_DR_LINEAR_MOTION_CALIB_LOW     = 0x0000000000000800
+        /** Some more motion in straight line needed */
+        IDL_DR_LINEAR_MOTION_CALIB_MED  = 0x0000000000001000
+        /** Sufficient motion events in straight line observed */
+        IDL_DR_LINEAR_MOTION_CALIB_HIGH    = 0x0000000000002000
+        /** Lot more stationary events on level ground needed */
+        IDL_DR_STATIC_CALIB_LOW            = 0x0000000000004000
+        /** Some more stationary events on level ground needed */
+        IDL_DR_STATIC_CALIB_MED            = 0x0000000000008000
+        /** Sufficient stationary events on level ground observed */
+        IDL_DR_STATIC_CALIB_HIGH           = 0x0000000000010000
+    }
+
+    /** Specify the set of SVs that are used to calculate
+     *  IDLLocationReport.   */
+    struct IDLLocationReportSvUsedInPosition {
+        /** Specify the set of SVs from GPS constellation that are used
+         *  to compute the position.  Bit 0 to Bit 31 corresponds
+         *  to GPS SV id 1 to 32.    */
+        UInt64 gpsSvUsedIdsMask
+        /** Specify the set of SVs from GLONASS constellation that are
+         *  used to compute the position.
+         *  Bit 0 to Bit 31 corresponds to GLO SV id 65 to 96.  */
+        UInt64 gloSvUsedIdsMask
+        /** Specify the set of SVs from GALILEO constellation that are
+         *  used to compute the position.
+         *  Bit 0 to Bit 35 corresponds to GAL SV id 301 to 336.
+         *   */
+        UInt64 galSvUsedIdsMask
+        /** ISpecify the set of SVs from BEIDOU constellation that are
+         *  used to compute the position.
+         *  Bit 0 to Bit 62 corresponds to BDS SV id 201 to 263.
+         *   */
+        UInt64 bdsSvUsedIdsMask
+        /** Specify the set of SVs from QZSS constellation that are used
+         *  to compute the position.
+         *  Bit 0 to Bit 4 corresponds to QZSS SV id 193 to 197.
+         *   */
+        UInt64 qzssSvUsedIdsMask
+        /** Specify the set of SVs from NAVIC constellation that are used
+         *  to compute the position.
+         *  Bit 0 to Bit 13 corresponds to NAVIC SV id 401 to 414.
+         *   */
+        UInt64 navicSvUsedIdsMask
+
+    }
+
+    /** Specify the SV measurements that are used to calculate
+     *  IDLLocationReport.  */
+    struct IDLGnssMeasUsageInfo {
+        /** Specify GNSS Constellation Type for the SV. */
+        UInt16 gnssConstellation
+        /** Specify satellite vehicle ID number.
+         *  For SV id range of each supported constellations, refer to
+         *  documentation section in IDLGnssSv::svId.
+         */
+        UInt16 gnssSvId
+        /** Specify the signal type mask of the SV.
+        * Contains IDLGnssSignalTypeMask bit */
+        UInt32 gnssSignalType
+    }
+
+    /** Specify device body frame parameters.    */
+    struct IDLLocationReportPositionDynamics {
+        /** Bitwise OR of IDLLocationReportPosDataMask to specify the
+         *  valid fields in IDLLocationReportPositionDynamics.
+         * Contains IDLLocationReportPosDataMask  bits */
+        UInt32 bodyFrameDataMask
+        /** Forward acceleration in body frame, in unit of
+         *  meters/second^2.    */
+        Float           longAccel
+        /** Sideward acceleration in body frame, in unit of
+         *  meters/second^2.    */
+        Float           latAccel
+        /** Vertical acceleration in body frame, in unit of
+         *  meters/second^2.    */
+        Float           vertAccel
+        /** Uncertainty of forward acceleration in body frame, in unit
+         *  of meters/second^2.
+         *  Uncertainty is defined with 68% confidence level.  */
+        Float           longAccelUnc
+        /** Uncertainty of side-ward acceleration in body frame, in unit
+         *  of meters/second^2.
+         *  Uncertainty is defined with 68% confidence level.     */
+        Float           latAccelUnc
+        /** Uncertainty of vertical acceleration in body frame, in unit
+         *  of meters/second^2.
+         *  Uncertainty is defined with 68% confidence level.    */
+        Float           vertAccelUnc
+        /** Body pitch, in unit of radians.    */
+        Float           pitch
+        /** Uncertainty of body pitch, in unit of radians.
+         *  Uncertainty is defined with 68% confidence level.     */
+        Float           pitchUnc
+        /** Body pitch rate, in unit of radians/second.   */
+        Float           pitchRate
+        /** Uncertainty of pitch rate, in unit of radians/second.
+         *  Uncertainty is defined with 68% confidence level.   */
+        Float           pitchRateUnc
+        /** Roll of body frame, clockwise is positive, in unit of
+         *  radian.   */
+        Float           roll
+        /** Uncertainty of roll, in unit of radian.
+         *  Uncertainty is defined with 68% confidence level.  */
+        Float           rollUnc
+        /** Roll rate of body frame, clockwise is
+        positive, in unit of radian/second.  */
+        Float           rollRate
+        /** Uncertainty of roll rate, in unit of radian/second.
+         *  Uncertainty is defined with 68% confidence level.  */
+        Float           rollRateUnc
+        /** Yaw of body frame, clockwise is positive, in unit of
+         *  radian.  */
+        Float           yaw
+        /** Uncertainty of yaw, 68% confidence level, in unit of radian.
+         *
+         *  Uncertainty is defined with 68% confidence level.   */
+        Float           yawUnc
+        /** Heading rate, in unit of radians/second.
+         *  Range: +/- pi (where pi is ~3.14159).
+         *  The positive value is clockwise and negative value is
+         *  anti-clockwise.
+         */
+        Float           yawRate
+        /** Uncertainty of heading rate, in unit of radians/second.
+         *  Uncertainty is defined with 68% confidence level.   */
+        Float           yawRateUnc
+
+    }
+
+    /** Specify Non-Glonass GNSS system time info. */
+    struct IDLGnssSystemTimeStructType {
+        /** Bitwise OR of IDLGnssSystemTimeStructTypeFlags to specify
+         *  valid fields in IDLGnssSystemTimeStructType.
+         * contains IDLGnssSystemTimeStructTypeFlags bits */
+        UInt32 validityMask
+        /** Extended week number at reference tick, in unit of week.
+         *
+         *  Set to 65535 if week number is unknown.
+         *
+         *  For GPS: calculated from midnight, Jan. 6, 1980. OTA decoded
+         *  10 bit GPS week is extended to map between: [NV6264 to
+         *  (NV6264 + 1023)]
+         *
+         *  For BDS: calculated from 00:00:00 on January 1, 2006 of
+         *  Coordinated Universal Time (UTC).
+         *
+         *  For GAL: calculated from 00:00 UT on Sunday August 22, 1999
+         *  (midnight between August 21 and August 22).
+         */
+        UInt16 systemWeek
+        /** Time in to the current week at reference tick, in unit of
+         *  milliseconds.
+         *  Range is 0 to 604799999.  */
+        UInt32 systemMsec
+        /** System clock time bias, in unit of milliseconds.
+         *  Note: System time (TOW Millisecond) = systemMsec - systemClkTimeBias.  */
+        Float systemClkTimeBias
+        /** Single sided maximum time bias uncertainty, in unit of
+         *  milliseconds.  */
+        Float systemClkTimeUncMs
+        /** FCount (free running HW timer) value, in unit of
+         *  milliseconds.
+         *  Don't use for relative time purpose due to possible
+         *  discontinuities.  */
+        UInt32 refFCount
+        /** Number of clock resets/discontinuities detected, which
+         *  affects the local hardware counter value.    */
+        UInt32 numClockResets
+
+    }
+
+    /** Specify Glonass system time info.    */
+    struct IDLGnssGloTimeStructType {
+        /** Bitwise OR of IDLGnssGloTimeStructTypeFlags to specify the
+         *  valid fields in IDLGnssGloTimeStructType.
+         * Contains IDLGnssGloTimeStructTypeFlags bits */
+        UInt32 validityMask
+        /** GLONASS four year number from 1996. Refer to GLONASS ICD.
+         *  Applicable only for GLONASS and shall be ignored for
+         * other constellations.   */
+        UInt8 gloFourYear
+        /** GLONASS day number in four years. Refer to GLONASS ICD.
+         *
+         * If unknown shall be set to 65535.  */
+        UInt16 gloDays
+        /** GLONASS time of day in unit of millisecond. Refer to GLONASS
+         *  ICD.   */
+        UInt32 gloMsec
+        /** GLONASS clock time bias, in unit of millisecond.
+         *  Note: GLO time (TOD Millisecond) = gloMsec -
+         *  gloClkTimeBias.
+         *  Check for gloClkTimeUncMs before use.  */
+        Float gloClkTimeBias
+        /** Single sided maximum time bias uncertainty, in unit of
+         *  milliseconds.   */
+        Float gloClkTimeUncMs
+        /** FCount (free running HW timer) value, in unit of
+         *  milliseconds.
+         *  Don't use for relative time purpose due to possible
+         *  discontinuities.  */
+        UInt32  refFCount
+        /** Number of clock resets/discontinuities detected,
+         *  affecting the local hardware counter value.  */
+        UInt32 numClockResets
+
+    }
+
+    /** Union to hold GNSS system time from different
+         *  constellations in IDLGnssSystemTime   */
+    union IDLSystemTimeStructUnion {
+        /** System time info from GPS constellation.   */
+        IDLGnssSystemTimeStructType gpsSystemTime
+        /** System time info from GALILEO constellation.   */
+        IDLGnssSystemTimeStructType galSystemTime
+        /** System time info from BEIDOU constellation.   */
+        IDLGnssSystemTimeStructType bdsSystemTime
+        /** System time info from QZSS constellation.   */
+        IDLGnssSystemTimeStructType qzssSystemTime
+        /** System time info from GLONASS constellation.   */
+        IDLGnssGloTimeStructType gloSystemTime
+        /** System time info from NAVIC constellation.   */
+        IDLGnssSystemTimeStructType navicSystemTime
+
+    }
+
+    /**  GNSS system time in IDLLocationReport. <br/>
+     */
+    struct IDLGnssSystemTime {
+        /** Specify the source constellation for GNSS system time.
+         *  */
+        IDLGnssSvSystemEnumType gnssSystemTimeSrc
+        /** Specify the GNSS system time corresponding to the source.
+         *  */
+        IDLSystemTimeStructUnion timeUnion
+
+    }
+
+    /** Specify the set of engines whose position reports are
+        requested via startPositionSession(uint32_t,
+        IDLLocReqEngineTypeMask, const EngineReport&, Response).
+
+    */
+    enumeration IDLLocReqEngineTypeMask {
+        /** Engine Mask Unknown */
+        IDL_LOC_REQ_ENG_UNKNOWN      = 0x0000
+        /** Mask to indicate that client requests the fused/default
+          position via registering location_client::EngineLocations
+          for the tracking session.
+          The default position is the propagated/aggregated reports from
+          all engines running on the system (e.g.: DR/SPE/PPE).
+        */
+        IDL_LOC_REQ_ENG_FUSED = 0x0001
+        /** Mask to indicate that client requests the unmodified SPE
+          position via registering location_client::EngineLocations
+          for the tracking session.
+        */
+        IDL_LOC_REQ_ENG_SPE   = 0x0002
+        /** Mask to indicate that the client requests unmodified PPE
+          position via registering location_client::EngineLocations
+          for the tracking session.
+        */
+        IDL_LOC_REQ_ENG_PPE   = 0x0004
+        /** Mask to indicate that the client requests unmodified VPE
+          position via registering location_client::EngineLocations
+          for the tracking session.
+        */
+        IDL_LOC_REQ_ENG_VPE   = 0x0008
+    }
+
+    /** Specify the position engine type that produced GnssLocation. */
+    enumeration IDLLocOutputEngineType {
+        /* Unknown Engine Type */
+        IDL_LOC_OUTPUT_ENGINE_UNKNOWN = 0
+        /** This is the propagated/aggregated report from the fixes of
+         *  all engines running on the system (e.g.: DR/SPE/PPE).
+         *  */
+        IDL_LOC_OUTPUT_ENGINE_FUSED = 1
+        /** This fix is the unmodified fix from modem GNSS engine.
+         *  */
+        IDL_LOC_OUTPUT_ENGINE_SPE   = 2
+        /** This is the unmodified fix from PPE engine. */
+        IDL_LOC_OUTPUT_ENGINE_PPE   = 3
+        /** This is the unmodified fix from VPE engine. */
+        IDL_LOC_OUTPUT_ENGINE_VPE  = 4
+        /** This is the entry count of this enum.   */
+        IDL_LOC_OUTPUT_ENGINE_COUNT = 4
+    }
+
+
+    /** Specify the set of position engines supported by
+     *  LocationClientAPI.   */
+    enumeration IDLPositioningEngineMask {
+        /** Position Engine Mask Unknown */
+        IDL_LOC_POS_ENG_UNKNOWN         = 0x0000
+        /** Mask for standard GNSS position engine.   */
+        IDL_STANDARD_POSITIONING_ENGINE = 0x0001
+        /** Mask for dead reckoning position engine.   */
+        IDL_DEAD_RECKONING_ENGINE       = 0x0002
+        /** Mask for precise position engine.   */
+        IDL_PRECISE_POSITIONING_ENGINE  = 0x0004
+        /** Mask for vpe engine.   */
+        IDL_VP_POSITIONING_ENGINE       = 0x0008
+    }
+
+
+    /** Basic location information structure */
+    struct IDLLocation {
+        /** Bitwise OR of IDLLocationFlagsMask to specify the valid
+         *  fields.
+         * Contains IDLLocationFlagsMask bits */
+        UInt32 flags
+        /** UTC timestamp for location fix since January 1, 1970, in
+         *  unit of milliseconds.   */
+        UInt64 timestamp
+        /** Latitude, in unit of degrees, range [-90.0, 90.0].  */
+        Double latitude
+        /** Longitude, in unit of degrees, range [-180.0, 180.0].
+         *  */
+        Double longitude
+        /** Altitude above the WGS 84 reference ellipsoid, in unit of
+         *  meters.   */
+        Double altitude
+        /** Horizontal speed, in meters/second.   */
+        Float speed
+        /** Bearing, in unit of degrees, range [0, 360)   */
+        Float bearing
+        /** Horizontal accuracy, in unit of meters.
+         *  Uncertainty is defined with 68% confidence level. */
+        Float horizontalAccuracy
+        /** Vertical accuracy, in unit of meters.
+         *  Uncertainty is defined with 68% confidence level. */
+        Float verticalAccuracy
+        /** Horizontal speed uncertainty, in unit meters/second.
+         *  Uncertainty is defined with 68% confidence level. */
+        Float speedAccuracy
+        /** Bearing uncertainty, in unit of degrees, range (0 to
+         *  359.999).
+         *  Uncertainty is defined with 68% confidence level. */
+        Float bearingAccuracy
+        /** Sets of technology that contributed to the fix.
+        * Contains IDLLocationTechnologyMask bits */
+        UInt32 techMask
+        /** Boot timestamp corresponding to the UTC timestamp for
+         *  location fix. Time base is reference to the application processor
+         *  generating this position report.(Example: Telematics Unit)
+         *  Clients shall translate it to local time base using elapsedPTPTimeNs.
+         *  In unit of nanoseconds.<br/>
+         *  This field may not always be available. Please check for the
+         *  presence of IDL_LOCATION_HAS_ELAPSED_REAL_TIME_BIT in
+         *  location::flags before retrieving this field.   */
+        UInt64 elapsedRealTimeNs
+        /** Uncertainty for the boot timestamp.<br/>
+         *  In unit of nanoseconds.<br/>
+         *  This field may not always be available. Please check for the
+         *  presence of IDL_LOCATION_HAS_ELAPSED_REAL_TIME_UNC_BIT in
+         *  location::flags before retrieving this field.   */
+        UInt64 elapsedRealTimeUncNs
+        /** Time uncertainty associated with this position.<br/>
+         *  In unit of milliseconds.<br/>
+         *  This field may not always be available. Please check for the
+         *  presence of IDL_LOCATION_HAS_TIME_UNC_BIT in
+         *  location::flags before retrieving this field. */
+        Float timeUncMs
+    }
+
+    /** Specify latitude, longitude and altitude info of location.
+     *
+     */
+    struct IDLLLAInfo {
+        /**  Latitude, in unit of degrees, range [-90.0, 90.0]. */
+        Double latitude
+
+        /**  Longitude, in unit of degrees, range [-180.0, 180.0].
+        */
+        Double longitude
+
+        /** Altitude above the WGS 84 reference ellipsoid, in unit
+        of meters. */
+        Float altitude
+    }
+
+    /** Specify various status that contributes to the DR poisition
+     *  engine. */
+    enumeration IDLDrSolutionStatusMask {
+        /** DR Soultion Status Unknown */
+        IDL_DR_SOLUTION_STATUS_UNKNOWN                             = 0x0000000000000000
+        /** Vehicle sensor speed input was detected by the DR position
+         *  engine. */
+        IDL_DR_SOLUTION_STATUS_VEHICLE_SENSOR_SPEED_INPUT_DETECTED = 0x0000000000000001
+        /** Vehicle sensor speed input was used by the DR position
+         *  engine. */
+        IDL_DR_SOLUTION_STATUS_VEHICLE_SENSOR_SPEED_INPUT_USED     = 0x0000000000000002
+        /** DRE solution disengaged due to insufficient
+          * calibration */
+        IDL_DR_SOLUTION_STATUS_WARNING_UNCALIBRATED                = 0x0000000000000004
+        /** DRE solution disengaged due to bad GNSS
+          * quality */
+        IDL_DR_SOLUTION_STATUS_WARNING_GNSS_QUALITY_INSUFFICIENT   = 0x0000000000000008
+        /** DRE solution disengaged as ferry condition
+          * detected */
+        IDL_DR_SOLUTION_STATUS_WARNING_FERRY_DETECTED              = 0x0000000000000010
+        /** DRE solution disengaged as 6DOF sensor inputs
+          * not available */
+        IDL_DR_SOLUTION_STATUS_ERROR_6DOF_SENSOR_UNAVAILABLE       = 0x0000000000000020
+        /** DRE solution disengaged as vehicle speed inputs
+          * not available */
+        IDL_DR_SOLUTION_STATUS_ERROR_VEHICLE_SPEED_UNAVAILABLE     = 0x0000000000000040
+        /** DRE solution disengaged as Ephemeris info
+          * not available */
+        IDL_DR_SOLUTION_STATUS_ERROR_GNSS_EPH_UNAVAILABLE          = 0x0000000000000080
+        /** DRE solution disengaged as GNSS measurement
+          * info not available */
+        IDL_DR_SOLUTION_STATUS_ERROR_GNSS_MEAS_UNAVAILABLE         = 0x0000000000000100
+        /** DRE solution disengaged due non-availability of
+          * stored position from previous session */
+        IDL_DR_SOLUTION_STATUS_WARNING_INIT_POSITION_INVALID       = 0x0000000000000200
+        /** DRE solution disengaged due to vehicle motion
+          *  detected at session start */
+        IDL_DR_SOLUTION_STATUS_WARNING_INIT_POSITION_UNRELIABLE    = 0x0000000000000400
+        /** DRE solution disengaged due to unreliable
+          * position */
+        IDL_DR_SOLUTION_STATUS_WARNING_POSITON_UNRELIABLE          = 0x0000000000000800
+        /** DRE solution disengaged due to a generic
+          * error */
+        IDL_DR_SOLUTION_STATUS_ERROR_GENERIC                       = 0x0000000000001000
+        /** DRE solution disengaged due to Sensor Temperature
+          * being out of range */
+        IDL_DR_SOLUTION_STATUS_WARNING_SENSOR_TEMP_OUT_OF_RANGE    = 0x0000000000002000
+        /** DRE solution disengaged due to insufficient
+          *  user dynamics */
+        IDL_DR_SOLUTION_STATUS_WARNING_USER_DYNAMICS_INSUFFICIENT  = 0x0000000000004000
+        /** DRE solution disengaged due to inconsistent
+          *  factory data */
+        IDL_DR_SOLUTION_STATUS_WARNING_FACTORY_DATA_INCONSISTENT   = 0x0000000000008000
+        /** DRE did not recieve any recent map matching feedback data */
+        DSSM_WARNING_MMF_UNAVAILABLE                               = 0x0000000000010000
+        /** Map matching feedback is available for DRE but is not usable */
+        DSSM_WARNING_MMF_NOT_USABLE                               = 0x0000000000020000
+    }
+
+    /** Specify the session status. */
+    enumeration IDLLocSessionStatus {
+        /** Session Status is unknown */
+        IDL_LOC_SESS_UNKNOWN      = 0
+        /** Session is successful. */
+        IDL_LOC_SESS_SUCCESS      = 1
+        /** Session is still in progress, the reported has not yet
+        achieved the needed criteria.*/
+        IDL_LOC_SESS_INTERMEDIATE = 2
+        /** Session has failed.*/
+        IDL_LOC_SESS_FAILURE      = 3
+    }
+
+    /** Specify the location info received by client via
+     *  startPositionSession(uint32_t, const
+     *  GnssReport&, Response) and
+     *  startPositionSession(uint32_t,
+     *  IDLLocReqEngineTypeMask, const EngineReports&, ResponseCb).
+     *
+     */
+    struct IDLLocationReport {
+        /*Basic Location information structure*/
+        IDLLocation locInfo
+        /** Bitwise OR of IDLLCALocationInfoFlagMask for param
+         * validity.
+         * Contains IDLLCALocationInfoFlagMask bits */
+        UInt64 locationInfoFlags
+        /** Altitude wrt mean sea level, in unit of meters.    */
+        Float altitudeMeanSeaLevel
+        /** Position dilution of precision, range: 0 (highest accuracy)
+         *  to 50 (lowest accuracy).    */
+        Float pdop
+        /** Horizontal dilution of precision, range: 0 (highest
+         *  accuracy) to 50 (lowest accuracy).    */
+        Float hdop
+        /** Vertical dilution of precision, range: 0 (highest accuracy)
+         *  to 50 (lowest accuracy).    */
+        Float vdop
+        /** Geometric  dilution of precision range: 0 (highest accuracy)
+         *  to 50 (lowest accuracy).    */
+        Float gdop
+        /** Time dilution of precision range: 0 (highest accuracy) to 50
+         *  (lowest accuracy).    */
+        Float tdop
+        /** Difference between the bearing to true
+         * north and the bearing shown on a magnetic compass.
+         * The deviation is positive when the magnetic north is east of
+         * true north.    */
+        Float magneticDeviation
+        /** Horizontal reliability.
+        * Contains IDLLocationReliability bits */
+        UInt32 horReliability
+        /** Vertical reliability.
+        * Contains IDLLocationReliability bits */
+        UInt32 verReliability
+        /** Horizontal elliptical accuracy semi-major axis, in unit of
+         *  meters.
+         *  Uncertainty is defined with 39% confidence level.  */
+        Float horUncEllipseSemiMajor
+        /** Horizontal elliptical accuracy semi-minor axis, in unit of
+         *  meters.
+         *  Uncertainty is defined with 39% confidence level.  */
+        Float horUncEllipseSemiMinor
+        /** Horizontal elliptical accuracy azimuth, in unit of degrees,
+         *  range [0, 180].
+         *  Confidence for uncertainty is not specified.  */
+        Float horUncEllipseOrientAzimuth
+        /** North standard deviation, in unit of meters.
+         *  Uncertainty is defined with 68% confidence level.  */
+        Float northStdDeviation
+        /** East standard deviation, in unit of meters.
+         *  Uncertainty is defined with 68% confidence level.  */
+        Float eastStdDeviation
+        /** North velocity, in unit of meters/sec.    */
+        Float northVelocity
+        /** East velocity, in unit of meters/sec.    */
+        Float eastVelocity
+        /** Up velocity, in unit of meters/sec.    */
+        Float upVelocity
+        /** North velocity uncertainty, in unit of meters/sec.
+         *  Uncertainty is defined with 68% confidence level.  */
+        Float northVelocityStdDeviation
+        /** East velocity uncertainty, in unit of meters/sec
+         *  Uncertainty is defined with 68% confidence level.  */
+        Float eastVelocityStdDeviation
+        /** Up velocity uncertainty, in unit of meters/sec.
+         *  Uncertainty is defined with 68% confidence level.  */
+        Float upVelocityStdDeviation
+        /** Number of SV used in position report.    */
+        UInt16 numSvUsedInPosition
+        /** GNSS SV used in position data.    */
+        IDLLocationReportSvUsedInPosition svUsedInPosition
+        /** Navigation solutions that are used to calculate the position
+         *  report.
+         * contains IDLLocationReportNavSolutionMask  bits */
+        UInt32 navSolutionMask
+        /** Position technology used in computing this fix.
+        * Contains IDLLocationTechnologyMask bits */
+        UInt32 posTechMask
+        /** Body frame dynamics info.    */
+        IDLLocationReportPositionDynamics bodyFrameData
+        /** GNSS system time when this position is calculated.   */
+        IDLGnssSystemTime               gnssSystemTime
+        /** GNSS measurement usage info.    */
+        IDLGnssMeasUsageInfo [] measUsageInfo
+        /** Number of leap Seconds at time when this position is
+         *  generated. */
+        UInt8 leapSeconds
+        /** Sensor calibration confidence percent, range [0, 100].
+         *   */
+        UInt8 calibrationConfidencePercent
+        /** Sensor calibration status.
+         * Contains IDLDrCalibrationStatusMask bits */
+        UInt64 calibrationStatus
+        /** Location engine type.
+            When this field is set to LOC_ENGINE_SRC_FUSED, the fix is
+            the propagated/aggregated reports from all engines running
+            on the system (e.g.: DR/SPE/PPE).
+            To check which location engine contributes to the fused
+            output, check for locOutputEngMask.  */
+        IDLLocOutputEngineType locOutputEngType
+        /** When loc output eng type is set to fused, this field
+         *  indicates the set of engines contribute to the fix.
+         * Contains IDLPositioningEngineMask bits */
+        UInt32 locOutputEngMask
+        /** When robust location is enabled, this field
+         * will indicate how well the various input data considered for
+         * GNSS navigation solution conforms to expectations.
+         * Note that Conformity index is for GNSS only output, not including
+         * other engines.
+         * Range: [0.0, 1.0], with 0.0 for least conforming and 1.0 for
+         * most conforming.
+         * </br> */
+        Float conformityIndex
+        /** VRP-based latitude/longitude/altitude.   */
+        IDLLLAInfo llaVRPBased
+        /** VRP-based east, north, and up velocity */
+        Float[] enuVelocityVRPBased
+        /** Dead reckoning position engine status.
+         * Contains IDLDrSolutionStatusMask bits */
+        UInt64 drSolutionStatusMask
+        /** When this field is valid, it will indicates whether altitude
+         *  is assumed or calculated.
+         *  false: Altitude is calculated.
+         *  true:  Altitude is assumed; there may not be enough
+         *         satellites to determine the precise altitude.  */
+        Boolean altitudeAssumed
+        /** Indicates whether session is success, failure or
+         *  intermediate based on IDLLocSessionStatus */
+        UInt32 sessionStatus
+        /** Integrity risk used for protection level parameters.
+         *  Unit of 2.5e-10. Valid range is [1 to (4e9-1)].
+         *  </br> Other values means integrity risk is disabled and
+         *  IDLLocationReport::protectAlongTrack,
+         *  IDLLocationReport::protectCrossTrack and
+         *  IDLLocationReport::protectVertical will not be available.
+         * Note that integrityRiskUsed is for GNSS only output, not including
+         * other engines.
+         */
+        UInt32 integrityRiskUsed
+        /** Along-track protection level at specified integrity risk, in
+         *  unit of meter.
+         * Note that protectAlongTrack is for GNSS only output, not including
+         * other engines.
+         */
+        Float    protectAlongTrack
+        /** Cross-track protection level at specified integrity risk, in
+         *  unit of meter.
+         * Note that protectCrossTrack is for GNSS only output, not including
+         * other engines.
+         */
+        Float    protectCrossTrack
+        /** Vertical component protection level at specified integrity
+         *  risk, in unit of meter.
+         * Note that protectVertical is for GNSS only output, not including
+         * other engines.
+         */
+        Float    protectVertical
+        /**<   List of DGNSS station IDs providing corrections.
+           Range:
+           - SBAS --  120 to 158 and 183 to 191.
+           - Monitoring station -- 1000-2023 (Station ID biased by 1000).
+           - Other values reserved.
+        */
+        UInt16 [] dgnssStationId
+        /** PTP time corresponding to the UTC timestamp for
+         *  location fix.
+         *  In unit in nanoseconds <br/>
+         *  This field may not always be available. Please check for the
+         *  presence of IDL_LOC_INFO_GPTP_TIME_BIT in
+         *  IDLLocationReport::locationInfoFlags before retrieving this field.   */
+        UInt64 elapsedgPTPTime
+        /** GPTP time Unc */
+        UInt64 elapsedgPTPTimeUnc
+        /** Distance between the base station and the receiver
+         *  Unit- meters */
+        Double baseLineLength
+        /** Difference in time between the fix timestamp using the
+         *  correction and the time of the correction
+         *  Unit - milli-seconds */
+        UInt64 ageMsecOfCorrections
+        /** Current Reporting Rate of GNSS engine
+         *  Unit - milli-seconds */
+        UInt32 currReportingRate
+        /** Time difference between packet generation time
+         *  and sending over SOMEIP
+         *  Unit- milli-seconds */
+        Int16 reportingLatency
+        /** Uncertainty for the GNSS leap second.
+         *  Units -- Seconds */
+        UInt8 leapSecondsUnc
+    }
+
+    /** GNSS SV report that comes when clients registers for
+     *  location_client::IDLGnssSv. */
+    struct IDLGnssSv {
+        /** Unique SV Identifier. This field is always valid. <br/>
+         *   SV Range for supported constellation is specified as below:
+         *
+         *    - For GPS:     1 to 32
+         *    - For GLONASS: 65 to 96 or FCN+104
+         *                   [65, 96] if orbital slot number(OSN) is known
+         *                   [97, 110] as frequency channel number(FCN) [-7, 6] plus 104
+         *                   i.e. encode FCN -7 as 97, 0 as 104, 6 as 110
+         *    - For SBAS:    120 to 158 and 183 to 191
+         *    - For QZSS:    193 to 197
+         *    - For BDS:     201 to 263
+         *    - For GAL:     301 to 336
+         *    - For NAVIC:   401 to 414    */
+        UInt16 svId
+        /** GLONASS frequency channel number, range is [1, 14].
+         *
+         * This field is always valid if and only if sv is of GLONASS.
+         *  */
+        UInt16 gloFrequency
+        /** Constellation type of the SV (GPS, SBAS, GLONASS, QZSS,
+         *  BEIDOU, GALILEO).
+         *  This field is always valid.   */
+        IDLGnssSvType type
+         /** Carrier-to-noise ratio of the signal measured at antenna,
+          * in unit of dB-Hz.
+          * cN0Dbhz of 0.0 indicates that this field is unknown.  */
+        Float cN0Dbhz
+        /** Elevation of the SV, in unit of degrees.
+         *  This field is always valid.   */
+        Float elevation
+        /** Azimuth of the SV, in unit of degrees.
+         *  This field is always valid.   */
+        Float azimuth
+        /** Bitwise OR of IDLGnssSvOptionsMask to specify additional
+         *  info and valid fields in IDLGnssSv.
+         *  This field is always valid.    */
+        UInt32 gnssSvOptionsMask
+        /** Carrier frequency of the signal tracked.
+         *  This field is valid if gnssSvOptionsMask has
+         *  IDL_GNSS_SV_OPTIONS_HAS_CARRIER_FREQUENCY_BIT set.   */
+        Float carrierFrequencyHz
+        /** GNSS signal type mask of the SV.
+         *  This field is valid if gnssSvOptionsMask has
+         *  GNSS_SV_OPTIONS_HAS_GNSS_SIGNAL_TYPE_BIT.
+         * Contains IDLGnssSignalTypeMask bit */
+        UInt32 gnssSignalTypeMask
+         /** Carrier-to-noise ratio of the signal measured at baseband,
+         *  in unit of dB-Hz.
+         *  This field is valid if gnssSvOptionsMask has
+         *  GNSS_SV_OPTIONS_HAS_BASEBAND_CARRIER_TO_NOISE_BIT set.  */
+        Double basebandCarrierToNoiseDbHz
+    }
+
+    /** Specify the GNSS signal type and RF band for jammer info and
+    - *  automatic gain control metric in IDLGnssData.
+    - *  To find out the jammer info and automatic gain control
+    - *  metric for a particular GNSS signal type, refer to the array
+    - *  element with index set to the signal type.
+    - */
+    enumeration IDLGnssSignalTypes {
+        /**  GNSS signal is of GPS L1CA RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_UNKNOWN  = 0
+        /**  GNSS signal is of GPS L1CA RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_GPS_L1CA = 1
+        /**  GNSS signal is of GPS L1C RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_GPS_L1C = 2
+         /**  GNSS signal is of GPS L2C_L RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_GPS_L2C_L = 3
+        /**  GNSS signal is of GPS L5_Q RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_GPS_L5_Q = 4
+        /**  GNSS signal is of GLONASS G1 (L1OF) RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_GLONASS_G1 = 5
+        /**  GNSS signal is of GLONASS G2 (L2OF) RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_GLONASS_G2 = 6
+        /**  GNSS signal is of GALILEO E1_C RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_GALILEO_E1_C = 7
+        /**  GNSS signal is of GALILEO E5A_Q RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_GALILEO_E5A_Q = 8
+        /**  GNSS signal is of GALILEO E5B_Q RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_GALILEO_E5B_Q = 9
+        /**  GNSS signal is of BEIDOU B1_I RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_BEIDOU_B1_I = 10
+        /**  GNSS signal is of BEIDOU B1C RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_BEIDOU_B1C = 11
+        /**  GNSS signal is of BEIDOU B2_I RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_BEIDOU_B2_I = 12
+        /**  GNSS signal is of BEIDOU B2A_I RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_BEIDOU_B2A_I = 13
+        /**  GNSS signal is of QZSS L1CA RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_QZSS_L1CA = 14
+        /**  GNSS signal is of QZSS L1S RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_QZSS_L1S = 15
+        /**  GNSS signal is of QZSS L2C_L RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_QZSS_L2C_L = 16
+        /**  GNSS signal is of QZSS L5_Q RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_QZSS_L5_Q = 17
+        /**  GNSS signal is of SBAS L1_CA RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_SBAS_L1_CA = 18
+        /**  GNSS signal is of NAVIC L5 RF band.    */
+        IDL_GNSS_SIGNAL_TYPE_NAVIC_L5 = 19
+        /**  GNSS signal is of BEIDOU B2A_Q RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_BEIDOU_B2A_Q = 20
+        /**  GNSS signal is of BEIDOU B2B_I RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_BEIDOU_B2B_I = 21
+        /**  GNSS signal is of BEIDOU B2B_Q RF band.     */
+        IDL_GNSS_SIGNAL_TYPE_BEIDOU_B2B_Q = 22
+        /**  GNSS signal is of NAVIC L1 RF band.  <br/>   */
+        GST_NAVIC_L1 = 23
+        /** Maximum number of signal types.    */
+        IDL_GNSS_MAX_NUMBER_OF_SIGNAL_TYPES = 24
+    }
+
+    /** Specify valid mask of data fields in
+     *  IDLGnssData.    */
+    enumeration IDLGnssDataMask {
+        /**  Unknown Data indication     */
+        IDL_GNSS_DATA_IND_UNKNOWN  = 0x0000
+        /** Jammer Indicator is available.    */
+        IDL_GNSS_DATA_JAMMER_IND_BIT = 0x0001
+        /** AGC is available.    */
+        IDL_GNSS_DATA_AGC_BIT = 0x0002
+    }
+
+    /** Specify the additional GNSS data that can be provided
+     *  during a tracking session, currently jammer and automatic
+     *  gain control data are available.
+     *
+     *  To find out the jammer info and automatic gain control
+     *  metric for a particular GNSS signal type, refer to the array
+     *  element with index set to the interested RF band.
+     *
+     *  For a particular RF band, user can determine
+     *  IDLGnssData::jammerInd is valid or not by checking the element
+     *  at index of the specified RF band in
+     *  IDLGnssData::gnssDataMask has
+     *  IDL_GNSS_DATA_JAMMER_IND_BIT set.
+     *
+     *  For a particular RF band, user can determine IDLGnssData::agc
+     *  is valid or not by checking the element at index of the
+     *  specified RF band in IDLGnssData::gnssDataMask has
+     *  IDL_GNSS_DATA_AGC_BIT set.
+     */
+    struct IDLGnssData {
+        /** Bitwise OR of IDLGnssDataMask to indicate the valid data
+         *  fields.  IDL_GNSS_MAX_NUMBER_OF_SIGNAL_TYPES
+        * Contains IDLGnssDataMask bits */
+        UInt32 [] gnssDataMask
+        /** Jammer Indication for each GNSS signal IDL_GNSS_MAX_NUMBER_OF_SIGNAL_TYPES    */
+        Double        [] jammerInd
+        /** Automatic gain control metric, in unit of dB. IDL_GNSS_MAX_NUMBER_OF_SIGNAL_TYPES    */
+        Double        [] agc
+
+    }
+
+    /** Specify valid fields in
+     *  IDLGnssMeasurementsData.  */
+    enumeration IDLGnssMeasurementsDataFlagsMask {
+        /**  Unknown Measurement Data Flags     */
+        IDL_MEAS_DATA_UNKNOWN  = 0x00000000
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::svId.     */
+        IDL_MEAS_DATA_SV_ID_BIT                        = 0x00000001
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::svType.     */
+        IDL_MEAS_DATA_SV_TYPE_BIT                      = 0x00000002
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::stateMask.     */
+        IDL_MEAS_DATA_STATE_BIT                        = 0x00000004
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::receivedSvTimeNs and
+         *  IDLGnssMeasurementsData::receivedSvTimeSubNs.   */
+        IDL_MEAS_DATA_RECEIVED_SV_TIME_BIT             = 0x00000008
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::receivedSvTimeUncertaintyNs.   */
+        IDL_MEAS_DATA_RECVD_SV_TIME_UNC_BIT= 0x00000010
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::carrierToNoiseDbHz.     */
+        IDL_MEAS_DATA_CARRIER_TO_NOISE_BIT             = 0x00000020
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::pseudorangeRateMps.     */
+        IDL_MEAS_DATA_PR_RATE_BIT             = 0x00000040
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::pseudorangeRateUncertaintyMps.
+         *   */
+        IDL_MEAS_DATA_PR_RATE_UNC_BIT = 0x00000080
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::adrStateMask.     */
+        IDL_MEAS_DATA_ADR_STATE_BIT                    = 0x00000100
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::adrMeters.     */
+        IDL_MEAS_DATA_ADR_BIT                          = 0x00000200
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::adrUncertaintyMeters.     */
+        IDL_MEAS_DATA_ADR_UNC_BIT              = 0x00000400
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::carrierFrequencyHz.     */
+        IDL_MEAS_DATA_CARRIER_FREQ_BIT            = 0x00000800
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::carrierCycles.     */
+        IDL_MEAS_DATA_CARRIER_CYCLES_BIT               = 0x00001000
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::carrierPhase.     */
+        IDL_MEAS_DATA_CARRIER_PHASE_BIT                = 0x00002000
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::carrierPhaseUncertainty.     */
+        IDL_MEAS_DATA_CARRIER_PHASE_UNC_BIT    = 0x00004000
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::multipathIndicator.     */
+        IDL_MEAS_DATA_MULTIPATH_IND_BIT          = 0x00008000
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::signalToNoiseRatioDb.     */
+        IDL_MEAS_DATA_SIGNAL_TO_NOISE_RATIO        = 0x00010000
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::agcLevelDb.     */
+        IDL_MEAS_DATA_AUTO_GAIN_CTRL_BIT       = 0x00020000
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::fullInterSignalBiasNs.     */
+        IDL_MEAS_DATA_FULL_ISB_BIT                     = 0x00040000
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::fullInterSignalBiasUncertaintyNs.     */
+        IDL_MEAS_DATA_FULL_ISB_UNC_BIT         = 0x00080000
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::cycleslipCount.     */
+        IDL_MEAS_DATA_CYCLE_SLIP_COUNT_BIT             = 0x00100000
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::gnssSignalType.  */
+        IDL_MEAS_DATA_GNSS_SIGNAL_TYPE_BIT             = 0x00200000
+        /** IDLGnssMeasurementsData has valid
+         *  IDLGnssMeasurementsData::basebandCarrierToNoiseDbHz.  */
+        IDL_MEAS_DATA_BASEBAND_CARRIER_TO_NOISE_BIT    = 0x00400000
+    }
+
+    /** Specify GNSS measurement state in
+     *  IDLGnssMeasurementsData::stateMask.     */
+    enumeration IDLGnssMeasurementsStateMask {
+        /** GNSS measurement state is unknown.     */
+        IDL_MEAS_STATE_UNKNOWN                 = 0x00000000
+        /** GNSS measurement state is "code lock".    */
+        IDL_MEAS_STATE_CODE_LOCK               = 0x00000001
+        /** GNSS measurement state is "bit sync".    */
+        IDL_MEAS_STATE_BIT_SYNC               = 0x00000002
+        /** GNSS measurement state is "subframe sync".    */
+        IDL_MEAS_STATE_SUBFRAME_SYNC           = 0x00000004
+        /** GNSS measurement state is "tow decoded".    */
+        IDL_MEAS_STATE_TOW_DECODED             = 0x00000008
+        /** GNSS measurement state is "msec ambiguous".    */
+        IDL_MEAS_STATE_MSEC_AMBIGUOUS          = 0x00000010
+        /** GNSS measurement state is "symbol sync".    */
+        IDL_MEAS_STATE_SYMBOL_SYNC             = 0x00000020
+        /** GNSS measurement state is "GLONASS string sync".     */
+        IDL_MEAS_STATE_GLO_STRING_SYNC         = 0x00000040
+        /** GNSS measurement state is "GLONASS TOD decoded".    */
+        IDL_MEAS_STATE_GLO_TOD_DECODED         = 0x00000080
+        /** GNSS measurement state is "BDS D2 bit sync".     */
+        IDL_MEAS_STATE_BDS_D2_BIT_SYNC         = 0x00000100
+        /** GNSS measurement state is "BDS D2 subframe sync".    */
+        IDL_MEAS_STATE_BDS_D2_SUBFRAME_SYNC    = 0x00000200
+        /** GNSS measurement state is "Galileo E1BC code lock".  */
+        IDL_MEAS_STATE_GAL_E1BC_CODE_LOCK      = 0x00000400
+        /** GNSS measurement state is "Galileo E1C second code lock". */
+        IDL_MEAS_STATE_GAL_E1C_2ND_CODE_LOCK   = 0x00000800
+        /** GNSS measurement state is "Galileo E1B page sync".   */
+        IDL_MEAS_STATE_GAL_E1B_PAGE_SYNC       = 0x00001000
+        /** GNSS measurement state is "SBAS sync".     */
+        IDL_MEAS_STATE_SBAS_SYNC               = 0x00002000
+    }
+
+    /** Specify accumulated delta range state in
+     *  IDLGnssMeasurementsData::adrStateMask.     */
+    enumeration IDLGnssMeasurementsAdrStateMask {
+        /** Accumulated delta range state is unknown.    */
+        IDL_GNSS_MEASUREMENTS_ACCUMULATED_DELTA_RANGE_STATE_UNKNOWN         = 0x00000000
+        /** Accumulated delta range state is valid.     */
+        IDL_GNSS_MEASUREMENTS_ACCUMULATED_DELTA_RANGE_STATE_VALID_BIT       = 0x00000001
+        /** Accumulated delta range state is "reset".     */
+        IDL_GNSS_MEASUREMENTS_ACCUMULATED_DELTA_RANGE_STATE_RESET_BIT       = 0x00000002
+        /** Accumulated delta range state is "cycle slip".    */
+        IDL_GNSS_MEASUREMENTS_ACCUMULATED_DELTA_RANGE_STATE_CYCLE_SLIP_BIT  = 0x00000004
+        /** Accumulated delta range state is half cycle resolved".    */
+        IDL_GNSS_MEASUREMENTS_ACCUMULATED_DELTA_RANGE_STATE_HALF_CYCLE_RESOLVED_BIT = 0x00000008
+    }
+
+
+    /** Specify the GNSS multipath indicator state in
+     *  IDLGnssMeasurementsData::multipathIndicator.    */
+    enumeration IDLGnssMeasurementsMultipathIndicator {
+        /** Multipath indicator is unknown.    */
+        IDL_GNSS_MEASUREMENTS_MULTIPATH_INDICATOR_UNKNOWN = 0x00000000
+        /** Multipath indicator is present.    */
+        IDL_GNSS_MEASUREMENTS_MULTIPATH_INDICATOR_PRESENT = 0x00000001
+        /** Multipath indicator is not present.    */
+        IDL_GNSS_MEASUREMENTS_MULTIPATH_INDICATOR_NOT_PRESENT = 0x00000002
+    }
+
+    /** Specify the valid fields in
+     *  IDLGnssMeasurementsClock.
+     */
+    enumeration IDLGnssMeasurementsClockFlagsMask {
+        /** Unknown Measurement Clock Flags */
+        IDL_MEAS_CLK_FLAGS_UNKNOWN                           = 0x00000000,
+        /** IDLGnssMeasurementsClock has valid
+         *  IDLGnssMeasurementsClock::leapSecond.   */
+        IDL_MEAS_CLK_FLAGS_LEAP_SECOND_BIT                   = 0x00000001,
+        /** IDLGnssMeasurementsClock has valid
+         *  IDLGnssMeasurementsClock::timeNs.   */
+        IDL_MEAS_CLK_FLAGS_TIME_BIT                          = 0x00000002
+        /** IDLGnssMeasurementsClock has valid
+         *  IDLGnssMeasurementsClock::timeUncertaintyNs.   */
+        IDL_MEAS_CLK_FLAGS_TIME_UNCERTAINTY_BIT              = 0x00000004
+        /** IDLGnssMeasurementsClock has valid
+         *  IDLGnssMeasurementsClock::fullBiasNs.   */
+        IDL_MEAS_CLK_FLAGS_FULL_BIAS_BIT                     = 0x00000008
+        /** IDLGnssMeasurementsClock has valid
+         *  IDLGnssMeasurementsClock::biasNs.   */
+        IDL_MEAS_CLK_FLAGS_BIAS_BIT                          = 0x00000010
+        /** IDLGnssMeasurementsClock has valid
+         *  IDLGnssMeasurementsClock::biasUncertaintyNs.   */
+        IDL_MEAS_CLK_FLAGS_BIAS_UNCERTAINTY_BIT              = 0x00000020
+        /** IDLGnssMeasurementsClock has valid
+         *  IDLGnssMeasurementsClock::driftNsps.   */
+        IDL_MEAS_CLK_FLAGS_DRIFT_BIT                         = 0x00000040
+        /** IDLGnssMeasurementsClock has valid
+         *  IDLGnssMeasurementsClock::driftUncertaintyNsps.   */
+        IDL_MEAS_CLK_FLAGS_DRIFT_UNCERTAINTY_BIT             = 0x00000080
+        /** IDLGnssMeasurementsClock has valid
+         *  IDLGnssMeasurementsClock::hwClockDiscontinuityCount.   */
+        IDL_MEAS_CLK_HW_CLOCK_DISCONTINUITY_COUNT_BIT        = 0x00000100
+        /** IDLGnssMeasurementsClock has valid
+         *  IDLGnssMeasurementsClock::elapsedRealTime <br/>   */
+        IDL_MEAS_CLK_FLAGS_ELAPSED_REAL_TIME_BIT             = 0x00000200
+        /** IDLGnssMeasurementsClock has valid
+         *  IDLGnssMeasurementsClock::elapsedRealTimeUnc. <br/>   */
+        IDL_MEAS_CLK_FLAGS_ELAPSED_REAL_TIME_UNC_BIT         = 0x00000400
+        /** IDLGnssMeasurementsClock:: has valid
+         *  IDLGnssMeasurementsClock::elapsedgPTPTime   <br/>   */
+        IDL_MEAS_CLK_FLAGS_ELAPSED_GPTP_TIME_BIT             = 0x00000800
+        /** IDLGnssMeasurementsClock:: has valid
+         *  IDLGnssMeasurementsClock::elapsedgPTPTimeUnc. <br/>   */
+        IDL_MEAS_CLK_FLAGS_ELAPSED_GPTP_TIME_UNC_BIT         = 0x00001000
+    }
+
+    struct IDLGnssMeasurementsData {
+        /** Bitwise OR of IDLGnssMeasurementsDataFlagsMask to specify the
+         *  valid fields in IDLGnssMeasurementsData.
+         * Contains IDLGnssMeasurementsDataFlagsMask bits */
+        UInt32 flags
+        /** Specify satellite vehicle ID number.
+         *  For SV id range of each supported constellations, refer to
+         *  documentation in IDLGnssSv::svId.
+         */
+        UInt16 svId
+        /** Increments when a cycle slip is detected.  */
+        UInt8 cycleSlipCount
+        /** SV constellation type.    */
+        IDLGnssSvType svType
+        /** Time offset when the measurement was taken,
+         *  in unit of nanoseconds.    */
+        Double timeOffsetNs
+        /** Bitwise OR of IDLGnssMeasurementsStateMask to specify the
+         *  GNSS measurement state.
+        * Contains IDLGnssMeasurementsStateMask bits */
+        UInt32 stateMask
+        /** Received GNSS time of the week in nanoseconds when the
+         *  measurement was taken.
+         *  For sub nanoseconds part of the time, please refer to
+         *  of IDLGnssMeasurementsData::receivedSvTimeSubNs.
+         *  Total time is: receivedSvTimeNs+receivedSvTimeSubNs. */
+        Int64 receivedSvTimeNs
+
+        /** Sub nanoseconds portion of the received GNSS time of the
+         *  week when the measurement was taken.
+         *  For nanoseconds portion of the time, please refer to field
+         *  of IDLGnssMeasurementsData::receivedSvTimeSubNs.
+         *  Total time is: receivedSvTimeNs+receivedSvTimeSubNs. */
+        Float receivedSvTimeSubNs
+
+        /** Satellite time.
+         *  All SV times in the current measurement block are already
+         *  propagated to a common reference time epoch, in unit of
+         *  nanoseconds.   */
+        Int64 receivedSvTimeUncertaintyNs
+        /** Signal strength, carrier to noise ratio, in unit of dB-Hz
+         *   */
+        Double carrierToNoiseDbHz
+        /** Uncorrected pseudorange rate, in unit of meters/second
+         *   */
+        Double pseudorangeRateMps
+        /** Uncorrected pseudorange rate uncertainty, in unit of
+         *  meters/second   */
+        Double pseudorangeRateUncertaintyMps
+        /** Bitwise OR of IDLGnssMeasurementsAdrStateMask.
+         * Contains IDLGnssMeasurementsAdrStateMask bits */
+        UInt32 adrStateMask
+        /** Accumulated delta range, in unit of meters   */
+        Double adrMeters
+        /** Accumulated delta range uncertainty, in unit of meters
+         *   */
+        Double adrUncertaintyMeters
+        /** Carrier frequency of the tracked signal, in unit of Hertz
+         *   */
+        Float carrierFrequencyHz
+        /** The number of full carrier cycles between the receiver and
+         *  the satellite.    */
+        Int64 carrierCycles
+        /** The RF carrier phase that the receiver has detected.
+         *   */
+        Double carrierPhase
+        /** The RF carrier phase uncertainty.    */
+        Double carrierPhaseUncertainty
+        /** Multipath indicator, could be unknown, present or not
+         *  present.
+         * Contains IDLGnssMeasurementsMultipathIndicator bits */
+        UInt32 multipathIndicator
+        /** Signal to noise ratio, in unit of dB  */
+        Double signalToNoiseRatioDb
+        /** Automatic gain control level, in unit of dB  */
+        Double agcLevelDb
+        /** Baseband signal strength, in unit of dB Hz.
+         *  Should always be available in measurement report.  */
+        Double basebandCarrierToNoiseDbHz
+        /** GNSS signal type mask of the SV.
+         *  Should always be available in measurement report.
+         * Contains IDLGnssSignalTypeMask bit */
+        UInt32 gnssSignalType
+        /** The full inter-signal bias (ISB) in nanoseconds.
+         *  This value is the sum of the estimated receiver-side and the
+         *  space-segment-side inter-system bias, inter-frequency bias
+         *  and inter-code bias.
+         */
+        Double fullInterSignalBiasNs
+        /** 1-sigma uncertainty associated with the full inter-signal
+         *  bias in nanoseconds.    */
+        Double fullInterSignalBiasUncertaintyNs
+    }
+
+    /** Specify GNSS measurements clock.
+     *  The main equation describing the relationship between
+     *  various components is:
+     *  utcTimeNs = timeNs - (fullBiasNs + biasNs) - leapSecond *
+     *  1,000,000,000 */
+    struct IDLGnssMeasurementsClock {
+        /** Bitwise OR of IDLGnssMeasurementsClockFlagsMask.
+        * Contains IDLGnssMeasurementsClockFlagsMask bits */
+        UInt32 flags
+        /** Leap second, in unit of seconds.   */
+        Int16 leapSecond
+        /** Time, monotonically increasing as long as the power is on,
+         *  in unit of nanoseconds.   */
+        Int64 timeNs
+        /** Time uncertainty (one sigma), in unit of nanoseconds
+         *  */
+        Double timeUncertaintyNs
+        /** Full bias, in uint of nanoseconds.   */
+        Int64 fullBiasNs
+        /** Sub-nanoseconds bias, in unit of nonoseconds */
+        Double biasNs
+        /** Bias uncertainty (one sigma), in unit of nanoseconds
+         *  */
+        Double biasUncertaintyNs
+        /** Clock drift, in unit of nanoseconds/second */
+        Double driftNsps
+        /** Clock drift uncertainty (one sigma), in unit of
+         *  nanoseconds/second */
+        Double driftUncertaintyNsps
+        /** HW clock discontinuity count - incremented
+         *  for each discontinuity in HW clock.   */
+        UInt32 hwClockDiscontinuityCount
+        /** elapsed time since boot, in unit of nonoseconds */
+        UInt64 elapsedRealTime
+        /** uncertainty of elapsedRealTime, in unit of nonoseconds */
+        UInt64 elapsedRealTimeUnc
+        /** gPTP since boot, in unit of nonoseconds */
+        UInt64 elapsedgPTPTime
+        /** uncertainty of elapsedgPTPTime, in unit of nonoseconds */
+        UInt64 elapsedgPTPTimeUnc
+    }
+    /** Specify GNSS measurements clock and data.    */
+    struct IDLGnssMeasurements {
+        /** GNSS measurements clock info.    */
+        IDLGnssMeasurementsClock clock
+        /** GNSS measurements data.    */
+        IDLGnssMeasurementsData [] measurements
+        /** NHz measurements indicator */
+        Boolean isNHz
+        /** Time difference between packet generation time
+         *  and sending over SOMEIP
+         *  Unit- milli-seconds */
+        Int16 reportingLatency
+    }
+
+    /*********** LIA API's ******************/
+
+
+    /**
+     *  Mask used to specify the set of aiding data that can be
+     *  deleted via deleteAidingData(). <br/> */
+    enumeration IDLAidingDataDeletionMask {
+        /** Aiding Mask Unknown */
+        IDL_AIDING_DATA_DELETION_UNKNOWN  = 0x0000
+        /** Mask to delete all aiding data from all position
+        engines on the device <br/> */
+        IDL_AIDING_DATA_DELETION_ALL  = 0x0001
+        /** Mask to delete ephemeris aiding data <br/> */
+        IDL_AIDING_DATA_DELETION_EPHEMERIS  = 0x0002
+        /** Mask to delete calibration data from dead reckoning position
+         *  engine.<br/> */
+        IDL_AIDING_DATA_DELETION_DR_SENSOR_CALIBRATION  = 0x0004
+    }
+
+   /** @brief
+        Request deletion of the specified aiding data from all
+        position engines on the device. <br/>
+
+        Invoking this API may cause noticeable delay for the
+        position engine to produce first fix and may have other
+        performance impact. For example, remove ephemeris data may
+        trigger the GNSS standard position engine (SPE) to do warm
+        start. So, this API should only be exercised with caution
+        and only for very limited usage scenario, e.g.: for
+        performance test and certification process. <br/>
+
+        @param aidingDataMask, specify the set of aiding data to
+                be deleted from all position engines. Currently,
+                only ephemeris deletion is supported. <br/>
+
+        @return IDL_LOC_INT_RESPONSE_SUCCESS, if the API request has been
+                accepted for further processing.
+
+    */
+    method deleteAidingData {
+        in {
+            UInt32 aidingDataMask
+        }
+        out {
+            IDLLocationResponse resp
+        }
+    }
+
+    enumeration IDLGnssConstellationType {
+        /** Unknown SV system  <br/> */
+        IDL_GNSS_CONSTELLATION_TYPE_UNKNOWN  = 0
+        /** GLONASS SV system  <br/> */
+        IDL_GNSS_CONSTELLATION_TYPE_GLONASS  = 1
+        /** QZSS SV system <br/> */
+        IDL_GNSS_CONSTELLATION_TYPE_QZSS     = 2
+        /** BEIDOU SV system <br/> */
+        IDL_GNSS_CONSTELLATION_TYPE_BEIDOU   = 3
+        /** GALILEO SV system <br/> */
+        IDL_GNSS_CONSTELLATION_TYPE_GALILEO  = 4
+        /** SBAS SV system <br/> */
+        IDL_GNSS_CONSTELLATION_TYPE_SBAS     = 5
+        /** NAVIC SV system <br/> */
+        IDL_GNSS_CONSTELLATION_TYPE_NAVIC    = 6
+        /** GPS SV system <br/> */
+        IDL_GNSS_CONSTELLATION_TYPE_GPS      = 7
+        /** Maximum constellatoin system */
+        IDL_GNSS_CONSTELLATION_TYPE_MAX      = 7
+    }
+
+    struct IDLGnssSvIdInfo {
+        /** constellation for the sv */
+        IDLGnssConstellationType constellation
+        /** sv id range for the constellation:
+         * GLONASS SV id range: 65 to 96
+         * QZSS SV id range: 193 to 197
+         * BDS SV id range: 201 to 263
+         * GAL SV id range: 301 to 336
+         * SBAS SV id range: 120 to 158 and 183 to 191
+         * NAVIC SV id range: 401 to 414
+         */
+        UInt32              svId
+    }
+
+    method configConstellations {
+        in {
+           IDLGnssSvIdInfo [] svList
+        }
+        out {
+            IDLLocationResponse resp
+        }
+    }
+
+    /** Map Matched data validity flags */
+    enumeration MapMatchingFeedbackDataValidity {
+        /** MapMatchingFeedbackData is invalid */
+        MMF_DATA_INVALID            = 0x00000000
+        /** MapMatchingFeedbackData has valid  utcTimestampMs */
+        MMF_DATA_VALID_UTC_TIME     = 0x00000001
+        /** MapMatchingFeedbackData has valid  mapMatchedLatitudeDifference */
+        MMF_DATA_VALID_LAT_DIFF     = 0x00000002
+        /** MapMatchingFeedbackData has valid  mapMatchedLongitudeDifference */
+        MMF_DATA_VALID_LONG_DIFF    = 0x00000004
+        /** MapMatchingFeedbackData has valid  isTunnel value */
+        MMF_DATA_VALID_TUNNEL       = 0x00000008
+        /** MapMatchingFeedbackData has valid  bearing */
+        MMF_DATA_VALID_BEARING      = 0x00000010
+        /** MapMatchingFeedbackData has valid  altitude */
+        MMF_DATA_VALID_ALTITUDE     = 0x00000020
+        /** MapMatchingFeedbackData has valid  horizontalAccuracy */
+        MMF_DATA_VALID_HOR_ACC      = 0x00000040
+        /** MapMatchingFeedbackData has valid  altitudeAccuracy */
+        MMF_DATA_VALID_ALT_ACC      = 0x00000080
+        /** MapMatchingFeedbackData has valid  bearingAccuracy */
+        MMF_DATA_VALID_BEARING_ACC  = 0x00000100
+    }
+
+    struct MapMatchingFeedbackData {
+        /** Validity fields for MMF data fields to follow
+         *  Flags defined uisng enum MapMatchingFeedbackDataValidity */
+        UInt64 validityMask
+
+        /** Unix epoch time of the location fix for which map-match
+         *  feedback is being sent, since the start of the Unix epoch
+         *  (00:00:00 January 1, 1970 UTC).
+         *  Unit: Milli-seconds */
+        UInt64 utcTimestampMs
+
+        /** Latitude difference = map matched latitude - reported latitude
+         *  Unit: Degrees
+         *  Range: [-90.0, 90.0] */
+        Double mapMatchedLatitudeDifference
+
+        /** Longitude difference = map matched longitude - reported longitude
+         *  Unit: Degrees
+         *  Range: [-180.0, 180.0] */
+        Double mapMatchedLongitudeDifference
+
+        /** Bearing: The horizontal direction of travel of the device with
+         *  respect to north and is unrelated to the device orientation.
+         *  Unit: Degrees
+         *  range: [0, 360) */
+        Float bearing
+
+        /** Absolute Altitude above the WGS 84 reference ellipsoid
+            Unit: meters */
+        Double altitude
+
+        /** Horizontal accuracy radius defined with the
+         *  68th percentile confidence level.
+         *  Unit: meter
+         *  Range: 0 or greater */
+        Float horizontalAccuracy
+
+        /** Altitude accuracy. Defined with 68% confidence level.
+         *  Unit:meter
+         *  Range: 0 or greater */
+        Float altitudeAccuracy
+
+        /** Estimated bearing accuracy defined with
+         *  68 percentile confidence level (1 sigma).
+         *  Unit: Degrees
+         *  Range [0, 360) */
+        Float bearingAccuracy
+
+        /** Road Type. Decision to use the MMF data depends on isTunnel
+         *  Value: True or False */
+        Boolean isTunnel
+    }
+
+    method injectMapMatchedFeedbackData {
+        in {
+            MapMatchingFeedbackData mmfData
+        }
+
+        out {
+            IDLLocationResponse resp
+        }
+    }
+}

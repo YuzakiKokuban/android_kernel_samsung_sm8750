@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+
+obj-$(CONFIG_SEC_MM)	:= sec_mm.o
+sec_mm-objs		:= sec_mm_init.o sec_mm_debug.o sec_mm_tune.o \
+			   sec_mm_sysfs.o sec_mm_trace.o lowfile_detect.o \
+			   panic_handler.o dump_tasks.o 
+
+obj-$(CONFIG_HUGEPAGE_POOL)	+= hpp.o

@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: ntrip client integration api test app
+Description: NTRIP Client integration api test app
+Version: @VERSION
+Libs:
+Cflags:

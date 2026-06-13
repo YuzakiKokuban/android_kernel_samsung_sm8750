@@ -1,0 +1,21 @@
+config SEC_REBOOT_CMD
+	tristate "SEC Reboot Command Iterator"
+	help
+	  TODO: help is not ready.
+
+config SEC_REBOOT_CMD_TEST_FOR_ON_DEVICE
+	tristate "KUnit test for sec_reboot_cmd_test"
+	depends on KUNIT
+	depends on SEC_REBOOT_CMD
+	help
+	  TODO: Describe config fully.
+	  If you run this test driver on device, SHOULD set this config as 'm' to build test driver modulraly.
+
+config SEC_REBOOT_CMD_TEST_FOR_ONLY_UML
+	tristate "KUnit test for sec_reboot_cmd_test"
+	depends on KUNIT
+	depends on UML
+	depends on SEC_REBOOT_CMD
+	help
+	  TODO: Describe config fully.
+	  This CONFIG is recommended to set to y.

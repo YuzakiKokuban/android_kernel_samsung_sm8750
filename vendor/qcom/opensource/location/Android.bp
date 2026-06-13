@@ -1,0 +1,50 @@
+GNSS_CFLAGS = [
+    "-Werror",
+    "-Wformat",
+    "-Wformat-extra-args",
+    "-Wunused-label",
+    "-Wunused-variable",
+    "-Wunused-function",
+    "-Wimplicit-fallthrough",
+    "-Wno-unused-parameter",
+    "-Wno-error=unused-parameter",
+    "-Wno-error=macro-redefined",
+    "-Wno-error=reorder",
+    "-Wno-error=missing-braces",
+    "-Wno-error=self-assign",
+    "-Wno-error=enum-conversion",
+    "-Wno-error=logical-op-parentheses",
+    "-Wno-error=null-arithmetic",
+    "-Wno-error=null-conversion",
+    "-Wno-error=parentheses-equality",
+    "-Wno-error=undefined-bool-conversion",
+    "-Wno-error=tautological-compare",
+    "-Wno-error=switch",
+]
+
+
+soong_config_module_type {
+    name: "qtilocationopensrc_cc_defaults",
+    module_type: "cc_defaults",
+    config_namespace: "qtilocation",
+    bool_variables: [
+        "feature_nhz",
+        "feature_locauto",
+    ],
+    properties: [
+        "cflags",
+    ],
+}
+
+qtilocationopensrc_cc_defaults {
+    name: "qtilocationopensrc_common_defaults",
+    cflags: GNSS_CFLAGS,
+    soong_config_variables: {
+        feature_nhz: {
+            cflags: ["-DFEATURE_NHZ_ENABLED"],
+        },
+        feature_locauto: {
+            cflags: ["-DFEATURE_AUTOMOTIVE"],
+        },
+    },
+}

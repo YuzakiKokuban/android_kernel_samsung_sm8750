@@ -1,0 +1,5 @@
+config SEC_QC_USER_RESET
+	tristate "SEC User Reset Debug for Qualcomm based devices"
+	depends on SEC_QC_DEBUG_PARTITION
+	help
+	  TODO: help is not ready.

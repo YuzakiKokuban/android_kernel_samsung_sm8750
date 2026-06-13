@@ -1,0 +1,92 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+#include "pineapple-audio-cdp.dtsi"
+
+&pineapple_snd {
+	qcom,model = "pineapple-cdp-wsa883x-snd-card";
+	asoc-codec  = <&stub_codec>, <&lpass_cdc>,
+			<&wcd939x_codec>, <&swr_haptics>,
+			<&wsa883x_0221>, <&wsa883x_0222>;
+	asoc-codec-names = "msm-stub-codec.1", "lpass-cdc",
+			"wcd939x_codec", "swr-haptics",
+			"wsa-codec1", "wsa-codec2";
+};
+
+&wsa_macro {
+	qcom,wsa-bat-cfgs= <0>, <0>;
+};
+
+&wsa884x_0220 {
+    status = "disabled";
+};
+
+&wsa884x_0221 {
+    status = "disabled";
+};
+
+&swr0 {
+	wsa883x_0221: wsa883x@02170221 {
+		compatible = "qcom,wsa883x";
+		reg = <0x2 0x2170221>;
+		qcom,spkr-sd-n-node = <&wsa_spkr_en02>;
+		qcom,lpass-cdc-handle = <&lpass_cdc>;
+		cdc-vdd-1p8-supply = <&L15B>;
+		qcom,cdc-vdd-1p8-voltage = <1800000 1800000>;
+		qcom,cdc-vdd-1p8-current = <20000>;
+		qcom,cdc-static-supplies = "cdc-vdd-1p8";
+		sound-name-prefix = "SpkrLeft";
+	};
+
+	wsa883x_0222: wsa883x@02170222 {
+		compatible = "qcom,wsa883x";
+		reg = <0x2 0x2170222>;
+		qcom,spkr-sd-n-node = <&wsa_spkr_en13>;
+		qcom,lpass-cdc-handle = <&lpass_cdc>;
+		cdc-vdd-1p8-supply = <&L15B>;
+		qcom,cdc-vdd-1p8-voltage = <1800000 1800000>;
+		qcom,cdc-vdd-1p8-current = <20000>;
+		qcom,cdc-static-supplies = "cdc-vdd-1p8";
+		sound-name-prefix = "SpkrRight";
+	};
+};
+
+&wsa2_macro {
+	qcom,wsa-bat-cfgs= <0>, <0>;
+};
+
+&wsa884x_2_0220 {
+    status = "disabled";
+};
+
+&wsa884x_2_0221 {
+    status = "disabled";
+};
+
+&swr3 {
+	wsa883x_2_0221: wsa883x@02170221 {
+		compatible = "qcom,wsa883x_2";
+		reg = <0x2 0x2170221>;
+		qcom,spkr-sd-n-node = <&wsa_spkr_en02>;
+		qcom,lpass-cdc-handle = <&lpass_cdc>;
+		cdc-vdd-1p8-supply = <&L15B>;
+		qcom,cdc-vdd-1p8-voltage = <1800000 1800000>;
+		qcom,cdc-vdd-1p8-current = <20000>;
+		qcom,cdc-static-supplies = "cdc-vdd-1p8";
+		sound-name-prefix = "Spkr2Left";
+	};
+
+	wsa883x_2_0222: wsa883x@02170222 {
+		compatible = "qcom,wsa883x";
+		reg = <0x2 0x2170222>;
+		qcom,spkr-sd-n-node = <&wsa_spkr_en13>;
+		qcom,lpass-cdc-handle = <&lpass_cdc>;
+		cdc-vdd-1p8-supply = <&L15B>;
+		qcom,cdc-vdd-1p8-voltage = <1800000 1800000>;
+		qcom,cdc-vdd-1p8-current = <20000>;
+		qcom,cdc-static-supplies = "cdc-vdd-1p8";
+		sound-name-prefix = "Spkr2Right";
+	};
+};

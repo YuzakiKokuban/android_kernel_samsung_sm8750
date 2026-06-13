@@ -1,0 +1,49 @@
+cc_library_shared {
+    name: "libsdmcore",
+    defaults: ["qtidisplay_defaults"],
+    sanitize: {
+        integer_overflow: true,
+    },
+    vendor: true,
+    header_libs: [
+        "display_headers",
+        "qti_kernel_headers",
+        "qti_display_kernel_headers",
+        "device_kernel_headers",
+    ],
+    cflags: [
+        "-fno-operator-names",
+        "-Wno-unused-parameter",
+        "-DLOG_TAG=\"SDM\"",
+    ],
+    shared_libs: [
+        "libdl",
+        "libdisplaydebug",
+        "libsdmutils",
+        "libdrm",
+        "libdrmutils",
+        "libsdedrm",
+        "libsdmdal",
+        "libsync",
+    ],
+
+    srcs: [
+        "core_interface.cpp",
+        "core_impl.cpp",
+        "display_base.cpp",
+        "display_builtin.cpp",
+        "display_pluggable.cpp",
+        "display_virtual.cpp",
+        "display_null.cpp",
+        "noise_plugin_intf_impl.cpp",
+        "comp_manager.cpp",
+        "strategy.cpp",
+        "resource_default.cpp",
+        "color_manager.cpp",
+        "hw_info_default.cpp",
+        "dpu_core_factory.cpp",
+        "dpu_single_core.cpp",
+        "dpu_multi_core.cpp",
+    ],
+
+}

@@ -1,0 +1,184 @@
+# Copyright (C) 2023 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("//build/kernel/kleaf:fail.bzl", "fail_action")
+
+# Used by all packages that uses kernel_build
+exports_files([
+    # keep sorted
+    "arm64_16k_defconfig",
+    "arm64_4k_defconfig",
+    "arm64_64k_defconfig",
+    "btf_debug_info_disabled_defconfig",
+    "btf_debug_info_enabled_defconfig",
+    "gki_module_protection_disabled_defconfig",
+])
+
+[[
+    filegroup(
+        name = "{}_4k_defconfig".format(arch),
+        srcs = [],
+        visibility = ["//visibility:public"],
+    ),
+    # Intentionally fail for 16k and 64k
+    # so build will fail if --page_size=16k or 64k for non-arm64 architectures
+    fail_action(
+        name = "{}_16k_defconfig".format(arch),
+        message = "ERROR: 16k pages not supported on {}.".format(arch),
+        visibility = ["//visibility:public"],
+    ),
+    fail_action(
+        name = "{}_64k_defconfig".format(arch),
+        message = "ERROR: 64k pages not supported on {}.".format(arch),
+        visibility = ["//visibility:public"],
+    ),
+] for arch in [
+    # keep sorted
+    "arm",
+    "i386",
+    "riscv64",
+    "x86_64",
+]]
+
+filegroup(
+    name = "debug",
+    srcs = select({
+        "//build/kernel/kleaf:debug_is_true": ["debug_defconfig"],
+        "//build/kernel/kleaf:debug_is_false": [],
+        "//conditions:default": [":fail_debug_lto"],
+    }),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "rust",
+    srcs = select({
+        "//build/kernel/kleaf:rust_is_enabled": ["rust_defconfig"],
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "zstd_dwarf_compression",
+    srcs = select({
+        "//build/kernel/kleaf:zstd_dwarf_compression_is_disabled": ["zstd_dwarf_compression_disabled_defconfig"],
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+)
+
+fail_action(
+    name = "fail_debug_lto",
+    message = "--debug requires --lto=none or default.",
+    visibility = ["//visibility:private"],
+)
+
+filegroup(
+    name = "kasan_any_mode",
+    srcs = select({
+        "//build/kernel/kleaf/impl:lto_is_set_to_default_or_none": ["kasan_any_mode_defconfig"],
+        "//conditions:default": [":fail_kasan_any_mode_lto"],
+    }),
+    visibility = ["//visibility:public"],
+)
+
+fail_action(
+    name = "fail_kasan_any_mode_lto",
+    message = "--kasan requires --lto=none or default.",
+)
+
+filegroup(
+    name = "kasan_generic",
+    srcs = select({
+        "//build/kernel/kleaf/impl:lto_is_set_to_default_or_none": ["kasan_generic_defconfig"],
+        "//conditions:default": [":fail_kasan_generic_lto"],
+    }),
+    visibility = ["//visibility:public"],
+)
+
+fail_action(
+    name = "fail_kasan_generic_lto",
+    message = "--kasan_generic requires --lto=none or default.",
+)
+
+# --kasan_sw_tags is arm64 only. See lib/Kconfig.kasan in kernel tree.
+filegroup(
+    name = "arm64_kasan_sw_tags",
+    srcs = select({
+        "//build/kernel/kleaf/impl:lto_is_set_to_default_or_none": ["arm64_kasan_sw_tags_defconfig"],
+        "//conditions:default": [":fail_kasan_sw_tags_lto"],
+    }),
+    visibility = ["//visibility:public"],
+)
+
+fail_action(
+    name = "kasan_sw_tags_not_supported",
+    message = "--kasan_sw_tags only supported on arm64.",
+    visibility = ["//visibility:private"],
+)
+
+[
+    filegroup(
+        name = "{}_kasan_sw_tags".format(arch),
+        srcs = select({
+            "//build/kernel/kleaf/impl:lto_is_set_to_default_or_none": [":kasan_sw_tags_not_supported"],
+            "//conditions:default": [":fail_kasan_sw_tags_lto"],
+        }),
+        visibility = ["//visibility:public"],
+    )
+    for arch in [
+        # keep sorted
+        "arm",
+        "i386",
+        "riscv64",
+        "x86_64",
+    ]
+]
+
+fail_action(
+    name = "fail_kasan_sw_tags_lto",
+    message = "--kasan_sw_tags requires --lto=none or default.",
+    visibility = ["//visibility:private"],
+)
+
+filegroup(
+    name = "kcsan",
+    srcs = select({
+        "//build/kernel/kleaf/impl:lto_is_set_to_default_or_none": ["kcsan_defconfig"],
+        "//conditions:default": [":fail_kcsan_lto"],
+    }),
+    visibility = ["//visibility:public"],
+)
+
+fail_action(
+    name = "fail_kcsan_lto",
+    message = "--kcsan requires --lto=none or default.",
+    visibility = ["//visibility:private"],
+)
+
+filegroup(
+    name = "signing_modules_disabled",
+    srcs = ["signing_modules_disabled_defconfig"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "gcov",
+    srcs = select({
+        "//build/kernel/kleaf:gcov_is_true": ["gcov_defconfig"],
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+)

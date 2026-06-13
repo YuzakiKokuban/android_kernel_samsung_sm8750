@@ -1,0 +1,40 @@
+{
+    "unicast" : "192.168.1.10",
+    "netmask" : "255.255.0.0",
+    "logging" :
+    {
+        "level" : "debug",
+        "console" : "true",
+        "file" : { "enable" : "false", "path" : "/var/log/vsomeip.log" },
+        "dlt" : "false"
+    },
+    "applications" :
+    [
+        {
+            "name" : "location-fidl-service",
+            "id" : "0x3"
+        }
+    ],
+    "services" :
+    [
+        {
+            "service" : "0xEE00",
+            "instance" : "0x01",
+            "reliable" : { "port" : "30509", "enable-magic-cookies" : "false" },
+            "unreliable" : "31000",
+            "someip-tp": {
+                "service-to-client": ["0x80E9", "0x80EA", "0x80EB", "0x80EC", "0x80ED", "0x80EE", "0x80EF", "0x80F0"]
+            }
+        }
+    ],
+    "max-payload-size-unreliable" : "15000",
+    "routing" : "sensor-fidl-service",
+    "network" : "vlan_ivss",
+    "service-discovery" :
+    {
+        "enable" : "true",
+        "multicast" : "224.244.224.245",
+        "port" : "30490",
+        "protocol" : "udp"
+    }
+}

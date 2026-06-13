@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: GPL-2.0
+config PROC_FSLOG
+        tristate "Enable FS logs for improving filesystem debug"
+        depends on PROC_FS
+        default y
+	help
+          This module provides a buffer for storing debugging information of
+	  Filesystem and Storage. The debugging information stored here can be
+	  used not only in the development stage but also to analyze market
+	  problems. In addition, it does not provide a module build option to
+	  leave logs for built-in modules. If you want to use the Filesystem
+	  and Storage dedicated debugging buffer, then you must say Y.
+
+config PROC_STLOG
+        tristate "Support the interface for storage log"
+        depends on PROC_FSLOG
+        default y
+	help
+	  If you want to use the storage log, then you must say Y.
+
+config PROC_DLOG
+        tristate "Support the interface for delete log"
+        depends on PROC_FSLOG
+        default y
+	help
+	  If you want to use the delete log, then you must say Y.
+
+config PROC_FSLOG_LOWMEM
+        bool "Reserve small size buffer for low memory devices"
+        depends on PROC_FSLOG
+        default n
+	help
+	  FSLOG reserves 256KB for low memory devices, otherwise, 512KB.  If a
+	  device might have small size memory and you need more free space in
+	  DRAM, then you must say Y.

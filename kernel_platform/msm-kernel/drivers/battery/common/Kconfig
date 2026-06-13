@@ -1,0 +1,388 @@
+config DIRECT_CHARGING
+	tristate "support for direct charging"
+	help
+	 Say Y to include support for direct charging
+	 support for direct charging models.
+	 Direct charging models should enable this charging option.
+	 it include some charging scenario for direct charging models.
+
+config MULTI_DIRECT_CHARGER
+	tristate "support for multiple direct chargers"
+	help
+	 Say Y to include support for multiple direct chargers.
+	 By enabling this feature a model can support
+	 multiple direct charging ICs.
+	 It controls in run-time the loading of the correct IC.
+
+menu "Samsung Battery Common drivers"
+
+config BATTERY_SAMSUNG
+	tristate "samsung battery driver"
+	help
+	  Say Y to include support for samsung battery driver
+	  This battery driver integrated all battery-related functions
+	  To see battery-related functions,
+	  refer to sec_charging_common.h
+
+config CHARGING_VZWCONCEPT
+	bool "VZW concept about the charging"
+	default n
+	depends on BATTERY_SAMSUNG
+	help
+	  Say Y here to enable
+	  support for apply the VZW concepts.
+	  VZW models should enable this charging option.
+	  it include some charging scenario for VZW models.
+
+config STEP_CHARGING
+	bool "support for step charging"
+	help
+	  Say Y here to enable
+	  support for step charging.
+	  it could be used with direct charging.
+	  it needs step charging tables.
+
+config ENABLE_FULL_BY_SOC
+	bool "make full by soc 100%"
+	help
+	default n
+	  Say Y here to enable
+	  support to make full charged by soc 100%.
+	  If this is N in models,
+	  battery common drivers make full by other conditions.
+
+config SEC_PD
+	tristate "support for sec pd"
+	help
+	 Say Y to include support for sec pd control module.
+	 This sec_pd driver integrated all pdo related function.
+	 To see pdo related functions,
+	 refer to sec_pd.h
+
+config UPDATE_BATTERY_DATA
+	bool "support for updating battery data"
+	default n
+	depends on BATTERY_SAMSUNG && OF
+	help
+	  Say Y here to enable
+	  support for update battery data.
+	  This integrated load and parsing data functions again.
+	  it need to battery data file for update.
+
+config BATTERY_CISD
+	bool "support for cisd"
+	help
+	  Say Y here to enable
+	  support for CISD.
+	  cisd means cell internal short detection.
+	  it include some other detection.
+
+config AFC_CHARGER_MODE
+	bool "afc charging support in sec battery driver"
+	default n
+	help
+	  Say Y here to enable
+	  support for sec afc charging support
+	  it includes some AFC charging options and
+	  information about AFC charging.
+
+config SAMSUNG_BATTERY_ENG_TEST
+	bool "enable ENG mode for battery test"
+	default n
+	help
+	  Say Y to include support for battery test
+	  enable this feature only ENG mode
+	  this featuren must disabled user binary
+	  stability test etc..
+
+config SAMSUNG_BATTERY_FACTORY
+	bool "enable for factory test"
+	default n
+	help
+	  Say Y to include support for factory test
+	  enable this feature only factory mode
+	  this featuren must disabled user binary
+	  stability test etc..
+
+config USE_POGO
+	bool "enable pogo charging"
+	default n
+	help
+	  Say Y here to enable
+	  support POGO properties.
+	  some models support POGO,
+	  then it make Y.
+
+config STORE_MODE
+	bool "enable store mode"
+	default n
+	help
+	  Say Y here to enable
+	  support store mode charging concpet.
+	  The LDU or RDU enable this STORE_MODE option,
+	  it include some charging scenario for store.
+
+config BATTERY_AGE_FORECAST
+	bool "battery age forecast"
+	default n
+	help
+	  Say Y here to enable
+	  support AGE FORECAST functions.
+	  it include some charging scenario for aged batteries.
+	  it need age forecast charging tables.
+
+config BATTERY_AGE_FORECAST_DETACHABLE
+	tristate "battery age forecast for detachable"
+	default n
+	select BATTERY_AGE_FORECAST
+	help
+	  Say Y here to enable
+	  support AGE FORECAST functions for detachable model.
+	  it include some charging scenario for aged batteries.
+	  it need age forecast charging tables.
+
+config BATTERY_AGE_FORECAST_B2B
+	tristate "battery age forecast for B2B"
+	default n
+	depends on BATTERY_AGE_FORECAST
+	help
+	  Say Y here to enable
+	  support AGE FORECAST functions for B2B.
+	  it include some charging scenario for aged batteries.
+	  it need age forecast charging tables.
+
+config BATTERY_LOGGING
+	bool "battery logging"
+	default n
+	depends on BATTERY_SAMSUNG
+	help
+	  Say Y to enable
+	  support for the battery logging feature which
+	  allows of logging battery related information
+	  during power on and power-off charging. As well
+	  as battery dump mechanism for periodically logging
+	  in an external file.
+
+config ENG_BATTERY_CONCEPT
+	bool "enable temp block"
+	default n
+	help
+	  Say Y here to enable
+	  support CONFIG_ENG_BATTERY_CONCEPT.
+	  It is for only in ENG bianry
+	  USER binary should disalbe this.
+
+config LIMIT_CHARGING_DURING_CALL
+	bool "limit charging during call"
+	default n
+	help
+	  Say Y here to enable
+	  support limit charging during call.
+	  some models support this for limiting charging current,
+	  then it make Y.
+
+config TABLET_MODEL_CONCEPT
+	bool "tablet model concept"
+	default n
+	help
+	  Say Y here to enable
+	  do not enable for cellphone models.
+	  tablet models support this for charging,
+	  then it make Y.
+
+config PD_CHARGER_HV_DISABLE
+    bool "enable supporing disable high voltage pd charger"
+    depends on BATTERY_SAMSUNG && I2C
+    help
+	  Say Y here to enable
+	  supporting disable high voltage pd charger.
+	  some models need this for support options that
+	  not support high voltage.
+
+config BATTERY_GKI
+    bool "temporary support for GKI build"
+    help
+	  Say Y here to enable
+	  support for module build normally.
+	  this is temporary added for prevent build break in module build.
+	  it will be deleted soon.
+
+config SUPPORT_SHIP_MODE
+    bool "support ship mode"
+    default n
+    help
+	  Say Y here to enable
+	  support to ship mode.
+	  If this is N in models,
+	  not support to ship mode.
+
+config SUPPORT_HV_CTRL
+    bool "support for controlling voltage"
+    default n
+    help
+	  Say Y here to enable
+	  support for controlling voltage
+	  If this is N in models,
+	  not support to control voltage.
+
+config NO_BATTERY
+	bool "support for no battery"
+	default n
+	help
+	  Say Y here to enable
+	  support for no battery models to turn off charging
+	  If this is N in models,
+	  not support to no battery.
+
+config SEC_BATTERY_TEST
+	bool "KUnit test for sec_battery_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sec_battery_test
+
+config SEC_BATTERY_WC_TEST
+	bool "KUnit test for sec_battery_wc_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sec_battery_wc_test
+
+config SEC_BATTERY_THERMAL_TEST
+	bool "KUnit test for sec_battery_thermal_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sec_battery_thermal_test
+
+config SEC_BATTERY_VOTE_TEST
+    bool "KUnit test for sec_battery_vote_test"
+    depends on SEC_KUNIT
+    help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sec_battery_vote_test
+
+config SEC_CISD_TEST
+	bool "KUnit test for sec_cisd_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sec_cisd_test
+
+config SEC_ADC_TEST
+	bool "KUnit test for sec_adc_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sec_adc_test
+
+config SEC_BATTERY_SYSFS_TEST
+	bool "KUnit test for sec_battery_sysfs_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sec_battery_sysfs_test
+
+config SEC_BATTERY_TTF_TEST
+	bool "KUnit test for sec_battery_ttf_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sec_battery_ttf_test
+
+config SEC_STEP_CHARGING_TEST
+	tristate "KUnit test for sec_step_charging_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sec_step_charging_test
+
+config SEC_PD_TEST
+	bool "KUnit test for sec_pd_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sec_pd_test
+
+config SEC_BATTERY_DT_TEST
+	bool "KUnit test for sec_battery_dt_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sec_pd_test
+
+config SEC_BATTERY_MISC_TEST
+	bool "KUnit test for sec_battery_misc_test"
+	depends on SEC_KUNIT
+	help
+    	  Say Y here to enable
+	  support to kunit test.
+	  for kunitest
+          for sec_pd_test
+
+config USB_FACTORY_MODE
+	bool "enable USB factory mode"
+	default n
+	help
+	  Say Y to enable CONFIG_USB_FACTORY_MODE
+	  This feature is used for models that support
+	  factory mode using USB cable instead of Anyway JIG.
+	  Code for this is added in charger and battery driver.
+
+config BATTERY_SAMSUNG_REBOOT
+	bool "support for check sec_reboot"
+	default n
+	help
+	 Say Y here,
+	 to support for check sec_reboot.
+	 This options for only ARCH_EXYNOS.
+	 If this is Y, checking reboot when power off.
+
+config SBP_FG
+	bool "SBP FUELGAUGE"
+	default n
+	help
+	  Say Y here to enable
+	  Support for SBP FUELGAUGE.
+
+config BATTERY_AUTH_EUR_DET_GPIO_SUPPORT
+	bool "BATTERY_AUTH_EUR_DET_GPIO_SUPPORT"
+	default n
+	help
+	  Say Y here to enable
+	  This feature is used for models that support
+	  eur detection gpio pin in battery authentication hardware.
+	  This pin is used to distinguish eur and non eur devices.
+
+config BATTERY_HOTSWAP
+    bool "support battery hotswap"
+    default n
+    help
+	  Say Y here to enable
+	  support battery hotswap.
+	  Some models would have detachable battery and need to detect
+	  removal or insertion of battery.
+
+endmenu

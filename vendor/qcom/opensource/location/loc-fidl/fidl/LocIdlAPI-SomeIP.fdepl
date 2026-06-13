@@ -1,0 +1,236 @@
+/** Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+   SPDX-License-Identifier: BSD-3-Clause-Clear */
+
+import "platform:/plugin/org.genivi.commonapi.someip/deployment/CommonAPI-4-SOMEIP_deployment_spec.fdepl"
+import "LocIdlAPI.fidl"
+
+define org.genivi.commonapi.someip.deployment for interface com.qualcomm.qti.location.LocIdlAPI {
+    SomeIpServiceID = 60928 /** 0xEE00*/
+
+    attribute gnssCapabilitiesMask {
+        SomeIpGetterID = 3000
+        SomeIpSetterID = 3001
+        SomeIpNotifierID = 33010
+        SomeIpNotifierEventGroups = { 33000 }  /*0x80E8*/
+
+        SomeIpAttributeReliable = true
+    }
+
+    method startPositionSession:LocationReport {
+        SomeIpMethodID = 32001 /** 0x7D01 */
+        SomeIpReliable = true
+    }
+
+    method startPositionSession:engineSpecificLocation {
+        SomeIpMethodID = 32002 /** 0x7D02 */
+        SomeIpReliable = true
+    }
+
+    method stopPositionSession {
+        SomeIpMethodID = 32003 /** 0x7D03 */
+    }
+
+    method deleteAidingData {
+        SomeIpMethodID = 32004 /** 0x7D04 */
+        SomeIpReliable = true
+    }
+
+    method configConstellations {
+        SomeIpMethodID = 32005 /** 0x7D05 */
+        SomeIpReliable = true
+    }
+
+    method injectMapMatchedFeedbackData {
+        SomeIpMethodID = 32006 /** 0x7D06 */
+        SomeIpReliable = true
+    }
+
+    broadcast GnssMeasurements {
+        SomeIpEventID = 33001  /** 0x80E9 */
+        SomeIpEventGroups = { 33000 }
+
+        out {
+        }
+    }
+
+    broadcast LocationReport {
+        SomeIpEventID = 33002 /** 0x80EA */
+        SomeIpEventGroups = { 33000 }
+        out {
+        }
+    }
+
+    broadcast EngineLocations {
+        SomeIpEventID = 33003 /** 0x80EB */
+        SomeIpEventGroups = { 33000 }
+        out {
+        }
+    }
+
+    broadcast GnssSv {
+        SomeIpEventID = 33004 /** 0x80EC */
+        SomeIpEventGroups = { 33000 }
+        out {
+        }
+    }
+
+    broadcast GnssNmea {
+        SomeIpEventID = 33005 /** 0x80ED */
+        SomeIpEventGroups = { 33000 }
+        out {
+        }
+    }
+
+    broadcast EngineNmea {
+        SomeIpEventID = 33006 /** 0x80EE */
+        SomeIpEventGroups = { 33000 }
+        out {
+        }
+    }
+
+    broadcast GnssData {
+        SomeIpEventID = 33007 /** 0x80EF */
+        SomeIpEventGroups = { 33000 }
+        out {
+        }
+    }
+
+    enumeration IDLGnssMeasurementsMultipathIndicator {
+        SomeIpEnumWidth = 4
+        IDL_GNSS_MEASUREMENTS_MULTIPATH_INDICATOR_UNKNOWN {
+        }
+        IDL_GNSS_MEASUREMENTS_MULTIPATH_INDICATOR_PRESENT{
+        }
+        IDL_GNSS_MEASUREMENTS_MULTIPATH_INDICATOR_NOT_PRESENT{
+        }
+    }
+
+    enumeration IDLLCALocationInfoFlagMask {
+        SomeIpEnumWidth = 8
+    }
+
+    enumeration IDLLocOutputEngineType {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLGnssSvType {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLLocationResponse {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLGnssSignalTypeMask {
+        SomeIpEnumWidth = 8
+    }
+
+    enumeration IDLLocationReportPosDataMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLLocationReportNavSolutionMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLLocationTechnologyMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLLocationFlagsMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLGnssSvOptionsMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLLocationCapabilitiesMask {
+        SomeIpEnumWidth = 8
+    }
+
+    enumeration IDLLocationReliability {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLGnssSvSystemEnumType {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLGnssSystemTimeStructTypeFlags {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLGnssGloTimeStructTypeFlags {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLDrCalibrationStatusMask {
+        SomeIpEnumWidth = 8
+    }
+
+    enumeration IDLLocReqEngineTypeMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLPositioningEngineMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLDrSolutionStatusMask {
+        SomeIpEnumWidth = 8
+    }
+
+    enumeration IDLGnssDataMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLGnssMeasurementsDataFlagsMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLGnssMeasurementsStateMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLGnssMeasurementsAdrStateMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLGnssMeasurementsMultipathIndicator {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLGnssMeasurementsClockFlagsMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLGnssReportCbInfoMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLEngineReportCbMask {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration IDLLocSessionStatus {
+        SomeIpEnumWidth = 4
+    }
+
+    enumeration MapMatchingFeedbackDataValidity {
+        SomeIpEnumWidth = 8
+    }
+}
+
+define org.genivi.commonapi.someip.deployment for provider as Service {
+    instance com.qualcomm.qti.location.LocIdlAPI {
+        InstanceId = "com.qualcomm.qti.location.LocIdlAPI"
+
+        SomeIpInstanceID = 1  /**Instance 0x01*/
+
+        /** Actual entries configured through vsomeip-location.json files */
+        SomeIpUnicastAddress = "192.168.1.1"
+        SomeIpReliableUnicastPort = 30499
+        SomeIpUnreliableUnicastPort = 30499
+    }
+}

@@ -1,0 +1,2 @@
+source "drivers/samsung/debug/riscv64/ap_context/Kconfig"
+source "drivers/samsung/debug/riscv64/debug/Kconfig"

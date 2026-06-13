@@ -1,0 +1,23 @@
+config ARGOS
+	tristate "Throughput monitoring Feature"
+	help
+	  This option enables monitoring the data throughput and doing several actions for
+	  enhancing the performance such as adjusting the CPU freqency, allocating the tasks
+	  to the appropriate CPU and so on
+
+config ARGOS_THROUGHPUT
+	default y if ARGOS=m
+	default n if ARGOS=y
+	bool "argos Throughput device"
+	help
+	  This option make /dev/network_throughput in sec_argos module
+	  for substitiution of pm qos /dev/network_throughput
+	  which is deprecated in kernel 5.4.
+
+config ARGOS_VOTING_DDR
+	default n
+	depends on ARGOS
+	bool "argos voting ddr clock"
+	help
+	  This option enable ddr voting part in sec_argos module.
+

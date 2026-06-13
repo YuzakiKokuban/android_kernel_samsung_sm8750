@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: GPL-2.0
+config FAT_COMMON
+	bool "Enable common functions for external filesystems"
+	default y
+	help
+	  This module provides common interface to support an external
+	  filesystem. And module build is not supported because fat and
+	  exfat are used as a built-in module in GKI. If you want to use
+	  features in this module, then you must say Y.
+
+config FS_COMMON_STLOG
+	bool "Enable storage log helper functions"
+	default y
+	depends on FAT_COMMON && PROC_STLOG
+	help
+	  This feature provides common storage log helper functions.
+	  Basically, it adds device major and minor number as prefix into
+	  an original log message. If you want to use this help functions,
+	  then you must say Y.
+
+config FS_RO_UEVENT
+	bool "Enable uevents for an external filesystem read-only remount"
+	default y
+	depends on FAT_COMMON
+	help
+	  This feature provides common uevent interface to notify that an
+	  external filesystem has been set as read-only by an error. It
+	  creates /sys/fs/fat/uevent observed by volume-daemon in Android
+	  system. If you want to notify read-only remount uevent, then
+	  you muset say Y.

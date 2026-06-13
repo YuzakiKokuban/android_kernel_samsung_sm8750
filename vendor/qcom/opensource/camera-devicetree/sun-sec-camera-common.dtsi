@@ -1,0 +1,192 @@
+&cci_i2c_sda0_active {
+	config {
+		/delete-property/ bias-pull-up;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_sda0_suspend {
+	config {
+		/delete-property/ bias-pull-down;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_scl0_active {
+	config {
+		/delete-property/ bias-pull-up;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_scl0_suspend {
+	config {
+		/delete-property/ bias-pull-down;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_sda1_active {
+	config {
+		/delete-property/ bias-pull-up;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_sda1_suspend {
+	config {
+		/delete-property/ bias-pull-down;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_scl1_active {
+	config {
+		/delete-property/ bias-pull-up;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_scl1_suspend {
+	config {
+		/delete-property/ bias-pull-down;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_sda2_active {
+	config {
+		/delete-property/ bias-pull-up;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_sda2_suspend {
+	config {
+		/delete-property/ bias-pull-down;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_scl2_active {
+	config {
+		/delete-property/ bias-pull-up;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_scl2_suspend {
+	config {
+		/delete-property/ bias-pull-down;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_scl3_active {
+	config {
+		/delete-property/ bias-pull-up;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_sda3_suspend {
+	config {
+		/delete-property/ bias-pull-down;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_sda3_active {
+	config {
+		/delete-property/ bias-pull-up;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_scl3_suspend {
+	config {
+		/delete-property/ bias-pull-down;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_sda4_active {
+	config {
+		/delete-property/ bias-pull-up;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_sda4_suspend {
+	config {
+		/delete-property/ bias-pull-down;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_scl4_active {
+	config {
+		/delete-property/ bias-pull-up;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_scl4_suspend {
+	config {
+		/delete-property/ bias-pull-down;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_sda5_active {
+	config {
+		/delete-property/ bias-pull-up;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_sda5_suspend {
+	config {
+		/delete-property/ bias-pull-down;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_scl5_active {
+	config {
+		/delete-property/ bias-pull-up;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+
+&cci_i2c_scl5_suspend {
+	config {
+		/delete-property/ bias-pull-down;
+		bias-disable;
+		drive-strength = <6>; /* 6 MA */
+	};
+};
+

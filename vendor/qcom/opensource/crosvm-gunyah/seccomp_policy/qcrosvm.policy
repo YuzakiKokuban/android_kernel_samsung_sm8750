@@ -1,0 +1,51 @@
+# Copyright (c) 2021, 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause-Clear
+
+write: 1
+mprotect: arg2 in ~PROT_EXEC || arg2 in ~PROT_WRITE
+mmap: arg2 in ~PROT_EXEC || arg2 in ~PROT_WRITE
+munmap: 1
+preadv: 1
+ioctl: 1
+read: 1
+epoll_pwait: 1
+openat: 1
+close: 1
+fstat: 1
+readlinkat: 1
+futex: 1
+prctl: arg0 == PR_SET_NAME || arg0 == PR_SET_VMA || arg0 == PR_GET_DUMPABLE || arg0 == 0x37 || arg0 == PR_CAPBSET_READ
+mremap: 1
+fstatfs: 1
+pread64: 1
+newfstatat: 1
+rt_sigprocmask: 1
+rt_sigaction: 1
+faccessat: 1
+lseek: 1
+getrandom: 1
+eventfd2: 1
+dup: 1
+epoll_ctl: 1
+sigaltstack: 1
+fcntl: 1
+getuid: 1
+clone: 1
+execve: 1
+getpid: 1
+set_tid_address: 1
+sched_getscheduler: 1
+getrlimit: 1
+sched_getaffinity: 1
+ppoll: 1
+madvise: 1
+flock: 1
+timerfd_create: 1
+epoll_create1: 1
+socket: arg0 == AF_UNIX
+connect: 1
+writev: 1
+restart_syscall: 1
+exit: 1
+exit_group: 1
+rt_sigreturn: 1

@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: loc-api-v02
+Description: Loc Api V02
+Version: @VERSION
+Libs: -L${libdir} -lloc_api_v02
+Cflags: -I${includedir} -I${includedir}/loc-api-v02

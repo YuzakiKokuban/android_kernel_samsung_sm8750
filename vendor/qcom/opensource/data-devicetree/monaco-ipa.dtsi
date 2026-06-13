@@ -1,0 +1,72 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+#include "ipa_v4.dtsi"
+
+&ipa_hw {
+	reg = <0x5800000 0x34000>,
+			<0x5804000 0x28000>;
+	qcom,ipa-hw-ver = <16>; /* IPA core version = IPAv4.2 */
+	qcom,use-ipa-pm;
+	qcom,max_num_smmu_cb = <3>;
+	qcom,ipa-fltrt-not-hashable;
+	qcom,skip-ieob-mask-wa;
+	/delete-property/ qcom,use-64-bit-dma-mask;
+	/delete-property/ qcom,lan-rx-napi;
+	/delete-property/ qcom,wan-use-skb-page;
+	/delete-property/ qcom,rmnet-ctl-enable;
+	/delete-property/ qcom,tx-wrapper-cache-max-size;
+
+	qcom,interconnect,num-cases = <5>;
+	qcom,interconnect,num-paths = <4>;
+	interconnects = <&system_noc MASTER_IPA &system_noc SNOC_BIMC_SLV>,
+			<&bimc SNOC_BIMC_MAS &bimc SLAVE_EBI_CH0>,
+			<&system_noc MASTER_IPA &system_noc SLAVE_OCIMEM>,
+			<&bimc MASTER_AMPSS_M0 &config_noc SLAVE_IPA_CFG>;
+	interconnect-names = "ipa_to_llcc", "llcc_to_ebi1", "ipa_to_imem", "appss_to_ipa";
+
+	/* No vote */
+	qcom,no-vote =
+	<0 0 0 0 0 0 0 0>;
+		/* SVS2 */
+	qcom,svs2 =
+	<80000 590000 80000 2160000 80000 560000 80000 120000>;
+
+	/* SVS */
+	qcom,svs =
+	<80000 800000 80000 5414000 80000 920000 80000 180000>;
+
+	/* NOMINAL */
+	qcom,nominal =
+	<206000 1500000 206000 7200000 206000 1560000 206000 380000>;
+
+	/* TURBO */
+	qcom,turbo =
+	<206000 1800000 206000 8500000 206000 1880000 206000 520000>;
+
+	qcom,bus-vector-names =
+	"MIN", "SVS2", "SVS", "NOMINAL", "TURBO";
+	qcom,throughput-threshold = <310 600 1000>;
+	qcom,scaling-exceptions = <>;
+};
+
+&ipa_smmu_ap {
+	iommus = <&apps_smmu 0x0140 0x0>;
+	qcom,iommu-dma-addr-pool = <0x10000000 0x30000000>;
+	qcom,additional-mapping = <0x0c123000 0x0c123000 0x2000>;
+	qcom,iommu-geometry = <0 0xB0000000>;
+	/delete-property/ qcom,ipa-q6-smem-size;
+};
+
+&ipa_smmu_wlan {
+	iommus = <&apps_smmu 0x141 0x0>;
+};
+
+&ipa_smmu_uc {
+	iommus = <&apps_smmu 0x0142 0x0>;
+	qcom,iommu-dma-addr-pool = <0x40400000 0x1fc00000>;
+};
+
+/delete-node/ &ipa_smmu_11ad;

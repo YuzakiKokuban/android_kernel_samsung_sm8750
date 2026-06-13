@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: agm
+Description: agm library
+Version: @VERSION@
+Libs: -L${libdir}
+Cflags: -I${includedir}/agm

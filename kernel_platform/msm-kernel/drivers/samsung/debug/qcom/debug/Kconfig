@@ -1,0 +1,9 @@
+config SEC_QC_DEBUG
+	tristate "SEC Common debugging feature for Qualcomm based devices"
+	help
+	  TODO: help is not ready.
+
+config SEC_QC_NR_CPUS
+	int "Maximum number of CPUs for debugging features"
+	range 2 8
+	default "8"

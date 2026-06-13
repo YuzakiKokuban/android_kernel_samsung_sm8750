@@ -1,0 +1,98 @@
+#
+# CCIC devices
+#
+
+comment "CCIC configs"
+
+config CCIC_MAX77775
+	tristate "CCIC 77775"
+	depends on I2C
+	default n
+	help
+	  If you say yes here you will get support for
+	  max77775 ccic full version chipset
+
+config MAX77775_CCIC_ALTERNATE_MODE
+	bool "support alternate mode"
+	depends on CCIC_MAX77775
+	default n
+	help
+	  If you say yes here you will get support for
+	  alternate mode function with max77775 ccic chipset
+
+config MUIC_MAX77775
+	tristate "Using MAX77775 MUIC"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will get support for
+	  the MAX77775 MUIC chip.
+	  To enable this driver,
+	  USE_MUIC should be enabled.
+
+config HV_MUIC_MAX77775_AFC
+	tristate "Using MAX77775 AFC MUIC"
+	default n
+	help
+	  If you say yes here you will get support for
+	  the MAX77775 AFC MUIC.
+	  To enable this driver,
+	  MUIC_MAX77775 should be enabled.
+
+config MAX77775_MUIC_QC_DISABLE
+	bool "Using QC charging"
+	depends on USE_MUIC
+	default n
+	help
+	  If you say yes here you will not get support for the QC charging
+
+config MAX77775_UPGRADED_WATER_DETECT
+	bool "Using improved water detection"
+	depends on CCIC_MAX77775
+	default n
+	help
+	  If you say yes here you will get support for extra water detection
+	  driver will check if it is water + no VBUS + no hiccup state,
+	  and if the condition is satisfied, it will reset IC.
+
+config MAX77775_GET_UNMASK_VBUS_HWPARAM
+	bool "Using get unmask vbus hw param"
+	depends on CCIC_MAX77775
+	default n
+	help
+	  If you say yes here you will get support for getting unmask vbus hw param
+	  driver will check if it is attach/detach repeat state,
+	  and if the condition is satisfied, it will get the hw param.
+	  
+config MUIC_POGO_DISABLE_TYPEC
+	bool "Using pogo disable typec"
+	default n
+	help
+	  If you say yes here you will get support for disabling typec.
+	  driver will disable the use of typec when pogo was connected.
+
+config MAX77775_ALTERNATE_TEST_FOR_ON_DEVICE
+	tristate "KUnit test for max77775_alternate_test"
+	depends on KUNIT
+	depends on CCIC_MAX77775
+	help
+	  This is feature for max77775_alternate.c file.
+	  If you run this test driver on device, SHOULD set this config as 'm' to build test driver modulraly.
+
+config MAX77775_ALTERNATE_TEST_FOR_ONLY_UML
+	tristate "KUnit test for max77775_alternate_test"
+	depends on KUNIT
+	depends on UML
+	depends on CCIC_MAX77775
+	help
+	  This is feature for max77775_alternate.c file. (UML)
+	  This CONFIG is recommended to set to y.
+
+config MAX77775_CCOPEN_AFTER_WATERCABLE
+	bool "Using ccopen water detection"
+	depends on CCIC_MAX77775
+	default n
+	help
+	  If you say yes here you will get support for ccopen on water detection
+	  cc line open if the water + cable is connected.
+	  To protect the connector by completely blocking VBUS

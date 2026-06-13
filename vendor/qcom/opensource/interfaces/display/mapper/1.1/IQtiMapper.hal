@@ -1,0 +1,109 @@
+/*
+* Copyright (c) 2019 The Linux Foundation. All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are
+* met:
+*    * Redistributions of source code must retain the above copyright
+*      notice, this list of conditions and the following disclaimer.
+*    * Redistributions in binary form must reproduce the above
+*      copyright notice, this list of conditions and the following
+*      disclaimer in the documentation and/or other materials provided
+*      with the distribution.
+*    * Neither the name of The Linux Foundation. nor the names of its
+*      contributors may be used to endorse or promote products derived
+*      from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+package vendor.qti.hardware.display.mapper@1.1;
+
+import android.hardware.graphics.mapper@2.0::types;
+import @1.0::IQtiMapper;
+
+interface IQtiMapper extends @1.0::IQtiMapper {
+
+  /*
+   * Get fd of allocated buffer.
+   */
+  @callflow(next="*")
+  getFd(pointer buffer) generates (Error error, int32_t fd);
+
+  /*
+   * Get width of the actual allocated buffer.
+   */
+  @callflow(next="*")
+  getWidth(pointer buffer) generates (Error error, int32_t width);
+
+  /*
+   * Get height of the actual allocated buffer.
+   */
+  @callflow(next="*")
+  getHeight(pointer buffer) generates (Error error, int32_t height);
+
+  /*
+   * Get offset of allocated buffer.
+   */
+  @callflow(next="*")
+  getOffset(pointer buffer) generates (Error error, uint64_t offset);
+
+  /*
+   * Get size of allocated buffer.
+   */
+  @callflow(next="*")
+  getSize(pointer buffer) generates (Error error, uint64_t size);
+
+  /*
+   * Get width ask to allocate.
+   */
+  @callflow(next="*")
+  getUnalignedWidth(pointer buffer) generates (Error error, int32_t unaligned_width);
+
+  /*
+   * Get height ask to allocate.
+   */
+  @callflow(next="*")
+  getUnalignedHeight(pointer buffer) generates (Error error, int32_t unaligned_height);
+
+  /*
+   * Get number of layer.
+   */
+  @callflow(next="*")
+  getLayerCount(pointer buffer) generates (Error error, uint64_t layer_count);
+
+  /*
+   * Get Id of allocated buffer.
+   */
+  @callflow(next="*")
+  getId(pointer buffer) generates (Error error, uint64_t id);
+
+  /*
+   * Get usage flags of allocated buffer.
+   */
+  @callflow(next="*")
+  getUsageFlags(pointer buffer) generates (Error error, uint64_t usage);
+
+  /*
+   * Get format of allocated buffer.
+   */
+  @callflow(next="*")
+  getFormat(pointer buffer) generates (Error error, int32_t format);
+
+  /*
+   * Get private flags of allocated buffer.
+   */
+  @callflow(next="*")
+  getPrivateFlags(pointer buffer) generates (Error error, int32_t flags);
+};
+

@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: pal
+Description: pal library
+Version: @VERSION@
+Libs: -L${libdir}
+Cflags: -I${includedir}/pal

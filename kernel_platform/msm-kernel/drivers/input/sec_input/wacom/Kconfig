@@ -1,0 +1,11 @@
+#
+# Wacom configuration
+#
+
+config INPUT_WACOM_WEZ02
+	tristate "Wacom penabled i2c touchscreen"
+	depends on I2C
+	help
+	  Say Y here if you have an Wacom penabled i2c touchscreen
+	  connected to your system.
+	  If unsure, say N.

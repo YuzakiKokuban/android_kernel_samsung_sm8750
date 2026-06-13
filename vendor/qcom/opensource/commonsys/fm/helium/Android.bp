@@ -1,0 +1,23 @@
+
+
+cc_library_shared {
+    name: "fm_helium",
+
+    srcs: [
+        "radio_helium_hal.c",
+        "radio_helium_hal_cmds.c",
+    ],
+
+    shared_libs: [
+        "libfm-hci",
+        "libdl",
+        "liblog",
+        "libnativehelper",
+        "libcutils",
+    ],
+
+    include_dirs: ["vendor/qcom/opensource/commonsys/fm/fm_hci"],
+
+    system_ext_specific: true,
+
+}

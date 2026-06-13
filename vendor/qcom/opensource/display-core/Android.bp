@@ -1,0 +1,31 @@
+cc_library_headers {
+    name: "display_debug_headers",
+    vendor: true,
+    export_include_dirs: [
+        "libdebug",
+    ],
+}
+
+cc_library_headers {
+  name: "display_core_headers",
+  vendor: true,
+  export_include_dirs: [
+    "include",
+    "libdrmutils",
+    "sdm/include",
+  ],
+  header_libs: [
+      "libhardware_headers",
+      "display_intf_headers",
+      "display_debug_headers",
+      "common_interface_headers",
+      "snapalloc_interface_headers",
+  ],
+  export_header_lib_headers: [
+      "libhardware_headers",
+      "display_intf_headers",
+      "display_debug_headers",
+      "common_interface_headers",
+      "snapalloc_interface_headers",
+  ],
+}

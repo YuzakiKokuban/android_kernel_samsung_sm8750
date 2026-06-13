@@ -1,0 +1,226 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/dsi.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Qualcomm Technologies Inc. Snapdragon DSI Controller output
+
+description: >
+  [1] Documentation/devicetree/bindings/clock/clock-bindings.txt
+  [2] Documentation/devicetree/bindings/graph.txt
+  [3] Documentation/devicetree/bindings/media/video-interfaces.txt
+  [4] Documentation/devicetree/bindings/display/panel/
+
+maintainers:
+  - Vara Reddy <quic_varar@quicinc.com>
+  - Vishnuvardhan Prodduturi <quic_vproddut@quicinc.com>
+
+properties:
+  compatible:
+    const: qcom,mdss-dsi-ctrl
+
+  reg:
+    description: Physical base address and length of the registers of controller
+
+  reg-names:
+    description: The names of register regions.
+     required:
+       - "dsi_ctrl"
+
+  interrupts:
+    description: The interrupt signal from the DSI block.
+
+  power-domains:
+    const: <&mmcc MDSS_GDSC>
+
+  clocks:
+    description: Phandles to device clocks.
+    $ref: /schemas/types.yaml#/definitions/phandle
+
+  clock-names:
+    description: >
+      Clocks necessary for DSI operation. For DSIv2, we need an additional clock "src" and for
+      DSI6G v2.0 onwards, we also need the clock "byte_intf".
+    required:
+      - "mdp_core"
+      - "iface"
+      - "bus"
+      - "core_mmss"
+      - "byte"
+      - "pixel"
+      - "core"
+
+  assigned-clocks:
+    description: Parents of "byte" and "pixel" for the given platform.
+
+  assigned-clock-parents:
+    description: >
+      The Byte clock and Pixel clock PLL outputs provided
+      by a DSI PHY block. See [1] for details on clock bindings.
+
+  vdd-supply:
+    description: phandle to vdd regulator device node
+    $ref: /schemas/types.yaml#/definitions/phandle
+
+  vddio-supply:
+    description: phandle to vdd-io regulator device node
+    $ref: /schemas/types.yaml#/definitions/phandle
+
+  vdda-supply:
+    description: phandle to vdda regulator device node
+    $ref: /schemas/types.yaml#/definitions/phandle
+
+  phys:
+    description: phandle to DSI PHY device node
+    $ref: /schemas/types.yaml#/definitions/phandle
+
+  phy-names:
+    description: the name of the corresponding PHY device
+    $ref: /schemas/types.yaml#/definitions/string-array
+
+  syscon-sfpb:
+    description: A phandle to mmss_sfpb syscon node (only for DSIv2)
+    $ref: /schemas/types.yaml#/definitions/phandle
+
+  panel@0:
+    description: >
+      Node of panel connected to this DSI controller.
+      See files in [4] for each supported panel.
+
+  qcom,dual-dsi-mode:
+    description: >
+      Boolean value indicating if the DSI controller is
+      driving a panel which needs 2 DSI links.
+
+  qcom,master-dsi:
+    description: >
+      Boolean value indicating if the DSI controller is driving
+      the master link of the 2-DSI panel.
+
+  qcom,sync-dual-dsi:
+    description: >
+      Boolean value indicating if the DSI controller is
+      driving a 2-DSI panel whose 2 links need receive command simultaneously.
+
+  pinctrl-names:
+    description: the pin control state names; should contain "default"
+
+  pinctrl-0:
+    description: the default pinctrl state (active)
+
+  pinctrl-n:
+    description: the "sleep" pinctrl state
+
+  qcom,dsi-ctrl-shared:
+    description: >
+      Boolean value indicating if the DSI controller is
+      shared between dual displays.
+
+required:
+  - compatible
+  - reg
+  - reg-names
+  - interrupts
+  - power-domains
+  - clocks
+  - clock-names
+  - assigned-clocks
+  - assigned-clock-parents
+  - vdd-supply
+  - vddio-supply
+  - vdda-supply
+  - phys
+  - phy-names
+  - syscon-sfpb
+  - ports
+
+examples:
+  - |
+    dsi0: dsi@fd922800 {
+      compatible = "qcom,mdss-dsi-ctrl";
+      qcom,dsi-host-index = <0>;
+      interrupt-parent = <&mdp>;
+      interrupts = <4 0>;
+      reg-names = "dsi_ctrl";
+      reg = <0xfd922800 0x200>;
+      power-domains = <&mmcc MDSS_GDSC>;
+      clock-names =
+        "bus",
+        "byte",
+        "core",
+        "core_mmss",
+        "iface",
+        "mdp_core",
+        "pixel";
+      clocks =
+        <&mmcc MDSS_AXI_CLK>,
+        <&mmcc MDSS_BYTE0_CLK>,
+        <&mmcc MDSS_ESC0_CLK>,
+        <&mmcc MMSS_MISC_AHB_CLK>,
+        <&mmcc MDSS_AHB_CLK>,
+        <&mmcc MDSS_MDP_CLK>,
+        <&mmcc MDSS_PCLK0_CLK>;
+
+      assigned-clocks =
+             <&mmcc BYTE0_CLK_SRC>,
+             <&mmcc PCLK0_CLK_SRC>;
+      assigned-clock-parents =
+             <&dsi_phy0 0>,
+             <&dsi_phy0 1>;
+
+      vdda-supply = <&pma8084_l2>;
+      vdd-supply = <&pma8084_l22>;
+      vddio-supply = <&pma8084_l12>;
+
+      phys = <&dsi_phy0>;
+      phy-names ="dsi-phy";
+
+      qcom,dual-dsi-mode;
+      qcom,master-dsi;
+      qcom,sync-dual-dsi;
+      qcom,dsi-ctrl-shared;
+
+      qcom,mdss-mdp-transfer-time-us = <12000>;
+      frame-threshold-time-us = <800>;
+
+      pinctrl-names = "default", "sleep";
+      pinctrl-0 = <&dsi_active>;
+      pinctrl-1 = <&dsi_suspend>;
+
+      ports {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        port@0 {
+          reg = <0>;
+          dsi0_in: endpoint {
+            remote-endpoint = <&mdp_intf1_out>;
+          };
+        };
+
+        port@1 {
+          reg = <1>;
+          dsi0_out: endpoint {
+            remote-endpoint = <&panel_in>;
+            data-lanes = <0 1 2 3>;
+          };
+        };
+      };
+
+      panel: panel@0 {
+        compatible = "sharp,lq101r1sx01";
+        reg = <0>;
+        link2 = <&secondary>;
+
+        power-supply = <...>;
+        backlight = <...>;
+
+        port {
+          panel_in: endpoint {
+            remote-endpoint = <&dsi0_out>;
+          };
+        };
+      };
+    };
+...

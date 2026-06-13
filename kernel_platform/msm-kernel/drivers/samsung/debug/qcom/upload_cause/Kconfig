@@ -1,0 +1,5 @@
+config SEC_QC_UPLOAD_CAUSE
+	tristate "SEC Panic Notifier Updating Upload Cause for Qualcomm Based Devices"
+	depends on SEC_UPLOAD_CAUSE
+	help
+	  TODO: help is not ready.

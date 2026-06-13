@@ -1,0 +1,21 @@
+{
+    "homepage": "https://github.com/tweag/rules_sh#readme",
+    "maintainers": [
+        {
+            "email": "claudio.bley@tweag.io",
+            "github": "avdv",
+            "name": "Claudio Bley"
+        },
+        {
+            "email": "andreas.herrmann@tweag.io",
+            "github": "aherrmann",
+            "name": "Andreas Herrmann"
+        }
+    ],
+    "versions": [
+        "0.2.0",
+        "0.3.0",
+        "0.4.0"
+    ],
+    "yanked_versions": {}
+}

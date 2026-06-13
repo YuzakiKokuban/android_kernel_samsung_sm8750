@@ -1,0 +1,9 @@
+config SEC_CLASS
+	tristate "Samsung sec class/sysfs Feature"
+	select DRV_SAMSUNG
+	help
+	  Samsung sysfs name 'sec' directory create
+
+# legacy compatibility
+config DRV_SAMSUNG
+	bool

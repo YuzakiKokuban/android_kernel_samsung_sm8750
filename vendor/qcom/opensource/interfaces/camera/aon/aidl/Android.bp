@@ -1,0 +1,31 @@
+aidl_interface {
+    name: "vendor.qti.hardware.camera.aon",
+    vendor_available: true,
+    owner: "qti",
+    srcs: ["vendor/qti/hardware/camera/aon/*.aidl"],
+    stability: "vintf",
+    backend: {
+        cpp: {
+            enabled: false,
+        },
+        java: {
+            sdk_version: "module_current",
+            enabled: true,
+        },
+        ndk: {
+            enabled: true,
+        },
+    },
+    versions_with_info: [
+        {
+            version: "1",
+            imports: [],
+        },
+        {
+            version: "2",
+            imports: [],
+        },
+
+    ],
+    frozen: true,
+}

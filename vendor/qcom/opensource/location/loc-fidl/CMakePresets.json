@@ -1,0 +1,234 @@
+{
+  "version": 1,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 19,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "unix-makefiles",
+      "hidden": true,
+      "generator": "Unix Makefiles",
+      "description": "Debug build using makefile generator",
+      "cacheVariables": {
+        "CMAKE_LINK_WHAT_YOU_USE": true,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
+        "CMAKE_MODULE_PATH": "${sourceDir}/CMake/Module",
+        "CMAKE_VERBOSE_MAKEFILE": true,
+        "CMAKE_COLOR_MAKEFILE": true,
+        "Python3_ROOT": "/usr"
+      }
+    },
+    {
+      "name": "clang9_linux_x86_64",
+      "inherits": "unix-makefiles",
+      "description": "Debug build with Clang-9 for Linux x86-64",
+      "binaryDir": "build/clang9_linux_x86_64",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/linux_clang9",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/CMake/Toolchain/clang9_linux_x86_64.cmake"
+        }
+      }
+    },
+    {
+      "name": "clang11_linux_x86_64",
+      "inherits": "unix-makefiles",
+      "description": "Debug build with Clang-11 for Linux x86-64",
+      "binaryDir": "build/clang11_linux_x86_64",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/linux_clang11",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/CMake/Toolchain/clang11_linux_x86_64.cmake"
+        }
+      }
+    },
+    {
+      "name": "gcc6_linux_x86_64",
+      "inherits": "unix-makefiles",
+      "description": "Debug build with GCC-6 for Linux x86-64",
+      "binaryDir": "build/gcc6_linux_x86_64",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/linux_gcc6",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/CMake/Toolchain/gcc6_linux_x86_64.cmake"
+        }
+      }
+    },
+    {
+      "name": "gcc7_linux_x86_64",
+      "inherits": "unix-makefiles",
+      "description": "Debug build with GCC-7 for Linux x86-64",
+      "binaryDir": "build/gcc7_linux_x86_64",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/linux_gcc7",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/CMake/Toolchain/gcc7_linux_x86_64.cmake"
+        }
+      }
+    },
+    {
+      "name": "gcc7_linux_x86_64_openssl",
+      "inherits": "gcc7_linux_x86_64",
+      "description": "Debug build with GCC-7 for Linux x86-64 with OpenSSL enabled",
+      "cacheVariables": {
+        "AMSR_ENABLE_X509": "ON"
+      }
+    },
+    {
+      "name": "gcc9_linux_x86_64",
+      "inherits": "unix-makefiles",
+      "description": "Debug build with GCC-9 for Linux x86-64",
+      "binaryDir": "build/gcc9_linux_x86_64",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/linux_gcc9",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/CMake/Toolchain/gcc9_linux_x86_64.cmake"
+        }
+      }
+    },
+    {
+      "name": "mips2019_linux_x86_64",
+      "inherits": "unix-makefiles",
+      "description": "Debug build with MIPS-2019 for Linux x86-64",
+      "binaryDir": "build/mips2019_linux_x86_64",
+      "cacheVariables": {
+        "CCACHE_ENABLE": "OFF",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/linux_mips2019",
+        "CMAKE_PREFIX_PATH": "/opt/mips",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/CMake/Toolchain/mips2019_linux_x86_64.cmake"
+        }
+      }
+    },
+    {
+      "name": "qcc5_qnx7_x86_64",
+      "inherits": "unix-makefiles",
+      "description": "Debug build with QCC-5 for QNX7 x86-64",
+      "binaryDir": "build/qcc5_qnx7_x86_64",
+      "cacheVariables": {
+        "CCACHE_ENABLE": "OFF",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/qnx7_qcc5",
+        "CMAKE_PREFIX_PATH": "$env{QNX_HOST}/usr",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/CMake/Toolchain/qcc5_qnx7_x86_64.cmake"
+        }
+      }
+    },
+    {
+      "name": "qcc8_qnx710_x86_64",
+      "inherits": "unix-makefiles",
+      "description": "Debug build with QCC-8 for QNX7.1 x86-64",
+      "binaryDir": "build/qcc8_qnx710_x86_64",
+      "cacheVariables": {
+        "CCACHE_ENABLE": "OFF",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/qnx710_qcc8",
+        "CMAKE_PREFIX_PATH": "$env{QNX_HOST}/usr",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/CMake/Toolchain/qcc8_qnx710_x86_64.cmake"
+        }
+      }
+    },
+    {
+      "name": "qcc8_qnx710_aarch64le",
+      "inherits": "unix-makefiles",
+      "description": "Debug build with QCC-8 for QNX7.1 aarch64le",
+      "binaryDir": "build/qcc8_qnx710_aarch64le",
+      "cacheVariables": {
+        "CCACHE_ENABLE": "OFF",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/qnx710_qcc8",
+        "CMAKE_PREFIX_PATH": "$env{QNX_HOST}/usr",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/CMake/Toolchain/qcc8_qnx710_aarch64le.cmake"
+        }
+      }
+    },
+    {
+      "name": "qcc8_qnx710_x86_64_openssl",
+      "inherits": "qcc8_qnx710_x86_64",
+      "description": "Debug build with QCC-8 for QNX7.1 x86-64 with OpenSSL enabled",
+      "cacheVariables": {
+        "AMSR_ENABLE_X509": "ON"
+      }
+    },
+    {
+      "name": "cafecc_linux_x86_64",
+      "inherits": "unix-makefiles",
+      "description": "Debug build with cafeCC for Linux x86-64",
+      "binaryDir": "build/cafecc_linux_x86_64",
+      "cacheVariables": {
+        "CCACHE_ENABLE": "ON",
+        "TACO_EXECUTE_TEST": "OFF",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/linux_cafecc",
+        "CMAKE_PREFIX_PATH": "/opt/bauhaus-suite",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/CMake/Toolchain/cafecc_linux_x86_64.cmake"
+        }
+      },
+      "environment": {
+        "COMPILE_ONLY": "true",
+        "BAUHAUS_CONFIG": "${sourceDir}/Infrastructure/bauhaus/bauhaus-config/cafecc_config_linux_gcc7_x86_64"
+      }
+    },
+    {
+      "name": "vca_linux_x86_64",
+      "inherits": "unix-makefiles",
+      "description": "Debug build with Vector Code Analyzer for Linux x86-64",
+      "binaryDir": "build/vca_linux_x86_64",
+      "cacheVariables": {
+        "CCACHE_ENABLE": "OFF",
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_LINK_WHAT_YOU_USE": false,
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/linux_vca",
+        "CMAKE_PREFIX_PATH": "/opt/VectorCodeAnalyzer",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/CMake/Toolchain/vca_linux_x86_64.cmake"
+        },
+        "Python3_ROOT": null
+      }
+    },
+    {
+      "name": "cafecc_qnx710_x86_64",
+      "inherits": "unix-makefiles",
+      "description": "Debug build with cafeCC for QNX7.1 x86-64",
+      "binaryDir": "build/cafecc_qnx710_x86_64",
+      "cacheVariables": {
+        "CCACHE_ENABLE": "ON",
+        "TACO_EXECUTE_TEST": "OFF",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/qnx_cafecc",
+        "CMAKE_PREFIX_PATH": "/opt/bauhaus-suite",
+        "CMAKE_TOOLCHAIN_FILE": {
+          "type": "FILEPATH",
+          "value": "${sourceDir}/CMake/Toolchain/cafecc_qnx710_x86_64.cmake"
+        }
+      },
+      "environment": {
+        "COMPILE_ONLY": "true",
+        "BAUHAUS_CONFIG": "${sourceDir}/Infrastructure/bauhaus/bauhaus-config/cafecc_config_QNX710_x86_64"
+      }
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+/* Copyright (c) 2020, The Linux Foundation. All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are
+* met:
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above
+*       copyright notice, this list of conditions and the following
+*       disclaimer in the documentation and/or other materials provided
+*       with the distribution.
+*     * Neither the name of The Linux Foundation nor the names of its
+*       contributors may be used to endorse or promote products derived
+*       from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+*/
+
+package vendor.qti.hardware.wifi.hostapd@1.2;
+
+import android.hardware.wifi.hostapd@1.0::IHostapd;
+import android.hardware.wifi.hostapd@1.0::types;
+
+import @1.0::IHostapdVendor;
+import @1.1::IHostapdVendor;
+
+/**
+ * Vendor Interface exposed by the hostapd HIDL service registered
+ * with the hardware service manager.
+ * This is the root level object for any vendor specific hostapd interactions.
+ */
+interface IHostapdVendor extends @1.1::IHostapdVendor {
+    /** Possble Security types. */
+    enum VendorEncryptionType : @1.1::IHostapdVendor.VendorEncryptionType {
+        SAE_TRANSITION,
+    };
+
+    /**
+     * Band bitmMask to use for the SoftAp operations.
+     * A combinatoin of these bits are used to identify the allowed bands
+     * to start the softAp
+     */
+    enum BandMask : uint32_t {
+        /**
+         * 2.4 GHz band.
+         */
+        BAND_2_GHZ = 1 << 0,
+        /**
+         * 5 GHz band.
+         */
+        BAND_5_GHZ = 1 << 1,
+        /**
+         * 6 GHz band.
+         */
+        BAND_6_GHZ = 1 << 2,
+    };
+
+    /**
+     * Parameters to control the HW mode for the interface.
+     */
+    struct HwModeParams {
+        /**
+         * Whether IEEE 802.11ax (HE) is enabled or not.
+         * Note: hw_mode=a is used to specify that 5 GHz band or 6 GHz band is
+         * used with HE.
+         */
+        bool enable80211AX;
+
+        /**
+         * Whether 6GHz band enabled or not on softAp.
+         * Note: hw_mode=a is used to specify that 5 GHz band or 6 GHz band is
+         * used.
+         */
+        bool enable6GhzBand;
+
+        /**
+         * Whether HE single user beamformer in enabled or not on softAp.
+         * Note: this is only applicable if 802.11ax is supported for softAp
+         */
+        bool enableHeSingleUserBeamformer;
+
+        /**
+         * Whether HE single user beamformee is enabled or not on softAp.
+         * Note: this is only applicable if 802.11ax is supported for softAp
+         */
+        bool enableHeSingleUserBeamformee;
+
+        /**
+         * Whether HE multiple user beamformer is enabled or not on softAp.
+         * Note: this is only applicable if 802.11ax is supported for softAp
+         */
+        bool enableHeMultiUserBeamformer;
+
+        /**
+         * Whether HE Target Wait Time (TWT) is enabled or not on softAp.
+         * Note: this is only applicable if 802.11ax is supported for softAp
+         */
+        bool enableHeTargetWakeTime;
+    };
+
+    /**
+     * Parameters to specify the channel frequency range for ACS.
+     */
+    struct AcsFrequencyRange {
+        /**
+         * Channel Frequency (in MHz) at the start of the range.
+         */
+        uint32_t start;
+
+        /**
+         * Channel Frequency (in MHz) at the end of the range.
+         */
+        uint32_t end;
+    };
+
+    /**
+     * Parameters to control the channel selection for the interface.
+     */
+    struct ChannelParams {
+        /**
+         * Band to use for the SoftAp operations.
+         */
+        bitfield<BandMask> bandMask;
+
+        /**
+         * This option can be used to specify the channel frequencies (in MHz) selected by ACS.
+         * If this is an empty list, all channels allowed in selected HW mode
+         * are specified implicitly.
+         * Note: channels may be overridden by firmware.
+         * Note: this option is ignored if ACS is disabled.
+         */
+        vec<AcsFrequencyRange> acsChannelFreqRangesMhz;
+    };
+
+
+    /**
+     * Parameters to use for setting up the access point interface.
+     */
+    struct VendorIfaceParams {
+        /**
+         * Baseline information as defined in HAL 1.1.
+         */
+        @1.1::IHostapdVendor.VendorIfaceParams VendorV1_1;
+
+        /**
+         * Additional Hw mode params for the interface
+         */
+        HwModeParams hwModeParams;
+
+        /**
+         * Additional Channel params for the interface
+         */
+        ChannelParams channelParams;
+    };
+
+    /**
+     * Parameters to use for setting up the access point network.
+     */
+    struct VendorNetworkParams {
+        /**
+         * Baseline information as defined in HAL 1.0.
+         */
+        @1.0::IHostapd.NetworkParams V1_0;
+
+        /**
+         * Passphrase for WPA3_SAE network, WPA3_SAE_TRANSITION and
+         * WPA2_PSK. Replaces @1.0::IHostapd.NetworkParams.pskPassphrase.
+         */
+        string passphrase;
+
+        /**
+         * Key management mask for the network. overrides NetworkParams.encryptionType
+         */
+        VendorEncryptionType vendorEncryptionType;
+
+        /**
+         * ocv: Operating Channel Validation
+         * This is a countermeasure against multi-channel man-in-the-middle attacks.
+         */
+        bool enableOCV;
+
+        /**
+         * Beacon Protection (management frame protection for Beacon frames)
+         */
+        bool enableBeaconProtection;
+    };
+
+
+    /**
+     * Adds a new vendor access point for hostapd to control.
+     *
+     * This should trigger the setup of an access point with the specified
+     * interface and network params.
+     *
+     * @param ifaceParams AccessPoint Params for the access point.
+     * @param nwParams Network Params for the access point.
+     * @return status Status of the operation.
+     *         Possible status codes:
+     *         |HostapdStatusCode.SUCCESS|,
+     *         |HostapdStatusCode.FAILURE_ARGS_INVALID|,
+     *         |HostapdStatusCode.FAILURE_UNKNOWN|,
+     *         |HostapdStatusCode.FAILURE_IFACE_EXISTS|
+     */
+    addVendorAccessPoint_1_2(VendorIfaceParams ifaceParams, VendorNetworkParams nwParams)
+        generates (HostapdStatus status);
+
+    /**
+     * List active interfaces in hostapd.
+     *
+     * @return status Status of the operation.
+     *         Possible status codes:
+     *         |SupplicantStatusCode.SUCCESS|,
+     *         |SupplicantStatusCode.FAILURE_UNKNOWN|
+     * @return ifnames Active interface names.
+     */
+    listInterfaces() generates (HostapdStatus status, vec<string> ifnames);
+
+    /**
+     * Send hostapd_cli like commands to hostapd.
+     * @return status Status of the operation.
+     *         Possible status codes:
+     *         |SupplicantStatusCode.SUCCESS|,
+     *         |SupplicantStatusCode.FAILURE_UNKNOWN|
+     * @return reply Hostapd_cli like reply string
+     */
+    hostapdCmd(string ifname, string cmd) generates (HostapdStatus status, string reply);
+};

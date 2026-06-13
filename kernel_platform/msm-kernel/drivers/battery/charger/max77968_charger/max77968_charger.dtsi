@@ -1,0 +1,26 @@
+&qupv3_hub_i2c4 {
+	status = "okay";
+
+	max77968_charger: max77968@40 {
+		compatible = "maxim,max77968";
+		reg = <0x40>;
+
+		max77968,input-current-limit = <0x2dc6c0>;
+		max77968,charging-current = <0x5b8d80>;
+		max77968,input-itopoff = <0x7a120>;
+		max77968,sense-resistance = <0x02>;
+		max77968,sense-config = <0x00>;
+		max77968,fsw_cfg_3to1 = <0x7>;
+		max77968,fsw_cfg_2to1 = <0x3>;
+		max77968,fsw_cfg_byp = <0x7>;
+		max77968,fsw_cfg_fpdo = <0x3>;
+		max77968,ntc-ot-en = <0x0>;
+		max77968,ntc-ot-th = <0x10eff0>;
+		max77968,chg-mode = <0x3>;
+		max77968,cv-polling = <0x7d0>;
+		max77968,step1-cv = <0x401640>;
+		max77968,fpdo_dc_input-itopoff = <0x19F0A0>;
+		max77968,fpdo_dc_vnow-topoff = <0x4C4B40>;
+		max77968,vbatt_adc_from = <0x00>;
+	};
+};

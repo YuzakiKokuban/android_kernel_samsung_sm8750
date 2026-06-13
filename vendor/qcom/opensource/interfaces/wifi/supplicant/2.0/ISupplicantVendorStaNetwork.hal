@@ -1,0 +1,442 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are
+* met:
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above
+*       copyright notice, this list of conditions and the following
+*       disclaimer in the documentation and/or other materials provided
+*       with the distribution.
+*     * Neither the name of The Linux Foundation nor the names of its
+*       contributors may be used to endorse or promote products derived
+*       from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+*/
+
+package vendor.qti.hardware.wifi.supplicant@2.0;
+
+
+import android.hardware.wifi.supplicant@1.0::ISupplicantStaNetworkCallback;
+import android.hardware.wifi.supplicant@1.0::types;
+import vendor.qti.hardware.wifi.supplicant@2.0::ISupplicantVendorNetwork;
+
+
+/**
+ * Vendor StaNetwork Interface extend to vendor.qti.hardware.wifi.supplicant@2.0 ISupplicantVendorNetwork
+ */
+interface ISupplicantVendorStaNetwork extends @2.0::ISupplicantVendorNetwork {
+  /** Possble mask of values for VendorKeyMgmt param. */
+  enum VendorKeyMgmtMask : uint32_t {
+    SAE = 1 << 10,
+    WAPI_PSK = 1 << 12,
+    WAPI_CERT = 1 << 13,
+    IEEE8021X_SUITEB = 1 << 16,
+    IEEE8021X_SUITEB_192 = 1 << 17,
+    FILS_SHA256 = 1 << 18,
+    FILS_SHA384 = 1 << 19,
+    OWE = 1 << 22,
+    DPP = 1 << 23,
+  };
+
+  /** Possble mask of values for VendorProto param. */
+  enum VendorProtoMask : uint32_t {
+    WAPI = 1 << 2,
+  };
+
+  /** Possble mask of values for VendorAuthAlg param. */
+  enum VendorAuthAlgMask : uint32_t {
+    FILS_SK = 1 << 5,
+  };
+
+  /** Possble mask of values for GroupCipher param. */
+  enum VendorGroupCipherMask : uint32_t {
+    GCMP = 1 << 6,
+    GCMP_256 = 1 << 8,
+  };
+
+  /** Possble mask of values for PairwiseCipher param. */
+  enum VendorPairwiseCipherMask : uint32_t {
+    GCMP = 1 << 6,
+    GCMP_256 = 1 << 8,
+  };
+
+  /** Possble mask of values for GroupMgmtCipher param. */
+  enum VendorGroupMgmtCipherMask : uint32_t {
+    BIP_GMAC_128 = 1 << 11,
+    BIP_GMAC_256 = 1 << 12,
+    BIP_CMAC_256 = 1 << 13,
+  };
+
+  /** Common config Vendor Param Method */
+
+  /**
+   * Set key management mask for the network.
+   *
+   * @param keyMgmtMask value to set.
+   *        Combination of |KeyMgmtMask| values.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setVendorKeyMgmt(bitfield<VendorKeyMgmtMask> keyMgmtMask) generates (SupplicantStatus status);
+
+  /**
+   * Set Protocol mask for the network.
+   *
+   * @param ProtoMask value to set.
+   *        Combination of |ProtoMask| values.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setVendorProto(bitfield<VendorProtoMask> ProtoMask) generates (SupplicantStatus status);
+
+  /**
+   * Set auth alg mask for the network.
+   *
+   * @param authAlgMask value to set.
+   *        Combination of |authAlgMask| values.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setVendorAuthAlg(bitfield<VendorAuthAlgMask> authAlgMask) generates (SupplicantStatus status);
+
+  /**
+   * Set group cipher mask for the network.
+   *
+   * @param groupCipherMask value to set.
+   *        Combination of |groupCipherMask| values.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setVendorGroupCipher(bitfield<VendorGroupCipherMask> groupCipherMask)
+      generates (SupplicantStatus status);
+
+  /**
+   * Set pairwise cipher mask for the network.
+   *
+   * @param pairwiseCipherMask value to set.
+   *        Combination of |pairwiseCipherMask| values.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setVendorPairwiseCipher(bitfield<VendorPairwiseCipherMask> pairwiseCipherMask)
+      generates (SupplicantStatus status);
+
+  /**
+   * Get the key mgmt mask set for the network.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   * @return keyMgmtMask Combination of |VendorKeyMgmtMask| values.
+   */
+  getVendorKeyMgmt()
+      generates (SupplicantStatus status, bitfield<VendorKeyMgmtMask> keyMgmtMask);
+
+  /**
+   * Get the protocol mask set for the network.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   * @return ProtoMask Combination of |VendorProtoMask| values.
+   */
+  getVendorProto()
+      generates (SupplicantStatus status, bitfield<VendorProtoMask> ProtoMask);
+
+  /**
+   * Get the auth alg mask set for the network.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   * @return authAlgMask Combination of |VendorAuthAlgMask| values.
+   */
+  getVendorAuthAlg()
+      generates (SupplicantStatus status, bitfield<VendorAuthAlgMask> authAlgMask);
+
+  /**
+   * Get the group cipher mask set for the network.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   * @return groupCipherMask Combination of |VendorGroupCipherMask| values.
+   */
+  getVendorGroupCipher()
+      generates (SupplicantStatus status,
+                 bitfield<VendorGroupCipherMask> groupCipherMask);
+
+  /**
+   * Get the pairwise cipher mask set for the network.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   * @return groupCipherMask Combination of |VendorPairwiseCipherMask| values.
+   */
+  getVendorPairwiseCipher()
+      generates (SupplicantStatus status,
+                 bitfield<VendorPairwiseCipherMask> pairwiseCipherMask);
+
+  /** FILS config Vendor Method */
+
+  /**
+   * Enable EAP ERP for this network.
+   *
+   * @param enable true to set, false otherwise.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setEapErp(bool enable) generates (SupplicantStatus status);
+
+  /** WPA3 config Vendor Method */
+
+  /**
+   * Bitfield of allowed group management ciphers
+   * @param enable true to set, false otherwise.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setGroupMgmtCipher(uint32_t group_mgmt_cipher) generates (SupplicantStatus status);
+
+  /**
+   * Set phase1 (outer authentication) parameters.
+   *
+   * @param Pre-configured EAP parameters or %NULL.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setEapPhase1Params(string params) generates (SupplicantStatus status);
+
+  /**
+   * Set OpenSSL cipher string.
+   *
+   * @param This is an OpenSSL specific configuration option for configuring the
+   *        default ciphers.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setEapOpensslCiphers(string Ciphers) generates (SupplicantStatus status);
+
+  /**
+   * Set DPP Connector for this network.
+   *
+   * @param connector string to set.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setDppConnector(string connector) generates (SupplicantStatus status);
+
+  /**
+   * Set DPP Net Access Key for this network.
+   *
+   * @param netAccessKey value to set.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setDppNetAccessKey(vec<uint8_t> netAccessKey)
+      generates (SupplicantStatus status);
+
+  /**
+   * Set DPP Net Access Key Expiry time for this network.
+   *
+   * @param netAccessKeyExpiry integer to set.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setDppNetAccessKeyExpiry(uint32_t netAccessKeyExpiry)
+      generates (SupplicantStatus status);
+
+  /**
+   * Set DPP C-sign for this network.
+   *
+   * @param csign value to set.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setDppCsign(vec<uint8_t> csign) generates (SupplicantStatus status);
+
+  /** WAPI config Vendor Method */
+
+  /**
+   * Set wapiPskType for this network.
+   *
+   * @param psk type value to set.
+   *        0: ASCII; 1: HEX.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+
+  setWapiPskType(uint32_t type) generates (SupplicantStatus status);
+
+  /**
+   * Set wapiPsk for this network.
+   *
+   * @param psk value to set.
+   *        Max length is 64.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setWapiPsk(string psk) generates (SupplicantStatus status);
+
+  /**
+   * Set wapiCertSelMode for this network.
+   *
+   * @param cert select mode to set.
+   *        0: automatic; 1: manual.
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setWapiCertSelMode(uint32_t mode) generates (SupplicantStatus status);
+
+  /**
+   * Set wapiCertSel for this network.
+   *
+   * @param selected cert name.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setWapiCertSel(string name) generates (SupplicantStatus status);
+
+  /**
+   * Get wapiPskType for this network.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   * @return psk type value.
+   */
+  getWapiPskType() generates (SupplicantStatus status, uint32_t type);
+
+  /**
+   * Get wapiPsk for this network.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   * @return psk value.
+   */
+  getWapiPsk() generates (SupplicantStatus status, string psk);
+
+  /**
+   * Get wapiCertSelMode for this network.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   * @return cert select mode value.
+   */
+  getWapiCertSelMode() generates (SupplicantStatus status, uint32_t mode);
+
+  /**
+   * Get wapiCertSel for this network.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   * @return selected cert value.
+   */
+  getWapiCertSel() generates (SupplicantStatus status, string name);
+
+  /** EAP SIM Vendor Method */
+
+  /**
+   * Set simnumber for this network.
+   *
+   * @param sim_num.
+   *
+   * @return status Status of the operation.
+   *         Possible status codes:
+   *         |SupplicantStatusCode.SUCCESS|,
+   *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+   *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+   *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+   */
+  setVendorSimNumber(uint32_t sim_num) generates (SupplicantStatus status);
+};

@@ -1,0 +1,34 @@
+{
+    "homepage": "https://github.com/bazel-contrib/rules_jvm",
+    "maintainers": [
+        {
+            "name": "Daniel Wagner-Hall",
+            "email": "dawagner@gmail.com",
+            "github": "illicitonion"
+        },
+        {
+            "name": "Gibson Fahnestock",
+            "email": "gibfahn@gmail.com",
+            "github": "gibfahn"
+        },
+        {
+            "name": "Simon Stewart",
+            "email": "simon.m.stewart@gmail.com",
+            "github": "shs96c"
+        }
+    ],
+    "repository": [
+        "github:bazel-contrib/rules_jvm"
+    ],
+    "versions": [
+        "0.13.0",
+        "0.18.0",
+        "0.21.4",
+        "0.22.0",
+        "0.23.0",
+        "0.24.0",
+        "0.25.1",
+        "0.26.0"
+    ],
+    "yanked_versions": {}
+}

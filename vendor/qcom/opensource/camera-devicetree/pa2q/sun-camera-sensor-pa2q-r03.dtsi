@@ -1,0 +1,26 @@
+#include "sun-camera-sensor-pa2q-r02.dtsi"
+
+&reg_dio8018_1_ldo7 {
+	regulator-min-microvolt = <2204000>;
+	regulator-max-microvolt = <2804000>;
+};
+
+&reg_dio8018_1_ldo2 {
+	regulator-min-microvolt = <824000>;
+	regulator-max-microvolt = <920000>;
+};
+
+&sensor_front {
+		rgltr-min-voltage = <824000 1804000 2204000 0 2704000>;
+		rgltr-max-voltage = <920000 1804000 2804000 0 3008000>;
+};
+
+&sensor_front_full {
+		rgltr-min-voltage = <824000 1804000 2204000 0 2704000>;
+		rgltr-max-voltage = <920000 1804000 2804000 0 3008000>;
+};
+
+&sensor_rear_wide {
+		rgltr-min-voltage = <920000 1804000 2204000 0 920000 2704000>;
+		rgltr-max-voltage = <920000 1804000 2204000 0 920000 3008000>;
+};

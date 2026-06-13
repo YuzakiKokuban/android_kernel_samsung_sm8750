@@ -1,0 +1,4 @@
+config SEC_QC_SUMMARY
+	tristate "SEC Debug Summary for Qualcomm SoC based models"
+	help
+	  TODO: help is not ready.

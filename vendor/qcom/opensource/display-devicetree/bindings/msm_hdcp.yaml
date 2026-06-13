@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/msm_hdcp.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: MSM HDCP driver
+
+description: |
+  Standalone driver managing HDCP related communications between TZ and HLOS for MSM chipset.
+
+maintainers:
+  - Rajkumar Subbiah <quic_rsubbia@quicinc.com>
+  - Vishnuvardhan Prodduturi <quic_vproddut@quicinc.com>
+
+properties:
+  compatible:
+    const: qcom,msm-hdcp
+
+required:
+  - compatible
+
+examples:
+  - |
+    qcom_msmhdcp: qcom,msm_hdcp {
+      compatible = "qcom,msm-hdcp";
+    };
+...

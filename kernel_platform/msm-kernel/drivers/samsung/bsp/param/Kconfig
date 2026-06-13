@@ -1,0 +1,4 @@
+config SEC_PARAM
+	tristate "Samsung PARAM driver"
+	help
+	  TODO: help is not ready.

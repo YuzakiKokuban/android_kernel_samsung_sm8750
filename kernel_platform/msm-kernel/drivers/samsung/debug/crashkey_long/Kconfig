@@ -1,0 +1,22 @@
+config SEC_CRASHKEY_LONG
+	tristate "SEC Long key reset driver"
+	depends on SEC_KEY_NOTIFIER
+	help
+	  TODO: help is not ready.
+
+config SEC_CRASHKEY_LONG_TEST_FOR_ON_DEVICE
+	tristate "KUnit test for sec_crashkey_long_test"
+	depends on KUNIT
+	depends on SEC_CRASHKEY_LONG
+	help
+	  TODO: Describe config fully.
+	  If you run this test driver on device, SHOULD set this config as 'm' to build test driver modulraly.
+
+config SEC_CRASHKEY_LONG_TEST_FOR_ONLY_UML
+	tristate "KUnit test for sec_crashkey_long_test"
+	depends on KUNIT
+	depends on UML
+	depends on SEC_CRASHKEY_LONG
+	help
+	  TODO: Describe config fully.
+	  This CONFIG is recommended to set to y.

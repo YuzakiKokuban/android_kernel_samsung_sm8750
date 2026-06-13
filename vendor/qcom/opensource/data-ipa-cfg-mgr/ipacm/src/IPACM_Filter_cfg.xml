@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2021 The Linux Foundation. All rights reserved. -->
+<system xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ipacm_filter_cfg.xsd">
+	<IPACMFilterCfg>
+		<FilteringEnabled>0</FilteringEnabled>
+		<FilterDLAck>0</FilterDLAck>
+		<FilterEntry>
+			<IPFamily>4</IPFamily>
+			<IPV4NextHeaderProtocol>17</IPV4NextHeaderProtocol>
+		</FilterEntry>
+		<FilterEntry>
+			<IPFamily>4</IPFamily>
+			<IPV4NextHeaderProtocol>6</IPV4NextHeaderProtocol>
+		</FilterEntry>
+	</IPACMFilterCfg>
+</system>

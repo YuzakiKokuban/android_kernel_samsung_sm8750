@@ -1,0 +1,299 @@
+config SPECTRA_ISP
+	bool "enable camera ISP module"
+	help
+	  This is enabling camera ISP module.
+	  IFE camera driver file be included.
+	  This will enable camera ISP driver to handle IFE driver.
+	  Core camera driver to handle VFE HW.
+
+config SPECTRA_ICP
+	bool "enable camera ICP module"
+	help
+	  This is enabling camera ICP module.
+	  Camera ICP driver file be included.
+	  This will enable camera ICP driver to interact with,
+	  ICP FW. Which can control IPE and BPS HW.
+
+config SPECTRA_JPEG
+	bool "enable camera jpeg module"
+	help
+	  This is enabling camera JPEG module.
+	  camera jpeg module will be functional.
+	  This module interact with jpeg HW for
+	  snapshot processing.
+
+config SPECTRA_SENSOR
+	bool "enable camera sensor module"
+	help
+	  This is enabling camera sensor module.
+	  sensor module files will be included to enable the driver.
+	  eeprom, flash, csiphy all other module will be included
+	  to make the sensor functional.
+
+config SPECTRA_USE_CLK_CRM_API
+	bool "enable camera cesta clk feature"
+	help
+	  This is enabling camera cesta feature.
+	  kernel clk driver api will cache the clk value
+	  send by camera hw and apply to CRM hw.
+	  CRM hw will consolidate and apply the clk to camera HW.
+
+config SPECTRA_USE_RPMH_DRV_API
+	bool "enable camera new ICC BW api"
+	help
+	  This is helping to set BW through kernel icc driver.
+	  Kernel icc driver do caching the bw information.
+	  icc driver will update the bw information RPMH,
+	  to apply proper bw voting for camera to mmnoc
+
+config SPECTRA_LLCC_STALING
+	bool "enable camera new LLCC staling feature"
+	help
+	  This will enable to call LLCC driver cache notification API
+	  and increment count API.
+	  Which will enable LLCC staling feature,based on counter
+	  invalidate the cache slice.
+
+config TARGET_SYNX_ENABLE
+	bool "enable HW synx"
+	help
+	  This is enabling HW syx feature.
+	  synx hw signaling external to camera,
+	  like EVA and other.
+	  This is to avoid sw signaling latency.
+
+config MSM_MMRM
+	bool "enable MSM MMRM"
+	help
+	  This is enabling mmrm api access.
+	  mmrm to cahce the clk voting.
+	  mmrm knows about all clients' clock rates.
+	  MMRM can decide whether new peak power usage is within allowed value
+
+config INTERCONNECT_QCOM
+	bool "enabling icc bus driver"
+	help
+		This is to access icc driver api.
+		To cache AB and IB vote will
+		use ICC kernel driver API.
+		So that ICC driver can consolidate the vote
+
+config DOMAIN_ID_SECURE_CAMERA
+	bool "enable domain ID based secure camera flow"
+	help
+		This is to enable domain ID based secure
+		camera flow on the hardware platforms with
+		domain ID based security architecture.
+		VC based security can be achieved with this.
+
+config DYNAMIC_FD_PORT_CONFIG
+	bool "enable dynamic FD port config feature"
+	help
+		This config enables dynamic FD port config
+		feature that allows the userspace to configure
+		the FD port to secure or non-secure based on
+		the FD solution in use in secure camera use cases.
+
+config SECURE_CAMERA_25
+	bool "enable secure camera 2.5"
+	help
+		This config enables 2.5 secure camera
+		feature that allows the usage of non contiguous
+		buffers for the secure camera images by
+		lending the buffers to a trusted virtual machine.
+
+config SPECTRA_SECURE_DYN_PORT_CFG
+	bool "enable dynamic port config feature"
+	help
+		This config enables dynamic port config
+		feature that allows the userspace to configure
+		the output port(s) of a device to secure or
+		non-secure based the usecase requirements.
+
+config SPECTRA_SECURE_CAMNOC_REG_UPDATE
+	bool "enable secure camnoc reg update feature"
+	help
+		This config enables secure reg update
+		feature that allows the HLOS to configure
+		camnoc registers through HYP to avoid
+		potential security issues.
+
+config SAMSUNG_CAMERA
+	bool "enable samsung camera"
+	help
+	  This is enabling samsung camera feature.
+	  samsung specialized functions will be functional.
+
+config CAMERA_FRAME_CNT_DBG
+	bool "enable camera frame count debug"
+	help
+	  This is enabling frame count debug feature.
+	  camera frame count will be functional.
+
+config CAMERA_FRAME_CNT_CHECK
+	bool "enable frame count check feature"
+	help
+	  This is enabling frame count check to ensure that
+	  sensor streams at least one frame before stream off.
+
+config CAMERA_SYSFS_V2
+	bool "enable camera sysfs v2 module"
+	help
+	  This is enabling camera sysfs v2 module.
+	  camera sysfs v2 module will be functional.
+	  This module provide sysfs node for factory test.
+
+config SAMSUNG_REAR_DUAL
+	bool "enable rear dual"
+	help
+	  This is enabling samsung rear dual feature.
+	  device has at least two cameras facing rear.
+
+config SAMSUNG_REAR_TRIPLE
+	bool "enable rear triple"
+	help
+	  This is enabling samsung rear triple feature.
+	  device has at least three cameras facing rear.
+
+config SAMSUNG_REAR_QUADRA
+	bool "enable rear quadra"
+	help
+	  This is enabling samsung rear quadra feature.
+	  device has at least four cameras facing rear.
+
+config SAMSUNG_PMIC_FLASH
+	bool "enable samsung pmic flash"
+	help
+	  This is enabling samsung pmic flash feature.
+	  samsung specialized functions will be functional.
+
+config SAMSUNG_FRONT_EEPROM
+	bool "enable front eeprom"
+	help
+	  This is enabling front eeprom feature.
+
+config SENSOR_RETENTION
+	bool "enable sensor retention"
+	help
+	  This is enabling sensor retention feature.
+	  sensor retention will be functional.
+
+config SAMSUNG_DEBUG_HW_INFO
+	bool "enable sensor hw info debug"
+	help
+	  This is enabling feature to debug sensor hw information.
+	  sensor will provide api to debug hardware information.
+
+config USE_CAMERA_HW_BIG_DATA
+	bool "enable hardware big data"
+	help
+	  This is enabling feature to gather H/W big data.
+	  all sensor subdevices will provide error information
+	  related to H/W.
+
+config CAMERA_CDR_TEST
+	bool "enable CDR test"
+	help
+	  This is enabling CDR test feature.
+
+config CAMERA_HW_ERROR_DETECT
+	bool "enable HW error detect"
+	help
+	  This is enabling HW error detect.
+
+config SAMSUNG_ACTUATOR_READ_HALL_VALUE
+	bool "enable read hall value of actuator"
+	help
+	  This is enabling actuator read hall value feature.
+	  actuator will provide api to read hall value.
+
+config SAMSUNG_UW_CAMERA_ACTUATOR
+	bool "enable ultra-wide camera with actuator feature"
+	help
+	  This is enabling ultra-wide camera with actuator feature.
+
+config SAMSUNG_FRONT_CAMERA_ACTUATOR
+	bool "enable front camera with actuator feature"
+	help
+	  This is enabling front camera with actuator feature.
+
+config SAMSUNG_READ_BPC_FROM_OTP
+	bool "enable read BPC from OTP"
+	help
+	  This is enabling read BPC from OTP feature.
+
+config SAMSUNG_WACOM_NOTIFIER
+	bool "enable wacom notifier"
+	help
+	  This is enabling wacom notifier.
+
+config CAMERA_ADAPTIVE_MIPI
+	bool "enable adaptive mipi"
+	help
+	  This is enabling function for adaptive mipi.
+
+config SAMSUNG_DEBUG_SENSOR_I2C
+	bool "enable debug sensor i2c"
+	help
+	  This is enabling debug sensor i2c.
+
+config SEC_NE1Q_PROJECT
+	bool "enable model feature for ne1 project"
+	help
+	  This is enabling function for ne1 project.
+
+config SEC_NE2Q_PROJECT
+	bool "enable model feature for ne2 project"
+	help
+	  This is enabling function for ne2 project.
+
+config SEC_NE3Q_PROJECT
+	bool "enable model feature for ne3 project"
+	help
+	  This is enabling function for ne3 project.
+
+config SEC_PA1Q_PROJECT
+	bool "enable model feature for pa1 project"
+	help
+	  This is enabling function for pa1 project.
+
+config SEC_PA2Q_PROJECT
+	bool "enable model feature for pa2 project"
+	help
+	  This is enabling function for pa2 project.
+
+config SEC_PA3Q_PROJECT
+	bool "enable model feature for pa3 project"
+	help
+	  This is enabling function for pa3 project.
+
+config SEC_PSQ_PROJECT
+	bool "enable model feature for ps project"
+	help
+	  This is enabling function for ps project.
+
+config SEC_Q7Q_PROJECT
+	bool "enable model feature for q7 project"
+	help
+	  This is enabling function for q7 project.
+
+config SEC_Q7MQ_PROJECT
+	bool "enable model feature for q7m project"
+	help
+	  This is enabling function for q7m project.
+
+config SAMSUNG_LPAI_OIS
+	bool "enable LPAI OIS module"
+	help
+	  This is enabling LPAI(Low Power AI) OIS module.
+	  LPAI OIS module will be functional.
+	 
+config SAMSUNG_FRONT_TOP
+	bool "enable front top"
+	help
+	  This is enabling front top features.
+	  
+config SAMSUNG_FRONT_TOP_EEPROM
+	bool "enable front top eeprom"
+	help
+	  This is enabling front top eeprom.

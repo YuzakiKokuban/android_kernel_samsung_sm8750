@@ -1,0 +1,1396 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
+
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are
+* met:
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above
+*       copyright notice, this list of conditions and the following
+*       disclaimer in the documentation and/or other materials provided
+*       with the distribution.
+*     * Neither the name of The Linux Foundation nor the names of its
+*       contributors may be used to endorse or promote products derived
+*       from this software without specific prior written permission.
+
+* THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+* BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+* BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+* OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+* IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+* Changes from Qualcomm Innovation Center, Inc. are provided under the following license:
+* Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+* SPDX-License-Identifier: BSD-3-Clause-Clear
+* -->
+
+<mixer>
+    <!-- These are the initial mixer settings -->
+    <!-- TAS25xx controls -->
+    <ctl name="TAS25XX CODEC PROFILE" value="stereo" /> 
+    <ctl name="TAS25XX MUTE_TOP" value="DISABLE" />
+    <ctl name="TAS25XX MUTE_BOTTOM" value="DISABLE" />
+    <ctl name="TAS25XX DVC_GAIN_TOP" value="55" />
+    <ctl name="TAS25XX DVC_GAIN_BOTTOM" value="55" />
+    <ctl name="TAS25XX GAIN_CTRL_TOP" value="dB18" />
+    <ctl name="TAS25XX GAIN_CTRL_BOTTOM" value="dB18" />
+    <ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="50ms" />
+    <ctl name="TAS25XX NOISE_GATE_HSTIMER_BOTTOM" value="50ms" />
+    <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-105"/>
+    <ctl name="TAS25XX NOISE_GATE_THRESHOLD_BOTTOM" value="dbFS-105"/>
+    <!-- CS40L26 controls -->
+    <ctl name="Haptics Source" value="Off" />
+    <ctl name="SVC Algo Enable" value="0" />
+
+    <!-- Codec controls -->
+    <!-- RX Controls -->
+    <ctl name="RX_MACRO RX0 MUX" value="ZERO" />
+    <ctl name="RX_MACRO RX1 MUX" value="ZERO" />
+    <ctl name="RX INT0_1 MIX1 INP0" value="ZERO" />
+    <ctl name="RX INT0_1 MIX1 INP1" value="ZERO" />
+    <ctl name="RX INT0_1 MIX1 INP2" value="ZERO" />
+    <ctl name="RX INT1_1 MIX1 INP0" value="ZERO" />
+    <ctl name="RX INT1_1 MIX1 INP1" value="ZERO" />
+    <ctl name="RX INT1_1 MIX1 INP2" value="ZERO" />
+    <ctl name="RX INT0 DEM MUX" value="NORMAL_DSM_OUT" />
+    <ctl name="RX INT1 DEM MUX" value="NORMAL_DSM_OUT" />
+    <ctl name="RX_COMP1 Switch" value="0" />
+    <ctl name="RX_COMP2 Switch" value="0" />
+    <ctl name="RX_EAR Mode" value="OFF" />
+    <ctl name="PM_QOS Vote" value="Disable" />
+
+    <!-- TX Controls -->
+    <ctl name="VA_AIF1_CAP Mixer DEC0" value="0" />
+    <ctl name="VA_AIF1_CAP Mixer DEC1" value="0" />
+    <ctl name="VA_AIF1_CAP Mixer DEC2" value="0" />
+    <ctl name="VA_AIF1_CAP Mixer DEC3" value="0" />
+    <ctl name="VA DEC0 MUX" value="MSM_DMIC" />
+    <ctl name="VA DEC1 MUX" value="MSM_DMIC" />
+    <ctl name="VA DEC2 MUX" value="MSM_DMIC" />
+    <ctl name="VA DEC3 MUX" value="MSM_DMIC" />
+    <ctl name="VA DMIC MUX0" value="ZERO" />
+    <ctl name="VA DMIC MUX1" value="ZERO" />
+    <ctl name="VA DMIC MUX2" value="ZERO" />
+    <ctl name="VA DMIC MUX3" value="ZERO" />
+    <ctl name="VA SMIC MUX0" value="ZERO" />
+    <ctl name="VA SMIC MUX1" value="ZERO" />
+    <ctl name="VA SMIC MUX2" value="ZERO" />
+    <ctl name="VA SMIC MUX3" value="ZERO" />
+    <ctl name="VA_DEC0 MODE" value="ADC_DEFAULT" />
+    <ctl name="DEC0_BCS Switch" value="0" />
+
+    <ctl name="TX_AIF1_CAP Mixer DEC0" value="0" />
+    <ctl name="TX_AIF1_CAP Mixer DEC1" value="0" />
+    <ctl name="TX_AIF1_CAP Mixer DEC2" value="0" />
+    <ctl name="TX_AIF1_CAP Mixer DEC3" value="0" />
+    <ctl name="TX_AIF1_CAP Mixer DEC4" value="0" />
+    <ctl name="TX_AIF1_CAP Mixer DEC5" value="0" />
+    <ctl name="TX_AIF1_CAP Mixer DEC6" value="0" />
+    <ctl name="TX_AIF1_CAP Mixer DEC7" value="0" />
+    <ctl name="TX_AIF2_CAP Mixer DEC0" value="0" />
+    <ctl name="TX_AIF2_CAP Mixer DEC1" value="0" />
+    <ctl name="TX_AIF2_CAP Mixer DEC2" value="0" />
+    <ctl name="TX_AIF2_CAP Mixer DEC3" value="0" />
+    <ctl name="TX_AIF2_CAP Mixer DEC4" value="0" />
+    <ctl name="TX_AIF2_CAP Mixer DEC5" value="0" />
+    <ctl name="TX_AIF2_CAP Mixer DEC6" value="0" />
+    <ctl name="TX_AIF2_CAP Mixer DEC7" value="0" />
+    <ctl name="TX DEC0 MUX" value="MSM_DMIC" />
+    <ctl name="TX DMIC MUX0" value="ZERO" />
+    <ctl name="TX SMIC MUX0" value="ZERO" />
+    <ctl name="TX DEC1 MUX" value="MSM_DMIC" />
+    <ctl name="TX DMIC MUX1" value="ZERO" />
+    <ctl name="TX SMIC MUX1" value="ZERO" />
+    <ctl name="TX DEC2 MUX" value="MSM_DMIC" />
+    <ctl name="TX DMIC MUX2" value="ZERO" />
+    <ctl name="TX SMIC MUX2" value="ZERO" />
+    <ctl name="TX DEC3 MUX" value="MSM_DMIC" />
+    <ctl name="TX DMIC MUX3" value="ZERO" />
+    <ctl name="TX SMIC MUX3" value="ZERO" />
+    <ctl name="TX DEC4 MUX" value="MSM_DMIC" />
+    <ctl name="TX DMIC MUX4" value="ZERO" />
+    <ctl name="TX SMIC MUX4" value="ZERO" />
+    <ctl name="TX DEC5 MUX" value="MSM_DMIC" />
+    <ctl name="TX DMIC MUX5" value="ZERO" />
+    <ctl name="TX SMIC MUX5" value="ZERO" />
+    <ctl name="TX DEC6 MUX" value="MSM_DMIC" />
+    <ctl name="TX DMIC MUX6" value="ZERO" />
+    <ctl name="TX SMIC MUX6" value="ZERO" />
+    <ctl name="TX DEC7 MUX" value="MSM_DMIC" />
+    <ctl name="TX DMIC MUX7" value="ZERO" />
+    <ctl name="TX SMIC MUX7" value="ZERO" />
+
+    <!-- Volume controls -->
+    <ctl name="RX_RX0 Digital Volume" value="84" />
+    <ctl name="RX_RX1 Digital Volume" value="84" />
+    <ctl name="RX_RX2 Digital Volume" value="84" />
+
+    <ctl name="TX_DEC0 Volume" value="102" />
+    <ctl name="TX_DEC1 Volume" value="102" />
+    <ctl name="TX_DEC2 Volume" value="102" />
+    <ctl name="TX_DEC3 Volume" value="102" />
+    <ctl name="TX_DEC4 Volume" value="102" />
+    <ctl name="TX_DEC5 Volume" value="84" />
+    <ctl name="TX_DEC6 Volume" value="84" />
+    <ctl name="TX_DEC7 Volume" value="84" />
+
+    <ctl name="VA_DEC0 Volume" value="84" />
+    <ctl name="VA_DEC1 Volume" value="84" />
+    <ctl name="VA_DEC2 Volume" value="84" />
+    <ctl name="VA_DEC3 Volume" value="84" />
+
+    <!-- IIR/voice anc -->
+    <ctl name="IIR0 Band1" value="00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00" />
+    <ctl name="IIR0 Band2" value="00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00" />
+    <ctl name="IIR0 Band3" value="00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00" />
+    <ctl name="IIR0 Band4" value="00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00" />
+    <ctl name="IIR0 Band5" value="00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00" />
+    <ctl name="IIR0 Enable Band1" value="0" />
+    <ctl name="IIR0 Enable Band2" value="0" />
+    <ctl name="IIR0 Enable Band3" value="0" />
+    <ctl name="IIR0 Enable Band4" value="0" />
+    <ctl name="IIR0 Enable Band5" value="0" />
+    <ctl name="IIR0 INP0 Volume" value="54" />
+    <ctl name="IIR0 INP0 MUX" value="ZERO" />
+    <ctl name="IIR0 INP1 MUX" value="ZERO" />
+    <ctl name="IIR0 INP2 MUX" value="ZERO" />
+    <ctl name="IIR0 INP3 MUX" value="ZERO" />
+
+    <!-- vbat related data -->
+
+    <!-- Codec controls end -->
+
+    <!-- defaults for mmap record -->
+
+    <!-- HIFI Filter coefficients for headphones path -->
+    <path name="hifi-filter-coefficients">
+        <ctl name="RX0 FIR Coeff Num" value="8" />
+        <ctl name="RX0 FIR Coeff Group0" value="08 00 00 00 00 00 00 10 00 00 00 10 00 00 00 10 00 00 00 10 00 00 00 10 00 00 00 10 00 00 00 10 00 00 00 10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" />
+        <ctl name="RX0 FIR Coeff Group1" value="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" />
+        <ctl name="RX1 FIR Coeff Num" value="8" />
+        <ctl name="RX1 FIR Coeff Group0" value="08 00 00 00 00 00 00 10 00 00 00 10 00 00 00 10 00 00 00 10 00 00 00 10 00 00 00 10 00 00 00 10 00 00 00 10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" />
+        <ctl name="RX1 FIR Coeff Group1" value="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0" />
+    </path>
+
+    <!-- These are audio route (FE to BE) specific mixer settings -->
+    <path name="gsm-mode">
+        <ctl name="GSM mode Enable" value="ON" />
+    </path>
+
+    <path name="upper-spk-amp-mute">
+        <ctl name="TAS25XX MUTE_TOP" value="ENABLE" />
+    </path>
+
+    <path name="amp-mute">
+        <ctl name="TAS25XX MUTE_TOP" value="ENABLE" />
+        <ctl name="TAS25XX MUTE_BOTTOM" value="ENABLE" />
+    </path>
+
+    <path name="lpi-pcm-logging">
+        <ctl name="LPI PCM Logging Enable" value="1" />
+    </path>
+
+    <path name="PM_QOS_Vote">
+        <ctl name="PM_QOS Vote" value="Enable" />
+    </path>
+
+    <!-- Dual MIC devices -->
+    <path name="handset-dmic-endfire">
+        <ctl name="TX_AIF1_CAP Mixer DEC1" value="1" />
+        <ctl name="TX DMIC MUX1" value="DMIC1" />
+        <ctl name="TX_AIF1_CAP Mixer DEC2" value="1" />
+        <ctl name="TX DMIC MUX2" value="DMIC3" />
+    </path>
+
+    <path name="speaker-dmic-endfire">
+        <ctl name="TX_AIF1_CAP Mixer DEC1" value="1" />
+        <ctl name="TX DMIC MUX1" value="DMIC0" />
+        <ctl name="TX_AIF1_CAP Mixer DEC2" value="1" />
+        <ctl name="TX DMIC MUX2" value="DMIC1" />
+    </path>
+
+    <!-- These are actual sound device specific mixer settings -->
+    <!-- Device -->
+    <!-- RX part -->
+    <path name="rcv">
+      <ctl name="TAS25XX CODEC PROFILE" value="top_only" />
+      <ctl name="TAS25XX DVC_GAIN_TOP" value="55" />
+      <ctl name="TAS25XX GAIN_CTRL_TOP" value="dB3" />
+      <ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="10ms" />
+      <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-105"/>
+    </path>
+
+    <path name="spk-mono-left">
+      <ctl name="TAS25XX CODEC PROFILE" value="top_only" />
+      <ctl name="TAS25XX DVC_GAIN_TOP" value="55" />
+      <ctl name="TAS25XX GAIN_CTRL_TOP" value="dB18" />	  
+      <ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="50ms" />
+      <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-105"/>
+    </path>
+
+    <path name="spk-mono-right">
+      <ctl name="TAS25XX CODEC PROFILE" value="bottom_only" />
+      <ctl name="TAS25XX NOISE_GATE_HSTIMER_BOTTOM" value="50ms" />
+      <ctl name="TAS25XX NOISE_GATE_THRESHOLD_BOTTOM" value="dbFS-105"/>
+    </path>
+
+    <path name="spk">
+      <ctl name="TAS25XX CODEC PROFILE" value="stereo" />
+      <ctl name="TAS25XX DVC_GAIN_TOP" value="55" />
+      <ctl name="TAS25XX GAIN_CTRL_TOP" value="dB18" />
+      <ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="50ms" />
+      <ctl name="TAS25XX NOISE_GATE_HSTIMER_BOTTOM" value="50ms" />
+      <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-105"/>
+      <ctl name="TAS25XX NOISE_GATE_THRESHOLD_BOTTOM" value="dbFS-105"/>
+    </path>
+
+    <path name="ear">
+    </path>
+
+    <path name="spk-ear">
+    </path>
+
+    <!-- TX part -->
+    <path name="main-mic">
+        <ctl name="TX_AIF1_CAP Mixer DEC0" value="1" />
+        <ctl name="TX DMIC MUX0" value="DMIC1" />
+    </path>
+
+    <path name="sub-mic">
+        <ctl name="TX_AIF1_CAP Mixer DEC1" value="1" />
+        <ctl name="TX DMIC MUX1" value="DMIC3" />
+    </path>
+
+    <path name="3rd-mic">
+        <ctl name="TX_AIF1_CAP Mixer DEC2" value="1" />
+        <ctl name="TX DMIC MUX2" value="DMIC5" />
+    </path>
+
+    <path name="4th-mic">
+        <ctl name="TX_AIF1_CAP Mixer DEC3" value="1" />
+        <ctl name="TX DMIC MUX3" value="DMIC7" />
+    </path>
+
+    <path name="ear-mic">
+    </path>
+
+    <path name="main-sub-mic">
+        <ctl name="TX_AIF1_CAP Mixer DEC0" value="1" />
+        <ctl name="TX_AIF1_CAP Mixer DEC1" value="1" />
+        <ctl name="TX DMIC MUX0" value="DMIC1" />
+        <ctl name="TX DMIC MUX1" value="DMIC3" />
+    </path>
+
+    <path name="sub-main-mic">
+        <ctl name="TX_AIF1_CAP Mixer DEC0" value="1" />
+        <ctl name="TX_AIF1_CAP Mixer DEC1" value="1" />
+        <ctl name="TX DMIC MUX0" value="DMIC3" />
+        <ctl name="TX DMIC MUX1" value="DMIC1" />
+    </path>
+
+    <path name="multi-mic">
+        <path name="main-mic" />
+        <path name="sub-mic" />
+        <path name="3rd-mic" />
+    </path>
+
+    <path name="vi-feedback">
+    </path>
+
+    <!-- swap R channel feedback data to L channel          -->
+    <!-- to verify external amp tx line at the factory test -->
+    <!-- for dual speaker project                           -->
+    <path name="swap-feedback">
+    </path>
+    <!-- end of Device -->
+
+    <!-- ====================================================== -->
+    <!-- Play Scenario  -->
+    <path name="sidetone-handset">
+    </path>
+
+    <path name="sidetone-headphones">
+    </path>
+
+    <path name="handset">
+        <path name="rcv" />
+        <ctl name="TAS25XX DVC_GAIN_TOP" value="41" />
+    </path>
+
+    <path name="speaker-mono-left">
+        <path name="spk-mono-left" />
+    </path>
+
+    <path name="speaker-mono-right">
+        <path name="spk-mono-right" />
+    </path>
+
+    <path name="speaker">
+        <path name="spk" />
+    </path>
+
+    <path name="headphones">
+    </path>
+
+    <path name="hph-highquality-mode">
+    </path>
+
+    <path name="hph-lowpower-mode">
+    </path>
+
+    <path name="true-native-mode">
+    </path>
+
+    <path name="usb-headphones">
+    </path>
+
+    <path name="usb-headset">
+    </path>
+
+    <path name="afe-proxy">
+    </path>
+
+    <path name="echo-ref-record">
+    </path>
+
+    <path name="display-port">
+    </path>
+
+    <path name="display-port1">
+    </path>
+
+    <path name="bt-sco">
+    </path>
+
+    <path name="bt-sco-wb">
+    </path>
+
+    <path name="bt-sco-swb">
+    </path>
+
+    <path name="speaker-and-headphones">
+    </path>
+
+    <path name="speaker-and-bt-sco">
+        <path name="spk" />
+    </path>
+
+    <path name="speaker-and-bt-sco-wb">
+        <path name="spk" />
+    </path>
+
+    <path name="speaker-and-headphones-bt-sco">
+    </path>
+
+    <path name="speaker-and-headphones-bt-sco-wb">
+    </path>
+
+    <path name="bt-a2dp">
+    </path>
+
+    <path name="bt-ble">
+    </path>
+
+    <path name="speaker-and-bt-a2dp">
+        <path name="speaker" />
+        <path name="bt-a2dp" />
+    </path>
+
+    <path name="speaker-and-bt-ble">
+        <path name="speaker" />
+        <path name="bt-ble" />
+    </path>
+
+    <path name="speaker-and-display-port">
+        <path name="speaker" />
+        <path name="display-port" />
+    </path>
+
+    <path name="speaker-and-usb-headphones">
+        <path name="usb-headphones" />
+    </path>
+
+    <path name="fm-speaker">
+        <path name="spk" />
+    </path>
+
+    <path name="fm-headset">
+    </path>
+
+    <path name="fm-input">
+    </path>
+
+    <path name="aas-headset">
+    </path>
+
+    <path name="aas-usb-headset">
+    </path>
+
+    <path name="karaoke-speaker">
+        <path name="spk" />
+		<ctl name="TAS25XX KARAOKE_TOP" value="dB2" />
+    </path>
+
+    <path name="listenback-headphones">
+    </path>
+
+    <path name="listenback-usb-headphones">
+    </path>
+
+    <path name="haptics-dev">
+        <ctl name="Haptics Source" value="PCM" />
+        <ctl name="SVC Algo Enable" value="1" />
+    </path>
+    <!-- end of Play Scenario -->
+
+    <!-- recognition Scenario -->
+    <path name="vr-main-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="111" />
+    </path>
+
+    <path name="vr-sub-mic">
+        <path name="sub-mic" />
+        <ctl name="TX_DEC1 Volume" value="113" />
+    </path>
+
+    <path name="vr-headset-mic">
+        <path name="ear-mic" />
+    </path>
+
+    <path name="vr-dual-mic">
+        <path name="main-sub-mic" />
+        <ctl name="TX_DEC0 Volume" value="111" />
+        <ctl name="TX_DEC1 Volume" value="111" />    
+    </path>
+
+    <path name="vr-usb-headset-mic">
+    </path>
+
+    <path name="vr-lowpower-main-mic">
+        <ctl name="DMIC_RATE OVERRIDE" value="CLK_0P6MHZ"/>
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="100" />
+    </path>
+
+    <path name="vr-lowpower-dual-mic">
+        <ctl name="DMIC_RATE OVERRIDE" value="CLK_0P6MHZ"/>
+        <path name="main-sub-mic" />
+        <ctl name="TX_DEC0 Volume" value="107" />
+        <ctl name="TX_DEC1 Volume" value="107" />
+    </path>
+
+    <path name="bargein-tts-speaker-mic">
+        <path name="sub-main-mic" />
+        <ctl name="TX_DEC0 Volume" value="110" />
+        <ctl name="TX_DEC1 Volume" value="100" />
+    </path>
+
+    <path name="bargein-tts-headphones-mic">
+        <path name="sub-main-mic" />
+        <ctl name="TX_DEC0 Volume" value="110" />
+        <ctl name="TX_DEC1 Volume" value="100" />
+    </path>
+
+    <path name="bargein-tts-headset-mic">
+        <path name="ear-mic" />
+    </path>
+
+    <path name="bargein-tts-usb-headset-mic">
+    </path>
+
+    <path name="bargein-aec-speaker-mic">
+        <path name="sub-main-mic" />
+        <ctl name="TX_DEC0 Volume" value="102" />
+        <ctl name="TX_DEC1 Volume" value="97" />
+    </path>
+
+    <path name="bargein-aec-headphones-mic">
+        <path name="sub-main-mic" />
+        <ctl name="TX_DEC0 Volume" value="93" />
+        <ctl name="TX_DEC1 Volume" value="83" />
+    </path>
+
+    <path name="bargein-aec-headset-mic">
+        <path name="ear-mic" />
+    </path>
+
+    <path name="bargein-aec-usb-headset-mic">
+    </path>
+
+    <path name="interpreter-listen-speaker-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="100" />
+        <ctl name="TX_DEC1 Volume" value="100" />
+        <ctl name="TX_DEC2 Volume" value="100" />
+    </path>
+
+    <path name="interpreter-listen-usb-headset-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="100" />
+        <ctl name="TX_DEC1 Volume" value="100" />
+        <ctl name="TX_DEC2 Volume" value="100" />
+    </path>
+
+    <path name="interpreter-listen-bt-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="100" />
+        <ctl name="TX_DEC1 Volume" value="100" />
+        <ctl name="TX_DEC2 Volume" value="100" />
+    </path>
+
+    <path name="interpreter-conv-speaker-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="100" />
+        <ctl name="TX_DEC1 Volume" value="100" />
+        <ctl name="TX_DEC2 Volume" value="100" />
+    </path>
+
+    <path name="interpreter-conv-usb-headset-mic">
+    </path>
+
+    <path name="headset-aas-mic">
+        <path name="sub-mic" />
+        <ctl name="TX_DEC1 Volume" value="109" />
+    </path>
+
+    <path name="usb-aas-mic">
+        <path name="sub-mic" />
+        <ctl name="TX_DEC1 Volume" value="109" />
+    </path>
+
+    <path name="bt-aas-mic">
+        <path name="sub-mic" />
+        <ctl name="TX_DEC1 Volume" value="109" />
+    </path>
+
+    <path name="karaoke-sub-mic"> 
+        <path name="sub-mic" /> 
+        <ctl name="TX_DEC1 Volume" value="98" /> 
+    </path>
+
+    <path name="listenback-main-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="84" />
+    </path>
+
+    <path name="listenback-headset-mic">
+    </path>
+
+    <path name="listenback-usb-headset-mic">
+    </path>
+    <!-- end of recognition Scenario -->
+
+    <!-- Recording Scenario  -->
+    <path name="handset-mic">
+        <path name="main-mic" />
+    </path>
+
+    <path name="handset-mic-unprocessed">
+        <path name="vr-main-mic" />
+    </path>
+
+    <path name="speaker-mic">
+        <path name="sub-mic" />
+    </path>
+
+    <path name="bt-sco-mic">
+    </path>
+
+    <path name="bt-sco-mic-wb">
+    </path>
+
+    <path name="bt-sco-mic-swb">
+    </path>
+
+    <path name="bt-a2dp-mic">
+    </path>
+
+    <path name="bt-ble-mic">
+    </path>
+
+    <path name="usb-headset-mic">
+    </path>
+
+    <path name="capture-fm">
+    </path>
+
+    <path name="dummy-dev">
+    </path>
+
+    <path name="ext_ec_ref_tx">
+    </path>
+
+    <path name="unprocessed-handset-mic">
+        <path name="handset-mic" />
+    </path>
+
+    <path name="unprocessed-main-mic">
+        <path name="handset-mic" />
+    </path>
+
+    <path name="unprocessed-mic">
+        <path name="unprocessed-handset-mic" />
+    </path>
+
+    <path name="unprocessed-stereo-mic">
+        <path name="sub-main-mic" />
+    </path>
+
+    <path name="unprocessed-three-mic">
+        <path name="multi-mic" />
+    </path>
+
+    <path name="unprocessed-quad-mic">
+    </path>
+
+    <path name="unprocessed-headset-mic">
+    </path>
+
+    <path name="unprocessed-usb-mic">
+    </path>
+
+    <path name="unprocessed-hdr-mic-landscape">
+        <path name="multi-mic" />
+    </path>
+
+    <path name="unprocessed-hdr-mic-inverted-landscape">
+        <path name="multi-mic" />
+    </path>
+
+    <path name="unprocessed-hdr-mic-portrait">
+        <path name="multi-mic" />
+    </path>
+
+    <path name="unprocessed-hdr-mic-inverted-portrait">
+        <path name="multi-mic" />
+    </path>
+
+    <path name="rec-main-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="84" />
+    </path>
+
+    <path name="rec-sub-mic">
+        <path name="sub-mic" />
+        <ctl name="TX_DEC1 Volume" value="84" />
+    </path>
+
+    <path name="rec-headset-mic">
+        <path name="ear-mic" />
+    </path>
+
+    <path name="rec-stereo-mic">
+        <path name="sub-main-mic" />
+        <ctl name="TX_DEC0 Volume" value="84" />
+        <ctl name="TX_DEC1 Volume" value="84" />
+    </path>
+
+    <path name="rec-usb-headset-mic">
+    </path>
+
+    <path name="rec-interview-mic">
+        <path name="sub-main-mic" />
+        <ctl name="TX_DEC0 Volume" value="97" />
+        <ctl name="TX_DEC1 Volume" value="97" />
+    </path>
+
+    <path name="camcorder-main-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="84" />
+    </path>
+
+    <path name="camcorder-sub-mic">
+        <path name="sub-mic" />
+        <ctl name="TX_DEC1 Volume" value="84" />
+    </path>
+
+    <path name="camcorder-multi-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="84" />
+        <ctl name="TX_DEC1 Volume" value="84" />
+        <ctl name="TX_DEC2 Volume" value="84" />
+    </path>
+
+    <path name="camcorder-multi-and-bt-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="84" />
+        <ctl name="TX_DEC1 Volume" value="84" />
+        <ctl name="TX_DEC2 Volume" value="84" />
+    </path>
+
+    <path name="echo-main-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="99" />
+    </path>
+
+    <path name="echo-sub-mic">
+        <path name="sub-mic" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+    </path>
+
+    <path name="echo-3rd-mic">
+        <path name="3rd-mic" />
+        <ctl name="TX_DEC2 Volume" value="102" />
+    </path>
+
+    <path name="echo-multi-mic">
+        <path name="multi-mic" />
+        <path name="4th-mic" />
+        <ctl name="TX_DEC0 Volume" value="107" />
+        <ctl name="TX_DEC1 Volume" value="112" />
+        <ctl name="TX_DEC2 Volume" value="114" />
+    </path>
+    <!-- end of Recording Scenario -->
+
+    <!-- Voice Wakeup Scenario -->
+    <path name="va-mic-mono">
+        <ctl name="VA_AIF1_CAP Mixer DEC0" value="1" />
+        <ctl name="VA DEC0 MUX" value="MSM_DMIC" />
+        <ctl name="VA DMIC MUX0" value="DMIC1" />
+        <ctl name="VA_DEC0 Volume" value="95"/>
+    </path>
+
+    <path name="va-mic-dmic">
+    </path>
+
+    <path name="va-mic-tmic">
+    </path>
+
+    <path name="va-mic-qmic">
+    </path>
+
+    <path name="va-mic">
+        <path name="va-mic-mono" />
+    </path>
+
+    <path name="va-mic-mono-lpi">
+        <ctl name="VA_AIF1_CAP Mixer DEC0" value="1" />
+        <ctl name="VA DEC0 MUX" value="MSM_DMIC" />
+        <ctl name="VA DMIC MUX0" value="DMIC1" />
+        <ctl name="VA_DEC0 Volume" value="95"/>
+    </path>
+
+    <path name="va-mic-dmic-lpi">
+        <ctl name="VA_AIF1_CAP Mixer DEC0" value="1" />
+        <ctl name="VA_AIF1_CAP Mixer DEC1" value="1" />
+        <ctl name="VA DEC0 MUX" value="MSM_DMIC" />
+        <ctl name="VA DEC1 MUX" value="MSM_DMIC" />
+        <ctl name="VA DMIC MUX0" value="DMIC1" />
+        <ctl name="VA DMIC MUX1" value="DMIC0" />
+    </path>
+
+    <path name="va-mic-tmic-lpi">
+    </path>
+
+    <path name="va-mic-qmic-lpi">
+    </path>
+
+    <path name="va-mic-lpi">
+        <path name="va-mic-mono-lpi" />
+    </path>
+
+    <path name="headset-va-mic-lpi">
+    </path>
+
+    <path name="headset-va-mic">
+    </path>
+    <!-- end of Voice Wakeup Scenario -->
+
+    <!-- call Scenario -->
+    <!-- RX part -->
+    <path name="call-handset">
+        <path name="rcv" />
+        <ctl name="TAS25XX GAIN_CTRL_TOP" value="dB3" />
+        <ctl name="TAS25XX CODEC PROFILE" value="top_only" />
+        <ctl name="TAS25XX DVC_GAIN_TOP" value="55" /> 
+        <ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-95"/>
+    </path>
+
+    <path name="call-handset-hac">
+        <path name="rcv" />
+    </path>
+
+    <path name="call-handset-hac-tcoil">
+        <path name="rcv" />
+    </path>
+
+    <path name="call-handset-flip">
+        <path name="call-handset" />
+    </path>
+
+    <path name="ext-modem-handset">
+        <path name="rcv" />
+        <ctl name="TAS25XX GAIN_CTRL_TOP" value="dB3" />
+        <ctl name="TAS25XX CODEC PROFILE" value="top_only" />
+        <ctl name="TAS25XX DVC_GAIN_TOP" value="55" /> 
+        <ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-95"/>
+    </path>
+
+    <path name="call-speaker">
+        <path name="spk" />
+        <ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_HSTIMER_BOTTOM" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-90"/>
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_BOTTOM" value="dbFS-90"/>
+    </path>
+
+    <path name="call-dex-speaker">
+        <path name="spk" />
+	<ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_HSTIMER_BOTTOM" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-90"/>
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_BOTTOM" value="dbFS-90"/>
+    </path>
+
+    <path name="call-speaker-flip">
+        <path name="call-speaker" />
+    </path>
+
+    <path name="ext-modem-speaker">
+        <path name="spk" />
+	<ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_HSTIMER_BOTTOM" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-90"/>
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_BOTTOM" value="dbFS-90"/>
+    </path>
+
+    <path name="call-headset">
+        <path name="ear" />
+    </path>
+
+    <path name="call-usb-headset">
+    </path>
+
+    <!-- TX part -->
+    <path name="hearing-aid-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+        <ctl name="TX_DEC1 Volume" value="94" />
+        <ctl name="TX_DEC2 Volume" value="94" />
+    </path>
+    
+    <path name="call-handset-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+        <ctl name="TX_DEC1 Volume" value="94" />
+        <ctl name="TX_DEC2 Volume" value="94" />
+    </path>
+
+    <path name="call-handset-mic-flip">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+        <ctl name="TX_DEC1 Volume" value="94" />
+        <ctl name="TX_DEC2 Volume" value="94" />
+    </path>
+
+    <path name="ext-modem-handset-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+        <ctl name="TX_DEC1 Volume" value="94" />
+        <ctl name="TX_DEC2 Volume" value="94" />
+    </path>
+
+    <path name="call-speaker-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+
+    <path name="ext-modem-speaker-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+
+    <path name="call-speaker-mic-flip">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+
+    <path name="call-headphone-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+    </path>
+
+    <path name="call-headset-mic">
+        <path name="ear-mic" />
+    </path>
+
+    <path name="call-usb-headphone-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+    </path>
+
+    <path name="call-dex-speaker-mic">
+        <path name="sub-mic" />
+        <ctl name="TX_DEC1 Volume" value="94" />
+    </path>
+
+    <path name="call-usb-headset-mic">
+    </path>
+
+    <path name="ext-modem-headphone-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+    </path>
+
+    <path name="ext-modem-usb-headphone-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+    </path>
+    <!-- end of call Scenario  -->
+
+    <!-- video call Scenario -->
+    <!-- RX part -->
+    <path name="video-call-speaker">
+        <path name="spk" />
+	<ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_HSTIMER_BOTTOM" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-90"/>
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_BOTTOM" value="dbFS-90"/>
+    </path>
+
+    <!-- TX part -->
+    <path name="video-call-speaker-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+
+    <path name="video-call-speaker-mic-flip">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+
+    <path name="video-call-speaker-mic-flex">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+    <!-- end of video call Scenario  -->
+
+    <!-- wifi call Scenario -->
+    <!-- RX part -->
+    <path name="wifi-call-handset">
+        <path name="rcv" />
+        <ctl name="TAS25XX GAIN_CTRL_TOP" value="dB3" />
+        <ctl name="TAS25XX CODEC PROFILE" value="top_only" />
+        <ctl name="TAS25XX DVC_GAIN_TOP" value="55" /> 
+        <ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-95"/>
+    </path>
+
+    <path name="wifi-call-handset-hac">
+        <path name="rcv" />
+    </path>
+
+    <path name="wifi-call-handset-hac-tcoil">
+        <path name="rcv" />
+    </path>
+
+    <path name="wifi-call-speaker">
+        <path name="spk" />
+	<ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_HSTIMER_BOTTOM" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-90"/>
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_BOTTOM" value="dbFS-90"/>	
+    </path>
+
+    <path name="wifi-call-dex-speaker">
+        <path name="spk" />
+	<ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_HSTIMER_BOTTOM" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-90"/>
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_BOTTOM" value="dbFS-90"/>
+    </path>
+
+    <path name="wifi-call-headset">
+        <path name="ear" />
+    </path>
+
+    <path name="wifi-call-usb-headset">
+    </path>
+
+    <!-- TX part -->
+    <path name="wifi-call-handset-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+        <ctl name="TX_DEC1 Volume" value="94" />
+        <ctl name="TX_DEC2 Volume" value="94" />
+    </path>
+
+    <path name="wifi-call-handset-mic-flip">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+        <ctl name="TX_DEC1 Volume" value="94" />
+        <ctl name="TX_DEC2 Volume" value="94" />
+    </path>
+
+    <path name="wifi-call-speaker-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+
+    <path name="wifi-call-speaker-mic-flip">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+
+    <path name="wifi-call-dex-speaker-mic">
+        <path name="sub-mic" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+    </path>
+
+    <path name="wifi-call-headphone-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+    </path>
+
+    <path name="wifi-call-headset-mic">
+        <path name="ear-mic" />
+    </path>
+
+    <path name="wifi-call-usb-headphone-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+    </path>
+
+    <path name="wifi-call-usb-headset-mic">
+    </path>
+    <!-- end of wifi call Scenario  -->
+
+    <!-- call forward Scenario -->
+    <path name="voice-call-forward">
+        <path name="rcv" />
+        <ctl name="TAS25XX MUTE_TOP" value="ENABLE" />
+        <ctl name="TAS25XX MUTE_BOTTOM" value="ENABLE" />
+    </path>
+
+    <path name="voice-call-forward-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="0" />
+    </path>
+    <!-- end of call forward Scenario -->
+
+    <!-- Spectro Scenario -->
+    <path name="voice-call-spectro">
+    </path>
+
+    <path name="voice-call-spectro-mic">
+        <ctl name="TX_DEC0 Volume" value="0" />
+        <ctl name="TX_DEC1 Volume" value="0" />
+    </path>
+    <!-- end of Spectro Scenario -->
+
+    <!-- TTY Scenario  -->
+    <!-- RX part -->
+    <path name="call-tty-handset">
+        <path name="rcv" />
+    </path>
+
+    <path name="call-tty-headset">
+        <path name="ear" />
+    </path>
+
+    <path name="call-tty-usb-headset">
+    </path>
+
+    <!-- TX part -->
+    <path name="call-tty-vco-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+    </path>
+
+    <path name="call-tty-headset-mic">
+        <path name="ear-mic" />
+    </path>
+
+    <path name="call-tty-full-mic">
+        <path name="ear-mic" />
+    </path>
+
+    <path name="call-tty-usb-headset-mic">
+    </path>
+
+    <path name="call-tty-full-usb-headset-mic">
+    </path>
+    <!-- end of TTY Scenario -->
+
+    <!-- VoWIFI TTY Scenario  -->
+    <!-- RX part -->
+    <path name="wifi-call-tty-handset">
+        <path name="rcv" />
+    </path>
+
+    <path name="wifi-call-tty-headset">
+        <path name="ear" />
+    </path>
+
+    <path name="wifi-call-tty-usb-headset">
+    </path>
+
+    <!-- TX part -->
+    <path name="wifi-call-tty-vco-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+    </path>
+
+    <path name="wifi-call-tty-headset-mic">
+        <path name="ear-mic" />
+    </path>
+
+    <path name="wifi-call-tty-full-mic">
+        <path name="ear-mic" />
+    </path>
+
+    <path name="wifi-call-tty-usb-headset-mic">
+    </path>
+
+    <path name="wifi-call-tty-full-usb-headset-mic">
+    </path>
+    <!-- end of TTY Scenario -->
+
+    <!-- VoIP Scenario -->
+    <!-- RX part -->
+    <path name="voip-comm-handset">
+        <path name="rcv" />
+    </path>
+
+    <path name="voip-comm-handset-hac">
+        <path name="rcv" />
+    </path>
+
+    <path name="voip-comm-handset-hac-tcoil">
+        <path name="rcv" />
+    </path>
+
+    <path name="voip-comm-speaker">
+        <path name="spk" />
+	<ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_HSTIMER_BOTTOM" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-90"/>
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_BOTTOM" value="dbFS-90"/>
+    </path>
+
+    <path name="voip-comm-dex-speaker">
+        <path name="spk" />
+	<ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_HSTIMER_BOTTOM" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-90"/>
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_BOTTOM" value="dbFS-90"/>
+    </path>
+
+    <path name="voip-comm-headset">
+        <path name="ear" />
+    </path>
+
+    <path name="voip-comm-usb-headset">
+    </path>
+
+    <path name="voip-comm-tv-speaker">
+        <path name="spk" />
+    </path>
+
+    <path name="voip-gaming-speaker">
+        <path name="spk" />
+	<ctl name="TAS25XX NOISE_GATE_HSTIMER_TOP" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_HSTIMER_BOTTOM" value="10ms" />
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_TOP" value="dbFS-90"/>
+        <ctl name="TAS25XX NOISE_GATE_THRESHOLD_BOTTOM" value="dbFS-90"/>
+    </path>
+
+    <!-- TX part -->
+    <path name="voip-comm-handset-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+        <ctl name="TX_DEC1 Volume" value="94" />
+        <ctl name="TX_DEC2 Volume" value="94" />
+    </path>
+
+    <path name="voip-comm-handset-mic-flip">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+        <ctl name="TX_DEC1 Volume" value="94" />
+        <ctl name="TX_DEC2 Volume" value="94" />
+    </path>
+
+    <path name="voip-comm-speaker-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+
+    <path name="voip-comm-speaker-mic-flip">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+
+    <path name="voip-comm-speaker-mic-flex">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+
+    <path name="voip-comm-dex-speaker-mic">
+        <path name="sub-mic" />
+        <ctl name="TX_DEC1 Volume" value="94" />
+    </path>
+
+    <path name="voip-comm-headphone-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+    </path>
+
+    <path name="voip-comm-headset-mic">
+        <path name="ear-mic" />
+    </path>
+
+    <path name="voip-comm-usb-headphone-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="94" />
+    </path>
+
+    <path name="voip-comm-usb-headset-mic">
+    </path>
+
+    <path name="voip-comm-tv-speaker-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+
+    <path name="voip-smonitor-speaker-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+
+    <path name="voip-gaming-speaker-mic">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+
+    <path name="voip-gaming-speaker-mic-flip">
+        <path name="multi-mic" />
+        <ctl name="TX_DEC0 Volume" value="90" />
+        <ctl name="TX_DEC1 Volume" value="90" />
+        <ctl name="TX_DEC2 Volume" value="90" />
+    </path>
+    <!-- end of VoIP Scenario -->
+
+    <!-- Factory Scenario -->
+    <!-- RX part -->
+    <path name="loopback-handset">
+    	<path name="rcv" />
+        <ctl name="TAS25XX DVC_GAIN_TOP" value="45" />
+    </path>
+
+    <path name="loopback-handset-dual-mic">
+        <path name="rcv" />
+    </path>
+
+    <path name="loopback-speaker-left">
+        <path name="spk-mono-left" />
+    </path>
+
+    <path name="loopback-speaker-right">
+        <path name="spk-mono-right" />
+        <path name="swap-feedback" />
+    </path>
+
+    <path name="loopback-headset">
+        <path name="ear" />
+    </path>
+
+    <path name="loopback-headset-dual-mic">
+        <path name="ear" />
+    </path>
+
+    <path name="loopback-usb-headset">
+    </path>
+
+    <path name="loopback-incallmusic-handset">
+        <path name="rcv" />
+    </path>
+
+    <path name="loopback-incallmusic-speaker">
+        <path name="spk-mono-right" />
+    </path>
+
+    <path name="loopback-incallmusic-speaker-all">
+        <path name="spk" />
+    </path>
+
+    <!-- TX part -->
+    <path name="loopback-main-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="105" />
+    </path>
+
+    <path name="loopback-dual-mic">
+        <path name="main-sub-mic" />
+        <ctl name="TX_DEC0 Volume" value="105" />
+        <ctl name="TX_DEC1 Volume" value="105" />
+    </path>
+
+    <path name="loopback-sub-mic">
+        <path name="sub-mic" />
+        <ctl name="TX_DEC1 Volume" value="80" />
+    </path>
+
+    <path name="loopback-3rd-mic">
+        <path name="3rd-mic" />
+        <ctl name="TX_DEC2 Volume" value="80" />
+    </path>
+
+    <path name="loopback-headphone-mic">
+        <path name="main-mic" />
+        <ctl name="TX_DEC0 Volume" value="84" />
+    </path>
+
+    <path name="loopback-headset-mic">
+        <path name="ear-mic" />
+    </path>
+
+    <path name="loopback-usb-headset-mic">
+    </path>
+
+    <path name="loopback-incallmusic-mic">
+        <path name="main-sub-mic" />
+        <ctl name="TX_DEC0 Volume" value="84" />
+        <ctl name="TX_DEC1 Volume" value="84" />
+    </path>
+    <!-- end of Factory Scenario -->
+
+</mixer>
+

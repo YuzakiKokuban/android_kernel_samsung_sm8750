@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright (C) 2012-2013, The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimer in the documentation and/or other materials provided
+ *       with the distribution.
+ *     * Neither the name of The Linux Foundation nor the names of its
+ *       contributors may be used to endorse or promote products derived
+ *       from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+ -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">調頻收音機</string>
+    <string name="menu_settings">設定</string>
+    <string name="menu_record_start">開始錄音</string>
+    <string name="menu_record_stop">停止錄音</string>
+    <string name="menu_all_channels">全部頻道</string>
+    <string name="app_label_all_channels">全部頻道</string>
+    <string name="button_ok">確定</string>
+    <string name="button_cancel">取消</string>
+    <string name="button_delete">取消</string>
+    <string name="error_sdcard_access">不能訪問SD卡</string>
+    <string name="fm_service_started">調頻 服務</string>
+    <string name="menu_sleep">自動關閉</string>
+    <string name="menu_sleep_cancel">取消自動關閉</string>
+    <string name="menu_scan_start">搜索</string>
+    <string name="button_text_stop">停止</string>
+    <string name="menu_scan_stop">停止搜索</string>
+    <string name="msg_seeking">搜索 調頻 電台</string>
+    <string name="msg_scanning">搜索所有 調頻 電台</string>
+    <string name="msg_scanning_pty">搜索 "<xliff:g id="pty_name">%1$s</xliff:g>"</string>
+    <string name="msg_noantenna">請插入耳機</string>
+    <string name="dialog_sleep_title">收音機自動關閉</string>
+    <string name="preset_name_dialog_title">輸入名稱 </string>
+    <string name="preset_name_title">重命名</string>
+    <string name="preset_search_title">搜索</string>
+    <string name="preset_search_name">搜索 "<xliff:g id="preset_name">%1$s</xliff:g>"</string>
+    <string name="preset_add">添加</string>
+    <string name="preset_replace">替換</string>
+    <string name="preset_tune">設定頻率</string>
+    <string name="preset_rename">重命名</string>
+    <string name="preset_delete">刪除</string>
+    <string name="sel_band_menu">選擇地區</string>
+    <string name="settings_menu">設定</string>
+    <string name="regional_band">地區</string>
+    <string name="aud_output_mode">音頻輸出模式</string>
+    <string name="sel_audio_output">選擇音頻輸出</string>
+    <string name="record_dur">錄音時長</string>
+    <string name="sel_rec_dur">選擇錄音時長</string>
+    <string name="auto_select_af">備用頻率</string>
+    <string name="auto_select_af_enabled">自動選擇開啟</string>
+    <string name="auto_select_af_disabled">自動選擇關閉</string>
+    <string name="settings_revert_confirm_title">確定清除設定</string>
+    <string name="settings_revert_confirm_msg">將刪除所有設定</string>
+    <string name="settings_revert_defaults_title">恢復出廠設定</string>
+    <string name="settings_revert_defaults_summary">清除所有設定</string>
+    <string name="audio_type_stereo">立體聲</string>
+    <string name="audio_type_mono">單聲道</string>
+    <string name="alert_dialog_ok">確定</string>
+    <string name="alert_dialog_cancel">取消</string>
+    <string name="search_dialog_title">搜索電台</string>
+    <string name="fm_command_timeout_title">超時</string>
+    <string name="fm_tune_timeout_msg">打開調頻 電台無響應。如果問題持續，請重新啟動調頻 收音機。</string>
+    <string name="fm_command_failed_title">調頻 操作失敗</string>
+    <string name="fm_cmd_failed_msg">調頻 操作失敗。如果問題持續，請重新啟動調頻 收音機。</string>
+    <string name="fm_cmd_failed_msg_hdmi">調頻 操作失敗。不支持調頻和 HDMI 並發。 </string>
+    <string name="fm_cmd_failed_call_on">調頻 操作失敗。通話期間禁止調頻音頻 </string>
+    <string name="station_name">電台:</string>
+    <string name="station_exists">此頻率已存在!</string>
+    <string name="stat_notif_frequency">調頻 收音機 "<xliff:g id="frequency">%1$s</xliff:g>" MHz</string>
+    <string name="cannot_startup_during_call">通话中不能启动調頻！</string>
+    <string name="cannot_startup_during_airplane">"通話中不能啟動調頻！"</string>
+    <string name="station_list_delete_station">删除:<xliff:g id="name">%s</xliff:g></string>
+    <string name="station_list_delete_station_prompt">要删除 <xliff:g id="name">%s</xliff:g> 吗？</string>
+    <string name="sdcard_no_space_cannot_recording">SD卡空間不足，不能錄音</string>
+    <string name="recording_stop_no_space">SD卡空間不足，錄音停止</string>
+    <string name="station_name_empty">電台名字不能為空，請新重輸入</string>
+    <string name="station_name_exist">已存在名為\"<xliff:g id="name">%s</xliff:g>\"的電台，請輸入其他名稱。</string>
+    <string name="dialog_presetlist_rename_title">請輸入名字</string>
+    <string name="user_defind_band_msg">请输入有效的频段范围 76.0 - 108.0</string>
+    <string name="FMRecording_reach_size_limit">已到达最长限制.</string>
+    <string name="unable_to_store">无法保存已录音频</string>
+
+</resources>

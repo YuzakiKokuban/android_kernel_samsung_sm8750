@@ -1,0 +1,11 @@
+Location Client Api doc
+
+1. Steps to generate doxygen Api doc:
+run
+    mkclientapidoc.sh [output-path]
+default output-path is docs/
+default doxgen configuration file is LocationClientApiDoxygen.conf
+
+2. below file will be generated:
+    html/
+        -HTML output, where the html/index.html is the home page.

@@ -1,0 +1,18 @@
+cc_library_shared {
+    name: "vendor.qti.hardware.vibratorSel.impl",
+    vendor: true,
+    srcs: [
+        "VibratorSelector.cpp",
+    ],
+    include_dirs: [
+        "external/expat/lib",
+    ],
+    shared_libs: [
+        "libcutils",
+        "libutils",
+        "liblog",
+        "libbinder_ndk",
+        "libexpat",
+        "android.hardware.vibrator-V2-ndk",
+    ],
+}

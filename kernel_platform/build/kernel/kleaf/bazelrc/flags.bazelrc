@@ -1,0 +1,78 @@
+# Copyright (C) 2023 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# User defined flags.
+
+# flags that control toolchains
+build --flag_alias=experimental_kernel_use_resolved_toolchains=//build/kernel/kleaf:incompatible_kernel_use_resolved_toolchains
+build --flag_alias=noexperimental_kernel_use_resolved_toolchains=no//build/kernel/kleaf:incompatible_kernel_use_resolved_toolchains
+build --flag_alias=incompatible_kernel_use_resolved_toolchains=//build/kernel/kleaf:incompatible_kernel_use_resolved_toolchains
+build --flag_alias=noincompatible_kernel_use_resolved_toolchains=no//build/kernel/kleaf:incompatible_kernel_use_resolved_toolchains
+build --flag_alias=incompatible_disable_hermetic_tools_symlink_source=//build/kernel/kleaf:incompatible_disable_hermetic_tools_symlink_source
+build --flag_alias=noincompatible_disable_hermetic_tools_symlink_source=no//build/kernel/kleaf:incompatible_disable_hermetic_tools_symlink_source
+build --flag_alias=workaround_btrfs_b292212788=//build/kernel/kleaf:workaround_btrfs_b292212788
+build --flag_alias=remove_strings_from_hermetic_tools=//build/kernel/kleaf:remove_strings_from_hermetic_tools
+build --flag_alias=noremove_strings_from_hermetic_tools=no//build/kernel/kleaf:remove_strings_from_hermetic_tools
+build --flag_alias=gzip_is_pigz=//build/kernel/kleaf:gzip_is_pigz
+build --flag_alias=nogzip_is_pigz=no//build/kernel/kleaf:gzip_is_pigz
+build --flag_alias=toolchain_from_sources=//build/kernel/kleaf:toolchain_from_sources
+build --flag_alias=notoolchain_from_sources=no//build/kernel/kleaf:toolchain_from_sources
+
+# flags that control kleaf integrity checking
+build --flag_alias=allow_ddk_unsafe_headers=//build/kernel/kleaf:allow_ddk_unsafe_headers
+build --flag_alias=allow_undeclared_modules=//build/kernel/kleaf:allow_undeclared_modules
+build --flag_alias=nowarn_undeclared_modules=no//build/kernel/kleaf:warn_undeclared_modules
+build --flag_alias=nokmi_symbol_list_strict_mode=no//build/kernel/kleaf:kmi_symbol_list_strict_mode
+build --flag_alias=nokmi_symbol_list_violations_check=no//build/kernel/kleaf:kmi_symbol_list_violations_check
+build --flag_alias=user_kmi_symbol_lists=//build/kernel/kleaf:user_kmi_symbol_lists
+
+# flags that control binary features
+build --flag_alias=gcov=//build/kernel/kleaf:gcov
+build --flag_alias=kasan=//build/kernel/kleaf:kasan
+build --flag_alias=kasan_sw_tags=//build/kernel/kleaf:kasan_sw_tags
+build --flag_alias=kasan_generic=//build/kernel/kleaf:kasan_generic
+build --flag_alias=kcsan=//build/kernel/kleaf:kcsan
+build --flag_alias=lto=//build/kernel/kleaf:lto
+build --flag_alias=notrim=//build/kernel/kleaf/impl:force_disable_trim
+build --flag_alias=debug=//build/kernel/kleaf:debug
+build --flag_alias=btf_debug_info=//build/kernel/kleaf:btf_debug_info
+build --flag_alias=noset_ext_modules=no//build/kernel/kleaf:set_ext_modules
+build --flag_alias=gki_build_config_fragment=//build/kernel/kleaf:gki_build_config_fragment
+build --flag_alias=defconfig_fragment=//build/kernel/kleaf:defconfig_fragment
+build --flag_alias=page_size=//build/kernel/kleaf:page_size
+build --flag_alias=rust=//build/kernel/kleaf:rust
+build --flag_alias=norust=no//build/kernel/kleaf:rust
+build --flag_alias=nozstd_dwarf_compression=no//build/kernel/kleaf:zstd_dwarf_compression
+build --flag_alias=kconfig_werror=//build/kernel/kleaf:kconfig_werror
+build --flag_alias=nokconfig_werror=no//build/kernel/kleaf:kconfig_werror
+
+# flags that control the distribution
+build --flag_alias=kbuild_symtypes=//build/kernel/kleaf:kbuild_symtypes
+build --flag_alias=kgdb=//build/kernel/kleaf:kgdb
+build --flag_alias=preserve_kbuild_output=//build/kernel/kleaf:preserve_kbuild_output
+
+# flags alias to allow passing --debug_* flags
+build --flag_alias=debug_annotate_scripts=//build/kernel/kleaf:debug_annotate_scripts
+build --flag_alias=debug_cache_dir_conflict=//build/kernel/kleaf:debug_cache_dir_conflict
+build --flag_alias=debug_make_verbosity=//build/kernel/kleaf:debug_make_verbosity
+build --flag_alias=debug_modpost_warn=//build/kernel/kleaf:debug_modpost_warn
+build --flag_alias=debug_print_scripts=//build/kernel/kleaf:debug_print_scripts
+
+# flags for DDK header analysis
+build --flag_alias=gen_ddk_headers_target=//build/kernel/kleaf:gen_ddk_headers_target
+build --flag_alias=gen_ddk_headers_gen_files_archives=//build/kernel/kleaf:gen_ddk_headers_gen_files_archives
+
+# flags that controls prebuilts
+build --flag_alias=use_prebuilt_gki=//build/kernel/kleaf:use_prebuilt_gki
+build --flag_alias=use_signed_prebuilts=//build/kernel/kleaf:use_signed_prebuilts

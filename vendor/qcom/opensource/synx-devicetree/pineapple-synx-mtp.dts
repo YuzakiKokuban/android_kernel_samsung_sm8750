@@ -1,0 +1,14 @@
+/* Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+/dts-v1/;
+/plugin/;
+
+#include "pineapple-synx-common.dtsi"
+
+/ {
+	model = "Qualcomm Technologies, Inc. Lanai MTP";
+	compatible = "qcom,lanai-mtp", "qcom,lanai", "qcom,mtp";
+	qcom,msm-id = <519 0x10000>, <536 0x10000>;
+	qcom,board-id = <0x10008 0>;
+};

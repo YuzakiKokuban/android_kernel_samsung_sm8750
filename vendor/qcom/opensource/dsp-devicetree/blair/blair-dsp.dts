@@ -1,0 +1,11 @@
+/dts-v1/;
+/plugin/;
+
+#include "blair-dsp.dtsi"
+
+/ {
+	model = "Qualcomm Technologies, Inc. blair v1 SoC";
+	compatible = "qcom,blair";
+	qcom,msm-id = <507 0x10000>, <578 0x10000>;
+	qcom,board-id = <0 0>;
+};

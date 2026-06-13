@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.             -->
+<!--                                                                                      -->
+<!-- Redistribution and use in source and binary forms, with or without                   -->
+<!-- modification, are permitted (subject to the limitations in the                       -->
+<!-- disclaimer below) provided that the following conditions are met:                    -->
+<!--                                                                                      -->
+<!--     * Redistributions of source code must retain the above copyright                 -->
+<!--       notice, this list of conditions and the following disclaimer.                  -->
+<!--                                                                                      -->
+<!--     * Redistributions in binary form must reproduce the above                        -->
+<!--       copyright notice, this list of conditions and the following                    -->
+<!--       disclaimer in the documentation and/or other materials provided                -->
+<!--       with the distribution.                                                         -->
+<!--                                                                                      -->
+<!--     * Neither the name of Qualcomm Innovation Center, Inc. nor the names of its      -->
+<!--       contributors may be used to endorse or promote products derived                -->
+<!--       from this software without specific prior written permission.                  -->
+<!--                                                                                      -->
+<!-- NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE                      -->
+<!-- GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT                  -->
+<!-- HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED                          -->
+<!-- WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF                 -->
+<!-- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.                 -->
+<!-- IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR                 -->
+<!-- ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL               -->
+<!-- DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE                    -->
+<!-- GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS                        -->
+<!-- INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER                 -->
+<!-- IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR                      -->
+<!-- OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN                  -->
+<!-- IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                                        -->
+<haptics_param_values>
+    <predefined_effect>
+        <!-- CLICK -->
+        <Hapticseffect effect="0">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>0</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>0</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <repetition_count>1</repetition_count>
+            <tracked_freq_warmup_time_ms>0</tracked_freq_warmup_time_ms>
+            <settling_time_ms>0</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_period_ms>0</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>65</mid_pulse_intensity>
+            <high_pulse_intensity>90</high_pulse_intensity>
+            <pulse_width_ms>35</pulse_width_ms>
+            <pulse_sharpness>80</pulse_sharpness>
+        </Hapticseffect>
+        <!-- DOUBLE CLICK -->
+        <Hapticseffect effect="1">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>1</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>0</f0_tracking_en>
+            <f0_tracking_param_reset_flag>0</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <repetition_count>2</repetition_count>
+            <tracked_freq_warmup_time_ms>0</tracked_freq_warmup_time_ms>
+            <settling_time_ms>0</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_period_ms>75</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>100</mid_pulse_intensity>
+            <high_pulse_intensity>90</high_pulse_intensity>
+            <pulse_width_ms>0</pulse_width_ms>
+            <pulse_sharpness>0</pulse_sharpness>
+            <num_pwl>4</num_pwl>
+            <pwl_time>0,10,25,35</pwl_time>
+            <pwl_acc>0,70,70,0</pwl_acc>
+        </Hapticseffect>
+        <!-- TICK -->
+        <Hapticseffect effect="2">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>4</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>0</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <tracked_freq_warmup_time_ms>0</tracked_freq_warmup_time_ms>
+            <settling_time_ms>0</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_count>1</repetition_count>
+            <repetition_period_ms>0</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>100</mid_pulse_intensity>
+            <high_pulse_intensity>90</high_pulse_intensity>
+            <pulse_width_ms>0</pulse_width_ms>
+            <pulse_sharpness>0</pulse_sharpness>
+        </Hapticseffect>
+        <!-- THUD -->
+        <Hapticseffect effect="3">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>1</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>0</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <repetition_count>1</repetition_count>
+            <tracked_freq_warmup_time_ms>0</tracked_freq_warmup_time_ms>
+            <settling_time_ms>0</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_period_ms>0</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>100</mid_pulse_intensity>
+            <high_pulse_intensity>90</high_pulse_intensity>
+            <pulse_width_ms>0</pulse_width_ms>
+            <pulse_sharpness>0</pulse_sharpness>
+            <num_pwl>4</num_pwl>
+            <pwl_time>0,15,40,65</pwl_time>
+            <pwl_acc>0,70,70,0</pwl_acc>
+        </Hapticseffect>
+        <!-- POP -->
+        <Hapticseffect effect="4">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>1</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>0</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <repetition_count>1</repetition_count>
+            <tracked_freq_warmup_time_ms>0</tracked_freq_warmup_time_ms>
+            <settling_time_ms>0</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_period_ms>0</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>100</mid_pulse_intensity>
+            <high_pulse_intensity>90</high_pulse_intensity>
+            <pulse_width_ms>0</pulse_width_ms>
+            <pulse_sharpness>0</pulse_sharpness>
+            <num_pwl>4</num_pwl>
+            <pwl_time>0,10,20,30</pwl_time>
+            <pwl_acc>0,70,70,0</pwl_acc>
+        </Hapticseffect>
+        <!-- HEAVY CLICK -->
+        <Hapticseffect effect="5">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>1</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>0</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <repetition_count>1</repetition_count>
+            <tracked_freq_warmup_time_ms>0</tracked_freq_warmup_time_ms>
+            <settling_time_ms>0</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_period_ms>0</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>100</mid_pulse_intensity>
+            <high_pulse_intensity>90</high_pulse_intensity>
+            <pulse_width_ms>0</pulse_width_ms>
+            <pulse_sharpness>0</pulse_sharpness>
+            <num_pwl>4</num_pwl>
+            <pwl_time>0,10,25,35</pwl_time>
+            <pwl_acc>0,70,70,0 </pwl_acc>
+        </Hapticseffect>
+    </predefined_effect>
+    <compose_effect>
+        <!-- NOOP -->
+        <Hapticseffect effect="0">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>0</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>0</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <repetition_count>1</repetition_count>
+            <tracked_freq_warmup_time_ms>50</tracked_freq_warmup_time_ms>
+            <settling_time_ms>0</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_period_ms>50</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>65</mid_pulse_intensity>
+            <high_pulse_intensity>90</high_pulse_intensity>
+            <pulse_width_ms>2</pulse_width_ms>
+            <pulse_sharpness>100</pulse_sharpness>
+        </Hapticseffect>
+        <!-- CLICK -->
+        <Hapticseffect effect="1">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>1</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>0</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <repetition_count>1</repetition_count>
+            <tracked_freq_warmup_time_ms>50</tracked_freq_warmup_time_ms>
+            <settling_time_ms>5</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_period_ms>50</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>100</mid_pulse_intensity>
+            <high_pulse_intensity>90</high_pulse_intensity>
+            <pulse_width_ms>0</pulse_width_ms>
+            <pulse_sharpness>0</pulse_sharpness>
+            <num_pwl>4</num_pwl>
+            <pwl_time>0,7,14,21</pwl_time>
+            <pwl_acc>0,33,33,0</pwl_acc>
+        </Hapticseffect>
+        <!-- THUD -->
+        <Hapticseffect effect="2">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>2</wave_design_mode>
+            <auto_overdrive_brake_en>1</auto_overdrive_brake_en>
+            <f0_tracking_en>1</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <tracked_freq_warmup_time_ms>50</tracked_freq_warmup_time_ms>
+            <settling_time_ms>5</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_count>1</repetition_count>
+            <repetition_period_ms>50</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>55</mid_pulse_intensity>
+            <high_pulse_intensity>90</high_pulse_intensity>
+            <pulse_width_ms>10</pulse_width_ms>
+            <pulse_sharpness>0</pulse_sharpness>
+        </Hapticseffect>
+        <!-- SPIN -->
+        <Hapticseffect effect="3">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>0</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>0</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <repetition_count>1</repetition_count>
+            <tracked_freq_warmup_time_ms>50</tracked_freq_warmup_time_ms>
+            <settling_time_ms>5</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_period_ms>50</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>60</mid_pulse_intensity>
+            <high_pulse_intensity>100</high_pulse_intensity>
+            <pulse_width_ms>3</pulse_width_ms>
+            <pulse_sharpness>100</pulse_sharpness>
+        </Hapticseffect>
+        <!-- QUICK RISE -->
+        <Hapticseffect effect="4">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>1</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>0</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <repetition_count>1</repetition_count>
+            <tracked_freq_warmup_time_ms>50</tracked_freq_warmup_time_ms>
+            <settling_time_ms>0</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_period_ms>50</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>60</mid_pulse_intensity>
+            <high_pulse_intensity>90</high_pulse_intensity>
+            <pulse_width_ms>0</pulse_width_ms>
+            <pulse_sharpness>0</pulse_sharpness>
+            <num_pwl>4</num_pwl>
+            <pwl_time>0,7,14,21</pwl_time>
+            <pwl_acc>0,100,100,0</pwl_acc>
+        </Hapticseffect>
+        <!-- SLOW RISE -->
+        <Hapticseffect effect="5">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>2</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>1</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <repetition_count>1</repetition_count>
+            <tracked_freq_warmup_time_ms>50</tracked_freq_warmup_time_ms>
+            <settling_time_ms>5</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_period_ms>50</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>70</mid_pulse_intensity>
+            <high_pulse_intensity>100</high_pulse_intensity>
+            <pulse_width_ms>10</pulse_width_ms>
+        </Hapticseffect>
+         <!-- QUICK FALL -->
+        <Hapticseffect effect="6">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>0</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>0</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <repetition_count>1</repetition_count>
+            <tracked_freq_warmup_time_ms>50</tracked_freq_warmup_time_ms>
+            <settling_time_ms>0</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_period_ms>50</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>75</mid_pulse_intensity>
+            <high_pulse_intensity>100</high_pulse_intensity>
+            <pulse_width_ms>3</pulse_width_ms>
+            <pulse_sharpness>100</pulse_sharpness>
+        </Hapticseffect>
+         <!-- LIGHT TICK -->
+        <Hapticseffect effect="7">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>1</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>0</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <repetition_count>1</repetition_count>
+            <tracked_freq_warmup_time_ms>50</tracked_freq_warmup_time_ms>
+            <settling_time_ms>0</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_period_ms>50</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>100</mid_pulse_intensity>
+            <high_pulse_intensity>90</high_pulse_intensity>
+            <pulse_width_ms>0</pulse_width_ms>
+            <pulse_sharpness>0</pulse_sharpness>
+            <num_pwl>3</num_pwl>
+            <pwl_time>0,10,20</pwl_time>
+            <pwl_acc>0,70,0</pwl_acc>
+        </Hapticseffect>
+         <!-- LOW TICK -->
+        <Hapticseffect effect="8">
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>2</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>0</f0_tracking_en>
+            <f0_tracking_param_reset_flag>1</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <repetition_count>1</repetition_count>
+            <tracked_freq_warmup_time_ms>50</tracked_freq_warmup_time_ms>
+            <settling_time_ms>5</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_period_ms>50</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>60</mid_pulse_intensity>
+            <high_pulse_intensity>90</high_pulse_intensity>
+            <pulse_width_ms>10</pulse_width_ms>
+            <pulse_sharpness>0</pulse_sharpness>
+        </Hapticseffect>
+    </compose_effect>
+    <oneshot_effect>
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>2</wave_design_mode>
+            <auto_overdrive_brake_en>0</auto_overdrive_brake_en>
+            <f0_tracking_en>1</f0_tracking_en>
+            <f0_tracking_param_reset_flag>0</f0_tracking_param_reset_flag>
+            <override_flag>7</override_flag>
+            <wavegen_fstart_hz_q20>0</wavegen_fstart_hz_q20>
+            <tracked_freq_warmup_time_ms>0</tracked_freq_warmup_time_ms>
+            <settling_time_ms>30</settling_time_ms>
+            <delay_time_ms>0</delay_time_ms>
+            <repetition_count>1</repetition_count>
+            <repetition_period_ms>120</repetition_period_ms>
+            <pilot_tone_en>0</pilot_tone_en>
+            <low_pulse_intensity>30</low_pulse_intensity>
+            <mid_pulse_intensity>85</mid_pulse_intensity>
+            <high_pulse_intensity>90</high_pulse_intensity>
+            <pulse_width_ms>0</pulse_width_ms>
+            <pulse_sharpness>0</pulse_sharpness>
+     </oneshot_effect>
+     <ringtone_effect>
+            <num_channels>1</num_channels>
+            <channel_mask>1</channel_mask>
+            <wave_design_mode>3</wave_design_mode>
+     </ringtone_effect>
+</haptics_param_values>

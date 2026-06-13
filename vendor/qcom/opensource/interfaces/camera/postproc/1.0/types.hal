@@ -1,0 +1,168 @@
+/*
+ * Copyright (c) 2019 The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above
+ *      copyright notice, this list of conditions and the following
+ *      disclaimer in the documentation and/or other materials provided
+ *      with the distribution.
+ *    * Neither the name of The Linux Foundation. nor the names of its
+ *      contributors may be used to endorse or promote products derived
+ *      from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package vendor.qti.hardware.camera.postproc@1.0;
+
+/** Camera metadata is provided as byte array. */
+typedef vec<uint8_t> CameraMetadata;
+
+/** This is generic Error enum */
+enum Error : int32_t
+{
+    /** Success */
+    NONE                    = 0,
+    /** StreamId out of range */
+    BAD_STREAMID            = 1,
+    /** Maximum Sessions are in Queue */
+    MAX_SESSIONS            = 2,
+    /** Handle pointer is invalid */
+    INVALID_HANDLE          = 3,
+    /** postproc Session Create Failed */
+    SESSION_NOT_INIT        = 4,
+    /** Malloc failed */
+    MALLOC_FAIL             = 5,
+    /** Post Processor failed */
+    POSTPROC_FAIL           = 6,
+    /** Device is in bad state */
+    DEVICE_BAD_STATE        = 7,
+    /** CB Pointer is invalid */
+    INVALID_CALLBACK_PTR    = 8,
+    /** PostProc Aborted */
+    ABORT                   = 9,
+    /** Unsupported Resolution */
+    UNSUPPORTED_RESOLUTION  = 10,
+};
+
+/** PostProcessor types supported by the service */
+enum PostProcType : int32_t
+{
+    /** YUV2Jpeg Conversion */
+    JPEG        = 0,
+};
+
+/* This struct contains WxH parameters */
+struct Resolution
+{
+    /** Width */
+    uint32_t width;
+    /** Height */
+    uint32_t height;
+};
+
+/** This struct contains JPEG postproc capabilities.
+    Dynamic update of resolution is supported. */
+struct JpegCapabilities
+{
+    /** Max number of streams supported */
+    uint32_t      maxStreamsSupported;
+    /** Max Resolution supported */
+    Resolution    maxResoultion;
+    /** Min Resolution supported */
+    Resolution    minResolution;
+    /** Gralloc Formats supported */
+    vec<uint32_t> formats;
+};
+
+/** This structure contains generic PostProc capabilities info.
+    This will be updated based on different postproc features supported */
+struct PostProcCapabilities
+{
+    /** JPEG stream capabilities */
+    JpegCapabilities jpegStream;
+};
+
+/** This struct contains Input and output Buffer generic properties */
+struct BufferParams
+{
+    /** Gralloc Format for handle */
+    uint32_t format;
+    /** Width  */
+    uint32_t width;
+    /** Height */
+    uint32_t height;
+};
+
+/** This struct contains parameters for postproc initialization */
+struct CreateParams
+{
+    /** Postproc type value */
+    PostProcType       postProcTypeVal;
+    /** Parameters for input */
+    vec<BufferParams> input;
+    /** Parameters for output */
+    vec<BufferParams> output;
+};
+
+/** Client can dynamically choose to update resolution for JPEG encode.
+    If Client choose to use same resolution, then same parameters as CreateParams can be used */
+struct HandleParams
+{
+    /** Gralloc Format for handle */
+    uint32_t format;
+    /** Width  */
+    uint32_t width;
+    /** Height */
+    uint32_t height;
+    /** handle pointer */
+    handle   bufHandle;
+};
+
+/** This structure contains parameters given during postproc process request */
+struct ProcessRequestParams
+{
+    /** Array of input handles */
+    vec<HandleParams> input;
+    /** Arry of output handles. */
+    vec<HandleParams> output;
+    /** Stream id, This indicates which index parameters provided during Init to use for encoding. */
+    uint32_t          streamId;
+    /** Metadata related to Camera */
+    CameraMetadata    metadata;
+};
+
+/** JPEG PostProc Result structure */
+struct JpegResult
+{
+    /** Encoded frame size */
+    uint32_t frameSize;
+};
+
+/** This is generic result structure.
+    Based on PostProcType, corresponding result structre will be used. */
+struct PostProcResult
+{
+    /** requestId given to client as part of process API */
+    uint32_t     requestId;
+    /** stream */
+    uint32_t     streamId;
+    /** Postproc Type Value */
+    PostProcType postProcTypeVal;
+    /** JPEG Result structure */
+    JpegResult   jpegResult;
+};

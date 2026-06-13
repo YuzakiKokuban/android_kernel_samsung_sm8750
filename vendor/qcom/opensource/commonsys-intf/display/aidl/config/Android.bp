@@ -1,0 +1,74 @@
+aidl_interface {
+    name: "vendor.qti.hardware.display.config",
+    vendor_available: true,
+    srcs: [
+        "vendor/qti/hardware/display/config/*.aidl",
+    ],
+    stability: "vintf",
+    imports: [
+        "android.hardware.common-V2",
+    ],
+    backend: {
+        java: {
+            enabled: false,
+        },
+        cpp: {
+            enabled: false,
+        },
+    },
+
+    owner: "qti",
+    versions_with_info: [
+        {
+            version: "1",
+            imports: ["android.hardware.common-V2"],
+        },
+        {
+            version: "2",
+            imports: ["android.hardware.common-V2"],
+        },
+        {
+            version: "3",
+            imports: ["android.hardware.common-V2"],
+        },
+        {
+            version: "4",
+            imports: ["android.hardware.common-V2"],
+        },
+        {
+            version: "5",
+            imports: ["android.hardware.common-V2"],
+        },
+        {
+            version: "6",
+            imports: ["android.hardware.common-V2"],
+        },
+        {
+            version: "7",
+            imports: ["android.hardware.common-V2"],
+        },
+        {
+            version: "8",
+            imports: ["android.hardware.common-V2"],
+        },
+        {
+            version: "9",
+            imports: ["android.hardware.common-V2"],
+        },
+        {
+            version: "10",
+            imports: ["android.hardware.common-V2"],
+        },
+        {
+            version: "11",
+            imports: ["android.hardware.common-V2"],
+        },
+        {
+            version: "12",
+            imports: ["android.hardware.common-V2"],
+        },
+
+    ],
+    frozen: true,
+
+}

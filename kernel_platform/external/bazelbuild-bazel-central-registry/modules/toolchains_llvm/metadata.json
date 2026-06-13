@@ -1,0 +1,18 @@
+{
+    "homepage": "https://github.com/bazel-contrib/toolchains_llvm",
+    "maintainers": [
+        {
+            "email": "starsid@gmail.com",
+            "github": "siddharthab",
+            "name": "Siddhartha Bagaria"
+        }
+    ],
+    "repository": [
+        "github:bazel-contrib/toolchains_llvm"
+    ],
+    "versions": [
+        "0.10.3",
+        "1.0.0"
+    ],
+    "yanked_versions": {}
+}

@@ -1,0 +1,33 @@
+config SEC_VIBRATOR_INPUTFF
+	tristate "sec vibrator inputff"
+	default n
+	help
+	  If you say yes here you will get support for the
+	  sec vibrator inputff driver
+
+config SEC_VIBRATOR_INPUTFF_TEST
+        bool "KUnit test for sec_vibrator_inputff_test"
+        depends on SEC_KUNIT
+        help
+          This driver is for inputff test driver
+		  sec vibrator kunit test
+		  If you want to add some functions,
+		  Please make the test case.
+
+config SEC_VIB_FOLD_MODEL
+	bool "get support for folder/flip status"
+	default n
+	help
+	  If you enable this feature,
+	  you will get event for folder/flip status
+	  through event_cmd sysfs
+
+config VIB_STORE_LE_PARAM
+	bool "To store the le param into NV preferably on SEC PARAM"
+	default n
+	help
+	  If you enable this feature,
+	  the LRA Estimated data will be stored on to a non-volatile memory
+	  preferably on SEC_PARAM. If sec param is used, make sure to enable
+	  at BL as well to match the param size.
+

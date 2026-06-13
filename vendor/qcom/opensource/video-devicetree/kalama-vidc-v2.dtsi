@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+ */
+
+#include "kalama-vidc.dtsi"
+
+/* KalamaV2-specific changes */
+&msm_vidc {
+	compatible = "qcom,sm8550-vidc-v2";
+};
+

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.               -->
+<!--                                                                                   -->
+<!-- Redistribution and use in source and binary forms, with or without                -->
+<!-- modification, are permitted provided that the following conditions are            -->
+<!-- met:                                                                              -->
+<!--     * Redistributions of source code must retain the above copyright              -->
+<!--       notice, this list of conditions and the following disclaimer.               -->
+<!--     * Redistributions in binary form must reproduce the above                     -->
+<!--       copyright notice, this list of conditions and the following                 -->
+<!--       disclaimer in the documentation and/or other materials provided             -->
+<!--       with the distribution.                                                      -->
+<!--     * Neither the name of The Linux Foundation nor the names of its               -->
+<!--       contributors may be used to endorse or promote products derived             -->
+<!--       from this software without specific prior written permission.               -->
+<!--                                                                                   -->
+<!-- THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED                      -->
+<!-- WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF              -->
+<!-- MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT            -->
+<!-- ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS            -->
+<!-- BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR            -->
+<!-- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF              -->
+<!-- SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR                   -->
+<!-- BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,             -->
+<!-- WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE              -->
+<!-- OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN            -->
+<!-- IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                                     -->
+<!--                                                                                   -->
+<!-- Changes from Qualcomm Innovation Center are provided under the following license: -->
+<!-- Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.     -->
+<!-- SPDX-License-Identifier: BSD-3-Clause-Clear                                       -->
+
+<config>
+    <group_device name="TDM-LPAIF-RX-TERTIARY" rate="96000" ch="3" bits="16" slot_mask="7"/>
+    <device name="TDM-LPAIF-RX-TERTIARY-VIRT-0" rate="96000" ch="2" bits="16" />
+    <!-- Format support per backend is optional, we can provide pcm format to specify which format -->
+    <!-- BE should be configured to. If format is provided, and bitwidth does not match the format,-->
+    <!-- bitwidth will be overwritten based on format.                                             -->
+    <device name="CODEC_DMA-LPAIF_WSA-RX-0" rate="48000" ch="1" bits="16" format="PCM_FORMAT_S16_LE"/>
+    <device name="CODEC_DMA-LPAIF_WSA-RX-1" rate="48000" ch="1" bits="16" />
+    <device name="CODEC_DMA-LPAIF_RXTX-RX-0" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF_AXI-RX-PRIMARY" rate="48000" ch="2" bits="16" />
+    <device name="SLIM-DEV1-RX-0" rate="48000" ch="2" bits="16" />
+    <device name="DISPLAY_PORT-RX" rate="48000" ch="2" bits="16" />
+    <device name="USB_AUDIO-RX" rate="48000" ch="2" bits="16" />
+    <device name="CODEC_DMA-LPAIF_RXTX-TX-3" rate="48000" ch="1" bits="16" />
+    <device name="CODEC_DMA-LPAIF_VA-TX-0" rate="48000" ch="1" bits="16" />
+    <device name="CODEC_DMA-LPAIF_VA-TX-1" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF_AXI-TX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="SLIM-DEV1-TX-0" rate="48000" ch="1" bits="16" />
+    <device name="USB_AUDIO-TX" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF-RX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF-TX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF_AUD-RX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF_AUD-TX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF-RX-TERTIARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF-TX-TERTIARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF-RX-SECONDARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF-TX-SECONDARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF_AUD-RX-SECONDARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF_AUD-TX-SECONDARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF_RXTX-RX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF_RXTX-TX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF_RXTX-RX-0" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF_VA-RX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF_VA-TX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF_WSA-RX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="MI2S-LPAIF_WSA-TX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF-RX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF-TX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF-RX-SECONDARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF-TX-SECONDARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF_AUD-RX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF_AUD-TX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF_AUD-RX-SECONDARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF_AUD-TX-SECONDARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF-RX-TERTIARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF-TX-TERTIARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF_RXTX-RX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF_RXTX-TX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF_VA-RX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF_VA-TX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF_WSA-RX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF_WSA-TX-PRIMARY" rate="48000" ch="1" bits="16" />
+    <device name="TDM-LPAIF_AXI-TX-PRIMARY" rate="48000" ch="2" bits="16" />
+    <device name="AUXPCM-LPAIF_AXI-TX-PRIMARY" rate="48000" ch="2" bits="16" />
+    <device name="MI2S-LPAIF_AXI-RX-PRIMARY" rate="48000" ch="2" bits="16" />
+    <device name="AUXPCM-LPAIF_AXI-RX-PRIMARY" rate="48000" ch="2" bits="16" />
+</config>
+

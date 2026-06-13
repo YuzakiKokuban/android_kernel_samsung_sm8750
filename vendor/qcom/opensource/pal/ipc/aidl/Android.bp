@@ -1,0 +1,33 @@
+aidl_interface {
+    name: "vendor.qti.hardware.pal",
+    srcs: ["vendor/qti/hardware/pal/*.aidl"],
+    vendor: true,
+    stability: "vintf",
+    imports: [
+        "android.hardware.common-V2",
+        "android.hardware.common.fmq-V1",
+    ],
+    backend: {
+        cpp: {
+            enabled: false,
+        },
+        java: {
+            sdk_version: "module_current",
+        },
+        ndk: {
+            enabled: true,
+        },
+    },
+    owner: "qti",
+    frozen: true,
+    versions_with_info: [
+        {
+            version: "1",
+            imports: [
+                "android.hardware.common-V2",
+                "android.hardware.common.fmq-V1",
+            ],
+        },
+    ],
+
+}

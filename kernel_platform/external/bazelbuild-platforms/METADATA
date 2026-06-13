@@ -1,0 +1,13 @@
+name: "platforms"
+description:
+    ""
+
+third_party {
+  identifier {
+    type: "Git"
+    value: "https://github.com/bazelbuild/platforms"
+  }
+  version: "0.0.10"
+  last_upgrade_date { year: 2024 month: 5 day: 17 }
+  license_type: NOTICE
+}

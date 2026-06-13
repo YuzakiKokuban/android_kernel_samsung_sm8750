@@ -1,0 +1,82 @@
+cc_defaults {
+    name: "qti_usb_hal_defaults",
+    cflags: [
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+    ],
+    vendor: true,
+    relative_install_path: "hw",
+}
+
+cc_binary {
+    name: "android.hardware.usb-service.qti",
+    defaults: ["qti_usb_hal_defaults"],
+    shared_libs: [
+        "android.hardware.usb-V1-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "libcutils",
+        "liblog",
+        "libutils",
+    ],
+    srcs: [
+        "Usb.cpp",
+    ],
+
+    init_rc: ["android.hardware.usb-service.qti.rc"],
+    vintf_fragments: ["android.hardware.usb-service.qti.xml"],
+}
+
+cc_fuzz {
+    name: "aidl_fuzz_usb_service",
+    defaults: ["qti_usb_hal_defaults"],
+    shared_libs: [
+        "android.hardware.usb-V1-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "libcutils",
+        "liblog",
+        "libutils",
+        "libbinder",
+    ],
+    srcs: [
+        "Usb.cpp",
+    ],
+
+    cflags: [
+        "-D__LIBFUZZON_LOCAL__",
+    ],
+
+    static_libs: [
+        "libbinder_random_parcel",
+    ],
+}
+
+cc_binary {
+    name: "android.hardware.usb.gadget-service.qti",
+    defaults: ["qti_usb_hal_defaults"],
+    shared_libs: [
+        "android.hardware.usb.gadget@1.1",
+        "android.hardware.usb.gadget-V1-ndk",
+        "libbase",
+        "libbinder_ndk",
+        "libcutils",
+        "liblog",
+        "libutils",
+    ],
+    static_libs: [
+        "libusbconfigfs"
+    ],
+    srcs: [
+        "UsbGadget.cpp",
+    ],
+
+    init_rc: ["android.hardware.usb.gadget-service.qti.rc"],
+    vintf_fragments: ["android.hardware.usb.gadget-service.qti.xml"],
+}
+
+prebuilt_etc {
+    name: "usb_compositions.conf",
+    src: "usb_compositions.conf",
+    vendor: true,
+}

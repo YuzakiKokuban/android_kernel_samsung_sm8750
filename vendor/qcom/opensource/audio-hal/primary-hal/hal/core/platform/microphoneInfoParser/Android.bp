@@ -1,0 +1,31 @@
+cc_library_static {
+    name: "libaudio_microphoneinfo_parser",
+    vendor: true,
+    export_include_dirs: ["include"],
+    srcs: [
+        "MicrophoneInfoParser.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libcutils",
+        "liblog",
+        "libutils",
+        "libxml2",
+        "android.media.audio.common.types-V3-ndk",
+    ],
+    header_libs: [
+        "libxsdc-utils",
+        "libaudio_system_headers",
+        "libarpal_headers",
+    ],
+    generated_headers: ["libaudio_microphone_info"],
+    generated_sources: ["libaudio_microphone_info"],
+    export_generated_headers: ["libaudio_microphone_info"],
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wthread-safety",
+    ],
+}
+

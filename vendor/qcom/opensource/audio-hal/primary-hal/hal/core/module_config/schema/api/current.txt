@@ -1,0 +1,374 @@
+// Signature format: 2.0
+package audio_module_config_qti {
+
+  public enum AudioChannelIndexMask {
+    method @NonNull public String getRawName();
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_1;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_10;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_11;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_12;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_13;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_14;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_15;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_16;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_17;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_18;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_19;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_2;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_20;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_21;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_22;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_23;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_24;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_3;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_4;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_5;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_6;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_7;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_8;
+    enum_constant public static final audio_module_config_qti.AudioChannelIndexMask INDEX_MASK_9;
+  }
+
+  public enum AudioChannelLayout {
+    method @NonNull public String getRawName();
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_13POINT_360RA;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_22POINT2;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_2POINT0POINT2;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_2POINT1;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_2POINT1POINT2;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_3POINT0POINT2;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_3POINT1;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_3POINT1POINT2;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_5POINT1;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_5POINT1POINT2;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_5POINT1POINT4;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_5POINT1_SIDE;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_6POINT1;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_7POINT1;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_7POINT1POINT2;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_7POINT1POINT4;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_9POINT1POINT4;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_9POINT1POINT6;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_FRONT_BACK;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_HAPTIC_AB;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_MONO;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_MONO_HAPTIC_A;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_MONO_HAPTIC_AB;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_PENTA;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_QUAD;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_QUAD_SIDE;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_STEREO;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_STEREO_HAPTIC_A;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_STEREO_HAPTIC_AB;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_SURROUND;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_TRI;
+    enum_constant public static final audio_module_config_qti.AudioChannelLayout LAYOUT_TRI_BACK;
+  }
+
+  public enum AudioDeviceType {
+    method @NonNull public String getRawName();
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_ACCESSORY;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_AFE_PROXY;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_DEFAULT;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_DEVICE;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_DOCK;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_ECHO_REFERENCE;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_FM_TUNER;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_HEADSET;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_LOOPBACK;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_MICROPHONE;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_MICROPHONE_BACK;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_SUBMIX;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_TELEPHONY_RX;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType IN_TV_TUNER;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType NONE;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_ACCESSORY;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_AFE_PROXY;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_BROADCAST;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_CARKIT;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_DEFAULT;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_DEVICE;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_DOCK;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_ECHO_CANCELLER;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_FM;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_HEADPHONE;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_HEADSET;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_HEARING_AID;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_LINE_AUX;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_SPEAKER;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_SPEAKER_EARPIECE;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_SPEAKER_SAFE;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_SUBMIX;
+    enum_constant public static final audio_module_config_qti.AudioDeviceType OUT_TELEPHONY_TX;
+  }
+
+  public enum AudioEncapsulationType {
+    method @NonNull public String getRawName();
+    enum_constant public static final audio_module_config_qti.AudioEncapsulationType IEC61937;
+    enum_constant public static final audio_module_config_qti.AudioEncapsulationType NONE;
+  }
+
+  public enum AudioFormatType {
+    method @NonNull public String getRawName();
+    enum_constant public static final audio_module_config_qti.AudioFormatType DEFAULT;
+    enum_constant public static final audio_module_config_qti.AudioFormatType NON_PCM;
+    enum_constant public static final audio_module_config_qti.AudioFormatType PCM;
+    enum_constant public static final audio_module_config_qti.AudioFormatType SYS_RESERVED_INVALID;
+  }
+
+  public enum AudioGainMode {
+    method @NonNull public String getRawName();
+    enum_constant public static final audio_module_config_qti.AudioGainMode CHANNELS;
+    enum_constant public static final audio_module_config_qti.AudioGainMode JOINT;
+    enum_constant public static final audio_module_config_qti.AudioGainMode RAMP;
+  }
+
+  public enum AudioInputFlag {
+    method @NonNull public String getRawName();
+    enum_constant public static final audio_module_config_qti.AudioInputFlag DIRECT;
+    enum_constant public static final audio_module_config_qti.AudioInputFlag FAST;
+    enum_constant public static final audio_module_config_qti.AudioInputFlag HW_AV_SYNC;
+    enum_constant public static final audio_module_config_qti.AudioInputFlag HW_HOTWORD;
+    enum_constant public static final audio_module_config_qti.AudioInputFlag MMAP_NOIRQ;
+    enum_constant public static final audio_module_config_qti.AudioInputFlag RAW;
+    enum_constant public static final audio_module_config_qti.AudioInputFlag SYNC;
+    enum_constant public static final audio_module_config_qti.AudioInputFlag ULTRASOUND;
+    enum_constant public static final audio_module_config_qti.AudioInputFlag VOIP_TX;
+  }
+
+  public enum AudioOutputFlag {
+    method @NonNull public String getRawName();
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag COMPRESS_OFFLOAD;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag DEEP_BUFFER;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag DIRECT;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag DIRECT_PCM;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag FAST;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag GAPLESS_OFFLOAD;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag HW_AV_SYNC;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag IEC958_NONAUDIO;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag INCALL_MUSIC;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag MMAP_NOIRQ;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag NON_BLOCKING;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag PRIMARY;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag RAW;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag SPATIALIZER;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag SYNC;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag TTS;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag ULTRASOUND;
+    enum_constant public static final audio_module_config_qti.AudioOutputFlag VOIP_RX;
+  }
+
+  public enum AudioPcmType {
+    method @NonNull public String getRawName();
+    enum_constant public static final audio_module_config_qti.AudioPcmType DEFAULT;
+    enum_constant public static final audio_module_config_qti.AudioPcmType FIXED_Q_8_24;
+    enum_constant public static final audio_module_config_qti.AudioPcmType FLOAT_32_BIT;
+    enum_constant public static final audio_module_config_qti.AudioPcmType INT_16_BIT;
+    enum_constant public static final audio_module_config_qti.AudioPcmType INT_24_BIT;
+    enum_constant public static final audio_module_config_qti.AudioPcmType INT_32_BIT;
+    enum_constant public static final audio_module_config_qti.AudioPcmType UINT_8_BIT;
+  }
+
+  public enum AudioUsage {
+    method @NonNull public String getRawName();
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_ALARM;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_ANNOUNCEMENT;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_ASSISTANCE_ACCESSIBILITY;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_ASSISTANCE_NAVIGATION_GUIDANCE;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_ASSISTANCE_SONIFICATION;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_ASSISTANT;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_CALL_ASSISTANT;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_EMERGENCY;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_GAME;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_INVALID;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_MEDIA;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_NOTIFICATION;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_NOTIFICATION_EVENT;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_NOTIFICATION_TELEPHONY_RINGTONE;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_SAFETY;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_SYS_RESERVED_NOTIFICATION_COMMUNICATION_DELAYED;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_SYS_RESERVED_NOTIFICATION_COMMUNICATION_INSTANT;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_SYS_RESERVED_NOTIFICATION_COMMUNICATION_REQUEST;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_UNKNOWN;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_VEHICLE_STATUS;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_VIRTUAL_SOURCE;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_VOICE_COMMUNICATION;
+    enum_constant public static final audio_module_config_qti.AudioUsage AUDIOUSAGE_VOICE_COMMUNICATION_SIGNALLING;
+  }
+
+  public enum ConnectionType {
+    method @NonNull public String getRawName();
+    enum_constant public static final audio_module_config_qti.ConnectionType analog;
+    enum_constant public static final audio_module_config_qti.ConnectionType bta2dp;
+    enum_constant public static final audio_module_config_qti.ConnectionType btle;
+    enum_constant public static final audio_module_config_qti.ConnectionType btsco;
+    enum_constant public static final audio_module_config_qti.ConnectionType bus;
+    enum_constant public static final audio_module_config_qti.ConnectionType hdmi;
+    enum_constant public static final audio_module_config_qti.ConnectionType hdmiarc;
+    enum_constant public static final audio_module_config_qti.ConnectionType hdmiearc;
+    enum_constant public static final audio_module_config_qti.ConnectionType ipv4;
+    enum_constant public static final audio_module_config_qti.ConnectionType spdif;
+    enum_constant public static final audio_module_config_qti.ConnectionType usb;
+    enum_constant public static final audio_module_config_qti.ConnectionType virtual;
+    enum_constant public static final audio_module_config_qti.ConnectionType wireless;
+  }
+
+  public class DevicePorts {
+    ctor public DevicePorts();
+    method @Nullable public java.util.List<audio_module_config_qti.DevicePorts.DevicePort> getDevicePort();
+  }
+
+  public static class DevicePorts.DevicePort {
+    ctor public DevicePorts.DevicePort();
+    method @Nullable public String getAddress();
+    method @Nullable public boolean getAttached();
+    method @Nullable public audio_module_config_qti.ConnectionType getConnection();
+    method @Nullable public boolean getDefaultDevice();
+    method @Nullable public audio_module_config_qti.AudioDeviceType getDeviceType();
+    method @Nullable public java.util.List<java.lang.String> getEncodings();
+    method @Nullable public audio_module_config_qti.Gains getGains();
+    method @Nullable public java.util.List<audio_module_config_qti.Profile> getProfile();
+    method @Nullable public audio_module_config_qti.Role getRole();
+    method @Nullable public String getTagName();
+    method @Nullable public boolean get_default();
+    method public void setAddress(@Nullable String);
+    method public void setAttached(@Nullable boolean);
+    method public void setConnection(@Nullable audio_module_config_qti.ConnectionType);
+    method public void setDefaultDevice(@Nullable boolean);
+    method public void setDeviceType(@Nullable audio_module_config_qti.AudioDeviceType);
+    method public void setEncodings(@Nullable java.util.List<java.lang.String>);
+    method public void setGains(@Nullable audio_module_config_qti.Gains);
+    method public void setRole(@Nullable audio_module_config_qti.Role);
+    method public void setTagName(@Nullable String);
+    method public void set_default(@Nullable boolean);
+  }
+
+  public class Gains {
+    ctor public Gains();
+    method @Nullable public java.util.List<audio_module_config_qti.Gains.Gain> getGain();
+  }
+
+  public static class Gains.Gain {
+    ctor public Gains.Gain();
+    method @Nullable public audio_module_config_qti.AudioChannelLayout getChannel_layout();
+    method @Nullable public int getDefaultValueMB();
+    method @Nullable public int getMaxRampMs();
+    method @Nullable public int getMaxValueMB();
+    method @Nullable public int getMinRampMs();
+    method @Nullable public int getMinValueMB();
+    method @Nullable public java.util.List<audio_module_config_qti.AudioGainMode> getMode();
+    method @Nullable public String getName();
+    method @Nullable public int getStepValueMB();
+    method @Nullable public boolean getUseForVolume();
+    method public void setChannel_layout(@Nullable audio_module_config_qti.AudioChannelLayout);
+    method public void setDefaultValueMB(@Nullable int);
+    method public void setMaxRampMs(@Nullable int);
+    method public void setMaxValueMB(@Nullable int);
+    method public void setMinRampMs(@Nullable int);
+    method public void setMinValueMB(@Nullable int);
+    method public void setMode(@Nullable java.util.List<audio_module_config_qti.AudioGainMode>);
+    method public void setName(@Nullable String);
+    method public void setStepValueMB(@Nullable int);
+    method public void setUseForVolume(@Nullable boolean);
+  }
+
+  public class MixPorts {
+    ctor public MixPorts();
+    method @Nullable public java.util.List<audio_module_config_qti.MixPorts.MixPort> getMixPort();
+  }
+
+  public static class MixPorts.MixPort {
+    ctor public MixPorts.MixPort();
+    method @Nullable public java.util.List<java.lang.String> getFlags();
+    method @Nullable public audio_module_config_qti.Gains getGains();
+    method @Nullable public long getMaxActiveCount();
+    method @Nullable public long getMaxOpenCount();
+    method @Nullable public String getName();
+    method @Nullable public java.util.List<audio_module_config_qti.AudioUsage> getPreferredUsage();
+    method @Nullable public java.util.List<audio_module_config_qti.Profile> getProfile();
+    method @Nullable public long getRecommendedMuteDurationMs();
+    method @Nullable public audio_module_config_qti.Role getRole();
+    method public void setFlags(@Nullable java.util.List<java.lang.String>);
+    method public void setGains(@Nullable audio_module_config_qti.Gains);
+    method public void setMaxActiveCount(@Nullable long);
+    method public void setMaxOpenCount(@Nullable long);
+    method public void setName(@Nullable String);
+    method public void setPreferredUsage(@Nullable java.util.List<audio_module_config_qti.AudioUsage>);
+    method public void setRecommendedMuteDurationMs(@Nullable long);
+    method public void setRole(@Nullable audio_module_config_qti.Role);
+  }
+
+  public enum MixType {
+    method @NonNull public String getRawName();
+    enum_constant public static final audio_module_config_qti.MixType mix;
+    enum_constant public static final audio_module_config_qti.MixType mux;
+  }
+
+  public class Modules {
+    ctor public Modules();
+    method @Nullable public audio_module_config_qti.Modules.Module getModule();
+    method public void setModule(@Nullable audio_module_config_qti.Modules.Module);
+  }
+
+  public static class Modules.Module {
+    ctor public Modules.Module();
+    method @Nullable public audio_module_config_qti.DevicePorts getDevicePorts();
+    method @Nullable public audio_module_config_qti.MixPorts getMixPorts();
+    method @Nullable public String getName();
+    method @Nullable public audio_module_config_qti.Routes getRoutes();
+    method public void setDevicePorts(@Nullable audio_module_config_qti.DevicePorts);
+    method public void setMixPorts(@Nullable audio_module_config_qti.MixPorts);
+    method public void setName(@Nullable String);
+    method public void setRoutes(@Nullable audio_module_config_qti.Routes);
+  }
+
+  public class Profile {
+    ctor public Profile();
+    method @Nullable public java.util.List<audio_module_config_qti.AudioChannelLayout> getChannelLayouts();
+    method @Nullable public java.util.List<audio_module_config_qti.AudioChannelIndexMask> getChannelMasks();
+    method @Nullable public audio_module_config_qti.AudioEncapsulationType getEncapsulationType();
+    method @Nullable public String getEncoding();
+    method @Nullable public audio_module_config_qti.AudioFormatType getFormatType();
+    method @Nullable public String getName();
+    method @Nullable public audio_module_config_qti.AudioPcmType getPcmType();
+    method @Nullable public java.util.List<java.math.BigInteger> getSamplingRates();
+    method public void setChannelLayouts(@Nullable java.util.List<audio_module_config_qti.AudioChannelLayout>);
+    method public void setChannelMasks(@Nullable java.util.List<audio_module_config_qti.AudioChannelIndexMask>);
+    method public void setEncapsulationType(@Nullable audio_module_config_qti.AudioEncapsulationType);
+    method public void setEncoding(@Nullable String);
+    method public void setFormatType(@Nullable audio_module_config_qti.AudioFormatType);
+    method public void setName(@Nullable String);
+    method public void setPcmType(@Nullable audio_module_config_qti.AudioPcmType);
+    method public void setSamplingRates(@Nullable java.util.List<java.math.BigInteger>);
+  }
+
+  public enum Role {
+    method @NonNull public String getRawName();
+    enum_constant public static final audio_module_config_qti.Role sink;
+    enum_constant public static final audio_module_config_qti.Role source;
+  }
+
+  public class Routes {
+    ctor public Routes();
+    method @Nullable public java.util.List<audio_module_config_qti.Routes.Route> getRoute();
+  }
+
+  public static class Routes.Route {
+    ctor public Routes.Route();
+    method @Nullable public String getSink();
+    method @Nullable public String getSources();
+    method @Nullable public audio_module_config_qti.MixType getType();
+    method public void setSink(@Nullable String);
+    method public void setSources(@Nullable String);
+    method public void setType(@Nullable audio_module_config_qti.MixType);
+  }
+
+  public class XmlParser {
+    ctor public XmlParser();
+    method @Nullable public static audio_module_config_qti.Modules read(@NonNull java.io.InputStream) throws javax.xml.datatype.DatatypeConfigurationException, java.io.IOException, org.xmlpull.v1.XmlPullParserException;
+    method @Nullable public static String readText(@NonNull org.xmlpull.v1.XmlPullParser) throws java.io.IOException, org.xmlpull.v1.XmlPullParserException;
+    method public static void skip(@NonNull org.xmlpull.v1.XmlPullParser) throws java.io.IOException, org.xmlpull.v1.XmlPullParserException;
+  }
+
+}
+

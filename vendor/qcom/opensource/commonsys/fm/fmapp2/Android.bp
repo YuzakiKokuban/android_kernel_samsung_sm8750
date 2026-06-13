@@ -1,0 +1,13 @@
+
+
+android_app {
+    name: "FM2",
+
+    srcs: ["src/com/caf/fmradio/CommaSeparatedFreqFileReader.java"] + ["src/com/caf/fmradio/FMAdapterApp.java"] + ["src/com/caf/fmradio/FMMediaButtonIntentReceiver.java"] + ["src/com/caf/fmradio/FMRadio.java"] + ["src/com/caf/fmradio/FMRadioService.java"] + ["src/com/caf/fmradio/FmSharedPreferences.java"] + ["src/com/caf/fmradio/FMStats.java"] + ["src/com/caf/fmradio/FmTags.java"] + ["src/com/caf/fmradio/GetNextFreqInterface.java"] + ["src/com/caf/fmradio/HorizontalNumberPicker.java"] + ["src/com/caf/fmradio/PresetList.java"] + ["src/com/caf/fmradio/PresetStation.java"] + ["src/com/caf/fmradio/Settings.java"] + ["src/com/caf/fmradio/StationListActivity.java"] + ["src/com/caf/fmradio/IFMRadioService.aidl"] + ["src/com/caf/fmradio/IFMRadioServiceCallbacks.aidl"] + ["src/com/caf/fmradio/IFMTransmitterServiceCallbacks.aidl"] + ["src/com/caf/hc_utils/**/*.java"],
+    certificate: "platform",
+    jni_libs: ["libqcomfm_jni"],
+    libs: ["qcom.fmradio"],
+    platform_apis: true,
+    aaptflags: ["--legacy"],
+    system_ext_specific: true,
+}

@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: GPL-2.0
+menu "SAMSUNG OGKI debugging features"
+
+source "drivers/staging/samsung/fat_common/Kconfig"
+
+source "drivers/staging/samsung/fslog/Kconfig"
+
+endmenu # SAMSUNG_MX

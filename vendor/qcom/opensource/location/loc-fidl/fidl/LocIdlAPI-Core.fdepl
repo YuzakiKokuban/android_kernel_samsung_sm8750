@@ -1,0 +1,150 @@
+/** Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+    SPDX-License-Identifier: BSD-3-Clause-Clear */
+
+import "platform:/plugin/org.genivi.commonapi.core/deployment/CommonAPI_deployment_spec.fdepl"
+import "LocIdlAPI.fidl"
+
+define org.genivi.commonapi.core.deployment for interface com.qualcomm.qti.location.LocIdlAPI {
+    DefaultEnumBackingType = UInt32
+    enumeration IDLLocationReportInfoFlagMask {
+        EnumBackingType = UInt64
+    }
+    enumeration IDLGnssMeasurementsMultipathIndicator {
+        EnumBackingType = UInt32
+        GNSS_MEASUREMENTS_MULTIPATH_INDICATOR_UNKNOWN {
+        }
+        GNSS_MEASUREMENTS_MULTIPATH_INDICATOR_PRESENT{
+        }
+        GNSS_MEASUREMENTS_MULTIPATH_INDICATOR_NOT_PRESENT{
+        }
+    }
+
+    enumeration IDLLocOutputEngineType {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGnssSvType {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLLocationResponse {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGnssSignalTypeMask {
+        EnumBackingType = UInt64
+    }
+
+    enumeration IDLLocationReportPosDataMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLLocationReportNavSolutionMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLLocationTechnologyMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLLocationFlagsMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGnssSvOptionsMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLLocationCapabilitiesMask {
+        EnumBackingType = UInt64
+    }
+
+    enumeration IDLLCALocationInfoFlagMask {
+        EnumBackingType = UInt64
+    }
+
+    enumeration IDLLocationReliability {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGnssLocSvSystemEnumType {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGnssSystemTimeStructTypeFlags {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGnssGloTimeStructTypeFlags {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLDrCalibrationStatusMask {
+        EnumBackingType = UInt64
+    }
+
+    enumeration IDLLocReqEngineTypeMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLPositioningEngineMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLDrSolutionStatusMask {
+        EnumBackingType = UInt64
+    }
+
+    enumeration IDLGnssDataMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGnssMeasurementsDataFlagsMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGnssMeasurementsStateMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGnssMeasurementsAdrStateMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGnssMeasurementsMultipathIndicator {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGnssMeasurementsClockFlagsMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLLeapSecondSysInfoMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGeofenceBreachTypeMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGnssReportCbInfoMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLEngineReportCbMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLAidingDataDeletionMask {
+        EnumBackingType = UInt32
+    }
+
+    enumeration IDLGnssConstellationType {
+        EnumBackingType = UInt64
+    }
+
+    enumeration MapMatchingFeedbackDataValidity {
+        EnumBackingType = UInt64
+    }
+}
+

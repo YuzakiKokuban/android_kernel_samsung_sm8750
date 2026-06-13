@@ -1,0 +1,14 @@
+#
+# Network Context Module Configuration
+#
+# SEC_PRODUCT_FEATURE_KNOX_SUPPORT_NPA {
+config KNOX_NCM
+  tristate "Network Context Module Support"
+  depends on NET
+  default y
+  help
+    This module provide some adition metadeta information related to packets
+
+    If you want to compile it as a module, say M here.
+    If unsure, say N.
+# SEC_PRODUCT_FEATURE_KNOX_SUPPORT_NPA }

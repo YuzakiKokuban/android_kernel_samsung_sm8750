@@ -1,0 +1,32 @@
+prebuilt_etc {
+    name: "init.qcom.usb.rc",
+    src: "init.qcom.usb.rc",
+    vendor: true,
+    sub_dir: "init/hw",
+}
+
+prebuilt_etc {
+    name: "init.qti.usb.debug.rc",
+    src: "init.qti.usb.debug.rc",
+    vendor: true,
+    sub_dir: "init",
+}
+
+sh_binary {
+    name: "init.qcom.usb.sh",
+    src: "init.qcom.usb.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init.qti.usb.debug.sh",
+    src: "init.qti.usb.debug.sh",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.qti.usb.qmaa.rc",
+    src: "init.qti.usb.qmaa.rc",
+    vendor: true,
+    sub_dir: "init",
+}

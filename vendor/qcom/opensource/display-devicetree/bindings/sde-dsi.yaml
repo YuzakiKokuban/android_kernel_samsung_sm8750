@@ -1,0 +1,360 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/sde-dsi.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: MDSS DSI
+
+description: |
+  mdss-dsi is the master DSI device which supports multiple DSI host controllers
+  that are compatible with MIPI display serial interface specification.
+
+maintainers:
+  - Vara Reddy <quic_varar@quicinc.com>
+  - Vishnuvardhan Prodduturi <quic_vproddut@quicinc.com>
+
+pattern properties:
+  "qcom,+\w+\-supply\-entries":
+    description: |
+      A node that lists the elements of the supply used by the
+      a particular "type" of DSI module. The module "types"
+      can be "core", "ctrl", and "phy". Within the same type,
+      there can be more than one instance of this binding,
+      in which case the entry would be appended with the
+      supply entry index.
+      e.g. qcom,ctrl-supply-entry@0
+    type: object
+    patternProperties:
+      "qcom,ctrl\-supply\-entry\@+\w":
+        properties:
+          reg:
+            description: offset and length of the register set for the device.
+          qcom,supply-name:
+            description: name of the supply (vdd/vdda/vddio)
+            $ref: /schemas/types.yaml#/definitions/string-array
+          qcom,supply-min-voltage:
+            description: minimum voltage level (uV)
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-max-voltage:
+            description: maximum voltage level (uV)
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-enable-load:
+            description: load drawn (uA) from enabled supply
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-disable-load:
+            description: load drawn (uA) from disabled supply
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-pre-on-sleep:
+            description: time to sleep (ms) before turning on
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-post-on-sleep:
+            description: time to sleep (ms) after turning on
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-pre-off-sleep:
+            description: time to sleep (ms) before turning off
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-post-off-sleep:
+            description: time to sleep (ms) after turning off
+            $ref: /schemas/types.yaml#/definitions/uint32
+      "qcom,core\-supply\-entry\@+\w":
+        properties:
+          reg:
+            description: offset and length of the register set for the device.
+          qcom,supply-name:
+            description: name of the supply (vdd/vdda/vddio)
+            $ref: /schemas/types.yaml#/definitions/string-array
+          qcom,supply-min-voltage:
+            description: minimum voltage level (uV)
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-max-voltage:
+            description: maximum voltage level (uV)
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-enable-load:
+            description: load drawn (uA) from enabled supply
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-disable-load:
+            description: load drawn (uA) from disabled supply
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-pre-on-sleep:
+            description: time to sleep (ms) before turning on
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-post-on-sleep:
+            description: time to sleep (ms) after turning on
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-pre-off-sleep:
+            description: time to sleep (ms) before turning off
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-post-off-sleep:
+            description: time to sleep (ms) after turning off
+            $ref: /schemas/types.yaml#/definitions/uint32
+      "qcom,phy\-supply\-entry\@+\w":
+        properties:
+          reg:
+            description: offset and length of the register set for the device.
+          qcom,supply-name:
+            description: name of the supply (vdd/vdda/vddio)
+            $ref: /schemas/types.yaml#/definitions/string-array
+          qcom,supply-min-voltage:
+            description: minimum voltage level (uV)
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-max-voltage:
+            description: maximum voltage level (uV)
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-enable-load:
+            description: load drawn (uA) from enabled supply
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-disable-load:
+            description: load drawn (uA) from disabled supply
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-pre-on-sleep:
+            description: time to sleep (ms) before turning on
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-post-on-sleep:
+            description: time to sleep (ms) after turning on
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-pre-off-sleep:
+            description: time to sleep (ms) before turning off
+            $ref: /schemas/types.yaml#/definitions/uint32
+          qcom,supply-post-off-sleep:
+            description: time to sleep (ms) after turning off
+            $ref: /schemas/types.yaml#/definitions/uint32
+
+properties:
+  compatible:
+    enum:
+      - qcom,dsi-ctrl-hw-v2.4
+      - qcom,dsi-ctrl-hw-v2.5
+      - qcom,dsi-ctrl-hw-v2.6
+      - qcom,dsi-ctrl-hw-v2.7
+      - qcom,dsi-ctrl-hw-v2.8
+      - qcom,dsi-ctrl-hw-v2.9
+      - qcom,dsi-phy-v3.0
+      - qcom,dsi-phy-v4.0
+      - qcom,dsi-phy-v4.1
+      - qcom,dsi-phy-v4.2
+      - qcom,dsi-phy-v4.3
+      - qcom,dsi-phy-v4.3.2
+      - qcom,dsi-phy-v5.2
+      - qcom,dsi-phy-v7.2
+
+  reg:
+    description: |
+      List of base address and length of memory mapped
+      regions of DSI controller, disp_cc and mdp_intf.
+
+  reg-names:
+    items:
+      - const: dsi_ctrl
+      - const: disp_cc_base
+      - const: mdp_intf_base
+
+  cell-index:
+    description: Specifies the controller instance.
+
+  clocks:
+    items:
+      - const: mdp_core_clk
+      - const: iface_clk
+      - const: core_mmss_clk
+      - const: bus_clk
+      - const: byte_clk
+      - const: pixel_clk
+      - const: core_clk
+      - const: byte_clk_rcg
+      - const: pixel_clk_rcg
+
+  pll-label:
+    description: Supported versions of DSI PLL.
+    $ref: /schemas/types.yaml#/definitions/string-array
+    enum: [dsi_pll_5nm, dsi_pll_4nm, dsi_pll_3nm]
+
+  gdsc-supply:
+    description: phandle to gdsc regulator node.
+    $ref: /schemas/types.yaml#/definitions/phandle
+
+  vdda-supply:
+   description: phandle to vdda regulator node.
+   $ref: /schemas/types.yaml#/definitions/phandle
+
+  vcca-supply:
+    description: phandle to vcca regulator node.
+    $ref: /schemas/types.yaml#/definitions/phandle
+
+  interrupt-parent:
+    description: phandle to the interrupt parent device node.
+    $ref: /schemas/types.yaml#/definitions/phandle
+
+  interrupts:
+    description: The interrupt signal from the DSI block.
+
+  qcom,dsi-default-panel:
+    description: Specifies the default panel.
+
+  qcom,mdp:
+    description: Specifies the mdp node which can find panel node from this.
+
+  qcom,demura-panel-id:
+    description: |
+      Specifies the u64 demura panel ID as an array <2>
+      If demura is not used this node must be set to <0,0>.
+    $ref: /schemas/types.yaml#/definitions/uint64
+
+  qcom,msm-bus,name:
+    description: String property describing MDSS client.
+    $ref: /schemas/types.yaml#/definitions/string-array
+
+  qcom,msm-bus,num-cases:
+    description: |
+      This is the number of bus scaling use cases
+      defined in the vectors property. This must be
+      set to <2> for MDSS DSI driver where use-case 0
+      is used to remove BW votes from the system. Use
+      case 1 is used to generate bandwidth requestes
+      when sending command packets.
+
+  qcom,msm-bus,num-paths:
+    description: |
+      This represents number of paths in each bus
+      scaling usecase. This value depends on number of
+      AXI master ports dedicated to MDSS for
+      particular chipset.
+
+  qcom,msm-bus,vectors-KBps:
+    description: |
+      A series of 4 cell properties, with a format
+      of (src, dst, ab, ib) which is defined at
+      Documentation/devicetree/bindings/arm/msm/msm_bus.txt.
+      DSI driver should always set average bandwidth
+      (ab) to 0 and always use instantaneous
+      bandwidth(ib) values.
+
+  label:
+    description: String to describe controller.
+    $ref: /schemas/types.yaml#/definitions/string-array
+
+  qcom,platform-te-gpio:
+    description: Specifies the gpio used for TE.
+
+  qcom,panel-te-source:
+    description: Specifies the source pin for Vsync from panel or WD Timer.
+
+  qcom,dsi-ctrl:
+    description: handle to dsi controller device
+
+  qcom,dsi-phy:
+    description: handle to dsi phy device
+
+  qcom,dsi-ctrl-num:
+    description: Specifies the DSI controllers to use for primary panel
+
+  qcom,dsi-sec-ctrl-num:
+    description: Specifies the DSI controllers to use for secondary panel
+
+  qcom,dsi-phy-num:
+    description: Specifies the DSI PHYs to use for primary panel
+
+  qcom,dsi-sec-phy-num:
+    description: Specifies the DSI PHYs to use for secondary panel
+
+  qcom,dsi-select-clocks:
+    description: Specifies the required clocks to use for primary panel
+
+  qcom,dsi-select-sec-clocks:
+    description: Specifies the required clocks to use for secondary panel
+
+  qcom,dsi-display-list:
+    description: Specifies the list of supported displays.
+    $ref: /schemas/types.yaml#/definitions/string-array
+
+  qcom,dsi-manager:
+    description: Specifies dsi manager is present
+
+  qcom,dsi-display:
+    description: Specifies dsi display is present
+
+  qcom,hdmi-display:
+    description: Specifies hdmi is present
+
+  qcom,dp-display:
+    description: Specified dp is present
+
+  qcom,mdss-mdp-transfer-time-us:
+    description: |
+      Specifies the dsi transfer time for command mode
+      panels in microseconds. Driver uses this number to adjust
+      the clock rate according to the expected transfer time.
+      Increasing this value would slow down the mdp processing
+      and can result in slower performance.
+      Decreasing this value can speed up the mdp processing,
+      but this can also impact power consumption.
+      As a rule this time should not be higher than the time
+      that would be expected with the processing at the
+      dsi link rate since anyways this would be the maximum
+      transfer time that could be achieved.
+      If ping pong split enabled, this time should not be higher
+      than two times the dsi link rate time.
+      If the property is not specified, then the default value is 14000 us.
+
+  qcom,dsi-phy-pll-bypass:
+    description: |
+      A boolean property that enables bypassing hardware access in DSI
+      PHY/PLL drivers to allow the DSI driver to run on emulation platforms
+      that might be missing those modules.
+
+  qcom,null-insertion-enabled:
+    description: A boolean to enable NULL packet insertion feature for DSI controller.
+
+  ports:
+    description: |
+      This video port is used when external bridge is present.
+      The connection is modeled using the OF graph bindings
+      specified in Documentation/devicetree/bindings/graph.txt.
+      Video port 0 reg 0 is for the bridge output. The remote
+      endpoint phandle should be mipi_dsi_device device node.
+
+  qcom,dsi-pll-ssc-en:
+    description: Boolean property to indicate that ssc is enabled.
+
+  qcom,dsi-pll-ssc-mode:
+    description: |
+      Spread-spectrum clocking. It can be either "down-spread"
+      or "center-spread". Default is "down-spread" if it is not specified.
+    $ref: /schemas/types.yaml#/definitions/string-array
+    default: down-spread
+    enum: [down-spread, center-spread]
+
+  qcom,ssc-frequency-hz:
+    description: |
+      Integer property to specify the spread frequency
+      to be programmed for the SSC.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,ssc-ppm:
+    description: Integer property to specify the Parts per Million value of SSC.
+    $ref: /schemas/types.yaml#/definitions/uint32
+
+  qcom,avdd-regulator-gpio:
+    description: Specifies the gpio pin used for avdd power supply regulator.
+
+required:
+  - compatible
+  - reg
+  - reg-names
+  - cell-index
+  - clocks
+  - clock-names
+  - pll-label
+  - gdsc-supply
+  - vdda-supply
+  - vcca-supply
+  - interrupt-parent
+  - qcom,dsi-default-panel
+  - qcom,mdp
+  - qcom,demura-panel-id
+  - qcom,msm-bus,name
+  - qcom,msm-bus,num-cases
+  - qcom,msm-bus,num-paths
+  - qcom,msm-bus,vectors-KBps
+
+...

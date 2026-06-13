@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (c) 2009, 2012-2013, The Linux Foundation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above copyright
+ *      notice, this list of conditions and the following disclaimer in the
+ *      documentation and/or other materials provided with the distribution.
+ *    * Neither the name of The Linux Foundation nor
+ *      the names of its contributors may be used to endorse or promote
+ *      products derived from this software without specific prior written
+ *      permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fmradio"
+    android:background="@drawable/bg_landscape"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout android:id="@+id/layout_on_off"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <ImageView android:id="@+id/btn_onoff"
+            android:src="@drawable/btn_onoff"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_height="wrap_content" />
+
+        <TextView android:id="@+id/record_msg_tv"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/recorder_start"
+            android:layout_marginLeft="25dp"
+            android:layout_toRightOf="@+id/btn_onoff"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="invisible"
+            android:text="@string/default_record"/>
+
+        <TextView android:id="@+id/prog_service_tv"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/record_msg_tv"
+            android:layout_toLeftOf="@+id/btn_silent"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:singleLine="true"
+            android:textStyle="bold"
+            android:text="@string/prog_service_string"/>
+
+        <ImageView android:id="@+id/btn_silent"
+            android:src="@drawable/ic_silent_mode_off"
+            android:layout_toLeftOf="@+id/btn_speaker_earphone"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_height="wrap_content" />
+
+        <ImageView android:id="@+id/btn_speaker_earphone"
+            android:src="@drawable/btn_earphone"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout android:id="@+id/stationinfo_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_on_off">
+
+        <!-- This included layout contains Station Information to display -->
+        <include layout="@layout/station_info" />
+
+    </RelativeLayout>
+
+    <com.caf.fmradio.HorizontalNumberPicker
+        android:id="@+id/fm_picker"
+        android:layout_width="fill_parent"
+        android:layout_height="175dp"
+        android:layout_marginBottom="50dp"
+        android:layout_below="@+id/stationinfo_layout"/>
+
+    <HorizontalScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:fillViewport="true"
+        android:layout_alignParentBottom="true"
+        android:scrollbars="none">
+
+        <LinearLayout android:id="@+id/favorite_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button android:id="@+id/presets_button_1"
+                style="@style/ButtonStripLeft"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="12sp"
+                android:singleLine="true"
+                android:layout_weight="1"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/presets_button_2"
+                style="@style/ButtonStripMiddle"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="12sp"
+                android:singleLine="true"
+                android:layout_weight="1"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/presets_button_3"
+                style="@style/ButtonStripMiddle"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="12sp"
+                android:singleLine="true"
+                android:layout_weight="1"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/presets_button_4"
+                style="@style/ButtonStripMiddle"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="12sp"
+                android:singleLine="true"
+                android:layout_weight="1"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/presets_button_5"
+                style="@style/ButtonStripMiddle"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="12sp"
+                android:singleLine="true"
+                android:layout_weight="1"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/presets_button_6"
+                style="@style/ButtonStripMiddle"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="12sp"
+                android:singleLine="true"
+                android:layout_weight="1"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/presets_button_7"
+                style="@style/ButtonStripMiddle"
+                android:text="@string/add_station"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="12sp"
+                android:singleLine="true"
+                android:layout_weight="1"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+</RelativeLayout>

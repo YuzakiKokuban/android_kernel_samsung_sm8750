@@ -1,0 +1,22 @@
+#include "sun-camera-sensor-q7q-pinctrl-common.dtsi"
+
+&flash_led_active {
+	mux {
+		pins = "gpio170";
+	};
+
+	config {
+		pins = "gpio170";
+	};
+};
+
+
+&flash_led_suspend {
+	mux {
+		pins = "gpio170";
+	};
+
+	config {
+		pins = "gpio170";
+	};
+};

@@ -1,0 +1,32 @@
+aidl_interface {
+    name: "vendor.qti.hardware.systemhelperaidl",
+    vendor_available: true,
+    owner: "qti",
+    srcs: [
+        "vendor/qti/hardware/systemhelperaidl/*.aidl",
+    ],
+    imports: [
+        "android.hardware.common-V2",
+    ],
+    stability: "vintf",
+    backend: {
+        cpp: {
+            enabled: false,
+        },
+        java: {
+            sdk_version: "module_current",
+            enabled: false,
+        },
+        ndk: {
+            enabled: true,
+        },
+    },
+    versions_with_info: [
+        {
+            version: "1",
+            imports: ["android.hardware.common-V2"],
+        },
+    ],
+    frozen: true,
+
+}

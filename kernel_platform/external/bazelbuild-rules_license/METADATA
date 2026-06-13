@@ -1,0 +1,17 @@
+name: "rules_license"
+description:
+    "Software license related rules and tools for the Bazel build system."
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://github.com/bazelbuild/rules_license"
+  }
+  url {
+    type: GIT
+    value: "https://github.com/bazelbuild/rules_license.git"
+  }
+  version: "bb6f02d8ce7e51587e600671d41e801960d16bf1"
+  last_upgrade_date { year: 2023 month: 3 day: 22 }
+  license_type: NOTICE
+}

@@ -1,0 +1,14 @@
+obj-$(CONFIG_SEC_QC_DEBUG)		+= debug/
+obj-$(CONFIG_SEC_QC_RBCMD)		+= reboot_cmd/
+obj-$(CONFIG_SEC_QC_DEBUG_PARTITION)	+= dbg_partition/
+obj-$(CONFIG_SEC_QC_QCOM_REBOOT_REASON)	+= reboot_reason/
+obj-$(CONFIG_SEC_QC_UPLOAD_CAUSE)	+= upload_cause/
+obj-$(CONFIG_SEC_QC_LOGGER)		+= logger/
+obj-$(CONFIG_SEC_QC_SOC_ID)		+= soc_id/
+obj-$(CONFIG_SEC_QC_QCOM_WDT_CORE)	+= wdt_core/
+obj-$(CONFIG_SEC_QC_SUMMARY)		+= summary/
+obj-$(CONFIG_SEC_QC_USER_RESET)		+= user_reset/
+obj-$(CONFIG_SEC_QC_SMEM)		+= smem/
+obj-$(CONFIG_SEC_QC_HW_PARAM)		+= hw_param/
+obj-$(CONFIG_SEC_QC_RST_EXINFO)		+= rst_exinfo/
+obj-$(CONFIG_SEC_QC_MOCK)		+= mock/

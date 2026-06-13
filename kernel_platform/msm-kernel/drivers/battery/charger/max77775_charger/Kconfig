@@ -1,0 +1,39 @@
+config CHARGER_DUMMY
+	bool "dummy charger driver"
+	default n
+	depends on BATTERY_SAMSUNG
+	help
+	  Say Y here to enable
+	  support for dummy charger driver.
+	  This driver source code implemented
+	  skeleton source code for charger functions.
+
+config CHARGER_MAX77775
+	tristate "MAX77775 battery charger support"
+	depends on BATTERY_SAMSUNG
+	help
+	  Say Y or M here to enable
+	  support for the MAX77775 charger.
+	  This includes boost mode.
+	  This is Switching Mode Charger.
+
+config MAX77775_CHECK_B2SOVRC
+	bool "enable for check B2SOVRC"
+	default n
+	depends on CHARGER_MAX77775
+	help
+	  Say Y here to enable
+	  support for CHARGER_MAX77775 check B2SCOVRC.
+	  MAX77775 onply supports this checking options.
+	  this is for MAX77775 monitoring B2SCOVRC.
+	  
+config SHIPMODE_BY_VBAT
+	bool "enable for check shipmode by vbat"
+	default n
+	depends on CHARGER_MAX77775
+	help
+	  Say Y here to enable
+	  support for SHIPMODE_BY_VBAT.
+	  MAX77775 only supports this checking options.
+	  this is for shipmode by vbat.
+

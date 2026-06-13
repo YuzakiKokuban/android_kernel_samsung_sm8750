@@ -1,0 +1,15 @@
+#include "sun-camera-sensor-pa2q-r03.dtsi"
+
+
+
+&sensor_front {
+		cam_v_custom2-supply = <&BOB1>;     	/* VREG_BOB1_3P3_3P5 */
+		rgltr-min-voltage = <824000 1804000 2204000 0 3008000>;
+		rgltr-max-voltage = <920000 1804000 2804000 0 3960000>;
+};
+
+&sensor_front_full {
+		cam_v_custom2-supply = <&BOB1>;     	/* VREG_BOB1_3P3_3P5 */
+		rgltr-min-voltage = <824000 1804000 2204000 0 3008000>;
+		rgltr-max-voltage = <920000 1804000 2804000 0 3960000>;
+};

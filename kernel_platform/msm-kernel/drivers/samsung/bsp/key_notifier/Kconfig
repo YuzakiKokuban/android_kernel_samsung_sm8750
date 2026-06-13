@@ -1,0 +1,4 @@
+config SEC_KEY_NOTIFIER
+	tristate "SEC Atomic keyboard notifierr"
+	help
+	  TODO: help is not ready.

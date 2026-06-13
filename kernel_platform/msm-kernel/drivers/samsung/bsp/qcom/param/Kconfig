@@ -1,0 +1,22 @@
+config SEC_QC_PARAM
+	tristate "Samsung PARAM driver for RAW Partion & Qualcomm based devices"
+	depends on SEC_PARAM
+	help
+	  TODO: help is not ready.
+
+config SEC_QC_PARAM_TEST_FOR_ON_DEVICE
+	tristate "KUnit test for sec_qc_param_test"
+	depends on KUNIT
+	depends on SEC_QC_PARAM
+	help
+	  TODO: Describe config fully.
+	  If you run this test driver on device, SHOULD set this config as 'm' to build test driver modulraly.
+
+config SEC_QC_PARAM_TEST_FOR_ONLY_UML
+	tristate "KUnit test for sec_qc_param_test"
+	depends on KUNIT
+	depends on UML
+	depends on SEC_QC_PARAM
+	help
+	  TODO: Describe config fully.
+	  This CONFIG is recommended to set to y.

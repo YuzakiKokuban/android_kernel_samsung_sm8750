@@ -1,0 +1,7 @@
+elsk@google.com
+maennich@google.com
+
+# TODO: add once available in aosp as kernel/build is only available there
+# include kernel/build:main:/OWNERS
+include platform/system/core:main:/janitors/OWNERS
+

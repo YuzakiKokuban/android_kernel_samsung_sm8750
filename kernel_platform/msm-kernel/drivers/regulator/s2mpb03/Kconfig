@@ -1,0 +1,28 @@
+if REGULATOR
+
+config REGULATOR_S2MPB03
+	tristate "Samsung S2MPB03 regulator"
+	depends on I2C
+	help
+	 This driver controls a Samsung S2MPB03 regulator
+	 via I2C bus.
+endif
+
+
+config S2MPB03_TEST_FOR_ON_DEVICE
+	tristate "KUnit test for s2mpb03_test"
+	depends on SEC_KUNIT
+	depends on REGULATOR_S2MPB03
+	help
+	  TODO: Describe config fully.
+	  If you run this test driver on device, SHOULD set this config as 'm' to build test driver modulraly.
+
+config S2MPB03_TEST_FOR_ONLY_UML
+	tristate "KUnit test for s2mpb03_test"
+	depends on SEC_KUNIT
+	depends on UML
+	depends on REGULATOR_S2MPB03
+	help
+	  TODO: Describe config fully.
+	  This CONFIG is recommended to set to y.
+

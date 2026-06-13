@@ -1,0 +1,6 @@
+xsd_config {
+    name: "audio_policy_engine_configuration",
+    srcs: ["audio_policy_engine_configuration.xsd"],
+    package_name: "audio.policy.engine.configuration",
+    nullability: true,
+}

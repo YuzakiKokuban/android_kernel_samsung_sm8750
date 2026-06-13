@@ -1,0 +1,92 @@
+/*
+ * Copyright (c) 2019 The Linux Foundation. All rights reserved.
+ * Not a contribution.
+ */
+
+/*
+ * Copyright 2018 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package vendor.qti.hardware.bluetooth_audio@2.0;
+
+import IBluetoothAudioPort;
+
+/**
+ * HAL interface from the Bluetooth stack to the Audio HAL
+ *
+ * The Bluetooth stack calls methods in this interface to start and end audio
+ * sessions and sends callback events to the Audio HAL.
+ *
+ * Note: For HIDL APIs with a "generates" statement, the callback parameter used
+ * for return value must be invoked synchronously before the API call returns.
+ */
+interface IBluetoothAudioProvider {
+
+    /**
+     * This method indicates that the Bluetooth stack is ready to stream audio.
+     * It registers an instance of IBluetoothAudioPort with and provides the
+     * current negotiated codec to the Audio HAL. After this method is called,
+     * the Audio HAL can invoke IBluetoothAudioPort.startStream().
+     *
+     * Note: endSession() must be called to unregister this IBluetoothAudioPort
+     *
+     * @param hostIf An instance of IBluetoothAudioPort for stream control
+     * @param audioConfig The audio configuration negotiated with the remote
+     *    device. The PCM parameters are set if software based encoding,
+     *    otherwise the correct codec configuration is used for hardware
+     *    encoding.
+     *
+     * @return status One of the following
+     *    SUCCESS if this IBluetoothAudioPort was successfully registered with
+     *        the Audio HAL
+     *    UNSUPPORTED_CODEC_CONFIGURATION if the Audio HAL cannot register this
+     *        IBluetoothAudioPort with the given codec configuration
+     *    FAILURE if the Audio HAL cannot register this IBluetoothAudioPort for
+     *        any other reason
+     * @return dataMQ The fast message queue for audio data from this provider.
+     *    Audio data will be in PCM format as specified by the
+     *    audioConfig.pcmConfig parameter.
+     *    Invalid if streaming is offloaded to hardware or on failure.
+     */
+    startSession(IBluetoothAudioPort hostIf, AudioConfiguration audioConfig)
+                generates (Status status, fmq_sync<uint8_t> dataMQ);
+
+    /**
+     * Callback for IBluetoothAudioPort.startStream()
+     *
+     * @param status SUCCESS or FAILURE
+     */
+    streamStarted(Status status);
+
+    /**
+     * Callback for IBluetoothAudioPort.suspendStream()
+     *
+     * @param status SUCCESS or FAILURE
+     */
+    streamSuspended(Status status);
+
+    /**
+     * Call to update Sesion Parameters in runtime
+     *
+     */
+    updateSessionParams(SessionParams sessionParams);
+
+    /**
+     * Ends the current session and unregisters the IBluetoothAudioPort
+     * interface.
+     */
+
+    endSession();
+};

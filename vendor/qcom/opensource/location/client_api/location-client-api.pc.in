@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: location-client-api
+Description: location client api library
+Version: @VERSION@
+Libs: -L${libdir} -llocation_client_api
+Cflags: -I${includedir} -I${includedir}/location-client-api

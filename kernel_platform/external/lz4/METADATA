@@ -1,0 +1,15 @@
+name: "lz4"
+description: "Extremely Fast Compression algorithm http://www.lz4.org"
+third_party {
+  url {
+    type: GIT
+    value: "https://github.com/lz4/lz4.git"
+  }
+  version: "v1.9.4"
+  license_type: RESTRICTED
+  last_upgrade_date {
+    year: 2022
+    month: 10
+    day: 6
+  }
+}

@@ -1,0 +1,5 @@
+config DECLARED_SET
+	bool "DECLARED_SET"
+
+config DECLARED_UNSET
+	bool "DECLARED_UNSET"

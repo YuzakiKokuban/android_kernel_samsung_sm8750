@@ -1,0 +1,10 @@
+# Enable KASAN.
+# The mode is unspecified and determined by defconfig of the
+# kernel_build.
+# If using software modes (generic or SW tag based), also use inline instrumentation types.
+
+CONFIG_KASAN=y
+CONFIG_KASAN_INLINE=y # nocheck: Not supported for HW tag based KASAN. See b/295240936
+CONFIG_KCOV=y
+# CONFIG_KASAN_OUTLINE is not set
+CONFIG_FRAME_WARN=0

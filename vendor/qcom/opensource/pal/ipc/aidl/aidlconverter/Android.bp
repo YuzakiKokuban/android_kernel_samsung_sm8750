@@ -1,0 +1,39 @@
+cc_library_static {
+
+    name: "libpalaidltypeconverter",
+    vendor: true,
+
+    cflags: [
+        "-v",
+        "-Wall",
+        "-Wextra",
+        "-Wthread-safety",
+    ],
+    tidy: true,
+    
+// { SEC_AUDIO_COMMON
+    include_dirs: ["system/media/audio/include"],
+// } SEC_AUDIO_COMMON
+
+    export_include_dirs: ["inc"],
+
+    srcs: [
+        "src/PalLegacyToAidl.cpp",
+        "src/PalAidlToLegacy.cpp",
+        "src/SharedMemoryWrapper.cpp",
+    ],
+
+    static_libs: ["libaidlcommonsupport"],
+
+    shared_libs: [
+        "liblog",
+        "libbinder_ndk",
+        "libbase",
+        "libcutils",
+        "libutils",
+        "vendor.qti.hardware.pal-V1-ndk",
+    ],
+
+    header_libs: ["libarpal_headers"],
+
+}

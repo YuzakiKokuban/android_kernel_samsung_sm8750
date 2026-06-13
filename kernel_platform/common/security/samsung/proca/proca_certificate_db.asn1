@@ -1,0 +1,19 @@
+SignedDb ::= SEQUENCE {
+  db                CertificateDb ({ proca_certificate_db_get_signed_data }),
+  signature         OCTET STRING ({ proca_certificate_db_get_signature })
+}
+
+CertificateDb ::= SEQUENCE {
+  certificateSeq     CertificateSeq,
+  version            INTEGER,
+  keyId              OCTET STRING ({ proca_certificate_db_get_key_id }),
+  dbMetadata         OCTET STRING
+}
+
+CertificateSeq ::= SEQUENCE OF CertificateEntry
+
+CertificateEntry ::= SEQUENCE {
+  fileName           OCTET STRING ({ proca_certificate_db_get_filename }),
+  certificate        OCTET STRING ({ proca_certificate_db_get_certificate }),
+  metadata           OCTET STRING
+}

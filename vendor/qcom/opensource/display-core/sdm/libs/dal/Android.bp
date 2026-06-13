@@ -1,0 +1,39 @@
+cc_library_shared {
+    name: "libsdmdal",
+    defaults: ["qtidisplay_defaults"],
+    sanitize: {
+        integer_overflow: true,
+    },
+    vendor: true,
+    header_libs: [
+        "qti_display_kernel_headers",
+    ],
+    cflags: [
+        "-fno-operator-names",
+        "-Wno-unused-parameter",
+        "-DLOG_TAG=\"SDM\"",
+    ],
+    shared_libs: [
+        "libdisplaydebug",
+        "libsdmutils",
+        "libdrm",
+        "libdrmutils",
+        "libsdedrm",
+        "libsync",
+    ],
+
+    srcs: [
+        "hw_events_interface.cpp",
+        "hw_info_interface.cpp",
+        "hw_interface.cpp",
+        "hw_info_drm.cpp",
+        "hw_device_drm.cpp",
+        "hw_peripheral_drm.cpp",
+        "hw_tv_drm.cpp",
+        "hw_events_drm.cpp",
+        "hw_scale_drm.cpp",
+        "hw_virtual_drm.cpp",
+        "hw_color_manager_drm.cpp",
+    ],
+
+}

@@ -1,0 +1,92 @@
+# Copyright (C) 2022 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+
+exports_files([
+    "build.config.modules",
+    "fake_modules_options.txt",
+])
+
+bzl_library(
+    name = "artifact_tests",
+    srcs = [
+        "device_modules_test.bzl",
+        "kernel_test.bzl",
+    ],
+    visibility = ["//build/kernel/kleaf:__subpackages__"],
+    deps = [
+        "//build/kernel/kleaf/impl",
+        "//build/kernel/kleaf/tests:empty_test",
+        "//build/kernel/kleaf/tests:hermetic_test",
+        "@bazel_skylib//rules:write_file",
+    ],
+)
+
+py_binary(
+    name = "kernel_module_test",
+    srcs = ["kernel_module_test.py"],
+    python_version = "PY3",
+    # All packages that uses kernel_module must be able to see this.
+    visibility = ["//visibility:public"],
+    deps = [
+        "@io_abseil_py//absl/testing:absltest",
+    ],
+)
+
+py_binary(
+    name = "kernel_build_test",
+    srcs = ["kernel_build_test.py"],
+    python_version = "PY3",
+    # All packages that uses kernel_module must be able to see this.
+    visibility = ["//visibility:public"],
+    deps = [
+        "@io_abseil_py//absl/testing:absltest",
+        "@io_abseil_py//absl/testing:parameterized",
+    ],
+)
+
+py_binary(
+    name = "initramfs_modules_options_test",
+    srcs = ["initramfs_modules_options_test.py"],
+    python_version = "PY3",
+    # All packages that uses kernel_module must be able to see this.
+    visibility = ["//visibility:public"],
+    deps = [
+        "@io_abseil_py//absl/testing:absltest",
+    ],
+)
+
+py_binary(
+    name = "check_module_signature",
+    srcs = ["check_module_signature.py"],
+    python_version = "PY3",
+    # All packages that uses kernel_module must be able to see this.
+    visibility = ["//visibility:public"],
+    deps = [
+        "@io_abseil_py//absl/flags",
+        "@io_abseil_py//absl/testing:absltest",
+    ],
+)
+
+py_binary(
+    name = "initramfs_modules_lists_test",
+    srcs = ["initramfs_modules_lists_test.py"],
+    python_version = "PY3",
+    # All packages that use kenrel_module must be able to see this.
+    visibility = ["//visibility:public"],
+    deps = [
+        "@io_abseil_py//absl/testing:absltest",
+    ],
+)

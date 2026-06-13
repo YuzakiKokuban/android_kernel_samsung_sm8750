@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: agmplugin
+Description: agm plugin library
+Version: @VERSION@
+Libs: -L${libdir} -lagmplugin
+Cflags: -I${includedir}

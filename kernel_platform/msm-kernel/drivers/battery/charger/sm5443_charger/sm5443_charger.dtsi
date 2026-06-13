@@ -1,0 +1,19 @@
+&qupv3_hub_i2c4 {
+	status = "okay";
+
+	sm5443_charger: sm5443@63 {
+		compatible = "siliconmitus,sm5443";
+		reg = <0x63>;
+
+		sm5443,r_ttl = <490000>;
+		sm5443,topoff = <380>;
+		sm5443,wc_topoff = <380>;
+		sm5443,en_vbatreg = <0>;
+	};
+};
+
+/* /home/dpi/qb5_8814/workspace/P4_1716/android/kernel_platform/kmodule/battery/stable/paradigm/charger/sm5443/sm5443_charger.pa3q.dtsi */
+&sm5443_charger {
+	sm5443,topoff = <150>;
+	sm5443,fpdo_vnow_reg = <4285000>;
+};
