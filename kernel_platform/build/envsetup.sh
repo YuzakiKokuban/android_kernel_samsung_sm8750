@@ -1,1 +1,0 @@
-kernel/envsetup.sh

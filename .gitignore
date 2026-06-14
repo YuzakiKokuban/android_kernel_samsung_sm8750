@@ -1,0 +1,33 @@
+# Build outputs
+/out/
+*.o
+*.ko
+*.mod.c
+*.mod
+modules.order
+Module.symvers
+System.map
+vmlinux
+vmlinux.o
+
+# ccache
+/.ccache/
+/.ccache_bin/
+
+# Build cache (WildKernels patches, SuSFS clones)
+/.build_cache/
+
+# AnyKernel3 zips
+*.zip
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# CI Center local
+/localversion
+/.scmversion
+/protected_module_names_list
+/protected_exports_list

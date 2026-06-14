@@ -1,4 +1,0 @@
-module(
-    name = "freetype",
-    version = "2.9",
-)

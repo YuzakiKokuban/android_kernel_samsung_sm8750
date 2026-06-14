@@ -1,3 +1,0 @@
-Allows a process to manipulate tty devices:
-  - configure tty devices
-  - perform vhangup() of a tty

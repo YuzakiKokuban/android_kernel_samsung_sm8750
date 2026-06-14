@@ -1,6 +1,0 @@
-module(
-    name = "lmdb",
-    version = "0.9.29",
-)
-
-bazel_dep(name = "platforms", version = "0.0.6")

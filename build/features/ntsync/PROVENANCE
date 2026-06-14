@@ -1,0 +1,10 @@
+ntsync vendored sources
+=======================
+Upstream Linux NTSYNC driver (the self-contained miscdevice form that
+compiles on 6.6). Vendored here so the build no longer fetches
+it from an external patch repo. apply_features.sh copies these into
+drivers/misc/ntsync.c and include/uapi/linux/ntsync.h and wires Kconfig/
+Makefile/defconfig. Upstream author: Elizabeth Figura. GPL-2.0.
+
+SM-S9380V adaptation: same sources, Kconfig insertion path verified against
+android15-6.6 drivers/misc/Kconfig.

@@ -1,1 +1,0 @@
-kernel/build_module.sh

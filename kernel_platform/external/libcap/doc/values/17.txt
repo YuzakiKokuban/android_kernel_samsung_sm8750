@@ -1,4 +1,0 @@
-Allows a process to perform raw IO:
-  - permit ioper/iopl access
-  - permit sending USB messages to any device via
-    /dev/bus/usb

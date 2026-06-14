@@ -1,2 +1,0 @@
-Allows a process to configure the kernel's syslog
-(printk) behavior.

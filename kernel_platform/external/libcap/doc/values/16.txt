@@ -1,3 +1,0 @@
-Allows a process to initiate the loading and unloading
-of kernel modules. This capability can effectively
-modify kernel without limit.

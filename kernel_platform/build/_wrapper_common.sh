@@ -1,1 +1,0 @@
-kernel/_wrapper_common.sh

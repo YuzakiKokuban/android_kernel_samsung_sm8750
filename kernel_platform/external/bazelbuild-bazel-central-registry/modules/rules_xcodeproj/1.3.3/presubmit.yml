@@ -1,4 +1,0 @@
-tasks:
-  verify_targets_macos:
-    name: Verify build targets
-    platform: macos

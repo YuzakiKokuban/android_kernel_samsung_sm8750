@@ -1,1 +1,0 @@
-../kernel/android/merge_dtbs.sh

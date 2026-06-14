@@ -1,5 +1,0 @@
-module(
-    name = "tinyply",
-    version = "2.3.4",
-    compatibility_level = 1,
-)

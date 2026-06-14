@@ -1,2 +1,0 @@
-Allows a process to broadcast to the network and to
-listen to multicast.

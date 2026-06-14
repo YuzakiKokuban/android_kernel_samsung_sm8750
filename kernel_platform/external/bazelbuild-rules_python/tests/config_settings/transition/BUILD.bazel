@@ -1,3 +1,0 @@
-load(":py_args_tests.bzl", "py_args_test_suite")
-
-py_args_test_suite(name = "py_args_tests")

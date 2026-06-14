@@ -1,3 +1,0 @@
-# ANDROID: Disable runtime symbol protection for debug builds
-#
-# CONFIG_MODULE_SIG_PROTECT is not set

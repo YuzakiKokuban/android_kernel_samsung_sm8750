@@ -1,4 +1,0 @@
-Allows a process to perform time manipulation of clocks:
-  - alter the system clock
-  - enable irix_stime on MIPS
-  - set the real-time clock

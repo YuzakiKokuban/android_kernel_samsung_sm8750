@@ -1,1 +1,0 @@
-kernel/all-variants.sh

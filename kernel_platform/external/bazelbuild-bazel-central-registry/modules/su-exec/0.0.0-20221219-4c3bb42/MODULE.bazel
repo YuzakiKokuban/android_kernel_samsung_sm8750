@@ -1,5 +1,0 @@
-module(
-    name = "su-exec",
-    version = "0.0.0-20221219-4c3bb42",
-    compatibility_level = 1,
-)

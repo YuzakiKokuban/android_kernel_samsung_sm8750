@@ -1,3 +1,0 @@
-module(name = "cpplint", version = "1.6.1")
-
-bazel_dep(name = "rules_python", version = "0.31.0")

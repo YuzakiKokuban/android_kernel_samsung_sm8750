@@ -1,4 +1,0 @@
-module(
-    name = "bliss",
-    version = "0.73",
-)

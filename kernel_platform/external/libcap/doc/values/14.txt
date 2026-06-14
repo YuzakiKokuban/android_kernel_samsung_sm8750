@@ -1,3 +1,0 @@
-Allows a process to lock shared memory segments for IPC
-purposes.  Also enables mlock and mlockall system
-calls.

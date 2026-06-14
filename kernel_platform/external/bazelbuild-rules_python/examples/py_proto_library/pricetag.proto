@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package rules_python;
-
-message PriceTag {
-  string name = 2;
-  double cost = 1;
-}

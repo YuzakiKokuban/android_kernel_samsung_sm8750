@@ -1,6 +1,0 @@
-EXTRA_CMDS="echo
-
-do_bad_things
-
-exit 1
-"

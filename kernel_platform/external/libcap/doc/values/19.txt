@@ -1,2 +1,0 @@
-Allows a process to perform a ptrace() of any other
-process.

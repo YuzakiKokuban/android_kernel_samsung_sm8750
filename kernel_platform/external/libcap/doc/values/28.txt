@@ -1,1 +1,0 @@
-Allows a process to take leases on files.

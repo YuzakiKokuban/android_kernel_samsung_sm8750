@@ -1,1 +1,0 @@
-# rules_license examples

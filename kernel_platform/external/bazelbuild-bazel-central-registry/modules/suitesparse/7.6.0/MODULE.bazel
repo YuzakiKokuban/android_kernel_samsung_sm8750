@@ -1,1 +1,0 @@
-module(name = "suitesparse", version = "7.6.0")

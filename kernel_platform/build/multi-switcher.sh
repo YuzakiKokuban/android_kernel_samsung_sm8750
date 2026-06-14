@@ -1,1 +1,0 @@
-kernel/multi-switcher.sh

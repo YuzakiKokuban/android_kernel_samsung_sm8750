@@ -1,5 +1,0 @@
---- MODULE.bazel
-+++ MODULE.bazel
-@@ -3 +3 @@ module(
--    version = "0",
-+    version = "1.6.0",
