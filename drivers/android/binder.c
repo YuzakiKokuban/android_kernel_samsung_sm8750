@@ -69,6 +69,9 @@
 #include <linux/ktime.h>
 
 #include <uapi/linux/sched/types.h>
+#ifdef CONFIG_REKERNEL
+#include <../rekernel/rekernel.h>
+#endif /* CONFIG_REKERNEL */
 #include <uapi/linux/android/binder.h>
 
 #include <linux/cacheflush.h>
@@ -2972,8 +2975,12 @@ static int binder_fixup_parent(struct list_head *pf_head,
 static bool binder_can_update_transaction(struct binder_transaction *t1,
 					  struct binder_transaction *t2)
 {
+#ifdef CONFIG_REKERNEL
+	if ((t1->flags & t2->flags & TF_ONE_WAY) != TF_ONE_WAY || !t1->to_proc || !t2->to_proc)
+#else
 	if ((t1->flags & t2->flags & (TF_ONE_WAY | TF_UPDATE_TXN)) !=
 	    (TF_ONE_WAY | TF_UPDATE_TXN) || !t1->to_proc || !t2->to_proc)
+#endif /* CONFIG_REKERNEL */
 		return false;
 	if (t1->to_proc->tsk == t2->to_proc->tsk && t1->code == t2->code &&
 	    t1->flags == t2->flags && t1->buffer->pid == t2->buffer->pid &&
@@ -3010,6 +3017,32 @@ binder_find_outdated_transaction_ilocked(struct binder_transaction *t,
 	}
 	return NULL;
 }
+
+#ifdef CONFIG_REKERNEL
+void rekernel_binder_transaction(bool reply, struct binder_transaction *t,
+				struct binder_node *target_node, struct binder_transaction_data *tr) {
+	struct binder_proc *to_proc;
+	struct binder_alloc *target_alloc;
+	if (!t->to_proc)
+		return;
+	to_proc = t->to_proc;
+
+	if (reply) {
+		binder_reply_handler(task_tgid_nr(current), current, to_proc->pid, to_proc->tsk, false, tr);
+	} else if (t->from) {
+		if (t->from->proc) {
+			binder_trans_handler(t->from->proc->pid, t->from->proc->tsk, to_proc->pid, to_proc->tsk, false, tr);
+		}
+	} else { // oneway=1
+		binder_trans_handler(task_tgid_nr(current), current, to_proc->pid, to_proc->tsk, true, tr);
+
+		target_alloc = &to_proc->alloc;
+		if (target_alloc->free_async_space < (target_alloc->buffer_size / 10 + 0x300)) {
+			binder_overflow_handler(task_tgid_nr(current), current, to_proc->pid, to_proc->tsk, true, tr);
+		}
+	}
+}
+#endif /* CONFIG_REKERNEL */
 
 /**
  * binder_proc_transaction() - sends a transaction to a process and wakes it up
@@ -3084,7 +3117,11 @@ static int binder_proc_transaction(struct binder_transaction *t,
 		if (enqueue_task)
 			binder_enqueue_work_ilocked(&t->work, &proc->todo);
 	} else {
+#ifdef CONFIG_REKERNEL
+		if (frozen_task_group(proc->tsk)) {
+#else
 		if ((t->flags & TF_UPDATE_TXN) && frozen) {
+#endif /* CONFIG_REKERNEL */
 			t_outdated = binder_find_outdated_transaction_ilocked(t,
 									      &node->async_todo);
 			if (t_outdated) {
@@ -3605,6 +3642,10 @@ static void binder_transaction(struct binder_proc *proc,
 			goto err_bad_extra_size;
 		}
 	}
+
+#ifdef CONFIG_REKERNEL
+	rekernel_binder_transaction(reply, t, target_node, tr);
+#endif /* CONFIG_REKERNEL */
 
 	trace_binder_transaction(reply, t, target_node);
 
