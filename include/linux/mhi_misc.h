@@ -344,7 +344,7 @@ static inline int mhi_report_error(struct mhi_controller *mhi_cntrl)
  * @mhi_cntrl: MHI controller
  * @priv: pointer to data
  */
-void mhi_controller_set_privdata(struct mhi_controller *mhi_cntrl, void *priv)
+static inline void mhi_controller_set_privdata(struct mhi_controller *mhi_cntrl, void *priv)
 {
 }
 
@@ -352,7 +352,7 @@ void mhi_controller_set_privdata(struct mhi_controller *mhi_cntrl, void *priv)
  * mhi_controller_get_privdata - Get private data from MHI controller
  * @mhi_cntrl: MHI controller
  */
-void *mhi_controller_get_privdata(struct mhi_controller *mhi_cntrl)
+static inline void *mhi_controller_get_privdata(struct mhi_controller *mhi_cntrl)
 {
 	return ERR_PTR(-EINVAL);
 }
@@ -368,7 +368,7 @@ void *mhi_controller_get_privdata(struct mhi_controller *mhi_cntrl)
  * MHI controller structure pointer if BDF match is found
  * NULL if cookie is not found
  */
-struct mhi_controller *mhi_bdf_to_controller(u32 domain, u32 bus, u32 slot, u32 dev_id)
+static inline struct mhi_controller *mhi_bdf_to_controller(u32 domain, u32 bus, u32 slot, u32 dev_id)
 {
 	return ERR_PTR(-EINVAL);
 }
@@ -379,7 +379,7 @@ struct mhi_controller *mhi_bdf_to_controller(u32 domain, u32 bus, u32 slot, u32 
  * @mhi_cntrl: MHI controller
  * @timeout: timeout in ms
  */
-void mhi_set_m2_timeout_ms(struct mhi_controller *mhi_cntrl, u32 timeout)
+static inline void mhi_set_m2_timeout_ms(struct mhi_controller *mhi_cntrl, u32 timeout)
 {
 }
 
@@ -388,7 +388,7 @@ void mhi_set_m2_timeout_ms(struct mhi_controller *mhi_cntrl, u32 timeout)
  * @mhi_cntrl: MHI controller
  * @notify_clients: if true, clients will be notified of the resume transition
  */
-int mhi_pm_fast_resume(struct mhi_controller *mhi_cntrl, bool notify_clients)
+static inline int mhi_pm_fast_resume(struct mhi_controller *mhi_cntrl, bool notify_clients)
 {
 	return -EPERM;
 }
@@ -398,7 +398,7 @@ int mhi_pm_fast_resume(struct mhi_controller *mhi_cntrl, bool notify_clients)
  * @mhi_cntrl: MHI controller
  * @notify_clients: if true, clients will be notified of the suspend transition
  */
-int mhi_pm_fast_suspend(struct mhi_controller *mhi_cntrl, bool notify_clients)
+static inline int mhi_pm_fast_suspend(struct mhi_controller *mhi_cntrl, bool notify_clients)
 {
 	return -EPERM;
 }
@@ -407,7 +407,7 @@ int mhi_pm_fast_suspend(struct mhi_controller *mhi_cntrl, bool notify_clients)
  * mhi_debug_reg_dump - dump MHI registers for debug purpose
  * @mhi_cntrl: MHI controller
  */
-void mhi_debug_reg_dump(struct mhi_controller *mhi_cntrl)
+static inline void mhi_debug_reg_dump(struct mhi_controller *mhi_cntrl)
 {
 }
 
@@ -415,7 +415,7 @@ void mhi_debug_reg_dump(struct mhi_controller *mhi_cntrl)
  * mhi_dump_sfr - Print SFR string from RDDM table.
  * @mhi_cntrl: MHI controller
  */
-void mhi_dump_sfr(struct mhi_controller *mhi_cntrl)
+static inline void mhi_dump_sfr(struct mhi_controller *mhi_cntrl)
 {
 }
 
@@ -427,7 +427,7 @@ void mhi_dump_sfr(struct mhi_controller *mhi_cntrl)
  * @cfg_tbl: Buffer with ECA/CCA information and data needed to setup context
  * @elements: Number of items to iterate over from the configuration table
  */
-int mhi_device_configure(struct mhi_device *mhi_dev,
+static inline int mhi_device_configure(struct mhi_device *mhi_dev,
 			 enum dma_data_direction dir,
 			 struct mhi_buf *cfg_tbl,
 			 int elements)
@@ -445,7 +445,7 @@ int mhi_device_configure(struct mhi_device *mhi_dev,
  * true if cookie is found
  * false if cookie is not found
  */
-bool mhi_scan_rddm_cookie(struct mhi_controller *mhi_cntrl, u32 cookie)
+static inline bool mhi_scan_rddm_cookie(struct mhi_controller *mhi_cntrl, u32 cookie)
 {
 	return false;
 }
@@ -475,7 +475,7 @@ bool mhi_scan_rddm_cookie(struct mhi_controller *mhi_cntrl, u32 cookie)
  * -ETIMEDOUT is device faled to move to M0 before @timeout_us elapsed
  * -EIO if the MHI state is one of the ERROR states.
  */
-int mhi_device_get_sync_atomic(struct mhi_device *mhi_dev, int timeout_us,
+static inline int mhi_device_get_sync_atomic(struct mhi_device *mhi_dev, int timeout_us,
 			       bool in_panic)
 {
 	return -EPERM;
@@ -486,7 +486,7 @@ int mhi_device_get_sync_atomic(struct mhi_device *mhi_dev, int timeout_us,
  * @mhi_cntrl: MHI controller
  * @cb_func: Callback to set for the MHI controller to receive BW scale requests
  */
-void mhi_controller_set_bw_scale_cb(struct mhi_controller *mhi_cntrl,
+static inline void mhi_controller_set_bw_scale_cb(struct mhi_controller *mhi_cntrl,
 				int (*cb_func)(struct mhi_controller *mhi_cntrl,
 					      struct mhi_link_info *link_info))
 {
@@ -497,7 +497,7 @@ void mhi_controller_set_bw_scale_cb(struct mhi_controller *mhi_cntrl,
  * @mhi_cntrl: MHI controller
  * @base: Physical address to be set for future reference
  */
-void mhi_controller_set_base(struct mhi_controller *mhi_cntrl,
+static inline void mhi_controller_set_base(struct mhi_controller *mhi_cntrl,
 			     phys_addr_t base)
 {
 }
@@ -507,7 +507,7 @@ void mhi_controller_set_base(struct mhi_controller *mhi_cntrl,
  * @mhi_cntrl: MHI controller
  * @base: Pointer to physical address to be populated
  */
-int mhi_controller_get_base(struct mhi_controller *mhi_cntrl,
+static inline int mhi_controller_get_base(struct mhi_controller *mhi_cntrl,
 			    phys_addr_t *base)
 {
 	return -EINVAL;
@@ -518,7 +518,7 @@ int mhi_controller_get_base(struct mhi_controller *mhi_cntrl,
  * @mhi_cntrl: MHI controller
  * returns value set as ID or 0 if no value was set
  */
-u32 mhi_controller_get_numeric_id(struct mhi_controller *mhi_cntrl)
+static inline u32 mhi_controller_get_numeric_id(struct mhi_controller *mhi_cntrl)
 {
 	return 0;
 }
@@ -528,7 +528,7 @@ u32 mhi_controller_get_numeric_id(struct mhi_controller *mhi_cntrl)
  * @mhi_dev: Device associated with the channels
  * @value: Pointer to an address value which will be populated
  */
-int mhi_get_channel_db_base(struct mhi_device *mhi_dev, phys_addr_t *value)
+static inline int mhi_get_channel_db_base(struct mhi_device *mhi_dev, phys_addr_t *value)
 {
 	return -EPERM;
 }
@@ -538,7 +538,7 @@ int mhi_get_channel_db_base(struct mhi_device *mhi_dev, phys_addr_t *value)
  * @mhi_dev: Device associated with the channels
  * @value: Pointer to an address value which will be populated
  */
-int mhi_get_event_ring_db_base(struct mhi_device *mhi_dev, phys_addr_t *value)
+static inline int mhi_get_event_ring_db_base(struct mhi_device *mhi_dev, phys_addr_t *value)
 {
 	return -EPERM;
 }
@@ -551,7 +551,7 @@ int mhi_get_event_ring_db_base(struct mhi_device *mhi_dev, phys_addr_t *value)
  * Returns:
  * Pointer to the MHI device associated with the channel
  */
-struct mhi_device *mhi_get_device_for_channel(struct mhi_controller *mhi_cntrl,
+static inline struct mhi_device *mhi_get_device_for_channel(struct mhi_controller *mhi_cntrl,
 					      u32 channel)
 {
 	return ERR_PTR(-EINVAL);
@@ -564,7 +564,7 @@ struct mhi_device *mhi_get_device_for_channel(struct mhi_controller *mhi_cntrl,
  * @cmd: IOCTL cmd
  * @arg: Optional parameter, iotcl cmd specific
  */
-long mhi_device_ioctl(struct mhi_device *mhi_dev, unsigned int cmd,
+static inline long mhi_device_ioctl(struct mhi_device *mhi_dev, unsigned int cmd,
 		      unsigned long arg)
 {
 	return -EPERM;
@@ -577,7 +577,7 @@ long mhi_device_ioctl(struct mhi_device *mhi_dev, unsigned int cmd,
  * Returns:
  * 0 for success, error code for failure
  */
-int mhi_controller_set_sfr_support(struct mhi_controller *mhi_cntrl,
+static inline int mhi_controller_set_sfr_support(struct mhi_controller *mhi_cntrl,
 				   size_t len)
 {
 	return -EPERM;
@@ -593,7 +593,7 @@ int mhi_controller_set_sfr_support(struct mhi_controller *mhi_cntrl,
  * Returns:
  * 0 for success, error code for failure
  */
-int mhi_controller_setup_timesync(struct mhi_controller *mhi_cntrl,
+static inline int mhi_controller_setup_timesync(struct mhi_controller *mhi_cntrl,
 				  u64 (*time_get)(struct mhi_controller *c),
 				  int (*lpm_disable)(struct mhi_controller *c),
 				  int (*lpm_enable)(struct mhi_controller *c))
@@ -611,7 +611,7 @@ int mhi_controller_setup_timesync(struct mhi_controller *mhi_cntrl,
  * Returns:
  * 0 for success, error code for failure
  */
-int mhi_get_remote_time_sync(struct mhi_device *mhi_dev,
+static inline int mhi_get_remote_time_sync(struct mhi_device *mhi_dev,
 			     u64 *t_host,
 			     u64 *t_dev)
 {
@@ -631,7 +631,7 @@ int mhi_get_remote_time_sync(struct mhi_device *mhi_dev,
  * Returns:
  * 0 for success, error code for failure
  */
-int mhi_get_remote_time(struct mhi_device *mhi_dev,
+static inline int mhi_get_remote_time(struct mhi_device *mhi_dev,
 			u32 sequence,
 			void (*cb_func)(struct mhi_device *mhi_dev,
 					u32 sequence,
@@ -646,7 +646,7 @@ int mhi_get_remote_time(struct mhi_device *mhi_dev,
  * for debugging purpose
  * @mhi_cntrl: MHI controller
  */
-int mhi_force_reset(struct mhi_controller *mhi_cntrl)
+static inline int mhi_force_reset(struct mhi_controller *mhi_cntrl)
 {
 	return -EINVAL;
 }
@@ -657,7 +657,7 @@ int mhi_force_reset(struct mhi_controller *mhi_cntrl)
  * @mhi_cntrl: MHI controller
  * @lvl: Log level from MHI_DEBUG_LEVEL enumerator
  */
-void mhi_controller_set_loglevel(struct mhi_controller *mhi_cntrl,
+static inline void mhi_controller_set_loglevel(struct mhi_controller *mhi_cntrl,
 				 enum MHI_DEBUG_LEVEL lvl)
 {
 }
@@ -666,7 +666,7 @@ void mhi_controller_set_loglevel(struct mhi_controller *mhi_cntrl,
  * mhi_get_soc_info - Get SoC info before registering mhi controller
  * @mhi_cntrl: MHI controller
  */
-int mhi_get_soc_info(struct mhi_controller *mhi_cntrl)
+static inline int mhi_get_soc_info(struct mhi_controller *mhi_cntrl)
 {
 	return -EINVAL;
 }
@@ -676,7 +676,7 @@ int mhi_get_soc_info(struct mhi_controller *mhi_cntrl)
  * to MHI device to stop tracing due SMMU fault
  * @mhi_cntrl: MHI controller
  */
-int mhi_host_notify_db_disable_trace(struct mhi_controller *mhi_cntrl)
+static inline int mhi_host_notify_db_disable_trace(struct mhi_controller *mhi_cntrl)
 {
 	return -EPERM;
 }
