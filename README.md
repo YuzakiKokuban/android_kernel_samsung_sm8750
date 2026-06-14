@@ -58,12 +58,20 @@ PACK=1 ANYKERNEL_DIR=../AnyKernel3_sm9380 build/build.sh lkm
 
 ## CI Center Local Build
 
+使用现有的 `s25_sm8750` 项目配置（已内置在 `Kokuban_Kernel_CI_Center/configs/projects.json`）：
+
 ```bash
-# In Kokuban_Kernel_CI_Center repo:
-./kokuban local --project s9380_sm8650 --branch oneui7-android15-local-ci
+# 在 Kokuban_Kernel_CI_Center 仓库中：
+./kokuban local --project s25_sm8750 --branch oneui7-android15-local-ci
+
+# 纯 LKM 模式（不启用 SuSFS/BBG，默认）：
+./kokuban local --project s25_sm8750 --branch oneui7-android15-local-ci --no-susfs --no-bbg
+
+# 带 SuSFS（需要 resukisu 模式，详见 build/build.sh）：
+./kokuban local --project s25_sm8750 --branch oneui7-android15-local-ci --with-susfs
 ```
 
-See `ci-project-config.json` for the recommended CI Center project entry.
+CI Center 会自动下载工具链到 `kernel_platform/prebuilts/`，无需手动配置。
 
 ## Build Dependencies
 
