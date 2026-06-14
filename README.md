@@ -41,7 +41,7 @@ Build with `MODE=resukisu`.
 # Clone with toolchain
 git clone https://github.com/YuzakiKokuban/android_kernel_samsung_sm8750.git
 cd android_kernel_samsung_sm8750
-git checkout oneui7-android15-local-ci
+git checkout 7.0
 
 # Download Samsung clang-r487747c toolchain to ../toolchain_samsung_sm8650/prebuilts/
 # (from https://opensource.samsung.com)
@@ -62,13 +62,13 @@ PACK=1 ANYKERNEL_DIR=../AnyKernel3_sm9380 build/build.sh lkm
 
 ```bash
 # 在 Kokuban_Kernel_CI_Center 仓库中：
-./kokuban local --project s25_sm8750 --branch oneui7-android15-local-ci
+./kokuban local --project s25_sm8750 --branch 7.0
 
 # 纯 LKM 模式（不启用 SuSFS/BBG，默认）：
-./kokuban local --project s25_sm8750 --branch oneui7-android15-local-ci --no-susfs --no-bbg
+./kokuban local --project s25_sm8750 --branch 7.0 --no-susfs --no-bbg
 
 # 带 SuSFS（需要 resukisu 模式，详见 build/build.sh）：
-./kokuban local --project s25_sm8750 --branch oneui7-android15-local-ci --with-susfs
+./kokuban local --project s25_sm8750 --branch 7.0 --with-susfs
 ```
 
 CI Center 会自动下载工具链到 `kernel_platform/prebuilts/`，无需手动配置。
