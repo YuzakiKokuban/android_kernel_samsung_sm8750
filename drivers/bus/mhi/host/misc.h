@@ -338,7 +338,7 @@ static inline void mhi_misc_mission_mode(struct mhi_controller *mhi_cntrl)
 {
 }
 
-static inline void mhi_special_dbs_pending(struct mhi_controller *mhi_cntrl)
+static inline void mhi_misc_dbs_pending(struct mhi_controller *mhi_cntrl)
 {
 }
 
