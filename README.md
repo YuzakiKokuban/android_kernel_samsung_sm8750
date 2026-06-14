@@ -1,13 +1,13 @@
 # Samsung SM-S9380V GKI Kernel — OneUI 7 / Android 15
 
-LKM-optimized kernel for **Samsung Galaxy SM-S9380V** (Snapdragon 8 Gen 3 / SM8650),
+LKM-optimized kernel for **Samsung Galaxy SM-S9380V** (Snapdragon 8 Elite / SM8750),
 maintained as a long-term stable branch (养老分支) for local CLI compilation via
 [Kokuban Kernel CI Center](https://github.com/YuzakiKokuban/Kokuban_Kernel_CI_Center).
 
 ## Source
 
 - **Base:** SM-S9380V_HKTW_15_Opensource (Samsung Open Source)
-- **Chipset:** SM8650 (Snapdragon 8 Gen 3)
+- **Chipset:** SM8750 (Snapdragon 8 Elite)
 - **Target:** OneUI 7 / Android 15 GKI (KMI generation 8)
 - **Kernel version:** 6.6.x (android15-6.6)
 
@@ -43,7 +43,7 @@ git clone https://github.com/YuzakiKokuban/android_kernel_samsung_sm8750.git
 cd android_kernel_samsung_sm8750
 git checkout 7.0
 
-# Download Samsung clang-r487747c toolchain to ../toolchain_samsung_sm8650/prebuilts/
+# Download Samsung clang-r510928 toolchain to ../toolchain_samsung_sm8750/prebuilts/
 # (from https://opensource.samsung.com)
 
 # Build (LKM mode - default)

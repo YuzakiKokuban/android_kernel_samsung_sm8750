@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# build.sh -- build the Samsung SM-S9380V (SM8650/Snapdragon 8 Gen 3) GKI kernel.
+# build.sh -- build the Samsung SM-S9380V (SM8750/Snapdragon 8 Elite) GKI kernel.
 #
 # Usage:
 #   build/build.sh [lkm|resukisu]
@@ -11,7 +11,7 @@
 #   resukisu  built-in ReSukiSU + SUSFS + full feature set
 #
 # Environment overrides:
-#   TOOLCHAIN_DIR  prebuilts dir (default: ../toolchain_samsung_sm8650/prebuilts)
+#   TOOLCHAIN_DIR  prebuilts dir (default: ../toolchain_samsung_sm8750/prebuilts)
 #   JOBS           parallel jobs (default: nproc)
 #   PACK           1 to pack an AnyKernel3 zip (needs ANYKERNEL_DIR)
 #   ANYKERNEL_DIR  path to an AnyKernel3 tree (default: ../AnyKernel3_sm9380)
@@ -25,13 +25,13 @@ cd "$KROOT"
 HERE="$KROOT/build"
 OUT="$KROOT/out"
 JOBS="${JOBS:-$(nproc)}"
-TOOLCHAIN_DIR="${TOOLCHAIN_DIR:-$KROOT/../toolchain_samsung_sm8650/prebuilts}"
-CLANG_BIN="${TOOLCHAIN_DIR}/clang/host/linux-x86/clang-r487747c/bin"
+TOOLCHAIN_DIR="${TOOLCHAIN_DIR:-$KROOT/../toolchain_samsung_sm8750/prebuilts}"
+CLANG_BIN="${TOOLCHAIN_DIR}/clang/host/linux-x86/clang-r510928/bin"
 ANYKERNEL_DIR="${ANYKERNEL_DIR:-$KROOT/../AnyKernel3_sm9380}"
 KMI_GEN=8   # android15-6.6 == KMI generation 8
 
 [ -d "$CLANG_BIN" ] || { echo "WARNING: toolchain not found at $CLANG_BIN"
-  echo "Set TOOLCHAIN_DIR to your Samsung clang-r487747c prebuilts dir."
+  echo "Set TOOLCHAIN_DIR to your Samsung clang-r510928 prebuilts dir."
   echo "Continuing anyway (toolchain may be in PATH)..." ; }
 
 echo "=== SM-S9380V build: MODE=$MODE  JOBS=$JOBS ==="
