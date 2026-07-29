@@ -1686,7 +1686,7 @@ config NETFILTER_XT_MATCH_DOMAIN
 	tristate 'Domain Filter Support'
 	depends on NETFILTER_XTABLES
 	depends on KNOX_NCM
-	default y
+	default n
 	help
 	  This option allow or block user network traffic based on domain
 

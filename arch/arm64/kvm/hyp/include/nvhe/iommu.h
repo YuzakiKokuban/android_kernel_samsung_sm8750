@@ -40,9 +40,9 @@ int kvm_iommu_attach_dev(pkvm_handle_t iommu_id, pkvm_handle_t domain_id,
 			 u32 endpoint_id, u32 pasid, u32 pasid_bits);
 int kvm_iommu_detach_dev(pkvm_handle_t iommu_id, pkvm_handle_t domain_id,
 			 u32 endpoint_id, u32 pasid);
-size_t kvm_iommu_map_pages(pkvm_handle_t domain_id,
-			   unsigned long iova, phys_addr_t paddr, size_t pgsize,
-			   size_t pgcount, int prot);
+int kvm_iommu_map_pages(pkvm_handle_t domain_id, unsigned long iova,
+			phys_addr_t paddr, size_t pgsize,
+			size_t pgcount, int prot, unsigned long *mapped);
 size_t kvm_iommu_unmap_pages(pkvm_handle_t domain_id,
 			     unsigned long iova, size_t pgsize, size_t pgcount);
 phys_addr_t kvm_iommu_iova_to_phys(pkvm_handle_t domain_id, unsigned long iova);
@@ -54,6 +54,8 @@ void kvm_iommu_iotlb_gather_add_page(struct kvm_hyp_iommu_domain *domain,
 void kvm_iommu_host_stage2_idmap(phys_addr_t start, phys_addr_t end,
 				 enum kvm_pgtable_prot prot);
 int kvm_iommu_snapshot_host_stage2(struct kvm_hyp_iommu_domain *domain);
+int kvm_iommu_iotlb_sync_map(pkvm_handle_t domain_id,
+			     unsigned long iova, size_t size);
 
 #define KVM_IOMMU_PADDR_CACHE_MAX		((size_t)511)
 /**
@@ -112,6 +114,7 @@ static inline void kvm_iommu_unlock(struct kvm_hyp_iommu *iommu)
  * @map_pages: Map pages in a domain.
  * @unmap_pages: Unmap pages from a domain.
  * @iova_to_phys: get physical address from IOVA in a domain.
+ * @iotlb_sync_map: Sync mapping created using @map_pages to the hardware.
  */
 struct kvm_iommu_ops {
 	int (*init)(unsigned long arg);
@@ -138,7 +141,8 @@ struct kvm_iommu_ops {
 			      struct iommu_iotlb_gather *gather,
 			      struct kvm_iommu_paddr_cache *cache);
 	phys_addr_t (*iova_to_phys)(struct kvm_hyp_iommu_domain *domain, unsigned long iova);
-	ANDROID_KABI_RESERVE(1);
+	ANDROID_KABI_USE(1, int (*iotlb_sync_map)(struct kvm_hyp_iommu_domain *domain,
+						  unsigned long iova, size_t size));
 	ANDROID_KABI_RESERVE(2);
 	ANDROID_KABI_RESERVE(3);
 	ANDROID_KABI_RESERVE(4);

@@ -151,7 +151,6 @@ const char *task_integrity_reset_str(
 }
 EXPORT_SYMBOL_GPL(task_integrity_reset_str);
 
-
 static enum task_integrity_reset_cause state_to_reason_cause(
 		enum task_integrity_state_cause cause)
 {
@@ -413,7 +412,8 @@ out:
 void five_state_proceed(struct task_integrity *integrity,
 			struct file_verification_result *file_result)
 {
-	struct five_iint_cache *iint = (struct five_iint_cache *)file_result->iint;
+	struct five_iint_cache *iint =
+				(struct five_iint_cache *)file_result->iint;
 	enum five_hooks fn = file_result->fn;
 	struct task_struct *task = file_result->task;
 	struct file *file = file_result->file;

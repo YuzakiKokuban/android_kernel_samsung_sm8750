@@ -95,38 +95,12 @@ int __init init_proca_cert_device(void);
  */
 
 /*
- * proca_get_certificate_db() - Read certificate for specific file.
- * @file: The file struct to get certificate for.
- * @certificate: Buffer to copy certificate
- *
- * Return: Size of certificate on success or error on failure.
- */
-int proca_get_certificate_db(struct file *file, char **certificate);
-
-/*
- * __proca_get_certificate_db() - Read certificate for specific file path.
+ * proca_get_certificate_db() - Read certificate for specific file path.
  * @pathname: The file path to get certificate for.
  * @certificate: Buffer to copy certificate.
  *
  * Return: Size of certificate on success or error on failure.
  */
-int __proca_get_certificate_db(const char *pathname, char **certificate);
-
-/*
- * proca_is_certificate_present_db() - Check if file certificate exist.
- * @file: The file struct to check certificate for.
- *
- * Return: True if certificate presents or false if certificate for file not found.
- */
-bool proca_is_certificate_present_db(struct file *file);
-
-/*
- * proca_certificate_db_find_entry() - Searches the database entry for the passed file path.
- * @path: The file path to get entry for.
- *
- * Return: certificate_entry if certificate presents or NULL if certificate for file not found.
- */
-struct certificate_entry *proca_certificate_db_find_entry(struct certificates_db *db,
-									const char *path);
+int proca_get_certificate_db(const char *pathname, char **certificate);
 
 #endif /* _LINUX_PROCA_CERTIFICATE_DB_H */

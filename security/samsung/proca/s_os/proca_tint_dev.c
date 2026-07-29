@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
- * FIVE task integrity
+ * PROCA task integrity
  *
  * Copyright (C) 2020 Samsung Electronics, Inc.
  * Egor Uleyskiy, <e.uleyskiy@samsung.com>
@@ -26,8 +26,9 @@
 #include <linux/file.h>
 #include <linux/compat.h>
 
-#include "task_integrity.h"
-#include "five_tint_dev.h"
+#include "gki/task_integrity.h"
+#include "proca_tint_dev.h"
+#include "proca.h"
 
 struct tint_message {
 	uint32_t version;
@@ -35,10 +36,6 @@ struct tint_message {
 	uint64_t reserved;
 	union __packed {
 		enum task_integrity_value value;
-		struct __packed {
-			uint64_t value_ptr;
-			uint16_t len_buf;
-		} label;
 		struct __packed {
 			uint64_t i_ino;
 			enum task_integrity_reset_cause cause;
@@ -48,30 +45,21 @@ struct tint_message {
 			} path;
 		} reset_file;
 		struct __packed {
-			uint64_t label_ptr;
-		} sign;
+			uint64_t cert_ptr;
+			uint16_t cert_len;
+		} cert;
 	} data;
 } __packed;
 
-#define TINT_VERSION 1
+#define TINT_VERSION 2
 #define TINT_DEV		"task_integrity"
 #define TINT_IOC_MAGIC		'f'
 #define TINT_IOCTL_GET_VALUE \
 	_IOWR(TINT_IOC_MAGIC, 1, struct tint_message)
-#define TINT_IOCTL_GET_LABEL \
-	_IOWR(TINT_IOC_MAGIC, 2, struct tint_message)
 #define TINT_IOCTL_GET_RESET_FILE \
+	_IOWR(TINT_IOC_MAGIC, 2, struct tint_message)
+#define TINT_IOCTL_GET_CERTIFICATE \
 	_IOWR(TINT_IOC_MAGIC, 3, struct tint_message)
-#define TINT_IOCTL_SIGN_FILE \
-	_IOWR(TINT_IOC_MAGIC, 4, struct tint_message)
-#define TINT_IOCTL_EDIT_FILE \
-	_IOWR(TINT_IOC_MAGIC, 5, struct tint_message)
-#define TINT_IOCTL_CLOSE_FILE \
-	_IOWR(TINT_IOC_MAGIC, 6, struct tint_message)
-#define TINT_IOCTL_VERIFY_SYNC_FILE \
-	_IOWR(TINT_IOC_MAGIC, 7, struct tint_message)
-#define TINT_IOCTL_VERIFY_ASYNC_FILE \
-	_IOWR(TINT_IOC_MAGIC, 8, struct tint_message)
 
 static struct tint_control {
 	struct device *pdev;
@@ -87,13 +75,13 @@ static struct task_struct *get_task_by_pid(pid_t pid)
 
 	pid_data = find_get_pid(pid);
 	if (unlikely(!pid_data)) {
-		pr_err("FIVE: Can't find PID: %u\n", pid);
+		pr_err("PROCA: Can't find PID: %u\n", pid);
 		return NULL;
 	}
 
 	task = get_pid_task(pid_data, PIDTYPE_PID);
 	if (unlikely(!task))
-		pr_err("FIVE: Can't find task by PID: %u\n", pid);
+		pr_err("PROCA: Can't find task by PID: %u\n", pid);
 
 	put_pid(pid_data);
 
@@ -121,53 +109,6 @@ static void put_tint_and_task(struct task_struct *task)
 	put_task_struct(task);
 }
 
-static int do_command_file(unsigned int cmd, unsigned int fd,
-			   struct integrity_label __user *label)
-{
-	int ret = 0;
-	struct file *file;
-
-	file = fget(fd);
-	if (!file) {
-		pr_err("FIVE: Can't get file struct: %u\n", cmd);
-		return -EFAULT;
-	}
-
-	switch (cmd) {
-	case TINT_IOCTL_SIGN_FILE: {
-		ret = five_fcntl_sign(file, label);
-		break;
-	}
-	case TINT_IOCTL_EDIT_FILE: {
-		ret = five_fcntl_edit(file);
-		break;
-	}
-	case TINT_IOCTL_CLOSE_FILE: {
-		ret = five_fcntl_close(file);
-		break;
-	}
-	case TINT_IOCTL_VERIFY_SYNC_FILE: {
-		ret = five_fcntl_verify_sync(file);
-		break;
-	}
-	case TINT_IOCTL_VERIFY_ASYNC_FILE: {
-		ret = five_fcntl_verify_async(file);
-		break;
-	}
-	default: {
-		pr_err("FIVE: Invalid IOCTL command: %u\n", cmd);
-		ret = -ENOIOCTLCMD;
-	}
-	}
-
-	if (ret)
-		pr_err("FIVE: Command failed: %u %d\n", cmd, ret);
-
-	fput(file);
-
-	return ret;
-}
-
 static long tint_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 {
 	long ret = 0;
@@ -176,86 +117,46 @@ static long tint_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 	struct tint_message msg = {0};
 
 	if (_IOC_TYPE(cmd) != TINT_IOC_MAGIC) {
-		pr_err("FIVE: IOCTL type is wrong\n");
+		pr_err("PROCA: IOCTL type is wrong\n");
 		return -ENOTTY;
 	}
 
 	ret = copy_from_user(&msg, argp, sizeof(msg));
 	if (ret) {
-		pr_err("FIVE: copy_from_user failed ret: %ld\n", ret);
+		pr_err("PROCA: copy_from_user failed ret: %ld\n", ret);
 		return -EFAULT;
 	}
 
 	if (msg.version != TINT_VERSION) {
-		pr_err("FIVE: Unsupported protocol version: %u\n", msg.version);
+		pr_err("PROCA: Unsupported protocol version: %u\n", msg.version);
 		return -EINVAL;
+	}
+
+	task = get_tint_and_task(msg.param);
+	if (!task) {
+		pr_err("PROCA: could not get task\n");
+		return -ESRCH;
+	}
+
+	if (!TASK_INTEGRITY(task)) {
+		pr_err("PROCA: TASK_INTEGRITY failed\n");
+		ret = -ENOENT;
+		goto out;
 	}
 
 	switch (cmd) {
 	case TINT_IOCTL_GET_VALUE: {
-		task = get_tint_and_task(msg.param);
-		if (!task) {
-			ret = -ESRCH;
-			break;
-		}
-
 		msg.data.value = task_integrity_user_read(TASK_INTEGRITY(task));
 
 		ret = copy_to_user(
 			(void __user *) &argp->data.value, &msg.data.value,
 			sizeof(msg.data.value));
 		if (unlikely(ret)) {
-			pr_err("FIVE: copy_to_user failed: %u %ld\n",
+			pr_err("PROCA: copy_to_user failed: %u %ld\n",
 				cmd, ret);
 			ret = -EFAULT;
 		}
 
-		put_tint_and_task(task);
-		break;
-	}
-	case TINT_IOCTL_GET_LABEL: {
-		const struct integrity_label *label;
-
-		task = get_tint_and_task(msg.param);
-		if (!task) {
-			ret = -ESRCH;
-			break;
-		}
-
-		if (!TASK_INTEGRITY(task)) {
-			ret = -ENOENT;
-			put_tint_and_task(task);
-			break;
-		}
-
-		spin_lock(&TASK_INTEGRITY(task)->value_lock);
-		label = TASK_INTEGRITY(task)->label;
-		spin_unlock(&TASK_INTEGRITY(task)->value_lock);
-
-		if (!label) {
-			ret = -ENOENT;
-			put_tint_and_task(task);
-			break;
-		}
-
-		if (msg.data.label.len_buf < sizeof(label->len) + label->len) {
-			pr_err("FIVE: User buffer is small for label: %u %u",
-				cmd, msg.data.label.len_buf);
-			ret = -EINVAL;
-			put_tint_and_task(task);
-			break;
-		}
-
-		ret = copy_to_user(
-			(void __user *) msg.data.label.value_ptr, label,
-			sizeof(label->len) + label->len);
-		if (unlikely(ret)) {
-			pr_err("FIVE: copy_to_user failed len: %u %ld\n",
-				cmd, ret);
-			ret = -EFAULT;
-		}
-
-		put_tint_and_task(task);
 		break;
 	}
 	case TINT_IOCTL_GET_RESET_FILE: {
@@ -264,22 +165,9 @@ static long tint_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 		uint16_t len_buf;
 		char *buf, *pathname;
 
-		task = get_tint_and_task(msg.param);
-		if (!task) {
-			ret = -ESRCH;
-			break;
-		}
-
-		if (!TASK_INTEGRITY(task)) {
-			ret = -ENOENT;
-			put_tint_and_task(task);
-			break;
-		}
-
 		reset_file = TASK_INTEGRITY(task)->reset_file;
 		if (!reset_file) {
 			ret = -ENOENT;
-			put_tint_and_task(task);
 			break;
 		}
 
@@ -289,28 +177,25 @@ static long tint_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 		len_buf = msg.data.reset_file.path.len_buf;
 
 		if (!len_buf || len_buf > PAGE_SIZE) {
-			pr_err("FIVE: Bad size of user buffer: %u %u",
+			pr_err("PROCA: Bad size of user buffer: %u %u",
 				cmd, len_buf);
 			ret = -EINVAL;
-			put_tint_and_task(task);
 			break;
 		}
 
 		buf = kmalloc(len_buf, GFP_KERNEL);
 		if (unlikely(!buf)) {
-			pr_err("FIVE: Can't allocate memory: %u %u",
+			pr_err("PROCA: Can't allocate memory: %u %u",
 				cmd, len_buf);
 			ret = -ENOMEM;
-			put_tint_and_task(task);
 			break;
 		}
 
 		pathname = d_path(&reset_file->f_path, buf, len_buf);
 		if (IS_ERR(pathname)) {
-			pr_err("FIVE: Can't obtain path: %u", len_buf);
+			pr_err("PROCA: Can't obtain path: %u", len_buf);
 			ret = -ENOMEM;
 			kfree(buf);
-			put_tint_and_task(task);
 			break;
 		}
 
@@ -320,11 +205,10 @@ static long tint_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 			(void __user *) msg.data.reset_file.path.pathname_ptr,
 			pathname, len_buf);
 		if (unlikely(ret)) {
-			pr_err("FIVE: copy_to_user failed path: %u %ld\n",
+			pr_err("PROCA: copy_to_user failed path: %u %ld\n",
 				cmd, ret);
 			ret = -EFAULT;
 			kfree(buf);
-			put_tint_and_task(task);
 			break;
 		}
 
@@ -333,30 +217,65 @@ static long tint_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 				   sizeof(msg.data.reset_file));
 
 		if (unlikely(ret)) {
-			pr_err("FIVE: copy_to_user failed: %u %ld\n",
+			pr_err("PROCA: copy_to_user failed: %u %ld\n",
 				cmd, ret);
 			ret = -EFAULT;
 		}
 
 		kfree(buf);
-		put_tint_and_task(task);
 		break;
 	}
-	case TINT_IOCTL_SIGN_FILE:
-	case TINT_IOCTL_EDIT_FILE:
-	case TINT_IOCTL_CLOSE_FILE:
-	case TINT_IOCTL_VERIFY_SYNC_FILE:
-	case TINT_IOCTL_VERIFY_ASYNC_FILE: {
-		ret = do_command_file(cmd, msg.param,
-		(struct integrity_label __user *) msg.data.sign.label_ptr);
+	case TINT_IOCTL_GET_CERTIFICATE: {
+		const char *cert;
+		size_t cert_size;
+
+		ret = proca_get_task_cert(task, &cert, &cert_size);
+		if (ret) {
+			break;
+		}
+
+		if (cert_size > msg.data.cert.cert_len) {
+			pr_err("PROCA: User certificate buffer too small\n");
+			ret = -ENOSPC;
+			break;
+		}
+
+		if (!access_ok((void __user *)msg.data.cert.cert_ptr, cert_size)) {
+			pr_err("PROCA: User certificate buffer is not accessible\n");
+			ret = -EACCES;
+			break;
+		}
+
+		ret = copy_to_user(
+			(void __user *) msg.data.cert.cert_ptr,
+			cert, cert_size);
+		if (unlikely(ret)) {
+			pr_err("PROCA: copy_to_user cert failed: %u %ld\n",
+				cmd, ret);
+			ret = -EFAULT;
+			break;
+		}
+
+		msg.data.cert.cert_len = cert_size;
+		ret = copy_to_user((void __user *) &argp->data.cert.cert_len,
+			&msg.data.cert.cert_len,
+			sizeof(msg.data.cert.cert_len));
+		if (unlikely(ret)) {
+			pr_err("PROCA: copy_to_user failed cert_len: %u %ld\n",
+				cmd, ret);
+			ret = -EFAULT;
+		}
+
 		break;
 	}
 	default: {
-		pr_err("FIVE: Invalid IOCTL command: %u\n", cmd);
+		pr_err("PROCA: Invalid IOCTL command: %u\n", cmd);
 		ret = -ENOIOCTLCMD;
 	}
 	}
 
+out:
+	put_tint_and_task(task);
 	return ret;
 }
 
@@ -376,13 +295,13 @@ static const struct file_operations tint_fops = {
 #endif
 };
 
-int __init five_tint_init_dev(void)
+int __init proca_tint_init_dev(void)
 {
 	int rc = 0;
 
 	rc = alloc_chrdev_region(&dev_ctrl.device_no, 0, 1, TINT_DEV);
 	if (unlikely(rc < 0)) {
-		pr_err("FIVE: alloc_chrdev_region failed %d\n", rc);
+		pr_err("PROCA: alloc_chrdev_region failed %d\n", rc);
 		return rc;
 	}
 
@@ -393,7 +312,7 @@ int __init five_tint_init_dev(void)
 #endif
 	if (IS_ERR(dev_ctrl.driver_class)) {
 		rc = PTR_ERR(dev_ctrl.driver_class);
-		pr_err("FIVE: class_create failed %d\n", rc);
+		pr_err("PROCA: class_create failed %d\n", rc);
 		goto exit_unreg_chrdev_region;
 	}
 
@@ -401,7 +320,7 @@ int __init five_tint_init_dev(void)
 				      dev_ctrl.device_no, NULL, TINT_DEV);
 	if (IS_ERR(dev_ctrl.pdev)) {
 		rc = PTR_ERR(dev_ctrl.pdev);
-		pr_err("FIVE: class_device_create failed %d\n", rc);
+		pr_err("PROCA: class_device_create failed %d\n", rc);
 		goto exit_destroy_class;
 	}
 
@@ -411,7 +330,7 @@ int __init five_tint_init_dev(void)
 	rc = cdev_add(&dev_ctrl.cdev,
 		      MKDEV(MAJOR(dev_ctrl.device_no), 0), 1);
 	if (unlikely(rc < 0)) {
-		pr_err("FIVE: cdev_add failed %d\n", rc);
+		pr_err("PROCA: cdev_add failed %d\n", rc);
 		goto exit_destroy_device;
 	}
 
@@ -427,7 +346,7 @@ exit_unreg_chrdev_region:
 	return rc;
 }
 
-void __exit five_tint_deinit_dev(void)
+void __exit proca_tint_deinit_dev(void)
 {
 	cdev_del(&dev_ctrl.cdev);
 	device_destroy(dev_ctrl.driver_class, dev_ctrl.device_no);

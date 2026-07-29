@@ -65,7 +65,7 @@ __visible_for_testing void mem_cache_alloc(void);
 void __init creds_fast_hash_init(void)
 {
 	unsigned int i;
-	static const int sizes[DEFEX_MEM_CACHE_COUNT] __initconst = {
+	static const size_t sizes[DEFEX_MEM_CACHE_COUNT] __initconst = {
 		sizeof(struct proc_cred_data),
 		sizeof(struct proc_cred_data) + sizeof(struct id_set),
 		sizeof(struct hash_item_struct)
@@ -198,25 +198,27 @@ __visible_for_testing struct proc_cred_data **get_cred_ptr(int id)
 	return cred_ptr;
 }
 
-__visible_for_testing void set_cred_data(int id, struct proc_cred_data **cred_ptr,
+__visible_for_testing int set_cred_data(int id, struct proc_cred_data **cred_ptr,
 		struct proc_cred_data *cred_data)
 {
 	struct hash_item_struct *obj;
 
 	if (id < 0)
-		return;
+		return -EINVAL;
 	if (cred_ptr) {
 		*cred_ptr = cred_data;
 	} else {
 		if (id > MAX_PID_32) {
 			obj = mem_cache_get(CACHE_HTABLE_ITEM);
 			if (!obj)
-				return;
+				return -EINVAL;
 			obj->id = id;
 			obj->cred_data = cred_data;
 			hash_add(creds_hash, &obj->node, id);
-		}
+		} else
+			return -EINVAL;
 	}
+	return 0;
 }
 
 void get_task_creds(struct task_struct *p, unsigned int *uid_ptr, unsigned int *fsuid_ptr,
@@ -258,9 +260,11 @@ int set_task_creds(struct task_struct *p, unsigned int uid, unsigned int fsuid,
 	struct proc_cred_data *cred_data = NULL, *tmp_data, **cred_ptr;
 	struct id_set *ids_ptr;
 	unsigned long flags;
-	int err = -1, tgid = p->tgid, pid = p->pid;
-	void *free_buff = NULL;
+	int cache_id = CACHE_CRED_DATA, err = -1, tgid = p->tgid, pid = p->pid;
+	void *free_buff1 = NULL, *free_buff2 = NULL;
 
+	if (tgid < 0 || pid < 0)
+		return err;
 
 	mem_cache_alloc();
 	spin_lock_irqsave(&creds_hash_update_lock, flags);
@@ -275,7 +279,10 @@ int set_task_creds(struct task_struct *p, unsigned int uid, unsigned int fsuid,
 			goto set_finish;
 		cred_data->cred_flags = 0;
 		cred_data->tcnt = 1;
-		set_cred_data(tgid, cred_ptr, cred_data);
+		if (set_cred_data(tgid, cred_ptr, cred_data)) {
+			free_buff1 = mem_cache_reclaim(CACHE_CRED_DATA, cred_data);
+			goto set_finish;
+		}
 	}
 	ids_ptr = &cred_data->default_ids;
 
@@ -288,9 +295,13 @@ int set_task_creds(struct task_struct *p, unsigned int uid, unsigned int fsuid,
 				if (!tmp_data)
 					goto set_finish;
 				*tmp_data = *cred_data;
-				free_buff = mem_cache_reclaim(CACHE_CRED_DATA, cred_data);
+				free_buff2 = mem_cache_reclaim(CACHE_CRED_DATA, cred_data);
 				cred_data = tmp_data;
-				set_cred_data(tgid, cred_ptr, cred_data);
+				if (set_cred_data(tgid, cred_ptr, cred_data)) {
+					cache_id = CACHE_CRED_DATA_ID;
+					free_buff1 = mem_cache_reclaim(CACHE_CRED_DATA_ID, cred_data);
+					goto set_finish;
+				}
 			}
 			ids_ptr = &cred_data->main_ids[0];
 		} else {
@@ -302,7 +313,10 @@ int set_task_creds(struct task_struct *p, unsigned int uid, unsigned int fsuid,
 				cred_data = mem_cache_get(CACHE_CRED_DATA);
 				if (!cred_data)
 					goto set_finish;
-				set_cred_data(pid, cred_ptr, cred_data);
+				if (set_cred_data(pid, cred_ptr, cred_data)) {
+					free_buff1 = mem_cache_reclaim(CACHE_CRED_DATA, cred_data);
+					goto set_finish;
+				}
 			}
 			cred_data->cred_flags = 0;
 			ids_ptr = &cred_data->default_ids;
@@ -314,8 +328,10 @@ int set_task_creds(struct task_struct *p, unsigned int uid, unsigned int fsuid,
 set_finish:
 	spin_unlock_irqrestore(&creds_hash_update_lock, flags);
 	/* Free the pending pointer */
-	if (free_buff)
-		kmem_cache_free(mem_cache[CACHE_CRED_DATA].allocator, free_buff);
+	if (free_buff1)
+		kmem_cache_free(mem_cache[cache_id].allocator, free_buff1);
+	if (free_buff2)
+		kmem_cache_free(mem_cache[CACHE_CRED_DATA].allocator, free_buff2);
 	mem_cache_alloc();
 	return err;
 }
@@ -349,7 +365,7 @@ void set_task_creds_tcnt(struct task_struct *p, int addition)
 	/* Search for the main process's data */
 	cred_ptr = get_cred_ptr(tgid);
 	tgid_cred_data = (cred_ptr) ? (*cred_ptr) : NULL;
-	if (tgid_cred_data) {
+	if (tgid_cred_data && tgid_cred_data->tcnt) {
 		tgid_cred_data->tcnt += addition;
 		/* No threads, remove process data */
 		if (!tgid_cred_data->tcnt) {

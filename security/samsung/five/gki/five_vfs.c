@@ -45,7 +45,7 @@ ssize_t five_getxattr_alloc(struct dentry *dentry, const char *name,
 	}
 
 	error = __vfs_getxattr(dentry, inode, name, value,
-							error, XATTR_NOSECURITY);
+						error, XATTR_NOSECURITY);
 	*xattr_value = value;
 	return error;
 }
@@ -82,7 +82,8 @@ static int warn_unsupported(struct file *file, const char *op)
 /*
  * This function is copied from __kernel_read()
  */
-static ssize_t __five_kernel_read(struct file *file, void *buf, size_t count, loff_t *pos)
+static ssize_t __five_kernel_read(struct file *file, void *buf,
+						size_t count, loff_t *pos)
 {
 	struct kvec iov = {
 		.iov_base    = buf,

@@ -6,6 +6,7 @@ This module contains a full list of kernel modules
  compiled by GKI.
 """
 
+# LINT.IfChange
 _COMMON_GKI_MODULES_LIST = [
     # keep sorted
     "drivers/block/virtio_blk.ko",
@@ -34,6 +35,8 @@ _COMMON_GKI_MODULES_LIST = [
     "drivers/net/usb/cdc_eem.ko",
     "drivers/net/usb/cdc_ether.ko",
     "drivers/net/usb/cdc_ncm.ko",
+    "drivers/net/usb/smsc75xx.ko",
+    "drivers/net/usb/smsc95xx.ko",
     "drivers/net/usb/r8152.ko",
     "drivers/net/usb/r8153_ecm.ko",
     "drivers/net/usb/rtl8150.ko",
@@ -80,7 +83,6 @@ _COMMON_GKI_MODULES_LIST = [
     "net/rfkill/rfkill.ko",
     "net/tipc/diag.ko",
     "net/tipc/tipc.ko",
-    "net/tls/tls.ko",
     "net/vmw_vsock/vmw_vsock_virtio_transport.ko",
 ]
 
@@ -99,6 +101,7 @@ _ARM64_GKI_MODULES_LIST = [
     "drivers/misc/open-dice.ko",
     "drivers/ptp/ptp_kvm.ko",
 ]
+# LINT.ThenChange(android/abi_gki_protected_exports_aarch64)
 
 _X86_GKI_MODULES_LIST = [
     # keep sorted
@@ -195,11 +198,13 @@ def get_kunit_modules_list(arch = None):
 
     return kunit_modules_list
 
+# LINT.IfChange
 _COMMON_UNPROTECTED_MODULES_LIST = [
     "drivers/block/zram/zram.ko",
     "kernel/kheaders.ko",
     "mm/zsmalloc.ko",
 ]
+# LINT.ThenChange(android/abi_gki_protected_exports_aarch64)
 
 # buildifier: disable=unnamed-macro
 def get_gki_protected_modules_list(arch = None):

@@ -100,7 +100,8 @@ static const struct lsm_id struct_five_lsmid = {
 	.name = "five_lsm",
 	.id = LSM_ORDER_LAST,
 };
-static const struct lsm_id * five_lsmid = &struct_five_lsmid;
+
+static const struct lsm_id *five_lsmid = &struct_five_lsmid;
 #endif
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(4, 9, 0)

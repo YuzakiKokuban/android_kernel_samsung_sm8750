@@ -221,11 +221,11 @@ __visible_for_testing int defex_check_integrity(struct file *f, struct d_tree_it
 	struct shash_desc *shash = NULL;
 	const void *hash = NULL;
 	static const unsigned char buff_zero[SHA256_DIGEST_SIZE] = {0};
-	unsigned char hash_sha256[SHA256_DIGEST_SIZE];
+	unsigned char hash_sha256[SHA256_DIGEST_SIZE] = { 0 };
 	unsigned char *buff = NULL;
 	size_t buff_size = PAGE_SIZE;
 	loff_t file_size = 0;
-	int ret = 0, err = 0, read_size = 0, hash_size;
+	int ret = 0, err = 0, read_size = 0, hash_size = 0;
 
 	if (item == NULL)
 		return -1;
@@ -694,7 +694,8 @@ int rules_lookup(const char *target_file, int attribute, struct file *f,
 {
 	int ret = 0;
 #if (defined(DEFEX_SAFEPLACE_ENABLE) || defined(DEFEX_IMMUTABLE_ENABLE) \
-		|| defined(DEFEX_PED_ENABLE))
+	|| defined(DEFEX_PED_ENABLE) || defined(DEFEX_IMMUTABLE_ROOT_ENABLE) \
+	|| defined(DEFEX_IMMUTABLE_ROOT_V2_ENABLE))
 	static const char system_root_txt[] = "/system_root";
 
 	if (check_system_mount() &&

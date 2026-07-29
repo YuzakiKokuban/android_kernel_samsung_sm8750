@@ -1312,6 +1312,8 @@ static int check_hotplug_memory_range(u64 start, u64 size)
 static int online_memory_block(struct memory_block *mem, void *arg)
 {
 	mem->online_type = mhp_default_online_type;
+	if (mem->online_type == MMOP_ONLINE_MOVABLE)
+		static_branch_enable(&movablecore_enabled);
 	return device_online(&mem->dev);
 }
 
@@ -1735,8 +1737,12 @@ static void do_migrate_range(unsigned long start_pfn, unsigned long end_pfn)
 		if (PageHWPoison(page)) {
 			if (WARN_ON(folio_test_lru(folio)))
 				folio_isolate_lru(folio);
-			if (folio_mapped(folio))
+			if (folio_mapped(folio)) {
+				folio_lock(folio);
 				try_to_unmap(folio, TTU_IGNORE_MLOCK);
+				folio_unlock(folio);
+			}
+
 			continue;
 		}
 
@@ -2297,6 +2303,8 @@ static int try_reonline_memory_block(struct memory_block *mem, void *arg)
 
 	if (**online_types != MMOP_OFFLINE) {
 		mem->online_type = **online_types;
+		if (mem->online_type == MMOP_ONLINE_MOVABLE)
+			static_branch_enable(&movablecore_enabled);
 		rc = device_online(&mem->dev);
 		if (rc < 0)
 			pr_warn("%s: Failed to re-online memory: %d",

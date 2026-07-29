@@ -142,8 +142,6 @@ struct defex_context {
 	char *target_name;
 	char *target_name_buff;
 	char *process_name_buff;
-
-	/* NB: cred must be the last field */
 	struct cred *cred;
 };
 

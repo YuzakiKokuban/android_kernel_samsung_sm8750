@@ -52,6 +52,8 @@ proca-$(CONFIG_PROCA_CERT_DEVICE) += s_os/proca_certificate_dev.o
 
 proca-$(CONFIG_PROCA_CERTIFICATES_XATTR) += s_os/proca_storage_xattr.o
 
+proca-$(CONFIG_PROCA_GKI_20) += s_os/proca_tint_dev.o
+
 proca-y += s_os/proca_lsm.o \
                       s_os/proca_vfs.o \
                       s_os/proca_audit.o

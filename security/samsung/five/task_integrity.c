@@ -194,14 +194,17 @@ char const * const tint_reset_cause_to_string(
 void task_integrity_set_reset_reason(struct task_integrity *intg,
 	enum task_integrity_reset_cause cause, struct file *file)
 {
+	(void)file;
 	if (intg->reset_cause != CAUSE_UNSET)
 		return;
 
 	intg->reset_cause = cause;
+#ifdef CONFIG_FIVE_DEBUG
 	if (file) {
 		get_file(file);
 		intg->reset_file = file;
 	}
+#endif
 }
 
 #if defined(CONFIG_SEC_KUNIT)

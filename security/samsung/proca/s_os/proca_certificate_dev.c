@@ -81,7 +81,7 @@ static ssize_t read_certificate(char **return_buffer, size_t *len,
 	}
 
 	path_buf = user_buf + cmd_size; /* Skip first 3 bytes of command and get PATH */
-	cert_size = __proca_get_certificate_db(path_buf, &cert_buff);
+	cert_size = proca_get_certificate_db(path_buf, &cert_buff);
 	if (!cert_buff) {
 		PROCA_INFO_LOG("Certificate dev: fail to get ceritificate for %s\n", path_buf);
 		kfree(user_buf);

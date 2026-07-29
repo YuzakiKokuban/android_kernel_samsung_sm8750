@@ -222,8 +222,7 @@ int defex_rules_signature_check(const char *rules_buffer, unsigned int rules_dat
 	unsigned char *hash_sha256_first;
 	unsigned char *signature;
 	key_ref_t key_ref;
-	static const char key_name_eng[] = "defex_key_eng";
-	static const char key_name_usr[] = "defex_key_usr";
+	static const char key_name[] = "defex_key";
 
 	if (rules_data_size < SIGN_SIZE)
 		return res;
@@ -247,19 +246,12 @@ int defex_rules_signature_check(const char *rules_buffer, unsigned int rules_dat
 	blob("Final hash dump:", hash_sha256, SHA256_DIGEST_SIZE, 16);
 #endif
 
-	/* prepare ENG key */
-	key_ref = defex_pubkey_prepare(defex_public_key_eng_start,
-		defex_public_key_eng_end, key_name_eng);
+	/* prepare public key */
+	key_ref = defex_pubkey_prepare(defex_public_key_start,
+		defex_public_key_end, key_name);
+
 	if (!IS_ERR_OR_NULL(key_ref))
 		res = defex_public_key_verify_signature(key_ref, signature, hash_sha256);
-
-	if (res != 0) {
-		/* prepare USER key */
-		key_ref = defex_pubkey_prepare(defex_public_key_usr_start,
-			defex_public_key_usr_end, key_name_usr);
-		if (!IS_ERR_OR_NULL(key_ref))
-			res = defex_public_key_verify_signature(key_ref, signature, hash_sha256);
-	}
 	if (rules_size && !res)
 		*rules_size = rules_data_size - SIGN_SIZE;
 

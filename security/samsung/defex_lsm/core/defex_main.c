@@ -925,7 +925,6 @@ int task_defex_enforce(struct task_struct *p, struct file *f, int syscall, ...)
 		return DEFEX_ALLOW;
 	}
 
-
 	ret = check_ped(&dc, p, feature_flag);
 	if (ret == -DEFEX_DENY)
 		goto exit;

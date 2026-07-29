@@ -77,3 +77,10 @@ config SECURITY_SELINUX_DEBUG
 	  This enables debugging code designed to help SELinux kernel
 	  developers, unless you know what this does in the kernel code you
 	  should leave this disabled.
+
+config SECURITY_SEATD
+	bool "SEAndroid Tampering Detection feature enable"
+	depends on SECURITY_SELINUX
+	default n
+	help
+	  This option enables SEAndroid Tampering Detection feature

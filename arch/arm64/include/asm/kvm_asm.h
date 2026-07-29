@@ -83,6 +83,7 @@ enum __kvm_host_smccc_func {
 	__KVM_HOST_SMCCC_FUNC___pkvm_relax_perms,
 	__KVM_HOST_SMCCC_FUNC___pkvm_wrprotect,
 	__KVM_HOST_SMCCC_FUNC___pkvm_dirty_log,
+	__KVM_HOST_SMCCC_FUNC___pkvm_host_split_guest,
 	__KVM_HOST_SMCCC_FUNC___pkvm_tlb_flush_vmid,
 	__KVM_HOST_SMCCC_FUNC___kvm_adjust_pc,
 	__KVM_HOST_SMCCC_FUNC___kvm_vcpu_run,
@@ -114,6 +115,7 @@ enum __kvm_host_smccc_func {
 	__KVM_HOST_SMCCC_FUNC___pkvm_host_iommu_iova_to_phys,
 	__KVM_HOST_SMCCC_FUNC___pkvm_host_hvc_pd,
 	__KVM_HOST_SMCCC_FUNC___pkvm_stage2_snapshot,
+	__KVM_HOST_SMCCC_FUNC___pkvm_host_iommu_iotlb_sync_map,
 
 	/*
 	 * Start of the dynamically registered hypercalls. Start a bit

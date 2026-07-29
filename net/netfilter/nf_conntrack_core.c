@@ -58,7 +58,6 @@
 // SEC_PRODUCT_FEATURE_KNOX_SUPPORT_NPA }
 
 #include "nf_internals.h"
- #include <linux/time.h>
 
 __cacheline_aligned_in_smp spinlock_t nf_conntrack_locks[CONNTRACK_LOCKS];
 EXPORT_SYMBOL_GPL(nf_conntrack_locks);
@@ -649,8 +648,8 @@ static void nf_ct_delete_from_lists(struct nf_conn *ct)
 	__nf_ct_delete_from_lists(ct);
 	// SEC_PRODUCT_FEATURE_KNOX_SUPPORT_NPA {
 #ifdef CONFIG_KNOX_NCM
-	if ((check_ncm_flag()) && (ct != NULL) && (NF_CONN_NPA_VENDOR_DATA_GET(ct)) &&
-	     (atomic_read(&NF_CONN_NPA_VENDOR_DATA_GET(ct)->startFlow))) {
+	if ((check_ncm_flag()) && (ct) && (NF_CONN_NPA_VENDOR_DATA_GET(ct)) &&
+	    (atomic_read(&NF_CONN_NPA_VENDOR_DATA_GET(ct)->startFlow))) {
 		knox_collect_conntrack_data(ct, NCM_FLOW_TYPE_CLOSE, 10);
 	}
 #endif
@@ -1041,7 +1040,9 @@ static int __nf_ct_resolve_clash(struct sk_buff *skb,
 		nf_ct_acct_merge(ct, ctinfo, loser_ct);
 		// SEC_PRODUCT_FEATURE_KNOX_SUPPORT_NPA {
 	#ifdef CONFIG_KNOX_NCM
-		if ( (check_ncm_flag()) && (loser_ct != NULL) && (NF_CONN_NPA_VENDOR_DATA_GET(loser_ct)) && (atomic_read(&NF_CONN_NPA_VENDOR_DATA_GET(loser_ct)->startFlow)) ) {
+		if ((check_ncm_flag()) && (loser_ct) &&
+		    (NF_CONN_NPA_VENDOR_DATA_GET(loser_ct)) &&
+		    (atomic_read(&NF_CONN_NPA_VENDOR_DATA_GET(loser_ct)->startFlow))) {
 			knox_collect_conntrack_data(loser_ct, NCM_FLOW_TYPE_CLOSE, 10);
 		}
 	#endif
@@ -1180,7 +1181,8 @@ nf_ct_resolve_clash(struct sk_buff *skb, struct nf_conntrack_tuple_hash *h,
 drop:
 	// SEC_PRODUCT_FEATURE_KNOX_SUPPORT_NPA {
 #ifdef CONFIG_KNOX_NCM
-	if ( (check_ncm_flag()) && (loser_ct != NULL) && (NF_CONN_NPA_VENDOR_DATA_GET(loser_ct)) && (atomic_read(&NF_CONN_NPA_VENDOR_DATA_GET(loser_ct)->startFlow)) ) {
+	if ((check_ncm_flag()) && (loser_ct) && (NF_CONN_NPA_VENDOR_DATA_GET(loser_ct)) &&
+	    (atomic_read(&NF_CONN_NPA_VENDOR_DATA_GET(loser_ct)->startFlow))) {
 		knox_collect_conntrack_data(loser_ct, NCM_FLOW_TYPE_CLOSE, 10);
 	}
 #endif
@@ -1260,7 +1262,8 @@ __nf_conntrack_confirm(struct sk_buff *skb)
 	if (unlikely(nf_ct_is_dying(ct))) {
 	// SEC_PRODUCT_FEATURE_KNOX_SUPPORT_NPA {
 #ifdef CONFIG_KNOX_NCM
-	if ( (check_ncm_flag()) && (ct != NULL) && (NF_CONN_NPA_VENDOR_DATA_GET(ct)) && (atomic_read(&NF_CONN_NPA_VENDOR_DATA_GET(ct)->startFlow)) ) {
+	if ((check_ncm_flag()) && (ct) && (NF_CONN_NPA_VENDOR_DATA_GET(ct)) &&
+	    (atomic_read(&NF_CONN_NPA_VENDOR_DATA_GET(ct)->startFlow))){
 		knox_collect_conntrack_data(ct, NCM_FLOW_TYPE_CLOSE, 10);
 	}
 #endif
@@ -1290,7 +1293,9 @@ __nf_conntrack_confirm(struct sk_buff *skb)
 chaintoolong:
 			// SEC_PRODUCT_FEATURE_KNOX_SUPPORT_NPA {
 		#ifdef CONFIG_KNOX_NCM
-			if ( (check_ncm_flag()) && (ct != NULL) && (NF_CONN_NPA_VENDOR_DATA_GET(ct)) && (atomic_read(&NF_CONN_NPA_VENDOR_DATA_GET(ct)->startFlow)) ) {
+				if ((check_ncm_flag()) && (ct) &&
+				    (NF_CONN_NPA_VENDOR_DATA_GET(ct)) &&
+				    (atomic_read(&NF_CONN_NPA_VENDOR_DATA_GET(ct)->startFlow))){
 				knox_collect_conntrack_data(ct, NCM_FLOW_TYPE_CLOSE, 10);
 			}
 		#endif

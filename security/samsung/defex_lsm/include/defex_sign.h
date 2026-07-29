@@ -12,10 +12,8 @@
 
 #define SIGN_SIZE		256
 
-extern char defex_public_key_eng_start[];
-extern char defex_public_key_eng_end[];
-extern char defex_public_key_usr_start[];
-extern char defex_public_key_usr_end[];
+extern char defex_public_key_start[];
+extern char defex_public_key_end[];
 
 int defex_rules_signature_check(const char *rules_buffer, unsigned int rules_data_size,
 			unsigned int *rules_size);

@@ -450,6 +450,7 @@ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
 	int ret;
 	u32 size = hid_report_len(report);
 	u8 *buf;
+	struct hid_report_enum *rep_enum;
 
 	/*
 	 * Do not fetch the feature report if the device has been explicitly
@@ -468,6 +469,13 @@ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
 		dev_warn(&hdev->dev, "failed to fetch feature %d\n",
 			 report->id);
 	} else {
+		rep_enum = &hdev->report_enum[HID_FEATURE_REPORT];
+		if (rep_enum->numbered && report->id != buf[0]) {
+			dev_warn(&hdev->dev, "Invalid reportID received, expected %d got %d\n", report->id, buf[0]);
+			kfree(buf);
+			return;
+		}
+
 		ret = hid_report_raw_event(hdev, HID_FEATURE_REPORT, buf,
 					   size, 0);
 		if (ret)
@@ -1668,9 +1676,12 @@ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
 		break;
 	}
 
-	if (suffix)
+	if (suffix) {
 		hi->input->name = devm_kasprintf(&hdev->dev, GFP_KERNEL,
 						 "%s %s", hdev->name, suffix);
+		if (!hi->input->name)
+			return -ENOMEM;
+	}
 
 	return 0;
 }

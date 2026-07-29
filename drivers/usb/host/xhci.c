@@ -18,6 +18,7 @@
 #include <linux/slab.h>
 #include <linux/dmi.h>
 #include <linux/dma-mapping.h>
+#include <trace/hooks/usb.h>
 
 #include "xhci.h"
 #include "xhci-trace.h"
@@ -196,6 +197,7 @@ int xhci_reset(struct xhci_hcd *xhci, u64 timeout_us)
 	u32 command;
 	u32 state;
 	int ret;
+	bool full_reset = 0;
 
 	state = readl(&xhci->op_regs->status);
 
@@ -224,8 +226,11 @@ int xhci_reset(struct xhci_hcd *xhci, u64 timeout_us)
 	if (xhci->quirks & XHCI_INTEL_HOST)
 		udelay(1000);
 
+	trace_android_vh_xhci_full_reset_on_remove(&full_reset);
+
 	ret = xhci_handshake_check_state(xhci, &xhci->op_regs->command,
-				CMD_RESET, 0, timeout_us, XHCI_STATE_REMOVING);
+				CMD_RESET, 0, timeout_us,
+				full_reset ? 0 : XHCI_STATE_REMOVING);
 	if (ret)
 		return ret;
 
@@ -1960,8 +1965,8 @@ int xhci_add_endpoint(struct usb_hcd *hcd, struct usb_device *udev,
 				__func__, added_ctxs);
 		return 0;
 	}
-
 	virt_dev = xhci->devs[udev->slot_id];
+	xhci_dbg(xhci,"virt_dev=%p used",virt_dev);
 	in_ctx = virt_dev->in_ctx;
 	ctrl_ctx = xhci_get_input_control_ctx(in_ctx);
 	if (!ctrl_ctx) {
@@ -2897,6 +2902,7 @@ static int xhci_configure_endpoint(struct xhci_hcd *xhci,
 	}
 
 	virt_dev = xhci->devs[udev->slot_id];
+	xhci_dbg(xhci, "ep configure virt_dev=%p",virt_dev);
 
 	ctrl_ctx = xhci_get_input_control_ctx(command->in_ctx);
 	if (!ctrl_ctx) {
@@ -3013,8 +3019,8 @@ int xhci_check_bandwidth(struct usb_hcd *hcd, struct usb_device *udev)
 		(xhci->xhc_state & XHCI_STATE_REMOVING))
 		return -ENODEV;
 
-	xhci_dbg(xhci, "%s called for udev %p\n", __func__, udev);
 	virt_dev = xhci->devs[udev->slot_id];
+	xhci_dbg(xhci, "%s called for udev %p %p\n", __func__, udev,virt_dev);
 
 	command = xhci_alloc_command(xhci, true, GFP_KERNEL);
 	if (!command)
@@ -3922,6 +3928,10 @@ static int xhci_discover_or_reset_device(struct usb_hcd *hcd,
 		}
 
 		if (ep->ring) {
+			if (ep->sideband) {
+				xhci_dbg(xhci, "notify_ep_ring_free");
+				xhci->notify_ep_ring_free(ep->sideband, i);
+			}
 			xhci_debugfs_remove_endpoint(xhci, virt_dev, i);
 			xhci_free_endpoint_ring(xhci, virt_dev, i);
 		}
@@ -4182,6 +4192,11 @@ static int xhci_setup_device(struct usb_hcd *hcd, struct usb_device *udev,
 	}
 
 	virt_dev = xhci->devs[udev->slot_id];
+	if(!virt_dev) {
+		xhci_dbg(xhci,"no virtual device found");
+		mutex_unlock(&xhci->mutex);
+		return -ENODEV;
+	}
 
 	if (WARN_ON(!virt_dev)) {
 		/*
@@ -4194,8 +4209,17 @@ static int xhci_setup_device(struct usb_hcd *hcd, struct usb_device *udev,
 		ret = -EINVAL;
 		goto out;
 	}
+	/* Check if device is being freed concurrently */
+	if (test_bit(1, &virt_dev->flags)) {
+		xhci_warn(xhci, "Device slot %d is being freed, aborting setup\n",
+			  udev->slot_id);
+		mutex_unlock(&xhci->mutex);
+		pm_runtime_put_noidle(hcd->self.controller);
+		return -ENODEV;
+	}
 	slot_ctx = xhci_get_slot_ctx(xhci, virt_dev->out_ctx);
 	trace_xhci_setup_device_slot(slot_ctx);
+
 
 	if (setup == SETUP_CONTEXT_ONLY) {
 		if (GET_SLOT_STATE(le32_to_cpu(slot_ctx->dev_state)) ==
@@ -4272,7 +4296,7 @@ static int xhci_setup_device(struct usb_hcd *hcd, struct usb_device *udev,
 		ret = -EINVAL;
 		break;
 	case COMP_USB_TRANSACTION_ERROR:
-		dev_warn(&udev->dev, "Device not responding to setup %s.\n", act);
+		dev_err(&udev->dev, "Device not responding to setup %s.\n", act);
 
 		mutex_unlock(&xhci->mutex);
 		ret = xhci_disable_slot(xhci, udev->slot_id);

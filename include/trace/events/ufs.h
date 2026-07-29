@@ -42,14 +42,14 @@
 #define UFS_CMD_TRACE_STRINGS					\
 	EM(UFS_CMD_SEND,	"send_req")			\
 	EM(UFS_CMD_COMP,	"complete_rsp")			\
-	EM(UFS_CMD_ERR,		"req_complete_err")		\
 	EM(UFS_DEV_COMP,	"dev_complete")			\
 	EM(UFS_QUERY_SEND,	"query_send")			\
 	EM(UFS_QUERY_COMP,	"query_complete")		\
 	EM(UFS_QUERY_ERR,	"query_complete_err")		\
 	EM(UFS_TM_SEND,		"tm_send")			\
 	EM(UFS_TM_COMP,		"tm_complete")			\
-	EMe(UFS_TM_ERR,		"tm_complete_err")
+	EM(UFS_TM_ERR,		"tm_complete_err")		\
+	EMe(UFS_CMD_ERR,	"req_complete_err")
 
 #define UFS_CMD_TRACE_TSF_TYPES					\
 	EM(UFS_TSF_CDB,		"CDB")		                \

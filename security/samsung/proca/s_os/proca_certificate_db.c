@@ -229,7 +229,6 @@ void deinit_proca_db(struct certificates_db *db)
 	struct certificate_entry *entry;
 	struct certificate_db *cert_db = &db->proca_certificates_db;
 
-	mutex_lock(&db->lock);
 	list_for_each_safe(l, next, &cert_db->entries) {
 		entry = list_entry(l, struct certificate_entry, list);
 		list_del(l);
@@ -243,18 +242,22 @@ void deinit_proca_db(struct certificates_db *db)
 	db->proca_signed_db.db_hash = NULL;
 	db->proca_signed_db.signature = NULL;
 	atomic_set(&db->status, NOT_READY);
-	mutex_unlock(&db->lock);
 }
 
-struct certificate_entry *proca_certificate_db_find_entry(
+/*
+ * db_find_entry_unlocked() - Searches the database entry for the passed file path.
+ * @db: The database to search in.
+ * @path: The file path to get entry for.
+ *
+ * NOTE: This function does NOT lock the database. The caller MUST hold the appropriate lock.
+ *
+ * Return: certificate_entry if certificate presents or NULL if certificate for file not found.
+ */
+static struct certificate_entry *db_find_entry_unlocked(
 	struct certificates_db *db, const char *path)
 {
 	struct list_head *l;
 	struct certificate_entry *entry = NULL;
-
-	/* Check that DB is inited */
-	if (atomic_read(&db->status) != INITED)
-		return NULL;
 
 	list_for_each(l, &db->proca_certificates_db.entries) {
 		entry = list_entry(l, struct certificate_entry, list);
@@ -264,6 +267,48 @@ struct certificate_entry *proca_certificate_db_find_entry(
 
 	return NULL;
 }
+
+/*
+ * db_find_entry() - Searches for a certificate and copies it under a single lock.
+ * @db: The database to search in.
+ * @pathname: The file path to get certificate for.
+ * @certificate: Output buffer to copy the certificate to.
+ *
+ * Return: Size of certificate on success, -ENOMEM on allocation failure, or -1 if not found.
+ */
+static int db_find_entry(struct certificates_db *db,
+                                     const char *pathname,
+                                     char **certificate)
+{
+	struct certificate_entry *entry = NULL;
+	int cert_size = -1;
+
+	mutex_lock(&db->lock);
+
+	/* Check that DB is inited */
+	if (atomic_read(&db->status) != INITED) {
+		mutex_unlock(&db->lock);
+		return -1;
+	}
+
+	entry = db_find_entry_unlocked(db, pathname);
+
+	if (entry) {
+		PROCA_INFO_LOG("Certificate for '%s' is found in %s DB.\n", entry->file_name, db->name);
+		cert_size = entry->certificate_size;
+
+		if (certificate && entry->certificate) {
+			*certificate = kmemdup(entry->certificate, cert_size, GFP_KERNEL);
+			if (!*certificate) {
+				cert_size = -ENOMEM; // Indicate allocation failure
+			}
+		}
+	}
+
+	mutex_unlock(&db->lock);
+	return cert_size;
+}
+
 
 /*
  * proca_db_is_ready() - Verify if partition of database is
@@ -287,34 +332,23 @@ static bool proca_db_is_ready(const char *partition, const char *db_path)
 	return true;
 }
 
-int __proca_get_certificate_db(const char *pathname, char **certificate)
+int proca_get_certificate_db(const char *pathname, char **certificate)
 {
-	struct certificate_entry *entry = NULL;
+	int ret = -1;
 	bool check_system, check_vendor;
+
+	if (certificate)
+		*certificate = NULL;
 
 #if defined(CONFIG_PROCA_DEBUG)
 
-	if (atomic_read(&proca_test_db.status) == NOT_READY &&
+	if (atomic_read(&proca_test_db.status) != INITED &&
 		proca_db_is_ready(proca_test_db.partition, proca_test_db.path)) {
 		load_db(proca_test_db.path, &proca_test_db);
 	}
-
-	mutex_lock(&proca_test_db.lock);
-	entry = proca_certificate_db_find_entry(&proca_test_db,
-		pathname);
-
-	if (entry) {
-		PROCA_INFO_LOG("Certificate for '%s' is found in TEST DB.\n", entry->file_name);
-
-		if (certificate && entry->certificate) {
-			*certificate = kmemdup(entry->certificate,
-			entry->certificate_size, GFP_KERNEL);
-		}
-
-		mutex_unlock(&proca_test_db.lock);
-		return entry->certificate_size;
-	}
-	mutex_unlock(&proca_test_db.lock);
+	ret = db_find_entry(&proca_test_db, pathname, certificate);
+	if (ret >= 0)
+		return ret;
 
 #endif
 
@@ -328,11 +362,9 @@ int __proca_get_certificate_db(const char *pathname, char **certificate)
 			proca_db_is_ready(system_db.partition, system_db.path)) {
 			load_db(system_db.path, &system_db);
 		}
-
-		entry = proca_certificate_db_find_entry(&system_db,
-			pathname);
-		if (entry)
-			goto exit;
+		ret = db_find_entry(&system_db, pathname, certificate);
+		if (ret >= 0)
+			return ret;
 	}
 
 	if (check_vendor) {
@@ -340,54 +372,14 @@ int __proca_get_certificate_db(const char *pathname, char **certificate)
 			proca_db_is_ready(vendor_db.partition, vendor_db.path)) {
 			load_db(vendor_db.path, &vendor_db);
 		}
-
-		entry = proca_certificate_db_find_entry(&vendor_db,
-			pathname);
-		if (entry)
-			goto exit;
+		ret = db_find_entry(&vendor_db, pathname, certificate);
+		if (ret >= 0)
+			return ret;
 	}
-
-exit:
-	if (entry) {
-		PROCA_INFO_LOG("Certificate for '%s' is found.\n", entry->file_name);
-		if (certificate && entry->certificate) {
-			*certificate = kmemdup(entry->certificate,
-				entry->certificate_size, GFP_KERNEL);
-		}
-
-		return entry->certificate_size;
-	}
-
-	return -1;
-}
-
-int proca_get_certificate_db(struct file *file, char **certificate)
-{
-	const char *pathname = NULL;
-	char *pathbuf = NULL;
-	char filename[NAME_MAX];
-	int ret = 0;
-
-	if (!file)
-		return -EINVAL;
-
-	if (certificate)
-		*certificate = NULL;
-
-	pathname = proca_d_path(file, &pathbuf, filename);
-	if (!pathbuf)
-		return -ENOMEM;
-
-	ret = __proca_get_certificate_db(pathname, certificate);
-	__putname(pathbuf);
 
 	return ret;
 }
 
-bool proca_is_certificate_present_db(struct file *file)
-{
-	return proca_get_certificate_db(file, NULL) >= 0;
-}
 
 int load_db(const char *file_path,
 		struct certificates_db *proca_db)
@@ -438,9 +430,9 @@ int load_db(const char *file_path,
 	res = parse_proca_db(data_buff, db_size, db);
 	if (res) {
 		atomic_set(&proca_db->status, FAILED);
-		mutex_unlock(&proca_db->lock);
 		PROCA_ERROR_LOG("Failed to parse DB asn1 data\n");
 		deinit_proca_db(proca_db);
+		mutex_unlock(&proca_db->lock);
 		goto do_clean;
 	}
 
@@ -450,9 +442,9 @@ int load_db(const char *file_path,
 		res = proca_verify_digsig(proca_db);
 		if (res) {
 			atomic_set(&proca_db->status, FAILED);
-			mutex_unlock(&proca_db->lock);
 			PROCA_ERROR_LOG("Failed to verify DB digsig\n");
 			deinit_proca_db(proca_db);
+			mutex_unlock(&proca_db->lock);
 			goto do_clean;
 		}
 
@@ -582,8 +574,11 @@ void __exit proca_certificate_db_deinit(void)
 
 	list_for_each(l, &proca_dbs) {
 		db = list_entry(l, struct certificates_db, list);
-		if (atomic_read(&db->status) == INITED)
+		if (atomic_read(&db->status) == INITED) {
+			mutex_lock(&db->lock);
 			deinit_proca_db(db);
+			mutex_unlock(&db->lock);
+		}
 		atomic_set(&db->status, ABSENT);
 	}
 	crypto_free_shash(g_db_validation_shash);

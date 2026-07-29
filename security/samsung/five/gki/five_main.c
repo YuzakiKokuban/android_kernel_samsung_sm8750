@@ -39,7 +39,6 @@
 #include <trace/hooks/security.h>
 #include <trace/hooks/sched.h>
 
-
 #include "five.h"
 #include "task_integrity.h"
 #include "five_audit.h"
@@ -69,6 +68,8 @@ static inline void five_event_destroy(
 static int five_fork(struct task_struct *task, struct task_struct *child_task);
 static int five_ptrace(struct task_struct *task, long request);
 static int five_process_vm_rw(struct task_struct *task, int write);
+
+static const char __UNIQUE_ID(built_with)[] __used __section(".modinfo") __aligned(1) = "built_with=DDK";
 
 #ifdef CONFIG_FIVE_DEBUG
 static int five_enabled = 1;
@@ -108,7 +109,8 @@ static ssize_t five_enabled_read(struct file *file, char __user *user_buf,
 	return simple_read_from_buffer(user_buf, count, pos, buf, sizeof(buf));
 }
 
-static ssize_t five_debugfs_integrity_write(struct file *file, const char __user *user_buf, size_t count, loff_t *pos)
+static ssize_t five_debugfs_integrity_write(struct file *file,
+			const char __user *user_buf, size_t count, loff_t *pos)
 {
 	pid_t pid = 0;
 	struct task_struct *task = NULL;
@@ -138,10 +140,10 @@ static ssize_t five_debugfs_integrity_write(struct file *file, const char __user
 				task->real_parent->pid,
 				task_integrity_user_read(TASK_INTEGRITY(task)));
 
-
 		if (TASK_INTEGRITY(task)->reset_cause)
 			pr_info("FIVE: RESET CAUSE: %s\n",
-						tint_reset_cause_to_string(TASK_INTEGRITY(task)->reset_cause));
+				tint_reset_cause_to_string(
+					TASK_INTEGRITY(task)->reset_cause));
 		else
 			pr_info("FIVE: NO RESET CAUSE\n");
 
@@ -151,7 +153,9 @@ static ssize_t five_debugfs_integrity_write(struct file *file, const char __user
 			tmp = (char *)__get_free_page(GFP_KERNEL);
 			if (!tmp)
 				return -ENOMEM;
-			pathname = d_path(&TASK_INTEGRITY(task)->reset_file->f_path, tmp, PAGE_SIZE);
+			pathname = d_path(
+				      &TASK_INTEGRITY(task)->reset_file->f_path,
+				      tmp, PAGE_SIZE);
 			if (IS_ERR(pathname))
 				goto out;
 			pr_info("FIVE: RESET FILE: %s\n", pathname);
@@ -744,6 +748,7 @@ int __five_bprm_check(struct linux_binprm *bprm, int depth)
 	int rc = 0;
 	struct task_struct *task = current;
 	struct task_integrity *old_tint = TASK_INTEGRITY(task);
+
 	if (unlikely(task->ptrace))
 		return rc;
 
@@ -912,7 +917,6 @@ static void inode_removexattr_wrapper(void *data, struct dentry *dentry,
 	*r = five_inode_removexattr(dentry, xattr_name);
 }
 
-
 static void inode_setxattr_wrapper(void *data, struct dentry *dentry,
 				const char *xattr_name, const void *xattr_value,
 				size_t xattr_value_len, int flags, int *r)
@@ -956,8 +960,8 @@ static int __init register_vendor_hooks(void)
 	if (error)
 		goto out;
 
-	error = register_trace_android_rvh_security_file_free(five_file_free_wrapper,
-					NULL);
+	error = register_trace_android_rvh_security_file_free(
+					five_file_free_wrapper,	NULL);
 	if (error)
 		goto out;
 
@@ -1070,11 +1074,10 @@ static int __init init_five(void)
 	error = register_vendor_hooks();
 	pr_err("FIVE: Register vendor hook\n");
 	if (error) {
-		pr_err("FIVE: Can't register vendor hook returned: %d\n", error);
+		pr_err("FIVE: Can't register vendor hook returned: %d\n",
+		       error);
 		return error;
 	}
-
-	error = five_tint_init_dev();
 
 	return error;
 }
@@ -1118,7 +1121,10 @@ static void bprm_hook_handler(struct work_struct *in_data)
 	if (unlikely(!context))
 		return;
 
-	five_hook_task_forked(context->task, context->child_task);
+	five_hook_task_forked(context->task, context->child_task,
+						  context->parent_tint_value,
+						  context->child_tint_value);
+
 	put_task_struct(context->task);
 	put_task_struct(context->child_task);
 
@@ -1166,7 +1172,7 @@ int five_fork(struct task_struct *task, struct task_struct *child_task)
 			}
 
 			list_add_tail(&five_file->list,
-					&TASK_INTEGRITY(child_task)->events.list);
+				      &TASK_INTEGRITY(child_task)->events.list);
 		}
 
 		context->tint = TASK_INTEGRITY(child_task);

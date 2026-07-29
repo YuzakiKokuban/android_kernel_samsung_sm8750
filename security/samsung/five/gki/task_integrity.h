@@ -109,7 +109,6 @@ struct task_integrity {
 	struct file *reset_file;
 };
 
-
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 10, 0))
 struct task_integrity *task_integrity_alloc(void);
 static inline struct task_integrity *TASK_INTEGRITY(struct task_struct *task)

@@ -50,6 +50,8 @@
   mas_walk
   mas_prev
   mas_next
+  mii_check_media
+  mii_ethtool_gset
   mm_access
   netlink_ack
   param_get_uint
@@ -114,6 +116,8 @@
   __traceiter_android_vh_flush_wq_wait_start
   __traceiter_android_vh_free_pages_prepare_bypass
   __traceiter_android_vh_free_pages_ok_bypass
+  __traceiter_android_vh_free_page_bypass
+  __traceiter_android_vh_free_folio_bypass
   __traceiter_android_vh_is_fpsimd_save
   __traceiter_android_vh_logbuf
   __traceiter_android_vh_logbuf_pr_cont
@@ -203,6 +207,8 @@
   __tracepoint_android_vh_flush_wq_wait_start
   __tracepoint_android_vh_free_pages_prepare_bypass
   __tracepoint_android_vh_free_pages_ok_bypass
+  __tracepoint_android_vh_free_page_bypass
+  __tracepoint_android_vh_free_folio_bypass
   __tracepoint_android_vh_is_fpsimd_save
   __tracepoint_android_vh_logbuf
   __tracepoint_android_vh_logbuf_pr_cont
@@ -253,6 +259,10 @@
   __tracepoint_vm_unmapped_area
   __tracepoint_workqueue_execute_start
   __tracepoint_kfree_skb
+  usbnet_get_link
+  usbnet_get_link_ksettings_mii
+  usbnet_nway_reset
+  usbnet_set_link_ksettings_mii
   usb_set_device_state
   yield
   regulator_get_current_limit

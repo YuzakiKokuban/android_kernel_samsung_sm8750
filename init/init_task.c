@@ -225,6 +225,7 @@ struct task_struct init_task
 	.android_vendor_data1 = {0, },
 	.android_oem_data1 = {0, },
 #endif
+	.dmabuf_info = NULL,
 	INIT_INTEGRITY(init_task)
 };
 EXPORT_SYMBOL(init_task);

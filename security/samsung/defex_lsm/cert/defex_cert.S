@@ -24,16 +24,12 @@
 	.globl VMLINUX_SYMBOL(name);	\
 	VMLINUX_SYMBOL(name):
 
-	.section ".ref.data", "aw"
+	.section ".ref.data", "a"
 
-GLOBAL(defex_public_key_eng_start)
-#if (defined(DEFEX_GKI) || defined(DEFEX_DEBUG_ENABLE))
+GLOBAL(defex_public_key_start)
+#if (defined(DEFEX_DEBUG_ENABLE))
 	.incbin "security/samsung/defex_lsm/cert/pubkey_eng.der"
-#endif
-GLOBAL(defex_public_key_eng_end)
-
-GLOBAL(defex_public_key_usr_start)
-#if (defined(DEFEX_GKI) || !defined(DEFEX_DEBUG_ENABLE))
+#else
 	.incbin "security/samsung/defex_lsm/cert/pubkey_user.der"
 #endif
-GLOBAL(defex_public_key_usr_end)
+GLOBAL(defex_public_key_end)

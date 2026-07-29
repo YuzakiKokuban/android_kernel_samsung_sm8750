@@ -18,7 +18,7 @@
 #ifndef __LINUX_FIVE_GKI_FIVE_TINT_DEV_H
 #define __LINUX_FIVE_GKI_FIVE_TINT_DEV_H
 
-int __init five_tint_init_dev(void);
-void __exit five_tint_deinit_dev(void);
+int __init proca_tint_init_dev(void);
+void __exit proca_tint_deinit_dev(void);
 
 #endif

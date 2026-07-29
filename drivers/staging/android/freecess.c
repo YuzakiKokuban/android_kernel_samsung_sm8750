@@ -138,6 +138,8 @@ int mod_sendmsg(int type, int mod, struct priv_data *data)
 			payload->code = data->code;
 			memcpy(payload->rpcname, data->rpcname, sizeof(data->rpcname));
 			payload->pkg_info.cmd = data->pkg_info.cmd;
+			payload->pkg_info.uid = task_uid(current).val;
+			payload->caller_pid = task_tgid_nr(current);
 		}
 		if (payload->mod == MOD_PKG)
 			memcpy(&payload->pkg_info, &data->pkg_info, sizeof(pkg_info_t));
@@ -272,6 +274,9 @@ static void recv_handler(struct sk_buff *skb)
 				FREECESS_KERNEL_VERSION = 1;
 				pr_warn("freecess fw is old, switch to version 1");
 			}
+		} else if (payload->version & (1<<1)) {
+			FREECESS_KERNEL_VERSION = 6;
+			pr_warn("freecess enables one freezer feature");
 		}
 		dump_kfreecess_msg(payload);
 		mod_sendmsg(LOOPBACK_MSG, payload->mod, NULL);

@@ -9,7 +9,7 @@ IMMUTABLE_ENABLE=true
 IMMUTABLE_ROOT_ENABLE=false
 IMMUTABLE_ROOT_V2_ENABLE=false
 LP_ENABLE=true
-UMH_RESTRICTION_ENABLE=true
+UMH_RESTRICTION_ENABLE=false
 TRUSTED_MAP_ENABLE=false
 USER_BUILD=false
 GKI_BUILD=false
@@ -105,7 +105,7 @@ endif
 
 ifneq ($(wildcard $(srctree)/include/crypto/internal/rsa.h),)
     $(warning [DEFEX] INTEGRITY_ENABLE)
-    INTEGRITY_ENABLE=true
+    INTEGRITY_ENABLE=false
 endif
 
 ifeq ($(GKI_BUILD), true)
@@ -185,7 +185,10 @@ endif
 
 ifeq ($(TRUSTED_MAP_ENABLE), true)
     DEFEX_DEFINES += -DDEFEX_TRUSTED_MAP_ENABLE
-    DEFEX_DEFINES += -DDEFEX_PERMISSIVE_TM
+    ifneq ($(CONFIG_SECURITY_DEFEX_DTM_ENFORCING), y)
+        $(warning [DEFEX] DTM mode is permissive)
+        DEFEX_DEFINES += -DDEFEX_PERMISSIVE_TM
+    endif
     defex-y += feature_trusted_map/dtm.o
     defex-y += feature_trusted_map/dtm_engine.o
     defex-y += feature_trusted_map/dtm_log.o
@@ -215,6 +218,7 @@ else
     defex-y += core/defex_sysfs.o
     DEFEX_DEFINES += -DDEFEX_PERMISSIVE_INT
     DEFEX_DEFINES += -DDEFEX_PERMISSIVE_SP
+    $(warning [DEFEX] DTM mode is permissive)
     DEFEX_DEFINES += -DDEFEX_PERMISSIVE_TM
     DEFEX_DEFINES += -DDEFEX_PERMISSIVE_IM
     DEFEX_DEFINES += -DDEFEX_PERMISSIVE_IMR
@@ -262,14 +266,14 @@ endif
 ccflags-y := -Wformat
 
 ifneq ($(wildcard $(src)/pack_rules.c),)
-    $(warning DEFEX Use new src)
+    $(warning [DEFEX] Use new src)
     ccflags-y += -I$(src)
     asflags-y += -Isecurity/samsung/defex_lsm
     ccflags-y += -I$(src)/cert
     asflags-y += -Isecurity/samsung/defex_lsm/cert
     defex_src := $(src)
 else
-    $(warning DEFEX Use old src)
+    $(warning [DEFEX] Use old src)
     ccflags-y += -I$(srctree)/$(src)
     asflags-y += -Isecurity/samsung/defex_lsm
     ccflags-y += -I$(srctree)/$(src)/cert
@@ -278,7 +282,6 @@ else
 endif
 
 ifneq ($(wildcard  $(defex_src)/pack_rules.c),)
-    $(warning DEFEX found pack_rules)
     ccflags-y += $(DEFEX_DEFINES)
     asflags-y += $(DEFEX_DEFINES)
     hostprogs := pack_rules
@@ -295,13 +298,15 @@ ifneq ($(wildcard  $(defex_src)/pack_rules.c),)
 
     $(obj)/core/defex_rules_proc.o: $(obj)/pack_rules $(obj)/defex_packed_rules.inc
 
-    $(obj)/cert/defex_cert.o: $(obj)/cert/pubkey_eng.der $(obj)/cert/pubkey_user.der
-
-    $(obj)/cert/pubkey_eng.der: $(defex_src)/cert/x509_five_eng.der
-	$(call cmd,mkey)
-
-    $(obj)/cert/pubkey_user.der: $(defex_src)/cert/x509_five_user.der
-	$(call cmd,mkey)
+    ifneq ($(USER_BUILD), true)
+        $(obj)/cert/defex_cert.o: $(obj)/cert/pubkey_eng.der
+        $(obj)/cert/pubkey_eng.der: $(defex_src)/cert/x509_five_eng.der
+		$(call cmd,mkey)
+    else
+        $(obj)/cert/defex_cert.o: $(obj)/cert/pubkey_user.der
+        $(obj)/cert/pubkey_user.der: $(defex_src)/cert/x509_five_user.der
+		$(call cmd,mkey)
+    endif
 
     SOURCE_RULES := $(defex_src)/defex_rules.c
     ifneq ($(wildcard /$(defex_src)/file_list),)
@@ -323,7 +328,7 @@ ifneq ($(wildcard  $(defex_src)/pack_rules.c),)
 	@cp -n $(obj)/pack_rules $(defex_src)/pack_rules 2>/dev/null || true
 
 else
-    $(warning DEFEX Not found pack_rules)
+    $(warning [DEFEX] Not found pack_rules)
     ccflags-y += $(DEFEX_DEFINES)
     asflags-y += $(DEFEX_DEFINES)
 endif

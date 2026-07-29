@@ -91,8 +91,15 @@ int proca_kernel_read(struct file *file, loff_t offset,
 struct file *proca_kernel_open(const char *path, int flags, int rights)
 {
 	struct file *filp = NULL;
-
+#if IS_BUILTIN(CONFIG_PROCA)
 	filp = filp_open(path, flags, rights);
+#else
+	struct path root;
+	task_lock(&init_task);
+	get_fs_root(init_task.fs, &root);
+	task_unlock(&init_task);
+	filp = file_open_root(&root, path, flags, rights);
+#endif
 	return filp;
 }
 

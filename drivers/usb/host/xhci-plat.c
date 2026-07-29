@@ -21,6 +21,7 @@
 #include <linux/usb/of.h>
 #include <linux/reset.h>
 
+#include <trace/hooks/usb.h>
 #include <trace/hooks/xhci.h>
 
 #include "xhci.h"
@@ -108,7 +109,7 @@ static const struct xhci_plat_priv xhci_plat_marvell_armada = {
 };
 
 static const struct xhci_plat_priv xhci_plat_marvell_armada3700 = {
-	.init_quirk = xhci_mvebu_a3700_init_quirk,
+	.quirks = XHCI_RESET_ON_RESUME,
 };
 
 static const struct xhci_plat_priv xhci_plat_brcm = {
@@ -320,7 +321,8 @@ int xhci_plat_probe(struct platform_device *pdev, struct device *sysdev, const s
 	}
 
 	usb3_hcd = xhci_get_usb3_hcd(xhci);
-	if (usb3_hcd && HCC_MAX_PSA(xhci->hcc_params) >= 4)
+	if (usb3_hcd && HCC_MAX_PSA(xhci->hcc_params) >= 4 &&
+	    !(xhci->quirks & XHCI_BROKEN_STREAMS))
 		usb3_hcd->can_do_streams = 1;
 
 	if (xhci->shared_hcd) {
@@ -447,7 +449,13 @@ static int xhci_plat_suspend(struct device *dev)
 {
 	struct usb_hcd	*hcd = dev_get_drvdata(dev);
 	struct xhci_hcd	*xhci = hcd_to_xhci(hcd);
-	int ret;
+	struct usb_device *udev;
+	int ret, bypass = 0;
+
+	udev = hcd->self.root_hub;
+	trace_android_rvh_usb_dev_suspend(udev, PMSG_SUSPEND, &bypass);
+	if (bypass)
+		return 0;
 
 	if (pm_runtime_suspended(dev))
 		pm_runtime_resume(dev);
@@ -475,7 +483,13 @@ static int xhci_plat_resume_common(struct device *dev, struct pm_message pmsg)
 {
 	struct usb_hcd	*hcd = dev_get_drvdata(dev);
 	struct xhci_hcd	*xhci = hcd_to_xhci(hcd);
-	int ret;
+	struct usb_device *udev;
+	int ret, bypass = 0;
+
+	udev = hcd->self.root_hub;
+	trace_android_vh_usb_dev_resume(udev, PMSG_RESUME, &bypass);
+	if (bypass)
+		return 0;
 
 	if (!device_may_wakeup(dev) && (xhci->quirks & XHCI_SUSPEND_RESUME_CLKS)) {
 		ret = clk_prepare_enable(xhci->clk);

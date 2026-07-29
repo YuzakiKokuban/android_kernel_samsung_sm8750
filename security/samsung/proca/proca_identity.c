@@ -94,6 +94,7 @@ void deinit_proca_identity(struct proca_identity *identity)
 	if (identity->file)
 		fput(identity->file);
 	kfree(identity->certificate);
+	identity->certificate = NULL;
 }
 
 #if defined(CONFIG_SEC_KUNIT)

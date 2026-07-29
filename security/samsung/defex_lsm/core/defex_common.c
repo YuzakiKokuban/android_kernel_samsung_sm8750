@@ -157,10 +157,21 @@ bool check_slab_ptr(void *ptr)
 	return PageSlab(page);
 }
 
+static bool check_page_ptr(void *ptr)
+{
+	unsigned long addr = (unsigned long)ptr;
+
+	if (IS_ERR_OR_NULL(ptr) || addr < PAGE_SIZE || (!PAGE_ALIGNED(addr)))
+		return false;
+	if (virt_addr_valid(ptr))
+		return true;
+	return false;
+}
+
 int init_defex_context(struct defex_context *dc, int syscall, struct task_struct *p,
 		struct file *f)
 {
-	memset(dc, 0, offsetof(struct defex_context, cred));
+	memset(dc, 0, sizeof(struct defex_context));
 	if (check_slab_ptr(f)) {
 		get_file(f);
 		dc->target_file = f;
@@ -176,15 +187,23 @@ int init_defex_context(struct defex_context *dc, int syscall, struct task_struct
 
 void release_defex_context(struct defex_context *dc)
 {
-	if (dc->process_name_buff)
+	if (check_page_ptr((void *)dc->process_name_buff)) {
 		free_page((unsigned long)dc->process_name_buff);
-	if (dc->target_name_buff)
+		dc->process_name_buff = NULL;
+	}
+	if (check_page_ptr((void *)dc->target_name_buff)) {
 		free_page((unsigned long)dc->target_name_buff);
-	if (dc->target_file)
+		dc->target_name_buff = NULL;
+	}
+	if (dc->target_file) {
 		fput(dc->target_file);
+		dc->target_file = NULL;
+	}
 #ifndef DEFEX_CACHES_ENABLE
-	if (dc->process_file)
+	if (dc->process_file) {
 		fput(dc->process_file);
+		dc->process_file = NULL;
+	}
 #endif /* DEFEX_CACHES_ENABLE */
 }
 
@@ -222,7 +241,7 @@ char *get_dc_process_name(struct defex_context *dc)
 	if (!dc->process_name) {
 		dpath = get_dc_process_dpath(dc);
 		if (dpath) {
-			dc->process_name_buff = (char *)__get_free_page(GFP_KERNEL);
+			dc->process_name_buff = (char *)__get_free_page(GFP_KERNEL | GFP_NOWAIT);
 			if (dc->process_name_buff)
 				path = d_path(dpath, dc->process_name_buff, PAGE_SIZE);
 		}
@@ -256,9 +275,14 @@ char *get_dc_target_name(struct defex_context *dc)
 	if (!dc->target_name) {
 		dpath = get_dc_target_dpath(dc);
 		if (dpath) {
-			dc->target_name_buff = (char *)__get_free_page(GFP_KERNEL);
-			if (dc->target_name_buff)
+			dc->target_name_buff = (char *)__get_free_page(GFP_KERNEL | GFP_NOWAIT);
+			if (dc->target_name_buff) {
 				path = d_path(dpath, dc->target_name_buff, PAGE_SIZE);
+				if (IS_ERR_OR_NULL(path)) {
+					free_page((unsigned long)dc->target_name_buff);
+					dc->target_name_buff = NULL;
+				}
+			}
 		}
 		dc->target_name = (IS_ERR_OR_NULL(path)) ? (char *)unknown_file : path;
 	}
@@ -343,7 +367,7 @@ char *defex_get_filename(struct task_struct *p)
 	}
 	path_get(dpath);
 
-	buff = (char *)__get_free_page(GFP_KERNEL);
+	buff = (char *)__get_free_page(GFP_KERNEL | GFP_NOWAIT);
 	if (buff)
 		path = d_path(dpath, buff, PATH_MAX);
 	path_put(dpath);
@@ -354,7 +378,7 @@ char *defex_get_filename(struct task_struct *p)
 
 out_filename:
 	if (path && !IS_ERR(path))
-		filename = kstrdup(path, GFP_KERNEL);
+		filename = kstrdup(path, GFP_KERNEL | GFP_NOWAIT);
 
 	if (!filename)
 		filename = (char *)unknown_file;
@@ -377,7 +401,7 @@ char *defex_resolve_filename(const char *name, char **out_buff)
 	if (*out_buff)
 		buff = *out_buff;
 	else
-		buff = kmalloc(PATH_MAX, GFP_KERNEL);
+		buff = kmalloc(PATH_MAX, GFP_KERNEL | GFP_NOWAIT);
 	if (buff) {
 		if (!kern_path(name, LOOKUP_FOLLOW, &path)) {
 			target_file = d_path(&path, buff, PATH_MAX);

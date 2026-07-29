@@ -63,6 +63,14 @@ config SECURITY_DEFEX_DTM
 	  This lets defex to know whether device supports DTM or not.
 	  If you are unsure how to answer this question, answer N.
 
+config SECURITY_DEFEX_DTM_ENFORCING
+	bool "Defex Trusted Map enforcing mode"
+	depends on SECURITY_DEFEX
+	default n
+	help
+	  This sets DEFEX DTM to enforcing mode.
+	  If you are unsure how to answer this question, answer N.
+
 config SECURITY_DEFEX_IMR
 	bool "Immutable root"
 	depends on SECURITY_DEFEX

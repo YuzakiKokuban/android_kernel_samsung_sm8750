@@ -83,6 +83,7 @@ void task_integrity_free(struct task_integrity *tint)
 		kmem_cache_free(task_integrity_cache, tint);
 	}
 }
+EXPORT_SYMBOL_GPL(task_integrity_free);
 
 void task_integrity_clear(struct task_integrity *tint)
 {
@@ -190,6 +191,7 @@ char const * const tint_reset_cause_to_string(
 
 	return tint_cause2str[cause];
 }
+
 #pragma GCC diagnostic pop
 
 /*
@@ -201,12 +203,15 @@ char const * const tint_reset_cause_to_string(
 void task_integrity_set_reset_reason(struct task_integrity *tint,
 	enum task_integrity_reset_cause cause, struct file *file)
 {
+	(void)file;
 	if (!tint || tint->reset_cause != CAUSE_UNSET)
 		return;
 
 	tint->reset_cause = cause;
+#ifdef CONFIG_FIVE_DEBUG
 	if (file) {
 		get_file(file);
 		tint->reset_file = file;
 	}
+#endif
 }

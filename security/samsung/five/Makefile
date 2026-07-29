@@ -13,8 +13,7 @@ five-y := five_lv.o five_cert.o five_keyring.o five_init.o  \
 
 ifdef CONFIG_FIVE_GKI_20
   FILES := five_main.o five_appraise.o five_crypto.o five_audit.o \
-           five_hooks.o task_integrity.o five_state.o five_vfs.o \
-           five_tint_dev.o
+           five_hooks.o task_integrity.o five_state.o five_vfs.o
   five-y += $(addprefix gki/,$(FILES))
   ccflags-y += -Isecurity/integrity/five/gki
 else

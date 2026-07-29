@@ -9,241 +9,242 @@
 
 #ifdef __NEVER_DEFINED__
 	/* Rules start after this line */
-	{feature_ped_exception,"/system/bin/run-as"},	/* DEFAULT */
 	{feature_ped_exception,"/system/bin/dumpstate"},	/* DEFAULT */
+	{feature_ped_exception,"/system/bin/run-as"},	/* DEFAULT */
 	{feature_safeplace_path,"/init"},
-	{feature_safeplace_path,"/system/bin/init"},
+	{feature_safeplace_path,"/sbin/adbd"},
+	{feature_safeplace_path,"/sbin/cbd"},
+	{feature_safeplace_path,"/sbin/dm_verity_hash"},
+	{feature_safeplace_path,"/sbin/dm_verity_signature_checker"},
+	{feature_safeplace_path,"/sbin/dm_verity_tz_cmd"},
+	{feature_safeplace_path,"/sbin/e2fsdroid_static"},
+	{feature_safeplace_path,"/sbin/mcDriverDaemon_static"},
+	{feature_safeplace_path,"/sbin/mke2fs_static"},
+	{feature_safeplace_path,"/sbin/mkfs.f2fs"},
+	{feature_safeplace_path,"/sbin/qseecomfsd"},
+	{feature_safeplace_path,"/sbin/recovery"},
+	{feature_safeplace_path,"/sbin/sload.f2fs"},
+	{feature_safeplace_path,"/sbin/sswap"},
+	{feature_safeplace_path,"/sbin/tzdaemon_recovery"},
+	{feature_safeplace_path,"/system/bin/adbd"},
+	{feature_safeplace_path,"/system/bin/apexd"},
 	{feature_safeplace_path,"/system/bin/app_process32"},
 	{feature_safeplace_path,"/system/bin/app_process64"},
+	{feature_safeplace_path,"/system/bin/art_apex_boot_integrity"},
+	{feature_safeplace_path,"/system/bin/at_distributor"},
+	{feature_safeplace_path,"/system/bin/atrace"},
+	{feature_safeplace_path,"/system/bin/awk"},
+	{feature_safeplace_path,"/system/bin/bc"},
 	{feature_safeplace_path,"/system/bin/blkid"},
+	{feature_safeplace_path,"/system/bin/bugreport"},
+	{feature_safeplace_path,"/system/bin/charger"},
 	{feature_safeplace_path,"/system/bin/clatd"},
 	{feature_safeplace_path,"/system/bin/cmd"},
+	{feature_safeplace_path,"/system/bin/connfwexe"},
 	{feature_safeplace_path,"/system/bin/corehelper.sh"},
 	{feature_safeplace_path,"/system/bin/crash_dump32"},
 	{feature_safeplace_path,"/system/bin/crash_dump64"},
+	{feature_safeplace_path,"/system/bin/ddexe"},
 	{feature_safeplace_path,"/system/bin/debuggerd"},
+	{feature_safeplace_path,"/system/bin/defrag_f2fs"},
+	{feature_safeplace_path,"/system/bin/diagexe"},
 	{feature_safeplace_path,"/system/bin/dnsmasq"},
 	{feature_safeplace_path,"/system/bin/dsms"},
 	{feature_safeplace_path,"/system/bin/dumpstate"},
-	{feature_safeplace_path,"/system/bin/fsck.vfat"},
+	{feature_safeplace_path,"/system/bin/dumpsys"},
+	{feature_safeplace_path,"/system/bin/e2fsck"},
+	{feature_safeplace_path,"/system/bin/e2fsdroid"},
+	{feature_safeplace_path,"/system/bin/e4defrag"},
+	{feature_safeplace_path,"/system/bin/fastbootd"},
 	{feature_safeplace_path,"/system/bin/fsck.exfat"},
+	{feature_safeplace_path,"/system/bin/fsck.f2fs"},
+	{feature_safeplace_path,"/system/bin/fsck.vfat"},
+	{feature_safeplace_path,"/system/bin/fsck_msdos"},
+	{feature_safeplace_path,"/system/bin/fsdbg"},
 	{feature_safeplace_path,"/system/bin/gatekeeperd"},
+	{feature_safeplace_path,"/system/bin/grep"},
+	{feature_safeplace_path,"/system/bin/gsid"},
 	{feature_safeplace_path,"/system/bin/healthd"},
+	{feature_safeplace_path,"/system/bin/hqcpsnbin"},
+	{feature_safeplace_path,"/system/bin/idledefrag"},
+	{feature_safeplace_path,"/system/bin/idmap2"},
+	{feature_safeplace_path,"/system/bin/init"},
 	{feature_safeplace_path,"/system/bin/installd"},
+	{feature_safeplace_path,"/system/bin/insthk"},
 	{feature_safeplace_path,"/system/bin/iod"},
 	{feature_safeplace_path,"/system/bin/ip"},
-	{feature_safeplace_path,"/system/bin/iptables"},
-	{feature_safeplace_path,"/system/bin/iptables-restore"},
 	{feature_safeplace_path,"/system/bin/ip6tables"},
 	{feature_safeplace_path,"/system/bin/ip6tables-restore"},
+	{feature_safeplace_path,"/system/bin/iptables"},
+	{feature_safeplace_path,"/system/bin/iptables-restore"},
+	{feature_safeplace_path,"/system/bin/knox_changer"},
+	{feature_safeplace_path,"/system/bin/knox_changer_recovery"},
 	{feature_safeplace_path,"/system/bin/lmkd"},
+	{feature_safeplace_path,"/system/bin/logcat"},
+	{feature_safeplace_path,"/system/bin/lpm"},
 	{feature_safeplace_path,"/system/bin/lshal"},
+	{feature_safeplace_path,"/system/bin/make_f2fs"},
 	{feature_safeplace_path,"/system/bin/mdf_fota"},
-	{feature_safeplace_path,"/system/bin/mkfs.vfat"},
+	{feature_safeplace_path,"/system/bin/migrate_legacy_obb_data.sh"},
+	{feature_safeplace_path,"/system/bin/minadbd"},
+	{feature_safeplace_path,"/system/bin/mke2fs"},
 	{feature_safeplace_path,"/system/bin/mkfs.exfat"},
+	{feature_safeplace_path,"/system/bin/mkfs.vfat"},
 	{feature_safeplace_path,"/system/bin/netd"},
+	{feature_safeplace_path,"/system/bin/netutils-wrapper-1.0"},
 	{feature_safeplace_path,"/system/bin/nst"},
+	{feature_safeplace_path,"/system/bin/patchoat"},
 	{feature_safeplace_path,"/system/bin/perfmond"},
 	{feature_safeplace_path,"/system/bin/perfprofd"},
+	{feature_safeplace_path,"/system/bin/prepare_param.sh"},
+	{feature_safeplace_path,"/system/bin/recovery"},
+	{feature_safeplace_path,"/system/bin/resetreason"},
+	{feature_safeplace_path,"/system/bin/resize2fs"},
+	{feature_safeplace_path,"/system/bin/sbm"},
+	{feature_safeplace_path,"/system/bin/scs"},
+	{feature_safeplace_path,"/system/bin/sdcard"},
+	{feature_safeplace_path,"/system/bin/sec_diag_uart_log"},
+	{feature_safeplace_path,"/system/bin/secdiscard"},
+	{feature_safeplace_path,"/system/bin/secilc"},
+	{feature_safeplace_path,"/system/bin/service"},
 	{feature_safeplace_path,"/system/bin/sgdisk"},
 	{feature_safeplace_path,"/system/bin/sh"},
+	{feature_safeplace_path,"/system/bin/sload_f2fs"},
+	{feature_safeplace_path,"/system/bin/smdexe"},
 	{feature_safeplace_path,"/system/bin/ss"},
 	{feature_safeplace_path,"/system/bin/storaged"},
 	{feature_safeplace_path,"/system/bin/tc"},
-	{feature_safeplace_path,"/system/bin/uncrypt"},
-	{feature_safeplace_path,"/system/bin/vold"},
-	{feature_safeplace_path,"/system/bin/webview_zygote32"},
-	{feature_safeplace_path,"/system/bin/grep"},
-	{feature_safeplace_path,"/system/bin/e2fsck"},
-	{feature_safeplace_path,"/system/bin/scs"},
-	{feature_safeplace_path,"/system/bin/vdc"},
-	{feature_safeplace_path,"/system/bin/vaultkeeperd"},
-	{feature_safeplace_path,"/system/bin/prepare_param.sh"},
-	{feature_safeplace_path,"/system/bin/smdexe"},
-	{feature_safeplace_path,"/system/bin/diagexe"},
-	{feature_safeplace_path,"/system/bin/ddexe"},
-	{feature_safeplace_path,"/system/bin/connfwexe"},
-	{feature_safeplace_path,"/system/bin/at_distributor"},
-	{feature_safeplace_path,"/system/bin/sdcard"},
-	{feature_safeplace_path,"/system/bin/resetreason"},
-	{feature_safeplace_path,"/system/bin/lpm"},
-	{feature_safeplace_path,"/system/bin/resize2fs"},
+	{feature_safeplace_path,"/system/bin/toolbox"},
+	{feature_safeplace_path,"/system/bin/toybox"},
 	{feature_safeplace_path,"/system/bin/tune2fs"},
-	{feature_safeplace_path,"/system/bin/patchoat"},
-	{feature_safeplace_path,"/system/bin/knox_changer"},
-	{feature_safeplace_path,"/system/bin/knox_changer_recovery"},
-	{feature_safeplace_path,"/sbin/sswap"},
-	{feature_safeplace_path,"/sbin/cbd"},
-	{feature_safeplace_path,"/sbin/adbd"},
-	{feature_safeplace_path,"/sbin/recovery"},
-	{feature_safeplace_path,"/sbin/mke2fs_static"},
-	{feature_safeplace_path,"/vendor/bin/hw/wpa_supplicant"},
+	{feature_safeplace_path,"/system/bin/uncrypt"},
+	{feature_safeplace_path,"/system/bin/usbd"},
+	{feature_safeplace_path,"/system/bin/vaultkeeperd"},
+	{feature_safeplace_path,"/system/bin/vdc"},
+	{feature_safeplace_path,"/system/bin/vold"},
+	{feature_safeplace_path,"/system/bin/vold_prepare_subdirs"},
+	{feature_safeplace_path,"/system/bin/wait_for_keymaster"},
+	{feature_safeplace_path,"/system/bin/watchdogd"},
+	{feature_safeplace_path,"/system/bin/webview_zygote32"},
+	{feature_safeplace_path,"/vendor/bin/adsprpcd"},
+	{feature_safeplace_path,"/vendor/bin/cbd"},
+	{feature_safeplace_path,"/vendor/bin/dsmsca"},
+	{feature_safeplace_path,"/vendor/bin/grep"},
+	{feature_safeplace_path,"/vendor/bin/hcgcd"},
+	{feature_safeplace_path,"/vendor/bin/hqread"},
+	{feature_safeplace_path,"/vendor/bin/hvdcp_opti"},
+	{feature_safeplace_path,"/vendor/bin/hw/android.hardware.usb@1.1-service.wahoo"},
+	{feature_safeplace_path,"/vendor/bin/hw/android.hardware.usb@1.3-service.coral"},
 	{feature_safeplace_path,"/vendor/bin/hw/macloader"},
 	{feature_safeplace_path,"/vendor/bin/hw/mfgloader"},
-	{feature_safeplace_path,"/sbin/dm_verity_hash"},
-	{feature_safeplace_path,"/sbin/dm_verity_signature_checker"},
-	{feature_safeplace_path,"/vendor/bin/qseecomd"},
-	{feature_safeplace_path,"/system/bin/vold_prepare_subdirs"},
-	{feature_safeplace_path,"/vendor/bin/init.qcom.early_boot.sh"},
-	{feature_safeplace_path,"/vendor/bin/toybox_vendor"},
-	{feature_safeplace_path,"/vendor/bin/toolbox"},
-	{feature_safeplace_path,"/vendor/bin/hw/android.hardware.usb@1.1-service.wahoo"},
 	{feature_safeplace_path,"/vendor/bin/hw/vendor.qti.hardware.iop@2.0-service"},
 	{feature_safeplace_path,"/vendor/bin/hw/vendor.qti.hardware.perf@1.0-service"},
-	{feature_safeplace_path,"/vendor/bin/init.qcom.class_core.sh"},
-	{feature_safeplace_path,"/vendor/bin/irsc_util"},
-	{feature_safeplace_path,"/vendor/bin/rmt_storage"},
-	{feature_safeplace_path,"/system/bin/toybox"},
-	{feature_safeplace_path,"/vendor/bin/init.qcom.usb.sh"},
-	{feature_safeplace_path,"/vendor/bin/tftp_server"},
-	{feature_safeplace_path,"/vendor/bin/init.qcom.sensors.sh"},
-	{feature_safeplace_path,"/system/bin/insthk"},
-	{feature_safeplace_path,"/vendor/bin/init.class_main.sh"},
-	{feature_safeplace_path,"/vendor/bin/time_daemon"},
-	{feature_safeplace_path,"/vendor/bin/thermal-engine"},
-	{feature_safeplace_path,"/vendor/bin/thermal-engine-v2"},
-	{feature_safeplace_path,"/system/bin/sec_diag_uart_log"},
-	{feature_safeplace_path,"/vendor/bin/init.qcom.sh"},
-	{feature_safeplace_path,"/system/bin/usbd"},
-	{feature_safeplace_path,"/vendor/bin/init.qcom.post_boot.sh"},
-	{feature_safeplace_path,"/system/bin/adbd"},
-	{feature_safeplace_path,"/system/bin/atrace"},
-	{feature_safeplace_path,"/system/bin/fsdbg"},
-	{feature_safeplace_path,"/system/bin/dumpsys"},
-	{feature_safeplace_path,"/system/bin/logcat"},
-	{feature_safeplace_path,"/system/bin/toolbox"},
-	{feature_safeplace_path,"/system/bin/mke2fs"},
-	{feature_safeplace_path,"/vendor/bin/cbd"},
-	{feature_safeplace_path,"/vendor/bin/adsprpcd"},
-	{feature_safeplace_path,"/sbin/e2fsdroid_static"},
-	{feature_safeplace_path,"/system/bin/e2fsdroid"},
-	{feature_safeplace_path,"/system/bin/fsck.f2fs"},
-	{feature_safeplace_path,"/system/bin/make_f2fs"},
-	{feature_safeplace_path,"/system/bin/sload_f2fs"},
-	{feature_safeplace_path,"/system/bin/bpfloader"},
-	{feature_safeplace_path,"/system/bin/wait_for_keymaster"},
-	{feature_safeplace_path,"/system/bin/secdiscard"},
-	{feature_safeplace_path,"/system/bin/idledefrag"},
-	{feature_safeplace_path,"/vendor/bin/init.mdm.sh"},
-	{feature_safeplace_path,"/vendor/bin/mdm_helper"},
-	{feature_safeplace_path,"/vendor/bin/ks"},
-	{feature_safeplace_path,"/vendor/bin/sh"},
-	{feature_safeplace_path,"/system/bin/e4defrag"},
-	{feature_safeplace_path,"/sbin/dm_verity_tz_cmd"},
-	{feature_safeplace_path,"/sbin/mcDriverDaemon_static"},
-	{feature_safeplace_path,"/sbin/qseecomfsd"},
-	{feature_safeplace_path,"/sbin/tzdaemon_recovery"},
-	{feature_safeplace_path,"/vendor/bin/hvdcp_opti"},
-	{feature_safeplace_path,"/sbin/mkfs.f2fs"},
-	{feature_safeplace_path,"/sbin/sload.f2fs"},
-	{feature_safeplace_path,"/system/bin/secilc"},
-	{feature_safeplace_path,"/system/bin/apexd"},
-	{feature_safeplace_path,"/system/bin/art_apex_boot_integrity"},
-	{feature_safeplace_path,"/system/bin/gsid"},
-	{feature_safeplace_path,"/system/bin/idmap2"},
-	{feature_safeplace_path,"/system/bin/charger"},
-	{feature_safeplace_path,"/system/bin/recovery"},
-	{feature_safeplace_path,"/system/bin/watchdogd"},
 	{feature_safeplace_path,"/vendor/bin/hw/vendor.qti.hardware.perf@2.0-service"},
-	{feature_safeplace_path,"/system/bin/netutils-wrapper-1.0"},
-	{feature_safeplace_path,"/system/bin/bugreport"},
-	{feature_safeplace_path,"/system/bin/minadbd"},
-	{feature_safeplace_path,"/system/bin/migrate_legacy_obb_data.sh"},
-	{feature_safeplace_path,"/vendor/bin/shsusrd"},
-	{feature_safeplace_path,"/system/bin/defrag_f2fs"},
-	{feature_safeplace_path,"/system/bin/fastbootd"},
-	{feature_safeplace_path,"/system/bin/sbm"},
 	{feature_safeplace_path,"/vendor/bin/hw/vendor.qti.hardware.perf@2.1-service"},
 	{feature_safeplace_path,"/vendor/bin/hw/vendor.qti.hardware.perf@2.2-service"},
-	{feature_safeplace_path,"/vendor/bin/grep"},
-	{feature_safeplace_path,"/vendor/bin/memlogd"},
-	{feature_safeplace_path,"/vendor/bin/init.insmod.sh"},
-	{feature_safeplace_path,"/vendor/bin/hw/android.hardware.usb@1.3-service.coral"},
 	{feature_safeplace_path,"/vendor/bin/hw/vendor.qti.hardware.perf-hal-service"},
+	{feature_safeplace_path,"/vendor/bin/hw/wpa_supplicant"},
+	{feature_safeplace_path,"/vendor/bin/init.class_main.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.insmod.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.mdm.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.qcom.class_core.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.qcom.early_boot.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.qcom.post_boot.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.qcom.sensors.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.qcom.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.qcom.usb.sh"},
 	{feature_safeplace_path,"/vendor/bin/iod"},
-	{feature_safeplace_path,"/vendor/bin/dsmsca"},
-	{feature_safeplace_path,"/vendor/bin/hqread"},
-	{feature_safeplace_path,"/system/bin/hqcpsnbin"},
-	{feature_safeplace_path,"/system/bin/awk"},
-	{feature_safeplace_path,"/system/bin/bc"},
-	{feature_safeplace_path,"/system/bin/service"},
-	{feature_safeplace_path,"/system/bin/fsck_msdos"},
-	{feature_safeplace_path,"/vendor/bin/hcgcd"},
+	{feature_safeplace_path,"/vendor/bin/irsc_util"},
+	{feature_safeplace_path,"/vendor/bin/ks"},
+	{feature_safeplace_path,"/vendor/bin/mdm_helper"},
+	{feature_safeplace_path,"/vendor/bin/memlogd"},
 	{feature_safeplace_path,"/vendor/bin/qlm-service"},
+	{feature_safeplace_path,"/vendor/bin/qseecomd"},
+	{feature_safeplace_path,"/vendor/bin/rmt_storage"},
+	{feature_safeplace_path,"/vendor/bin/sh"},
+	{feature_safeplace_path,"/vendor/bin/shsusrd"},
+	{feature_safeplace_path,"/vendor/bin/tftp_server"},
+	{feature_safeplace_path,"/vendor/bin/thermal-engine"},
+	{feature_safeplace_path,"/vendor/bin/thermal-engine-v2"},
+	{feature_safeplace_path,"/vendor/bin/time_daemon"},
+	{feature_safeplace_path,"/vendor/bin/toolbox"},
+	{feature_safeplace_path,"/vendor/bin/toybox_vendor"},
+	{feature_safeplace_path,"/system/bin/bpfloader_kzt"},
+	{feature_safeplace_path,"/system/bin/fsck.exfat_sec"},
+	{feature_safeplace_path,"/system/bin/ksmbd.tools"},
+	{feature_safeplace_path,"/system/bin/mkfs.exfat_sec"},
 	{feature_safeplace_path,"/system/bin/rdxd"},
 	{feature_safeplace_path,"/system/bin/ztd"},
-	{feature_safeplace_path,"/system/bin/fsck.exfat_sec"},
-	{feature_safeplace_path,"/system/bin/mkfs.exfat_sec"},
-	{feature_safeplace_path,"/system/bin/ksmbd.tools"},
+	{feature_safeplace_path,"/product/bin/qvirtmgr"},
+	{feature_safeplace_path,"/product/bin/vendor.qti.qvirt-service"},
+	{feature_safeplace_path,"/product/bin/vendor.qti.qvirt-service_rs"},
 	{feature_safeplace_path,"/system/system_ext/bin/dpmd"},
 	{feature_safeplace_path,"/system_ext/bin/dpmd"},
-	{feature_safeplace_path,"/vendor/bin/init.qti.dcvs.sh"},
-	{feature_safeplace_path,"/vendor/bin/vendor_modprobe.sh"},
-	{feature_safeplace_path,"/vendor/bin/init.qti.qcv.sh"},
-	{feature_safeplace_path,"/vendor/bin/init.qcom.crashdata.sh"},
-	{feature_safeplace_path,"/vendor/bin/energy-awareness"},
-	{feature_safeplace_path,"/vendor/bin/qcom-system-daemon"},
-	{feature_safeplace_path,"/vendor/bin/init.qti.kernel.sh"},
-	{feature_safeplace_path,"/vendor/bin/init.kernel.post_boot.sh"},
-	{feature_safeplace_path,"/vendor/bin/init.kernel.post_boot-lahaina.sh"},
-	{feature_safeplace_path,"/vendor/bin/init.qti.early_init.sh"},
-	{feature_safeplace_path,"/vendor/bin/init.qti.keymaster.sh"},
-	{feature_safeplace_path,"/vendor/bin/init.qti.write.sh"},
-	{feature_safeplace_path,"/vendor/bin/vmmgr"},
-	{feature_safeplace_path,"/product/bin/qvirtmgr"},
 	{feature_safeplace_path,"/system_ext/bin/qcrosvm"},
-	{feature_safeplace_path,"/vendor/bin/ssr_setup"},
-	{feature_safeplace_path,"/product/bin/vendor.qti.qvirt-service_rs"},
-	{feature_safeplace_path,"/product/bin/vendor.qti.qvirt-service"},
+	{feature_safeplace_path,"/vendor/bin/energy-awareness"},
+	{feature_safeplace_path,"/vendor/bin/hw/android.hardware.boot-service.qti"},
+	{feature_safeplace_path,"/vendor/bin/hw/android.hardware.thermal@2.0-service.qti-v2"},
 	{feature_safeplace_path,"/vendor/bin/hw/vendor.qti.hardware.debugutils-service"},
-	{feature_safeplace_path,"/vendor/bin/hw/vendor.qti.hardware.perf2-hal-service"},
 	{feature_safeplace_path,"/vendor/bin/hw/vendor.qti.hardware.limits@1.1-service"},
 	{feature_safeplace_path,"/vendor/bin/hw/vendor.qti.hardware.limits@1.2-service"},
-	{feature_safeplace_path,"/vendor/bin/hw/android.hardware.thermal@2.0-service.qti-v2"},
-	{feature_safeplace_path,"/vendor/bin/poweropt-service"},
-	{feature_safeplace_path,"/vendor/bin/msm_irqbalance"},
-	{feature_safeplace_path,"/vendor/bin/qms"},
+	{feature_safeplace_path,"/vendor/bin/hw/vendor.qti.hardware.perf2-hal-service"},
 	{feature_safeplace_path,"/vendor/bin/hw/vendor.qti.MemHal-service"},
-	{feature_safeplace_path,"/vendor/bin/hw/android.hardware.boot-service.qti"},
+	{feature_safeplace_path,"/vendor/bin/init.kernel.post_boot.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.kernel.post_boot-lahaina.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.qcom.crashdata.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.qti.dcvs.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.qti.early_init.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.qti.kernel.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.qti.keymaster.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.qti.qcv.sh"},
+	{feature_safeplace_path,"/vendor/bin/init.qti.write.sh"},
+	{feature_safeplace_path,"/vendor/bin/msm_irqbalance"},
+	{feature_safeplace_path,"/vendor/bin/poweropt-service"},
+	{feature_safeplace_path,"/vendor/bin/qcom-system-daemon"},
+	{feature_safeplace_path,"/vendor/bin/qms"},
+	{feature_safeplace_path,"/vendor/bin/ssr_setup"},
+	{feature_safeplace_path,"/vendor/bin/vendor_modprobe.sh"},
+	{feature_safeplace_path,"/vendor/bin/vmmgr"},
 	{feature_safeplace_path,"/vendor/bin/cp_diskserver"},
 	{feature_safeplace_path,"/vendor/bin/hw/android.hardware.boot-service.exynos"},
+	{feature_safeplace_path,"/system/bin/hw/android.hardware.boot-service.mtk_recovery"},
+	{feature_safeplace_path,"/system/bin/oem-iptables-init.sh"},
+	{feature_safeplace_path,"/system_ext/bin/aee_aed"},
+	{feature_safeplace_path,"/system_ext/bin/aee_aed64"},
+	{feature_safeplace_path,"/system_ext/bin/aee_aed64_v2"},
+	{feature_safeplace_path,"/system_ext/bin/aee_v2"},
 	{feature_safeplace_path,"/system_ext/bin/mobile_log_d"},
+	{feature_safeplace_path,"/system_ext/bin/mtk_plpath_utils"},
 	{feature_safeplace_path,"/vendor/bin/aee_aedv"},
 	{feature_safeplace_path,"/vendor/bin/aee_aedv64"},
+	{feature_safeplace_path,"/vendor/bin/aee_aedv64_v2"},
+	{feature_safeplace_path,"/vendor/bin/aee_dumpstatev_v2"},
 	{feature_safeplace_path,"/vendor/bin/dcxosetcap"},
+	{feature_safeplace_path,"/vendor/bin/dmabuf_dump"},
 	{feature_safeplace_path,"/vendor/bin/eara_io_service"},
 	{feature_safeplace_path,"/vendor/bin/frs"},
+	{feature_safeplace_path,"/vendor/bin/hw/android.hardware.boot-service.mtk"},
+	{feature_safeplace_path,"/vendor/bin/hw/vendor.mediatek.hardware.aee@1.1-service"},
+	{feature_safeplace_path,"/vendor/bin/hw/vendor.mediatek.hardware.aee@V1-service"},
+	{feature_safeplace_path,"/vendor/bin/hw/vendor.mediatek.hardware.mtkpower@1.0-service"},
+	{feature_safeplace_path,"/vendor/bin/hw/vendor.mediatek.hardware.mtkpower-service.mediatek"},
+	{feature_safeplace_path,"/vendor/bin/hw/vendor.mediatek.hardware.nvram@1.1-service"},
+	{feature_safeplace_path,"/vendor/bin/hw/vendor.mediatek.hardware.nvram-service"},
 	{feature_safeplace_path,"/vendor/bin/meta_tst"},
+	{feature_safeplace_path,"/vendor/bin/mrdump_tool"},
 	{feature_safeplace_path,"/vendor/bin/nvram_daemon"},
 	{feature_safeplace_path,"/vendor/bin/thermal_core"},
 	{feature_safeplace_path,"/vendor/bin/thermal_manager"},
-	{feature_safeplace_path,"/vendor/bin/hw/vendor.mediatek.hardware.mtkpower-service.mediatek"},
-	{feature_safeplace_path,"/vendor/bin/hw/vendor.mediatek.hardware.nvram-service"},
-	{feature_safeplace_path,"/vendor/bin/hw/vendor.mediatek.hardware.nvram@1.1-service"},
-	{feature_safeplace_path,"/system/bin/oem-iptables-init.sh"},
-	{feature_safeplace_path,"/system_ext/bin/aee_aed64_v2"},
-	{feature_safeplace_path,"/system_ext/bin/aee_v2"},
-	{feature_safeplace_path,"/vendor/bin/aee_aedv64_v2"},
-	{feature_safeplace_path,"/vendor/bin/aee_dumpstatev_v2"},
-	{feature_safeplace_path,"/vendor/bin/dmabuf_dump"},
-	{feature_safeplace_path,"/vendor/bin/mrdump_tool"},
-	{feature_safeplace_path,"/vendor/bin/hw/android.hardware.boot-service.mtk"},
-	{feature_safeplace_path,"/vendor/bin/hw/vendor.mediatek.hardware.mtkpower@1.0-service"},
-	{feature_safeplace_path,"/vendor/bin/hw/vendor.mediatek.hardware.aee@V1-service"},
-	{feature_safeplace_path,"/vendor/bin/hw/vendor.mediatek.hardware.aee@1.1-service"},
-	{feature_safeplace_path,"/system_ext/bin/aee_aed"},
-	{feature_safeplace_path,"/system_ext/bin/aee_aed64"},
 	{feature_safeplace_path,"/vendor/bin/wifiver_info"},
-	{feature_safeplace_path,"/system_ext/bin/mtk_plpath_utils"},
 	{feature_safeplace_path,"/apex/com.android.adbd/bin/adbd"},
-	{feature_safeplace_path,"/apex/com.android.art/bin/artd"},
 	{feature_safeplace_path,"/apex/com.android.art/bin/art_boot"},
+	{feature_safeplace_path,"/apex/com.android.art/bin/artd"},
 	{feature_safeplace_path,"/apex/com.android.art/bin/dex2oat32"},
 	{feature_safeplace_path,"/apex/com.android.art/bin/dex2oat64"},
 	{feature_safeplace_path,"/apex/com.android.art/bin/odrefresh"},
+	{feature_safeplace_path,"/apex/com.android.compos/bin/compos_verify"},
 	{feature_safeplace_path,"/apex/com.android.compos/bin/composd"},
 	{feature_safeplace_path,"/apex/com.android.compos/bin/composd_cmd"},
-	{feature_safeplace_path,"/apex/com.android.compos/bin/compos_verify"},
 	{feature_safeplace_path,"/apex/com.android.configinfrastructure/bin/aflags_updatable"},
 	{feature_safeplace_path,"/apex/com.android.conscrypt/bin/boringssl_self_test32"},
 	{feature_safeplace_path,"/apex/com.android.conscrypt/bin/boringssl_self_test64"},
@@ -266,7 +267,6 @@
 	{feature_safeplace_path,"/system/bin/bootstrap/linkerconfig"},
 	{feature_safeplace_path,"/system/bin/boringssl_self_test32"},
 	{feature_safeplace_path,"/system/bin/boringssl_self_test64"},
-	{feature_safeplace_path,"/system/bin/bpfloader"},
 	{feature_safeplace_path,"/system/bin/btfloader"},
 	{feature_safeplace_path,"/system/bin/clean_scratch_files"},
 	{feature_safeplace_path,"/system/bin/content"},
@@ -310,14 +310,14 @@
 	{feature_safeplace_path,"/vendor/bin/refnotify"},
 	{feature_safeplace_path,"/vendor/bin/sprdstorageproxyd"},
 	{feature_safeplace_path,"/vendor/bin/uniber"},
-	{feature_safeplace_path,"/tmp/update_binary"},
-	{feature_safeplace_path,"/tmp/update-binary"},
 	{feature_safeplace_path,"/postinstall/bin/checkpoint_gc"},
 	{feature_safeplace_path,"/postinstall/system/bin/otapreopt_script"},
-	{feature_safeplace_path,"/system/bin/install-recovery.sh"},	/* DEFAULT */
-	{feature_safeplace_path,"/vendor/bin/install-recovery.sh"},	/* DEFAULT */
+	{feature_safeplace_path,"/tmp/update_binary"},
+	{feature_safeplace_path,"/tmp/update-binary"},
 	{feature_safeplace_path,"/system/bin/bpfloader"},	/* DEFAULT */
+	{feature_safeplace_path,"/system/bin/install-recovery.sh"},	/* DEFAULT */
 	{feature_safeplace_path,"/system/bin/snapuserd"},	/* DEFAULT */
+	{feature_safeplace_path,"/vendor/bin/install-recovery.sh"},	/* DEFAULT */
 	{feature_immutable_path_write,"/system/"},	/* DEFAULT */
 	{feature_immutable_path_write,"/vendor/"},	/* DEFAULT */
 	{feature_immutable_path_open,"/system/bin/"},	/* DEFAULT */
@@ -325,8 +325,8 @@
 	{feature_immutable_root,"/apex/com.android.adbd/bin/adbd:/data/local/tmp/"},	/* DEFAULT */
 	{feature_immutable_root,"/apex/com.android.art/bin/odrefresh:/data/misc/apexdata/com.android.art/"},	/* DEFAULT */
 	{feature_immutable_root,"/apex/com.android.art/bin/odrefresh:/data/misc/odrefresh/"},	/* DEFAULT */
-	{feature_immutable_root,"/apex/com.android.compos/bin/composd:/data/misc/apexdata/"},	/* DEFAULT */
 	{feature_immutable_root,"/apex/com.android.compos/bin/compos_verify:/data/misc/apexdata/"},	/* DEFAULT */
+	{feature_immutable_root,"/apex/com.android.compos/bin/composd:/data/misc/apexdata/"},	/* DEFAULT */
 	{feature_immutable_root,"/apex/com.android.virt/bin/fd_server:/data/misc/apexdata/com.android.art/"},	/* DEFAULT */
 	{feature_immutable_root,"/apex/com.android.virt/bin/virtmgr:/data/apex/"},	/* DEFAULT */
 	{feature_immutable_root,"/apex/com.android.virt/bin/virtmgr:/data/app-staging/"},	/* DEFAULT */
@@ -334,6 +334,7 @@
 	{feature_immutable_root,"/apex/com.android.virt/bin/virtmgr:/data/misc/virtualizationservice/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/apexd:/data/apex/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/apexd:/data/app-staging/"},	/* DEFAULT */
+	{feature_immutable_root,"/system/bin/apexd:/data/misc/apexdata/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/apexd:/data/misc/apexrollback/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/apexd:/data/misc_ce/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/apexd:/data/misc_de/"},	/* DEFAULT */
@@ -386,14 +387,15 @@
 	{feature_immutable_root,"/system/bin/netd:/data/misc/net/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/odsign:/data/misc/apexdata/com.android.art/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/odsign:/data/misc/odsign/"},	/* DEFAULT */
-	{feature_immutable_root,"/system/bin/perfetto:/data/local/traces/.trace-in-progress_in_perfd.trace"},	/* DEFAULT */
+	{feature_immutable_root,"/system/bin/perfetto:/data/local/traces/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/profcollectctl:/data/misc/profcollectd/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/rdxd:/data/rdx_dump"},	/* DEFAULT */
-	{feature_immutable_root,"/system/bin/secdiscard:/data/sec_backup_sys_de/vold/user_keys/ce/"},	/* DEFAULT */
-	{feature_immutable_root,"/system/bin/secdiscard:/data/sec_backup_sys_de/vold/user_keys/de/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/secdiscard:/data/misc/vold/user_keys/ce/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/secdiscard:/data/misc/vold/user_keys/de/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/secdiscard:/data/misc_ce/"},	/* DEFAULT */
+	{feature_immutable_root,"/system/bin/secdiscard:/data/sec_backup_ce/"},	/* DEFAULT */
+	{feature_immutable_root,"/system/bin/secdiscard:/data/sec_backup_sys_de/vold/user_keys/ce/"},	/* DEFAULT */
+	{feature_immutable_root,"/system/bin/secdiscard:/data/sec_backup_sys_de/vold/user_keys/de/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/sh:/data/local/tmp/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/sh:/data/local/traces/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/sh:/data/log/traces/"},	/* DEFAULT */
@@ -401,9 +403,7 @@
 	{feature_immutable_root,"/system/bin/storaged:/data/misc_ce/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/anr"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/app/"},	/* DEFAULT */
-	{feature_immutable_root,"/system/bin/toybox:/data/data/com.android.cts.install.lib.testapp.A/"},	/* DEFAULT */
-	{feature_immutable_root,"/system/bin/toybox:/data/data/com.android.cts.install.lib.testapp.B/"},	/* DEFAULT */
-	{feature_immutable_root,"/system/bin/toybox:/data/data/com.google.android.gts.rollback"},	/* DEFAULT */
+	{feature_immutable_root,"/system/bin/toybox:/data/data/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/local/tmp/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/local/traces/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/log/"},	/* DEFAULT */
@@ -415,11 +415,13 @@
 	{feature_immutable_root,"/system/bin/toybox:/data/misc_de/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/property/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/sec/"},	/* DEFAULT */
+	{feature_immutable_root,"/system/bin/toybox:/data/sec_backup_ce/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/sec_backup_sys_de/vold/user_keys/ce/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/sec_backup_sys_de/vold/user_keys/de/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/sec_maintenance/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/sec_pass/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/system/packages.list"},	/* DEFAULT */
+	{feature_immutable_root,"/system/bin/toybox:/data/user/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/user_de/0/com.android.cts.install.lib.testapp.A/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/user_de/0/com.android.cts.install.lib.testapp.B/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/toybox:/data/user_de/0/com.google.android.gts.rollback"},	/* DEFAULT */
@@ -434,9 +436,8 @@
 	{feature_immutable_root,"/system/bin/vold:/data/app/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/vold:/data/app-asec/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/vold:/data/data.new"},	/* DEFAULT */
-	{feature_immutable_root,"/system/bin/vold:/data/incremental"},	/* DEFAULT */
-	{feature_immutable_root,"/system/bin/vold:/data/sec_maintenance.new"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/vold:/data/data/"},	/* DEFAULT */
+	{feature_immutable_root,"/system/bin/vold:/data/incremental"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/vold:/data/log/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/vold:/data/media/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/vold:/data/misc/vold/"},	/* DEFAULT */
@@ -450,6 +451,8 @@
 	{feature_immutable_root,"/system/bin/vold:/data/sec_backup_de/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/vold:/data/sec_backup_sys_de/vold/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/vold:/data/sec_backup_unencrypted/"},	/* DEFAULT */
+	{feature_immutable_root,"/system/bin/vold:/data/sec_backup_v2/"},	/* DEFAULT */
+	{feature_immutable_root,"/system/bin/vold:/data/sec_maintenance.new"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/vold:/data/sec_maintenance/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/vold:/data/sec_pass/"},	/* DEFAULT */
 	{feature_immutable_root,"/system/bin/vold:/data/system/users/"},	/* DEFAULT */
@@ -481,51 +484,50 @@
 	{feature_immutable_root,"/vendor/bin/sh:/data/vendor/sensors/scripts"},	/* DEFAULT */
 	{feature_immutable_root,"/vendor/bin/thermal_core:/data/vendor/thermal/"},	/* DEFAULT */
 	{feature_immutable_root,"/vendor/bin/toybox_vendor:/data/vendor/modem_config/ver_info.txt"},	/* DEFAULT */
-	{feature_immutable_root_v2,"/com.samsung.android.smartsuggestions:/data/sec_pass/1b89aa98175dcb78d8c03fdda25f3b9682db9d114ff88c50bed8fdf954956bb9/"},	/* DEFAULT */
-	{feature_immutable_root_v2,"/com.samsung.android.moneta:/data/sec_pass/9c61e70152f4866045fc87930fe9d5c041a4150f55871d698efb4b28e405b941/"},	/* DEFAULT */
-	{feature_immutable_root_v2,"/com.samsung.android.privateaccesstokens:/data/sec_pass/48c6f0f3cf9ac39b3c9f47b8a779a311818f9b427752adb4a85a20bf9d4393c9/"},	/* DEFAULT */
 	{feature_immutable_root_v2,"/com.samsung.android.app.moments:/data/sec_pass/acd0471b014f3427dd529fb1aef89d6e950ed2142f427c29ca0a50dc9bf91746/"},	/* DEFAULT */
-	{feature_immutable_root_v2,"/com.samsung.android.mcfds:/data/sec_pass/f382f77b6fd00fb57907b892e89288281145b4c7d740b68c94c3f45193143e44/"},	/* DEFAULT */
-	{feature_immutable_root_v2,"/com.sec.android.gallery3d:/data/sec_pass/172db225d62455197e816713bfedeba13d9c963e7f1468a7ecea535f6998beec/"},	/* DEFAULT */
-	{feature_immutable_root_v2,"/com.sec.android.app.myfiles:/data/sec_pass/3c79d5be3e571cc269d0062077defefa6187e65c438896c8122f3bc94dfc5303/"},	/* DEFAULT */
-	{feature_immutable_root_v2,"/com.samsung.android.app.notes:/data/sec_pass/2a63ba3740a44ac8535373f649c5f90ba4a91eb47b1ee8d799bdcfaf447d6ab6/"},	/* DEFAULT */
-	{feature_immutable_root_v2,"/com.sec.android.app.voicenote:/data/sec_pass/55fff2786314b0cf4b46f99d871488547ab995e636781594a070887403d2c8fb/"},	/* DEFAULT */
+	{feature_immutable_root_v2,"/com.samsung.android.privateaccesstokens:/data/sec_pass/48c6f0f3cf9ac39b3c9f47b8a779a311818f9b427752adb4a85a20bf9d4393c9/"},	/* DEFAULT */
+	{feature_immutable_root_v2,"/com.samsung.android.scloud:/data/sec_pass/172db225d62455197e816713bfedeba13d9c963e7f1468a7ecea535f6998beec/"},	/* DEFAULT */
+	{feature_immutable_root_v2,"/com.samsung.android.smartsuggestions:/data/sec_pass/1b89aa98175dcb78d8c03fdda25f3b9682db9d114ff88c50bed8fdf954956bb9/"},	/* DEFAULT */
+	{feature_immutable_root_v2,"/com.samsung.android.smartsuggestions:/data/sec_pass/3b77744e68b154467252fed656476b729dd8a31f73a9bab91dc08f0912871804/"},	/* DEFAULT */
 	{feature_immutable_root_v2,"/com.samsung.sept.Security:/data/sec_pass/a270dccce591c56d26f6a54615251ba4f84804d965a80572308c608b4dcda5a0/"},	/* DEFAULT */
-	{feature_immutable_src_exception,"/system/bin/icd"},
-	{feature_immutable_src_exception,"/system/bin/iof"},
-	{feature_immutable_src_exception,"/system/bin/sh"},
+	{feature_immutable_root_v2,"/com.samsung.sept.Security:/data/sec_pass/ae1c2f4d8c09e6f4a3b7c9f8cacc02c108a7be0fee20770d9ba8b1c0244e46e0/"},	/* DEFAULT */
+	{feature_immutable_root_v2,"/com.sec.android.easyMover:/data/sec_pass/172db225d62455197e816713bfedeba13d9c963e7f1468a7ecea535f6998beec/"},	/* DEFAULT */
+	{feature_immutable_root_v2,"/com.sec.android.gallery3d:/data/sec_pass/172db225d62455197e816713bfedeba13d9c963e7f1468a7ecea535f6998beec/"},	/* DEFAULT */
+	{feature_immutable_src_exception,"/init"},
 	{feature_immutable_src_exception,"/system/bin/app_process32"},
 	{feature_immutable_src_exception,"/system/bin/app_process64"},
 	{feature_immutable_src_exception,"/system/bin/crash_dump32"},
 	{feature_immutable_src_exception,"/system/bin/crash_dump64"},
+	{feature_immutable_src_exception,"/system/bin/icd"},
+	{feature_immutable_src_exception,"/system/bin/init"},
+	{feature_immutable_src_exception,"/system/bin/iof"},
+	{feature_immutable_src_exception,"/system/bin/lshal"},
 	{feature_immutable_src_exception,"/system/bin/mediaextractor"},
+	{feature_immutable_src_exception,"/system/bin/sh"},
 	{feature_immutable_src_exception,"/system/bin/surfaceflinger"},
-	{feature_immutable_src_exception,"/vendor/bin/sh"},
+	{feature_immutable_src_exception,"/vendor/bin/hw/android.hardware.biometrics.face@2.0-service"},
 	{feature_immutable_src_exception,"/vendor/bin/hw/android.hardware.media.omx@1.0-service"},
-	{feature_immutable_src_exception,"/vendor/bin/snap_utility_32"},
-	{feature_immutable_src_exception,"/vendor/bin/snap_utility_64"},
+	{feature_immutable_src_exception,"/vendor/bin/hw/vendor.samsung.hardware.camera.provider-service_64"},
 	{feature_immutable_src_exception,"/vendor/bin/icd_vendor"},
 	{feature_immutable_src_exception,"/vendor/bin/iof_vendor"},
-	{feature_immutable_src_exception,"/init"},
-	{feature_immutable_src_exception,"/system/bin/init"},
-	{feature_immutable_src_exception,"/system/bin/lshal"},
-	{feature_immutable_src_exception,"/vendor/bin/hw/vendor.samsung.hardware.camera.provider-service_64"},
-	{feature_immutable_src_exception,"/vendor/bin/hw/android.hardware.biometrics.face@2.0-service"},
+	{feature_immutable_src_exception,"/vendor/bin/sh"},
+	{feature_immutable_src_exception,"/vendor/bin/snap_utility_32"},
+	{feature_immutable_src_exception,"/vendor/bin/snap_utility_64"},
 	{feature_immutable_src_exception,"/apex/com.android.runtime/bin/crash_dump32"},	/* DEFAULT */
 	{feature_immutable_src_exception,"/apex/com.android.runtime/bin/crash_dump64"},	/* DEFAULT */
-	{feature_immutable_src_exception,"/data/local/tests/unrestricted/CtsBionicTestCases/arm64/CtsBionicTestCases"},	/* DEFAULT */
 	{feature_immutable_src_exception,"/data/local/tests/unrestricted/CtsBionicTestCases/arm/CtsBionicTestCases"},	/* DEFAULT */
+	{feature_immutable_src_exception,"/data/local/tests/unrestricted/CtsBionicTestCases/arm64/CtsBionicTestCases"},	/* DEFAULT */
 	{feature_immutable_src_exception,"/data/local/tmp/CtsSimpleperfTestCases"},	/* DEFAULT */
 	{feature_immutable_tgt_exception,"/system/bin/app_process32"},
 	{feature_immutable_tgt_exception,"/system/bin/app_process64"},
 	{feature_integrity_check,"/vendor/bin/hw/android.hardware.gatekeeper@1.0-service"},
 	{feature_integrity_check,"/vendor/bin/hw/android.hardware.keymaster@4.0-service"},
 	{feature_integrity_check,"/vendor/bin/hw/android.hardware.security.keymint-service"},
-	{feature_integrity_check,"/vendor/bin/hw/vendor.samsung.hardware.tlc.kg@1.0-service"},
 	{feature_integrity_check,"/vendor/bin/hw/vendor.samsung.hardware.security.wsm-service"},
-	{feature_integrity_check,"/vendor/bin/vendor.samsung.hardware.security.wsm@1.0-service"},
-	{feature_integrity_check,"/vendor/bin/vaultkeeperd"},
+	{feature_integrity_check,"/vendor/bin/hw/vendor.samsung.hardware.tlc.kg@1.0-service"},
 	{feature_integrity_check,"/vendor/bin/hw/vendor.samsung.hardware.tlc.kg@1.1-service"},
+	{feature_integrity_check,"/vendor/bin/vaultkeeperd"},
+	{feature_integrity_check,"/vendor/bin/vendor.samsung.hardware.security.wsm@1.0-service"},
 	/* Rules will be added here */
 	/* Never modify the above line. Rules will be added for buildtime */
 #endif /* __NEVER_DEFINED__ */

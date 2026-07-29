@@ -204,7 +204,7 @@ void d_tree_lookup_init(struct d_tree *the_tree, struct d_tree_ctx *ctx,
 			unsigned int lookup_flags);
 int d_tree_lookup_path(struct d_tree_ctx *ctx, const char *file_path,
 		struct d_tree_item *found_item);
-int d_tree_check_linked_rules(struct d_tree_item *part1_item, int part2_offset,
+int d_tree_check_linked_rules(struct d_tree_item *part1_item, unsigned int part2_offset,
 		unsigned int feature);
 
 
@@ -216,7 +216,7 @@ extern int rules_data_size;
 extern unsigned char *text_data;
 extern int text_data_size;
 extern unsigned char *integrity_data;
-int integrity_data_size;
+extern int integrity_data_size;
 extern unsigned char *bin_data;
 extern int bin_data_size;
 extern unsigned char *work_bin_arr[65000];

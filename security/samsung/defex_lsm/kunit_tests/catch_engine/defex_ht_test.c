@@ -54,7 +54,7 @@ extern struct mem_cache_list mem_cache[DEFEX_MEM_CACHE_COUNT];
 
 extern struct proc_cred_data *get_cred_data(int id);
 extern struct proc_cred_data **get_cred_ptr(int id);
-extern void set_cred_data(int id, struct proc_cred_data **cred_ptr,
+extern int set_cred_data(int id, struct proc_cred_data **cred_ptr,
 			struct proc_cred_data *cred_data);
 extern void *mem_cache_get(int cache_number);
 extern void *mem_cache_reclaim(int cache_number, void *ptr);

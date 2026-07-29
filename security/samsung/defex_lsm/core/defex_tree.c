@@ -20,6 +20,7 @@
 #include <errno.h>
 #include <limits.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -52,7 +53,7 @@ __visible_for_testing int subpath_extract_next(struct subpath_extract_ctx *ctx,
 		const char **subpath_ptr)
 {
 	const char *path, *next_separator;
-	size_t l = 0;
+	int l = 0;
 
 	if (!ctx || !ctx->path)
 		return 0;
@@ -60,9 +61,9 @@ __visible_for_testing int subpath_extract_next(struct subpath_extract_ctx *ctx,
 	path = ctx->path;
 	next_separator = strchr(path, '/');
 	if (!next_separator)
-		l = strlen(path);
+		l = (int)strlen(path);
 	else
-		l = (size_t)(next_separator - path);
+		l = (int)(next_separator - path);
 	if (subpath_ptr)
 		*subpath_ptr = path;
 
@@ -159,9 +160,31 @@ int d_tree_get_header(void *data, size_t data_size, struct d_tree *the_tree)
 	return ret;
 }
 
+__visible_for_testing int check_tree_bounds(const struct d_tree *__tree,
+		unsigned int offset, unsigned int size)
+{
+	size_t max_offset = (size_t)__tree->root_offset + offset + size;
+	return (max_offset <= __tree->data_size);
+}
+
+__visible_for_testing int check_tab_bounds(const struct d_tree *__tree,
+		unsigned int tab_offset, unsigned int offset, unsigned int size)
+{
+#ifdef __KERNEL__
+	size_t max_offset = (size_t)tab_offset + offset + size;
+	return (max_offset <= __tree->data_size);
+#else
+	(void)__tree;
+	(void)tab_offset;
+	(void)offset;
+	(void)size;
+	return 1;
+#endif
+}
+
 int d_tree_get_item_header(struct d_tree *the_tree, unsigned int offset, struct d_tree_item *item)
 {
-	unsigned int features, field_offset = 0;
+	unsigned int features, field_offset = 0, next_offset;
 	struct rule_item_struct *item_v10;
 	void *item_ptr;
 
@@ -181,50 +204,84 @@ int d_tree_get_item_header(struct d_tree *the_tree, unsigned int offset, struct 
 	if (the_tree->version != D_TREE_VERSION_20)
 		return (int)field_offset;
 
+	next_offset = field_offset + 4;
+	if (!check_tree_bounds(the_tree, offset, next_offset))
+		return 0;
 	features = D_TREE_DWORD_REF(item_ptr, field_offset);
 	item->features = features;
-	field_offset += 4;
+	field_offset = next_offset;
 	if (features & d_tree_item_path) {
+		next_offset = field_offset + 2;
+		if (!check_tree_bounds(the_tree, offset, next_offset))
+			return 0;
 		item->path_index = D_TREE_WORD_REF(item_ptr, field_offset);
-		field_offset += 2;
+		field_offset = next_offset;
 	}
 	if (features & d_tree_item_text) {
+		next_offset = field_offset + 2;
+		if (!check_tree_bounds(the_tree, offset, next_offset))
+			return 0;
 		item->text_index = D_TREE_WORD_REF(item_ptr, field_offset);
-		field_offset += 2;
+		field_offset = next_offset;
 	}
 	if (features & d_tree_item_integrity) {
+		next_offset = field_offset + 2;
+		if (!check_tree_bounds(the_tree, offset, next_offset))
+			return 0;
 		item->integrity_index = D_TREE_WORD_REF(item_ptr, field_offset);
-		field_offset += 2;
+		field_offset = next_offset;
 	}
 	if (features & d_tree_item_bin) {
+		next_offset = field_offset + 2;
+		if (!check_tree_bounds(the_tree, offset, next_offset))
+			return 0;
 		item->bin_index = D_TREE_WORD_REF(item_ptr, field_offset);
-		field_offset += 2;
+		field_offset = next_offset;
 	}
 	if (features & d_tree_item_children) {
+		next_offset = field_offset + 6;
+		if (!check_tree_bounds(the_tree, offset, next_offset))
+			return 0;
 		item->child_offset = D_TREE_WORD_REF(item_ptr, field_offset);
 		field_offset += 2;
 		item->child_count = D_TREE_WORD_REF(item_ptr, field_offset);
 		field_offset += 2;
 		item->child_size = D_TREE_WORD_REF(item_ptr, field_offset);
 		field_offset += 2;
+		if (!item->child_count || !item->child_size
+			|| !check_tree_bounds(the_tree, item->child_offset, 4 +
+				(item->child_count - 1) * (unsigned int)item->child_size))
+			return 0;
 	}
 	if (features & d_tree_item_linked) {
+		next_offset = field_offset + 6;
+		if (!check_tree_bounds(the_tree, offset, next_offset))
+			return 0;
 		item->linked_features = D_TREE_DWORD_REF(item_ptr, field_offset);
 		field_offset += 4;
 		item->link_index = D_TREE_WORD_REF(item_ptr, field_offset);
 		field_offset += 2;
 	}
 	if (features & d_tree_item_dword) {
+		next_offset = field_offset + 4;
+		if (!check_tree_bounds(the_tree, offset, next_offset))
+			return 0;
 		item->data_dword = D_TREE_DWORD_REF(item_ptr, field_offset);
-		field_offset += 4;
+		field_offset = next_offset;
 	}
 	if (features & d_tree_item_word) {
+		next_offset = field_offset + 2;
+		if (!check_tree_bounds(the_tree, offset, next_offset))
+			return 0;
 		item->data_word = D_TREE_WORD_REF(item_ptr, field_offset);
-		field_offset += 2;
+		field_offset = next_offset;
 	}
 	if (features & d_tree_item_byte) {
+		next_offset = field_offset + 1;
+		if (!check_tree_bounds(the_tree, offset, next_offset))
+			return 0;
 		item->data_byte = D_TREE_BYTE_REF(item_ptr, field_offset);
-		field_offset += 1;
+		field_offset = next_offset;
 	}
 	item->item_size = (unsigned short)field_offset;
 	return (int)field_offset;
@@ -233,31 +290,51 @@ int d_tree_get_item_header(struct d_tree *the_tree, unsigned int offset, struct 
 const char *d_tree_get_table_data(enum d_tree_table_type t_type, struct d_tree *the_tree,
 		unsigned int index, unsigned int *data_size)
 {
-	unsigned int offset, size = 0, max_index;
+	unsigned int tab_offset = 0, offset, size = 0, max_index;
 	const char *data_ptr = NULL;
 	void *tab_ptr = NULL;
 
+	if (data_size)
+		*data_size = 0;
+
+	if (!the_tree)
+		return NULL;
+
 	switch (t_type) {
 	case d_tree_string_table:
-		tab_ptr = D_TREE_GET_PTR(the_tree->text_data, the_tree->text_offset);
+		tab_offset = the_tree->text_offset;
+		if (the_tree->text_data)
+			tab_ptr = D_TREE_GET_PTR(the_tree->text_data, tab_offset);
 		max_index = the_tree->text_count;
 		break;
 	case d_tree_integrity_table:
-		tab_ptr = D_TREE_GET_PTR(the_tree->integrity_data, the_tree->integrity_offset);
+		tab_offset = the_tree->integrity_offset;
+		if (the_tree->integrity_data)
+			tab_ptr = D_TREE_GET_PTR(the_tree->integrity_data, tab_offset);
 		max_index = the_tree->integrity_count;
 		break;
 	case d_tree_bin_table:
-		tab_ptr = D_TREE_GET_PTR(the_tree->bin_data, the_tree->bin_offset);
+		tab_offset = the_tree->bin_offset;
+		if (the_tree->bin_data)
+			tab_ptr = D_TREE_GET_PTR(the_tree->bin_data, tab_offset);
 		max_index = the_tree->bin_count;
 		break;
+	default:
+		return NULL;
 	}
-	if (tab_ptr && index && index <= max_index) {
+	if (((uintptr_t)tab_ptr) > 0xffff && index && index <= max_index
+			&& check_tab_bounds(the_tree, tab_offset, 0, 0)) {
 		index *= 4;
-		size = D_TREE_WORD_REF(tab_ptr, index);
-		offset = D_TREE_WORD_REF(tab_ptr, index + 2);
-		data_ptr = (const void *)D_TREE_GET_PTR(tab_ptr, offset);
+		if (check_tab_bounds(the_tree, tab_offset, index, 4)) {
+			size = D_TREE_WORD_REF(tab_ptr, index);
+			offset = D_TREE_WORD_REF(tab_ptr, index + 2);
+			if (check_tab_bounds(the_tree, tab_offset, offset, size))
+				data_ptr = (const void *)D_TREE_GET_PTR(tab_ptr, offset);
+			else
+				size = 0;
+		}
 	}
-	if (data_size)
+	if (data_size && data_ptr)
 		*data_size = size;
 	return data_ptr;
 }
@@ -265,6 +342,12 @@ const char *d_tree_get_table_data(enum d_tree_table_type t_type, struct d_tree *
 const char *d_tree_get_subpath(struct d_tree_item *item, unsigned int *subpath_size)
 {
 	const char *text_ptr = NULL;
+
+	if (subpath_size)
+		*subpath_size = 0;
+
+	if (!item || !item->tree)
+		return NULL;
 
 	if (item->tree->version == D_TREE_VERSION_10) {
 		text_ptr = (const char *)item->item_v10->name;
@@ -281,6 +364,12 @@ const char *d_tree_get_text(struct d_tree_item *item, unsigned int *text_size)
 {
 	const char *text_ptr = NULL;
 
+	if (text_size)
+		*text_size = 0;
+
+	if (!item || !item->tree)
+		return NULL;
+
 	if (item->tree->version == D_TREE_VERSION_10) {
 		text_ptr = (const char *)item->item_v10->name;
 		if (text_size)
@@ -295,6 +384,12 @@ const char *d_tree_get_text(struct d_tree_item *item, unsigned int *text_size)
 const unsigned char *d_tree_get_integrity(struct d_tree_item *item, unsigned int *data_size)
 {
 	const unsigned char *data_ptr = NULL;
+
+	if (data_size)
+		*data_size = 0;
+
+	if (!item || !item->tree)
+		return NULL;
 
 #ifdef DEFEX_INTEGRITY_ENABLE
 	if (item->tree->version == D_TREE_VERSION_10) {
@@ -314,6 +409,12 @@ const unsigned char *d_tree_get_bin(struct d_tree_item *item, unsigned int index
 {
 	const unsigned char *data_ptr = NULL;
 
+	if (data_size)
+		*data_size = 0;
+
+	if (!item || !item->tree)
+		return NULL;
+
 	if (item->tree->version == D_TREE_VERSION_20)
 		data_ptr = (const unsigned char *)d_tree_get_table_data(d_tree_bin_table,
 			item->tree, index, data_size);
@@ -332,7 +433,7 @@ struct d_tree_item *d_tree_next_child(struct d_tree_item *parent_item,
 			&& ((parent_item->child_index + 1) < parent_item->child_count)) {
 		++parent_item->child_index;
 		offset = (size_t)parent_item->child_offset
-			+ (parent_item->child_index * parent_item->child_size);
+			+ (parent_item->child_index * (size_t)parent_item->child_size);
 	}
 
 	if (offset && d_tree_get_item_header(parent_item->tree, (unsigned int)offset, child_item))
@@ -354,12 +455,14 @@ int d_tree_compare_item_name(struct d_tree_item *item, const char *name, size_t 
 				return 1;
 			return 0;
 		}
-		do {
-			part_size = subdir_ptr[wildcard_offset++];
+		while (wildcard_offset < subdir_size) {
+			part_size = ((const uint8_t *)subdir_ptr)[wildcard_offset++];
 			if (part_size & 0x80) {
 				part_size &= 0x7F;
 				name_offset += (part_size) ? part_size : l;
 			} else {
+				if (name_offset > l)
+					return 0;
 				if ((l - name_offset) < part_size
 				   || (subdir_size - wildcard_offset) < part_size)
 					return 0;
@@ -371,7 +474,7 @@ int d_tree_compare_item_name(struct d_tree_item *item, const char *name, size_t 
 			}
 			if (name_offset >= l && wildcard_offset >= subdir_size)
 				return 1;
-		} while (wildcard_offset < subdir_size);
+		}
 	}
 	return 0;
 }
@@ -383,12 +486,12 @@ size_t d_tree_unpack_wildcard(const char *packed_str, size_t packed_size, char *
 
 	while (packed_size) {
 		--packed_size;
-		part_size = *packed_str++;
+		part_size = (uint8_t)*packed_str++;
 		if (part_size & 0x80) {
 			part_size &= 0x7F;
 			if (offset >= (unpacked_size - 4))
 				break;
-			offset += sprintf(unpacked_str + offset, "[*%d]", (int)part_size);
+			offset += (size_t)sprintf(unpacked_str + offset, "[*%d]", (int)part_size);
 		} else {
 			if ((offset + part_size) >= unpacked_size)
 				break;
@@ -490,7 +593,7 @@ int d_tree_lookup_path(struct d_tree_ctx *ctx,
 
 	subpath_extract_init(&subpath_ctx, file_path);
 	do {
-		l = subpath_extract_next(&subpath_ctx, &subpath);
+		l = (size_t)subpath_extract_next(&subpath_ctx, &subpath);
 		if (!l)
 			break;
 
@@ -525,10 +628,10 @@ int d_tree_lookup_path(struct d_tree_ctx *ctx,
 	return 0;
 }
 
-int d_tree_check_linked_rules(struct d_tree_item *part1_item, int part2_offset,
+int d_tree_check_linked_rules(struct d_tree_item *part1_item, unsigned int part2_offset,
 		unsigned int feature)
 {
-	unsigned short *link_array;
+	const unsigned short *link_array;
 	unsigned int i, link_size = 0;
 
 	if (!part2_offset) {
@@ -541,7 +644,7 @@ int d_tree_check_linked_rules(struct d_tree_item *part1_item, int part2_offset,
 	if (!(part1_item->linked_features & feature))
 		return 0;
 	/* Search on the list of linked items */
-	link_array = (unsigned short *)d_tree_get_bin(part1_item, part1_item->link_index,
+	link_array = (const unsigned short *)d_tree_get_bin(part1_item, part1_item->link_index,
 		&link_size);
 	if (link_array && link_size) {
 		link_size >>= 1;
@@ -575,12 +678,13 @@ int d_tree_get_wildcard_offset(const char *src_ptr, size_t l)
 {
 	char c;
 	const char *start_ptr;
-	int digits, wildcard_size, offset = 0;
+	int digits, wildcard_size;
+	size_t offset = 0;
 
 	if (!l)
 		l = strnlen(src_ptr, PATH_MAX);
 	while ((start_ptr = memchr(src_ptr + offset, '[', l - offset)) != NULL) {
-		offset = (start_ptr - src_ptr);
+		offset = (size_t)(start_ptr - src_ptr);
 		++start_ptr;
 		if (*start_ptr != '*') {
 			++offset;
@@ -592,7 +696,7 @@ int d_tree_get_wildcard_offset(const char *src_ptr, size_t l)
 		while ((c = *start_ptr) != 0) {
 			if (c == ']')
 				if (digits && wildcard_size < 128)
-					return offset;
+					return (int)offset;
 			if (isdigit(c)) {
 				digits++;
 				wildcard_size = wildcard_size * 10 + (c - '0');
@@ -609,8 +713,8 @@ int d_tree_get_wildcard_offset(const char *src_ptr, size_t l)
 char *d_tree_pack_wildcard(const char *src_ptr, size_t l)
 {
 	char c;
-	int  offset, out_offset = 0, wildcard_size;
-	size_t part_size, block_size;
+	int  offset, wildcard_size;
+	size_t part_size, block_size, out_offset = 0;
 	static char work_str[PATH_MAX];
 
 	while (l) {
@@ -628,14 +732,14 @@ char *d_tree_pack_wildcard(const char *src_ptr, size_t l)
 			l--;
 			if (out_offset >= (PATH_MAX - 2) || wildcard_size > 127)
 				goto do_exit;
-			work_str[out_offset++] = wildcard_size | 0x80;
+			work_str[out_offset++] = (char)((uint8_t)wildcard_size | 0x80);
 		} else {
 			part_size = (offset < 0) ? l : (size_t)offset;
 			while (part_size) {
 				block_size = (part_size > 127) ? 127 : part_size;
 				if ((out_offset + block_size) >= (PATH_MAX - 2))
 					goto do_exit;
-				work_str[out_offset++] = block_size;
+				work_str[out_offset++] = (char)block_size;
 				memcpy(work_str + out_offset, src_ptr, block_size);
 				src_ptr += block_size;
 				out_offset += block_size;
@@ -657,14 +761,20 @@ void init_tree_data(enum d_tree_version version)
 	rules_data_size = 1024 * 1024;
 
 	text_data = calloc(1024, 1024);
+	if (!text_data)
+		return;
 	text_data_size = 1024 * 1024;
 	D_TREE_DWORD_REF(text_data, 0) = 4;
 
 	integrity_data = calloc(1024, 1024);
+	if (!integrity_data)
+		return;
 	integrity_data_size = 1024 * 1024;
 	D_TREE_DWORD_REF(integrity_data, 0) = 4;
 
 	bin_data = calloc(1024, 1024);
+	if (!bin_data)
+		return;
 	bin_data_size = 1024 * 1024;
 	D_TREE_DWORD_REF(bin_data, 0) = 4;
 
@@ -903,7 +1013,7 @@ unsigned short add_table_item(enum d_tree_table_type t_type, struct d_tree *the_
 {
 	unsigned char *tab_ptr = NULL;
 	unsigned int i, index = 1, *table_size;
-	int add_size = (unsigned short)data_size + 4;
+	unsigned int add_size = (unsigned short)data_size + 4;
 	unsigned short item_size, item_offset, old_offset, *table_count = NULL, *table_header;
 	unsigned char *new_item_hdr, *new_item_data;
 
@@ -943,10 +1053,10 @@ unsigned short add_table_item(enum d_tree_table_type t_type, struct d_tree *the_
 		index = overwrite_index;
 		item_size = table_header[index * 2];
 		item_offset = table_header[index * 2 + 1];
-		add_size = (int)data_size - (int)item_size;
+		add_size = (unsigned int)data_size - item_size;
 		new_item_data = (tab_ptr + item_offset);
 		move_data_block(new_item_data + item_size, *table_size - (item_offset + item_size),
-			add_size);
+			(int)add_size);
 		memcpy(new_item_data, data, data_size);
 		table_header[index * 2] = (unsigned short)data_size;
 		*table_size += add_size;
@@ -980,6 +1090,8 @@ struct d_tree_item *create_tree_item(const char *name, size_t l)
 		l = 0;
 
 	item = malloc(sizeof(struct d_tree_item));
+	if (!item)
+		return item;
 	memset(item, 0, sizeof(struct d_tree_item));
 	item->item_index = (unsigned short)d_tree_arr_count;
 	item->tree = &rules_tree;
@@ -1005,6 +1117,8 @@ struct d_tree_item *add_tree_item(struct d_tree_item *base, const char *name, si
 		add_features = d_tree_item_wildcard;
 	}
 	new_item = create_tree_item(name, l);
+	if (!new_item)
+		return new_item;
 	new_item->features |= add_features;
 	if (!base->child_offset) {
 		base->child_offset = new_item->item_index;
@@ -1035,6 +1149,8 @@ struct d_tree_item *lookup_dir(struct d_tree_item *base, const char *name, size_
 	}
 	do {
 		item_text = d_tree_get_subpath(item, &item_text_size);
+		if (!item_text)
+			return NULL;
 		if ((!(item->features & feature_is_file)
 				|| (!!(item->features & feature_for_recovery)) == for_recovery)
 				&& (size_t)item_text_size == l
@@ -1067,6 +1183,8 @@ struct d_tree_item *add_tree_path(const char *file_path, unsigned int for_recove
 		cur_item = lookup_dir(base, ptr, l, for_recovery);
 		if (!cur_item) {
 			cur_item = add_tree_item(base, ptr, l);
+			if (!cur_item)
+				return cur_item;
 			/* slash wasn't found, it's a file */
 			if (!next_separator) {
 				cur_item->features |= feature_is_file;
@@ -1084,12 +1202,13 @@ struct d_tree_item *add_tree_path(const char *file_path, unsigned int for_recove
 
 void d_tree_add_link(struct d_tree_item *item, unsigned short offset, unsigned int feature)
 {
-	unsigned short *old_link_array = NULL, *new_link_array;
+	const unsigned short *old_link_array = NULL;
+	unsigned short *new_link_array;
 	unsigned int i, link_size = 0, is_exist = 0;
 
 	feature &= (feature_immutable_src_exception | feature_immutable_dst_exception
 		| feature_immutable_root | feature_immutable_root_v2);
-	old_link_array = (unsigned short *)d_tree_get_table_data(d_tree_bin_table, &rules_tree,
+	old_link_array = (const unsigned short *)d_tree_get_table_data(d_tree_bin_table, &rules_tree,
 		item->link_index, &link_size);
 	new_link_array = malloc(link_size + 16);
 	if (!new_link_array)

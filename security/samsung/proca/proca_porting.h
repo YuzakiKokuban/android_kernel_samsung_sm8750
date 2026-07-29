@@ -127,7 +127,11 @@ static inline uintptr_t get_kimage_voffset(void)
 
 static inline u64 get_kimage_vaddr(void)
 {
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(6, 8, 0) || !IS_BUILTIN(CONFIG_PROCA))
 	return kimage_vaddr;
+#else
+	return (u64)&_text;
+#endif
 }
 
 static inline u64 get_kimage_voffset(void)

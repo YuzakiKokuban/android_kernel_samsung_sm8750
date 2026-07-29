@@ -1135,6 +1135,9 @@ void fuse_conn_put(struct fuse_conn *fc)
 		struct fuse_iqueue *fiq = &fc->iq;
 		struct fuse_sync_bucket *bucket;
 
+		fuse_daemon_watchdog_stop(fc);
+		fuse_perf_destroy(fc);
+
 		if (IS_ENABLED(CONFIG_FUSE_DAX))
 			fuse_dax_conn_free(fc);
 		if (fiq->ops->release)
@@ -1145,7 +1148,6 @@ void fuse_conn_put(struct fuse_conn *fc)
 			WARN_ON(atomic_read(&bucket->count) != 1);
 			kfree(bucket);
 		}
-		fuse_daemon_watchdog_stop(fc);
 		call_rcu(&fc->rcu, delayed_release);
 	}
 }
@@ -1613,7 +1615,6 @@ void fuse_free_conn(struct fuse_conn *fc)
 	WARN_ON(!list_empty(&fc->devices));
 	idr_for_each(&fc->passthrough_req, free_fuse_passthrough, NULL);
 	idr_destroy(&fc->passthrough_req);
-	fuse_perf_destroy(fc);
 	kfree(fc);
 }
 EXPORT_SYMBOL_GPL(fuse_free_conn);
