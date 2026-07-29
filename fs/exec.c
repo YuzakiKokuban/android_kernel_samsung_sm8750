@@ -69,6 +69,10 @@
 #include <linux/user_events.h>
 #include <linux/page_size_compat.h>
 
+#ifndef __GENKSYMS__
+#include <linux/dma-buf.h>
+#endif
+
 #include <linux/uaccess.h>
 #include <asm/mmu_context.h>
 #include <asm/tlb.h>
@@ -78,10 +82,6 @@
 
 #include <trace/events/sched.h>
 #include <trace/hooks/sched.h>
-
-#ifdef CONFIG_SECURITY_DEFEX
-#include <linux/defex.h>
-#endif
 
 static int bprm_creds_from_file(struct linux_binprm *bprm);
 
@@ -1861,14 +1861,6 @@ static int bprm_execve(struct linux_binprm *bprm,
 	if (IS_ERR(file))
 		goto out_unmark;
 
-#ifdef CONFIG_SECURITY_DEFEX
-	retval = task_defex_enforce(current, file, -__NR_execve, bprm);
-	if (retval < 0) {
-		bprm->file = file;
-		retval = -EPERM;
-		goto out_unmark;
-	}
-#endif
 	sched_exec();
 
 	bprm->file = file;
