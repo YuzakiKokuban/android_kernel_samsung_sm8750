@@ -6736,9 +6736,7 @@ CONFIG_KSU_MULTI_MANAGER_SUPPORT=y
 CONFIG_KPM=y
 
 #
-# KernelSU - SUSFS
 #
-# end of KernelSU - SUSFS
 # end of KernelSU
 # end of Device Drivers
 
